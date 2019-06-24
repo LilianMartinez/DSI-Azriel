@@ -14,3 +14,11 @@
 Route::get('/', function () {
     return view('contenido/contenido');
 });
+
+//TABLA EFECTIVO
+Route::get('/efectivo','EfectivoController@index');
+Route::post('/efectivo/registrar','EfectivoController@store');
+Route::put('/efectivo/actualizar','EfectivoController@update');
+
+//TABLA MONTO FIJO
+Route::get('/montofijo','MontoFijoController@index');
