@@ -36,13 +36,16 @@
                         </ul>
                     </li>
                     <li class="nav-item nav-dropdown">
-                        <a class="nav-link nav-dropdown-toggle" href="#"><i class="icon-wallet"></i> Efectivo</a>
+                        <a class="nav-link nav-dropdown-toggle" href="#"><i class="icon-wallet"></i> Caja Chica</a>
                         <ul class="nav-dropdown-items">
+                            <li @click="menu=16" class="nav-item">
+                                <a class="nav-link" href="#"><i class="icon-wallet"></i>Caja chica diaria</a>
+                            </li>
                             <li @click="menu=7" class="nav-item">
-                                <a class="nav-link" href="#"><i class="icon-wallet"></i> Ingresos</a>
+                                <a class="nav-link" href="#"><i class="icon-wallet"></i> Historial de registros</a>
                             </li>
                             <li @click="menu=8" class="nav-item">
-                                <a class="nav-link" href="#"><i class="icon-notebook"></i> Egresos</a>
+                                <a class="nav-link" href="#"><i class="icon-notebook"></i> Informe</a>
                             </li>
                         </ul>
                     </li>

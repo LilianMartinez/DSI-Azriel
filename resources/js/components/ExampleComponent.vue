@@ -2,15 +2,13 @@
    <main class="main">
             <!-- Breadcrumb -->
             <ol class="breadcrumb">
-                <li class="breadcrumb-item">Home</li>
                 <li class="breadcrumb-item"><a href="#">Admin</a></li>
-                <li class="breadcrumb-item active">Dashboard</li>
             </ol>
             <div class="container-fluid">
                 <!-- Ejemplo de tabla Listado -->
                 <div class="card">
                     <div class="card-header">
-                        <i class="fa fa-align-justify"></i> Categorías
+                        Caja Chica
                         <button type="button" class="btn btn-secondary" data-toggle="modal" data-target="#modalNuevo">
                             <i class="icon-plus"></i>&nbsp;Nuevo
                         </button>
@@ -31,86 +29,59 @@
                         <table class="table table-bordered table-striped table-sm">
                             <thead>
                                 <tr>
+                                    <th>Factura</th>
+                                    <th>Concepto</th>
+                                    <th>Ingreso</th>
+                                    <th>Egreso </th>
                                     <th>Opciones</th>
-                                    <th>Nombre</th>
-                                    <th>Descripción</th>
-                                    <th>Estado</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <tr>
+                                    
+                                    <td>45678</td>
+                                    <td>Dispositivos electrónicos</td>
+                                    <td>$27.9</td>
+                                    <td></td>
                                     <td>
-                                        <button type="button" class="btn btn-warning btn-sm" data-toggle="modal" data-target="#modalNuevo">
+                                        <button type="button" data-toggle="modal" data-target="#modalNuevo">
                                           <i class="icon-pencil"></i>
                                         </button> &nbsp;
                                         <button type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#modalEliminar">
                                           <i class="icon-trash"></i>
                                         </button>
                                     </td>
-                                    <td>Equipos</td>
-                                    <td>Dispositivos electrónicos</td>
-                                    <td>
-                                        <span class="badge badge-success">Activo</span>
-                                    </td>
                                 </tr>
+                              
                                 <tr>
-                                    <td>
-                                        <button type="button" class="btn btn-warning btn-sm" data-toggle="modal" data-target="#modalNuevo">
+                                   
+                                    <td>679021</td>
+                                    <td>Agua</td>
+                                    <td></td>
+                                     <td>$5.90</td>
+                                      <td>
+                                        <button type="button" data-toggle="modal" data-target="#modalNuevo">
                                           <i class="icon-pencil"></i>
                                         </button> &nbsp;
                                         <button type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#modalEliminar">
                                           <i class="icon-trash"></i>
                                         </button>
                                     </td>
-                                    <td>Equipos</td>
-                                    <td>Dispositivos electrónicos</td>
-                                    <td>
-                                        <span class="badge badge-success">Activo</span>
-                                    </td>
                                 </tr>
+                             
                                 <tr>
-                                    <td>
-                                        <button type="button" class="btn btn-warning btn-sm" data-toggle="modal" data-target="#modalNuevo">
-                                          <i class="icon-pencil"></i>
-                                        </button> &nbsp;
-                                        <button type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#modalEliminar">
-                                          <i class="icon-trash"></i>
-                                        </button>
-                                    </td>
+                                    
                                     <td>Equipos</td>
-                                    <td>Dispositivos electrónicos</td>
+                                    <td>Fotocopias</td>
+                                    <td>$6.80</td>
+                                    <td></td>
                                     <td>
-                                        <span class="badge badge-secondary">Inactivo</span>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <button type="button" class="btn btn-warning btn-sm" data-toggle="modal" data-target="#modalNuevo">
-                                          <i class="icon-pencil"></i>
-                                        </button> &nbsp;
-                                        <button type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#modalEliminar">
-                                          <i class="icon-trash"></i>
-                                        </button>
-                                    </td>
-                                    <td>Equipos</td>
-                                    <td>Dispositivos electrónicos</td>
-                                    <td>
-                                        <span class="badge badge-secondary">Inactivo</span>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <button type="button" class="btn btn-warning btn-sm" data-toggle="modal" data-target="#modalNuevo">
+                                        <button type="button" data-toggle="modal" data-target="#modalNuevo">
                                           <i class="icon-pencil"></i>
                                         </button>&nbsp;
                                         <button type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#modalEliminar">
                                           <i class="icon-trash"></i>
                                         </button>
-                                    </td>
-                                    <td>Equipos</td>
-                                    <td>Dispositivos electrónicos</td>
-                                    <td>
-                                        <span class="badge badge-success">Activo</span>
                                     </td>
                                 </tr>
                             </tbody>

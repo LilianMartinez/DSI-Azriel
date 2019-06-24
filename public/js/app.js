@@ -1941,35 +1941,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   mounted: function mounted() {
     console.log('Component mounted.');
@@ -37286,22 +37257,15 @@ var staticRenderFns = [
     var _c = _vm._self._c || _h
     return _c("main", { staticClass: "main" }, [
       _c("ol", { staticClass: "breadcrumb" }, [
-        _c("li", { staticClass: "breadcrumb-item" }, [_vm._v("Home")]),
-        _vm._v(" "),
         _c("li", { staticClass: "breadcrumb-item" }, [
           _c("a", { attrs: { href: "#" } }, [_vm._v("Admin")])
-        ]),
-        _vm._v(" "),
-        _c("li", { staticClass: "breadcrumb-item active" }, [
-          _vm._v("Dashboard")
         ])
       ]),
       _vm._v(" "),
       _c("div", { staticClass: "container-fluid" }, [
         _c("div", { staticClass: "card" }, [
           _c("div", { staticClass: "card-header" }, [
-            _c("i", { staticClass: "fa fa-align-justify" }),
-            _vm._v(" Categorías\n                     "),
+            _vm._v("\n                     Caja Chica\n                     "),
             _c(
               "button",
               {
@@ -37371,23 +37335,32 @@ var staticRenderFns = [
               [
                 _c("thead", [
                   _c("tr", [
-                    _c("th", [_vm._v("Opciones")]),
-                    _vm._v(" "),
-                    _c("th", [_vm._v("Nombre")]),
+                    _c("th", [_vm._v("Factura")]),
                     _vm._v(" "),
                     _c("th", [_vm._v("Descripción")]),
                     _vm._v(" "),
-                    _c("th", [_vm._v("Estado")])
+                    _c("th", [_vm._v("Ingreso")]),
+                    _vm._v(" "),
+                    _c("th", [_vm._v("Egreso ")]),
+                    _vm._v(" "),
+                    _c("th", [_vm._v("Opciones")])
                   ])
                 ]),
                 _vm._v(" "),
                 _c("tbody", [
                   _c("tr", [
+                    _c("td", [_vm._v("45678")]),
+                    _vm._v(" "),
+                    _c("td", [_vm._v("Dispositivos electrónicos")]),
+                    _vm._v(" "),
+                    _c("td", [_vm._v("$27.9")]),
+                    _vm._v(" "),
+                    _c("td"),
+                    _vm._v(" "),
                     _c("td", [
                       _c(
                         "button",
                         {
-                          staticClass: "btn btn-warning btn-sm",
                           attrs: {
                             type: "button",
                             "data-toggle": "modal",
@@ -37409,25 +37382,22 @@ var staticRenderFns = [
                         },
                         [_c("i", { staticClass: "icon-trash" })]
                       )
-                    ]),
-                    _vm._v(" "),
-                    _c("td", [_vm._v("Equipos")]),
-                    _vm._v(" "),
-                    _c("td", [_vm._v("Dispositivos electrónicos")]),
-                    _vm._v(" "),
-                    _c("td", [
-                      _c("span", { staticClass: "badge badge-success" }, [
-                        _vm._v("Activo")
-                      ])
                     ])
                   ]),
                   _vm._v(" "),
                   _c("tr", [
+                    _c("td", [_vm._v("679021")]),
+                    _vm._v(" "),
+                    _c("td", [_vm._v("Agua")]),
+                    _vm._v(" "),
+                    _c("td"),
+                    _vm._v(" "),
+                    _c("td", [_vm._v("$5.90")]),
+                    _vm._v(" "),
                     _c("td", [
                       _c(
                         "button",
                         {
-                          staticClass: "btn btn-warning btn-sm",
                           attrs: {
                             type: "button",
                             "data-toggle": "modal",
@@ -37449,105 +37419,22 @@ var staticRenderFns = [
                         },
                         [_c("i", { staticClass: "icon-trash" })]
                       )
-                    ]),
-                    _vm._v(" "),
-                    _c("td", [_vm._v("Equipos")]),
-                    _vm._v(" "),
-                    _c("td", [_vm._v("Dispositivos electrónicos")]),
-                    _vm._v(" "),
-                    _c("td", [
-                      _c("span", { staticClass: "badge badge-success" }, [
-                        _vm._v("Activo")
-                      ])
                     ])
                   ]),
                   _vm._v(" "),
                   _c("tr", [
-                    _c("td", [
-                      _c(
-                        "button",
-                        {
-                          staticClass: "btn btn-warning btn-sm",
-                          attrs: {
-                            type: "button",
-                            "data-toggle": "modal",
-                            "data-target": "#modalNuevo"
-                          }
-                        },
-                        [_c("i", { staticClass: "icon-pencil" })]
-                      ),
-                      _vm._v("  \n                                     "),
-                      _c(
-                        "button",
-                        {
-                          staticClass: "btn btn-danger btn-sm",
-                          attrs: {
-                            type: "button",
-                            "data-toggle": "modal",
-                            "data-target": "#modalEliminar"
-                          }
-                        },
-                        [_c("i", { staticClass: "icon-trash" })]
-                      )
-                    ]),
-                    _vm._v(" "),
                     _c("td", [_vm._v("Equipos")]),
                     _vm._v(" "),
-                    _c("td", [_vm._v("Dispositivos electrónicos")]),
+                    _c("td", [_vm._v("Fotocopias")]),
                     _vm._v(" "),
-                    _c("td", [
-                      _c("span", { staticClass: "badge badge-secondary" }, [
-                        _vm._v("Inactivo")
-                      ])
-                    ])
-                  ]),
-                  _vm._v(" "),
-                  _c("tr", [
+                    _c("td", [_vm._v("$6.80")]),
+                    _vm._v(" "),
+                    _c("td"),
+                    _vm._v(" "),
                     _c("td", [
                       _c(
                         "button",
                         {
-                          staticClass: "btn btn-warning btn-sm",
-                          attrs: {
-                            type: "button",
-                            "data-toggle": "modal",
-                            "data-target": "#modalNuevo"
-                          }
-                        },
-                        [_c("i", { staticClass: "icon-pencil" })]
-                      ),
-                      _vm._v("  \n                                     "),
-                      _c(
-                        "button",
-                        {
-                          staticClass: "btn btn-danger btn-sm",
-                          attrs: {
-                            type: "button",
-                            "data-toggle": "modal",
-                            "data-target": "#modalEliminar"
-                          }
-                        },
-                        [_c("i", { staticClass: "icon-trash" })]
-                      )
-                    ]),
-                    _vm._v(" "),
-                    _c("td", [_vm._v("Equipos")]),
-                    _vm._v(" "),
-                    _c("td", [_vm._v("Dispositivos electrónicos")]),
-                    _vm._v(" "),
-                    _c("td", [
-                      _c("span", { staticClass: "badge badge-secondary" }, [
-                        _vm._v("Inactivo")
-                      ])
-                    ])
-                  ]),
-                  _vm._v(" "),
-                  _c("tr", [
-                    _c("td", [
-                      _c(
-                        "button",
-                        {
-                          staticClass: "btn btn-warning btn-sm",
                           attrs: {
                             type: "button",
                             "data-toggle": "modal",
@@ -37569,16 +37456,6 @@ var staticRenderFns = [
                         },
                         [_c("i", { staticClass: "icon-trash" })]
                       )
-                    ]),
-                    _vm._v(" "),
-                    _c("td", [_vm._v("Equipos")]),
-                    _vm._v(" "),
-                    _c("td", [_vm._v("Dispositivos electrónicos")]),
-                    _vm._v(" "),
-                    _c("td", [
-                      _c("span", { staticClass: "badge badge-success" }, [
-                        _vm._v("Activo")
-                      ])
                     ])
                   ])
                 ])
@@ -50155,7 +50032,7 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! C:\xampp\htdocs\DSI-Azriel\resources\js\app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! C:\Users\win10\Documents\Diseño\DSI-Azriel\resources\js\app.js */"./resources/js/app.js");
 
 
 /***/ })

@@ -8,7 +8,7 @@
     <meta name="description" content="Azriel Laravel Vue Js- ">
     <meta name="author" content="">
     <meta name="keyword" content="Azriel Laravel Vue Js, Sistema compras Laravel Vue Js">
-    <link rel="shortcut icon" href="img/favicon.png">
+    <link rel="shortcut icon" href="img/logo-msc.png">
     <title>Azriel-Parroquia San Luis Mariona</title>
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <!-- Icons -->
@@ -17,21 +17,34 @@
 </head>
 
 <body class="app header-fixed sidebar-fixed aside-menu-fixed aside-menu-hidden">
+                    <div class="contenido1">
+                    <table class="table-banner">
+                    <colgroup>
+				<col class="col1-banner"/>
+				<col class="col2-banner"/>
+			</colgroup>
+                    <tr>
+                        <td rowspan="3"><img src="img/logo-msc.png" class="img-logos"></td>
+                    </tr>
+                    <tr>
+                       <td class="text-center-banner1 font-banner1"> PARROQUIA DE SAN LUIS MARIONA</td>
+                    </tr>
+                    <tr>
+                       <td class="text-center-banner2">MISIONEROS DEL SAGRADO CORAZÓN</td>
+                    </tr>
+</table>
+                    </div>
     <div id="app">
     <header class="app-header navbar">
         <button class="navbar-toggler mobile-sidebar-toggler d-lg-none mr-auto" type="button">
           <span class="navbar-toggler-icon"></span>
         </button>
-       <!-- <a class="navbar-brand" href="#"></a>-->
         <button class="navbar-toggler sidebar-toggler d-md-down-none" type="button">
           <span class="navbar-toggler-icon"></span>
         </button>
         <ul class="nav navbar-nav d-md-down-none">
             <li class="nav-item px-3">
-                <a class="nav-link" href="#">Escritorio</a>
-            </li>
-            <li class="nav-item px-3">
-                <a class="nav-link" href="#">Configuraciones</a>
+                <a>Menú</a>
             </li>
         </ul>
         <ul class="nav navbar-nav ml-auto">
