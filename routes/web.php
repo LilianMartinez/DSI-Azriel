@@ -13,8 +13,8 @@
 
 Route::get('/', function () {
     return view('contenido/contenido');
-});
-
+})->middleware('auth');
+Route::group(['middleware' => 'auth'], function () {
 //TABLA EFECTIVO
 Route::get('/efectivo','EfectivoController@index');
 Route::post('/efectivo/registrar','EfectivoController@store');
@@ -22,3 +22,7 @@ Route::put('/efectivo/actualizar','EfectivoController@update');
 
 //TABLA MONTO FIJO
 Route::get('/montofijo','MontoFijoController@index');
+});
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');
