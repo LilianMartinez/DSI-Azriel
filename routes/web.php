@@ -19,6 +19,7 @@ Route::group(['middleware' => 'auth'], function () {
 Route::get('/efectivo','EfectivoController@index');
 Route::post('/efectivo/registrar','EfectivoController@store');
 Route::put('/efectivo/actualizar','EfectivoController@update');
+Route::get('/caja','EfectivoController@cajaChica')->name('caja');
 
 //TABLA MONTO FIJO
 Route::get('/montofijo','MontoFijoController@index');
