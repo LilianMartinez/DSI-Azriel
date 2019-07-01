@@ -1,9 +1,12 @@
 <?php
 
 namespace App\Http\Controllers;
-
+//use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use App\Efectivo;
+use App\MontoFijo;
+use Carbon\Carbon;
+use Illuminate\Support\Facades\DB;
 
 class EfectivoController extends Controller
 {
@@ -12,10 +15,32 @@ class EfectivoController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $efectivos = Efectivo::all();
-        return $efectivos;
+        //$efectivos = Efectivo::all();
+      //  if(!$request->ajax()) return redirect('/');
+        
+
+          $buscar = $request->buscar;
+          $criterio = $request->criterio;  
+
+        if ($buscar == ''){
+            $efectivos= Efectivo::orderBy('id','desc')->paginate(6);
+        } else {
+            $efectivos= Efectivo::where($criterio, 'like','%' . $buscar .'%')->orderBy('id','desc')->paginate(6);
+        }
+
+       return[
+       'pagination' =>[
+            'total' =>  $efectivos->total(),
+            'current_page' => $efectivos->currentPage(),
+            'per_page' =>$efectivos->perPage(),
+            'last_page' => $efectivos->lastPage(),
+            'from' => $efectivos->firstItem(),
+            'to' => $efectivos->lastItem(),
+            ],
+            'efectivos' => $efectivos
+        ];
     }
 
    
@@ -33,23 +58,11 @@ class EfectivoController extends Controller
         $efectivo->descripcion_efectivo=$request->descripcion_efectivo;
         $efectivo->tipo=$request->tipo;
         $efectivo->monto=$request->monto;
-        $efectivo->fecha=$request->fecha;
+        $efectivo->fecha=Carbon::now()->toDateString();
         $efectivo->save();
 
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
-    
 
     /**
      * Update the specified resource in storage.
@@ -65,7 +78,7 @@ class EfectivoController extends Controller
         $efectivo->descripcion_efectivo=$request->descripcion_efectivo;
         $efectivo->tipo=$request->tipo;
         $efectivo->monto=$request->monto;
-        $efectivo->fecha=$request->fecha;
+        //$efectivo->fecha=$request->fecha;
         $efectivo->save();
     }
 
@@ -75,8 +88,23 @@ class EfectivoController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $request)
     {
-        //
+        $efectivo = DB::table('efectivos')->where("id",$request->id)->delete();
+        return "evento eliminado";
+    }
+
+    public function buscar(Request $request)
+    {
+        /*$montofi = MontoFijo::findOrFail($request->id);
+        $montofi ->nombremf=$request->nombremf;
+        $montofi ->montof=$request->montof;
+        return $montofi;*/
+
+        $montofi = MontoFijo::find($request->id);
+        return $montofi;
+        
+
+        
     }
 }

@@ -18,7 +18,7 @@
  * Copyright 2011-2017 Twitter, Inc.
  * Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)
  */
-@media print {
+ @media print {
   *,
   *::before,
   *::after {
@@ -60,6 +60,45 @@
   .table-bordered th,
   .table-bordered td {
     border: 1px solid #ddd !important; } }
+    .text-center-banner1 {
+      text-indent:25%; }
+  .text-center-banner2 {
+    text-indent:26.63%; }
+    .table-banner {
+      width: 100%;
+      max-width: 100%;
+      background-color: transparent; }
+  .col1-banner{
+      width: 20%;
+  }
+  .col2-banner{
+    width: 80%;
+  }
+  .table-precios {
+    width: 100%;
+    max-width: 100%;
+    background-color: transparent; }
+  .col1-precios{
+    width: 33%;
+  }
+  .col2-precios{
+  width: 33%;
+  }
+  .col3-precios{
+    width: 34%;
+    }
+  .font-banner1{
+    font-family: Arial Black;
+    font-weight: bold;
+  }
+  .contenido1 {BACKGROUND-COLOR: #AED6F1 ; WIDTH: auto ; }
+   .img-logos {
+      width: 80px;
+      height: 80px; }
+
+.divmenu{
+  text-align: left;
+}
 
 html {
   box-sizing: border-box;
@@ -67,7 +106,7 @@ html {
   line-height: 1.15;
   -webkit-text-size-adjust: 100%;
   -ms-text-size-adjust: 100%;
-  -ms-overflow-style: scrollbar;
+  -ms-overflow-style: -scrollbar;
   -webkit-tap-highlight-color: transparent; }
 
 *,
@@ -1060,20 +1099,6 @@ pre {
   max-width: 100%;
   margin-bottom: 1rem;
   background-color: transparent; }
-.table-banner {
-    width: 100%;
-    max-width: 100%;
-    background-color: transparent; }
-.col1-banner{
-    width: 20%;
-}
-.col2-banner{
-  width: 80%;
-}
-.font-banner1{
-  font-family: Arial Black;
-  font-weight: bold;
-}
   .table th,
   .table td {
     padding: 0.75rem;
@@ -5907,10 +5932,6 @@ a.bg-dark:focus, a.bg-dark:hover {
 
 .text-center {
   text-align: center !important; }
-.text-center-banner1 {
-    text-indent:273px; }
-.text-center-banner2 {
-  text-indent:284px; }
 
 @media (min-width: 576px) {
   .text-sm-left {
@@ -6130,9 +6151,7 @@ body {
 
 .img-avatar {
   border-radius: 50em; }
-  .img-logos {
-    width: 80px;
-    height: 80px; }
+
 .avatar {
   position: relative;
   display: inline-block;
@@ -7438,8 +7457,6 @@ base-chart.chart {
 
 .dropdown-menu-lg {
   width: 250px; }
-
-.contenido1 {BACKGROUND-COLOR: #AED6F1 ; WIDTH: auto ; }
 
 .app-header .navbar-nav .dropdown-menu {
   position: absolute; }

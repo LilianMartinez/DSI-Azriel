@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateMontosFijosTable extends Migration
+class CreatePersonasTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,10 +13,10 @@ class CreateMontosFijosTable extends Migration
      */
     public function up()
     {
-        Schema::create('montos_fijos', function (Blueprint $table) {
-            $table->bigIncrements('id');
-            $table->string('nombremf',50);
-            $table->float('montof', 10,2);
+        Schema::create('personas', function (Blueprint $table) {
+            $table->increments('id');
+            $table->string('nombre_persona',100);
+            $table->string('apellido_persona',100);
             $table->timestamps();
         });
     }
@@ -28,6 +28,6 @@ class CreateMontosFijosTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('montos_fijos');
+        Schema::dropIfExists('personas');
     }
 }
