@@ -65,7 +65,10 @@
         <h1>Contenido del menú 15</h1>
     </template>
     <template v-if="menu==16">
-        <example-component></example-component>
+        <efectivo></efectivo>
+    </template>
+    <template v-if="menu==17">
+        <montofijom></montofijom>
     </template>
 
     

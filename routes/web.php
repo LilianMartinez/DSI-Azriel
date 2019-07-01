@@ -17,8 +17,15 @@ Route::get('/', function () {
 
 //TABLA EFECTIVO
 Route::get('/efectivo','EfectivoController@index');
-Route::post('/efectivo/registrar','EfectivoController@store');
+Route::put('/efectivo/registrar','EfectivoController@store');
 Route::put('/efectivo/actualizar','EfectivoController@update');
+Route::get('/efectivo/suma','EfectivoController@buscar');
+
 
 //TABLA MONTO FIJO
 Route::get('/montofijo','MontoFijoController@index');
+Route::put('/montofijo/registrar','MontoFijoController@store');
+Route::post('/montofijo/buscarmf','MontoFijoController@buscar');
+Route::put('/montofijo/actualizar','MontoFijoController@update');
+Route::put('/montofijo/eliminar','MontoFijoController@eliminar');
+
