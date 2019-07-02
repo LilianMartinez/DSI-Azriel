@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\MontoFijo;
+use Illuminate\Support\Facades\DB;
 
 class MontoFijoController extends Controller
 {
@@ -11,13 +13,24 @@ class MontoFijoController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $montos_fijos = MontoFijo::all();
+        if(!$request->ajax()) return redirect('/');
+  
+        $buscar = $request->buscar;
+        $criterio = $request->criterio;
+        
+        
+        if ($buscar == ''){
+            $montos_fijos = MontoFijo::where('estado','1')->orderBy('id')->get();
+        } else {
+            $montos_fijos = MontoFijo::where($criterio, 'like','%' . $buscar .'%')
+            ->where('estado','1')
+            ->orderBy('id')->get();
+        }
         return $montos_fijos;
-
-      
     }
+ 
 
     /**
      * Show the form for creating a new resource.
@@ -37,7 +50,17 @@ class MontoFijoController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        if(!$request->ajax()) return redirect('/');
+        $this->validate($request, [
+           'nombremf'=> 'required|min:3|max:50',
+           'montof'=>'required|between:0,9999.99'
+
+        ]);
+        $montoFijo = new MontoFijo();
+        $montoFijo->nombremf= $request->nombremf;
+        $montoFijo->montof=$request->montof;
+        $montoFijo->estado=1;
+        $montoFijo->save();
     }
 
     /**
@@ -69,9 +92,23 @@ class MontoFijoController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $id)
     {
-        //
+        if(!$id->ajax()) return redirect('/');
+        $this->validate($id, [
+            'nombremf'=> 'required|min:3|max:50',
+            'montof'=>'required|between:0,9999.99'
+ 
+         ]);
+        $montofi = DB::table('montos_fijos')->where("id",$id->id)->update(["nombremf"=>$id->nombremf, "montof" => $id->montof]);
+    }
+
+    public function eliminar(Request $id)
+    {
+        if(!$id->ajax()) return redirect('/');
+        $cambiar=2;
+     
+        $montofi = DB::table('montos_fijos')->where("id",$id->id)->update(["estado"=>$cambiar]);
     }
 
     /**
@@ -83,5 +120,11 @@ class MontoFijoController extends Controller
     public function destroy($id)
     {
         //
+    }
+    public function buscar(Request $id)
+    {
+        if(!$id->ajax()) return redirect('/');
+       $montofi = DB::table('montos_fijos')->where("id",$id->id)->first();
+       return response()->json($montofi);    
     }
 }

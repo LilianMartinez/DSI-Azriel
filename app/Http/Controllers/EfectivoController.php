@@ -17,18 +17,34 @@ class EfectivoController extends Controller
      */
     public function index(Request $request)
     {
-        //$efectivos = Efectivo::all();
-      //  if(!$request->ajax()) return redirect('/');
-        
+        if(!$request->ajax()) return redirect('/');
+       
 
-          $buscar = $request->buscar;
-          $criterio = $request->criterio;  
-
-        if ($buscar == ''){
-            $efectivos= Efectivo::orderBy('id','desc')->paginate(6);
-        } else {
-            $efectivos= Efectivo::where($criterio, 'like','%' . $buscar .'%')->orderBy('id','desc')->paginate(6);
+        $buscar = $request->buscar;
+        $criterio = $request->criterio;  
+        $componente=$request->componente;
+        $hoy=Carbon::now()->toDateString();
+        if($componente==1){
+            if ($buscar == ''){
+             
+                $efectivos = DB::table('efectivos')->where('fecha',$hoy)->paginate(15);
+            } 
+            else {
+                
+                $efectivos= DB::table('efectivos')
+                ->where('fecha', $hoy)
+                ->where($criterio, 'like','%' . $buscar .'%')
+                ->orderBy('id','desc')->paginate(15);
+            }
+        } else{
+            if($componente!=1){
+            if ($buscar == ''){
+            $efectivos= Efectivo::orderBy('id','desc')->paginate(15);
+            } else {
+            $efectivos= Efectivo::where($criterio, 'like','%' . $buscar .'%')->orderBy('id','desc')->paginate(15);
+            }
         }
+    }
 
        return[
        'pagination' =>[
@@ -53,6 +69,12 @@ class EfectivoController extends Controller
      */
     public function store(Request $request)
     {
+        if(!$request->ajax()) return redirect('/');
+        $this->validate($request, [
+            'descripcion_efectivo'=> 'required|min:5|max:50',
+            'monto'=>'required|between:0,9999.99'
+ 
+         ]);
         $efectivo = new Efectivo();
         $efectivo->num_recibo= $request->num_recibo;
         $efectivo->descripcion_efectivo=$request->descripcion_efectivo;
@@ -73,6 +95,12 @@ class EfectivoController extends Controller
      */
     public function update(Request $request)
     {
+        if(!$request->ajax()) return redirect('/');
+        $this->validate($request, [
+            'descripcion_efectivo'=> 'required|min:5|max:50',
+            'monto'=>'required|between:0,9999.99'
+ 
+         ]);
         $efectivo = Efectivo::findOrFail($request->id);
         $efectivo->num_recibo= $request->num_recibo;
         $efectivo->descripcion_efectivo=$request->descripcion_efectivo;
@@ -96,15 +124,29 @@ class EfectivoController extends Controller
 
     public function buscar(Request $request)
     {
-        /*$montofi = MontoFijo::findOrFail($request->id);
-        $montofi ->nombremf=$request->nombremf;
-        $montofi ->montof=$request->montof;
-        return $montofi;*/
-
-        $montofi = MontoFijo::find($request->id);
-        return $montofi;
-        
-
-        
+        if(!$request->ajax()) return redirect('/');
+        $h=1;
+        $h2=2;
+       $efectivo = DB::table('efectivos')->where("tipo",$h)->sum("monto");
+       $efectivo2=  DB::table('efectivos')->where("tipo",$h2)->sum("monto");
+       $total= $efectivo-$efectivo2;
+       return $total; 
+      // return $efectivo;  
+    }
+    public function buscaregreso(Request $request)
+    {
+        if(!$request->ajax()) return redirect('/');
+        $h=2;
+        $hoy=Carbon::now()->toDateString();
+       $efectivo = DB::table('efectivos') ->where('fecha', $hoy)->where("tipo",$h)->sum("monto");
+       return $efectivo;  
+    }
+    public function buscaringreso(Request $request)
+    {
+        if(!$request->ajax()) return redirect('/');
+        $h=1;
+        $hoy=Carbon::now()->toDateString();
+       $efectivo = DB::table('efectivos') ->where('fecha', $hoy)->where("tipo",$h)->sum("monto");
+      return $efectivo;  
     }
 }

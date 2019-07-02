@@ -7,8 +7,8 @@
             <div class="container-fluid">
                 <!-- Ejemplo de tabla Listado -->
                 <div class="card">
-                    <div class="card-header">
-                        Historial de Registros
+                    <div class="card-header"><label class="titulo-encabezados">Historial de Registros</label>
+                        
                     </div>
                     <div class="card-body">
                         <div class="form-group row">
@@ -20,8 +20,8 @@
                                       <option value="descripcion_efectivo">Concepto</option>
                                       <option value="monto">Cantidad de dinero</option>
                                     </select>
-                                    <input type="text" v-model="buscar" @keyup.enter="listarEfectivo(1,buscar,criterio)" class="form-control" placeholder="Texto a buscar">
-                                    <button type="submit" @click="listarEfectivo(1,buscar,criterio) " class="btn btn-primary"><i class="fa fa-search"></i> Buscar</button>
+                                    <input type="text" v-model="buscar" @keyup.enter="listarEfectivo(1,buscar,criterio,2)" class="form-control" placeholder="Texto a buscar">
+                                    <button type="submit" @click="listarEfectivo(1,buscar,criterio,2) " class="btn btn-primary"><i class="fa fa-search"></i> Buscar</button>
                                 </div>
                             </div>
                         </div>
@@ -97,6 +97,7 @@
                 montoFi:1,   //
                 idEfectivo:'',
                 modalE:0,
+                tipocomponente:2,
 
                 errorEfectivo:0,
                 errorMostrarMsjDescripcion:[],
@@ -143,9 +144,15 @@
         },
         methods:{
 
-            listarEfectivo(page,buscar,criterio){
+            listarEfectivo(page,buscar,criterio,tipocomponente){
                 let me=this;
-                var url='/efectivo?page='+ page + '&buscar=' + buscar + '&criterio=' + criterio;
+                var lengthbuscar = this.buscar.length;
+                 if(lengthbuscar >0)
+                 {
+                     var buscar2= this.buscar.toUpperCase();
+                 }else
+                 buscar2=this.buscar;
+                var url='/efectivo?page='+ page + '&buscar=' + buscar2 + '&criterio=' + criterio +'&componente=' + tipocomponente;
                 axios.get(url) .then(function (response) {
                     // handle success
                     var respuesta= response.data;
@@ -158,19 +165,19 @@
                 });
             
             },
-        cambiarPagina(page,buscar,criterio){
+        cambiarPagina(page,buscar,criterio,tipocomponente){
             let me = this;
             //Actualiza la pagina actualizar
             me.pagination.current_page = page;
             //Envia la peticion para visualizar la data de esa pagina
-            me.listarEfectivo(page,buscar,criterio);
+            me.listarEfectivo(page,buscar,criterio,tipocomponente);
         }
         
     
         },
         
         mounted() {
-            this.listarEfectivo(1,this.buscar,this.criterio);
+            this.listarEfectivo(1,this.buscar,this.criterio,this.tipocomponente);
            
         }
     }

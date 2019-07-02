@@ -8,7 +8,8 @@
                 <!-- Ejemplo de tabla Listado -->
                 <div class="card">
                     <div class="card-header">
-                       Usuarios de la aplicación
+                        <label class="titulo-encabezados">Usuarios de la aplicación</label>
+                       
                     </div>
                     <div class="card-body">
                          <div class="input-group margen">
@@ -215,7 +216,13 @@
 
             listarPersona(page,buscar,criterio){
                 let me=this;
-                var url='/user?page='+ page + '&buscar=' + buscar + '&criterio=' + criterio;
+                var lengthbuscar = this.buscar.length;
+                 if(lengthbuscar >0)
+                 {
+                     var buscar2= this.buscar.toUpperCase();
+                 }else
+                 buscar2=this.buscar;
+                var url='/user?page='+ page + '&buscar=' + buscar2 + '&criterio=' + criterio;
                 axios.get(url) .then(function (response) {
                     // handle success
                     var respuesta= response.data;
@@ -254,10 +261,10 @@
              }
              let me=this;
               axios.put('/user/registrar',{
-                  'nombre_persona': this.nombre_persona,
-                  'apellido_persona':this.apellido_persona,
-                  'usuario':this.usuario,
-                  'password':this.password,
+                  'nombre_persona': this.nombre_persona.toUpperCase(),
+                  'apellido_persona':this.apellido_persona.toUpperCase(),
+                  'usuario':this.usuario.toUpperCase(),
+                  'password':this.password.toUpperCase(),
                   'idrol':this.idrol
               }) .then(function (response) {
                     me.cerrarModal();
@@ -278,10 +285,10 @@
                
                let me=this;
               axios.put('/user/actualizar',{
-                  'nombre_persona': this.nombre_persona,
-                  'apellido_persona':this.apellido_persona,
-                  'usuario':this.usuario,
-                  'password':this.password,
+                  'nombre_persona': this.nombre_persona.toUpperCase(),
+                  'apellido_persona':this.apellido_persona.toUpperCase(),
+                  'usuario':this.usuario.toUpperCase(),
+                  'password':this.password.toUpperCase(),
                   'idrol':this.idrol,
                   'id':this.persona_id,
               }) .then(function (response) {

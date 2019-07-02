@@ -45,12 +45,18 @@ Route::group(['middleware'=>['auth']],function(){
                             Route::get('/efectivo','EfectivoController@index');
                             Route::put('/efectivo/registrar','EfectivoController@store');
                             Route::put('/efectivo/actualizar','EfectivoController@update');
-                            Route::get('/efectivo/buscarmf','EfectivoController@buscar');
                             Route::put('/efectivo/eliminar','EfectivoController@destroy');
+                            Route::get('/efectivo/suma','EfectivoController@buscar');
+                            Route::get('/efectivo/sumaegresos','EfectivoController@buscaregreso');
+                            Route::get('/efectivo/sumaingresos','EfectivoController@buscaringreso');
                             
                             
                             //TABLA MONTO FIJO
                             Route::get('/montofijo','MontoFijoController@index');
+                            Route::put('/montofijo/registrar','MontoFijoController@store');
+                            Route::post('/montofijo/buscarmf','MontoFijoController@buscar');
+                            Route::put('/montofijo/actualizar','MontoFijoController@update');
+                            Route::put('/montofijo/eliminar','MontoFijoController@eliminar');
 
             });
 

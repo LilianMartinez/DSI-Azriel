@@ -17,23 +17,14 @@
 </head>
 
 <body class="app header-fixed sidebar-fixed aside-menu-fixed aside-menu-hidden">
-                    <div class="contenido1">
-                    <table class="table-banner">
-                    <colgroup>
-				<col class="col1-banner"/>
-				<col class="col2-banner"/>
-			</colgroup>
-                    <tr>
-                        <td rowspan="3"><img src="img/logo-msc.png" class="img-logos"></td>
-                    </tr>
-                    <tr>
-                       <td class="text-center-banner1 font-banner1"> PARROQUIA DE SAN LUIS MARIONA</td>
-                    </tr>
-                    <tr>
-                       <td class="text-center-banner2">MISIONEROS DEL SAGRADO CORAZÓN</td>
-                    </tr>
-</table>
-                    </div>
+    <div class="div-general-banner">
+        <div class="div-imagen-banner"><img src="img/logo-msc.png" class="img-logos"></div>
+        <div class="div-textos-banner">
+        <div class="div-texto1-banner"><label class="font-banner1">PARROQUIA DE SAN LUIS MARIONA</label></div>
+        <div class="div-texto1-banner">MISIONEROS DEL SAGRADO CORAZÓN</div>
+        </div>
+        </div>
+    </div>
     <div id="app">
     <header class="app-header navbar">
         <button class="navbar-toggler mobile-sidebar-toggler d-lg-none mr-auto" type="button">
@@ -53,14 +44,8 @@
         <!-- -->
          <ul class="nav navbar-nav ml-auto">
             <li class="nav-item d-md-down-none">
-                <a class="nav-link" href="#" data-toggle="dropdown">
-                    <i class="icon-bell"></i>
-                    <span class="badge badge-pill badge-danger">5</span>
-                </a>
                 <div class="dropdown-menu dropdown-menu-right">
-                    <div class="dropdown-header text-center">
-                        <strong>Notificaciones</strong>
-                    </div>
+                  
                    <!-- <a class="dropdown-item" href="#">
                         <i class="fa fa-envelope-o"></i> Ingresos
                         <span class="badge badge-success">3</span>
@@ -73,7 +58,7 @@
             </li>
             <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle nav-link" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
-                    <img src="img/avatars/6.jpg" class="img-avatar" alt="admin@bootstrapmaster.com">
+                 <label>Sesion</label>
                     <span class="d-md-down-none">{{Auth::user()->usuario}} </span>
                 </a>
                 <div class="dropdown-menu dropdown-menu-right">

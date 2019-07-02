@@ -26,10 +26,6 @@
                         <template v-if="menu==10">
                                 <user></user> 
                         </template>
-                        
-                        <template v-if="menu==11">
-                        <h1>Credenciales</h1>
-                        </template>
 
                         <template v-if="menu==14">
                             <h1>Ayuda</h1>
@@ -98,6 +94,9 @@
 
                         <template v-if="menu==16">
                             <efectivo></efectivo>
+                        </template>
+                        <template v-if="menu==17">
+                        <montofijom></montofijom>
                         </template>
             @else
             @endif

@@ -1,14 +1,11 @@
 <template>
    <main class="main">
-            <!-- Breadcrumb -->
-            <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="#">Admin</a></li>
-            </ol>
+           
             <div class="container-fluid">
-                <!-- Ejemplo de tabla Listado -->
+                <!-- caja chica -->
                 <div class="card">
                     <div class="card-header">
-                        Caja Chica
+                       <label class="titulo-encabezados">Caja Chica</label>
                     </div>
                     <div class="card-body">
                          <div class="input-group margen">
@@ -16,7 +13,7 @@
                                     <i class="icon-plus"></i>&nbsp;Nuevo
                             </button>
                         </div>
-                        <div class="form-group row">
+                         <div class="form-group row">
                             <div class="col-md-6">
                                 <div class="input-group">
                                     <select class="form-control col-md-3" v-model="criterio">
@@ -24,10 +21,22 @@
                                       <option value="descripcion_efectivo">Concepto</option>
                                       <option value="monto">Cantidad de dinero</option>
                                     </select>
-                                    <input type="text" v-model="buscar" @keyup.enter="listarEfectivo(1,buscar,criterio)" class="form-control" placeholder="Texto a buscar">
-                                    <button type="submit" @click="listarEfectivo(1,buscar,criterio) " class="btn btn-primary"><i class="fa fa-search"></i> Buscar</button>
+                                    <input type="text" v-model="buscar" @keyup.enter="listarEfectivo(1,buscar,criterio,1)" class="form-control" placeholder="Texto a buscar">
+                                    <button type="submit" @click="listarEfectivo(1,buscar,criterio,1) " class="btn btn-primary"><i class="fa fa-search"></i> Buscar</button>
                                 </div>
                             </div>
+                        </div>
+                        <div class="totales">
+                            <label>Total Acumulado: $</label>                              
+                            <label v-text="totalAcum" ></label> 
+                        </div>
+                        <div class="totales2">
+                            <label>Total de ingresos del dia: $</label>                              
+                            <label v-text="totalAcumIngre" ></label> 
+                        </div>
+                        <div class="totales2">
+                            <label>Total de egresos del dia: $</label>                              
+                            <label v-text="totalAcumEgre" ></label> 
                         </div>
                         <table class="table table-bordered table-striped table-sm">
                             <thead>
@@ -36,7 +45,7 @@
                                     <th>Concepto</th>
                                     <th>Ingreso</th>
                                     <th>Egreso </th>
-                                    <th>Opciones</th>
+                                    <th style="text-align: center">Opciones</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -55,8 +64,8 @@
                                         <td v-text="efectivo.monto"></td>
                                     </template>
 
-                                        <button type="button" @click="abrirModal('efectivos','actualizar',efectivo)" >
-                                          <i class="icon-pencil"></i>
+                                        <button  type="button" @click="abrirModal('efectivos','actualizar',efectivo)" >
+                                          <i class="icon-pencil  enter"></i>
                                         </button> &nbsp;
                                         <button type="button" class="btn btn-danger btn-sm" @click="abrirModal('efectivos','eliminar',efectivo)">
                                           <i class="icon-trash"></i>
@@ -95,105 +104,79 @@
                         <div class="modal-body">
                             <form action="" method="post" enctype="multipart/form-data" class="form-horizontal">
                                 <div class="form-group row">
-                                    <label class="col-md-3 form-control-label" for="text-input">Factura</label>
-                                    <div class="col-md-9">
-                                        <input type="text" v-model="num_recibo" class="form-control" placeholder="Numero de factura">
+                                    <label class="col-md-2 form-control-label" for="text-input">Factura</label>
+                                    <div class="col-md-5">
+                                        <input type="text" tabindexgt="0" v-model="num_recibo" class="form-control" placeholder="Numero de factura">
                                     </div>
                                 </div>
                                 <div class="form-group row">
-                                    <label class="col-md-3 form-control-label" for="email-input">Concepto*</label>
-                                    <div class="col-md-9">
-                                        <input type="text" v-model="descripcion_efectivo" class="form-control" placeholder="Descripción de movimiento">
+                                    <label class="col-md-2 form-control-label">Concepto<b class="alerta">*</b></label>
+                                    <div class="col-md-5">
+                                        <textarea rows="8" tabindexgt="-1" cols="45" v-model="descripcion_efectivo">Descripción de movimiento</textarea>
                                     </div>
                                 </div>
-                                    <div>
-                                        <div v-show="errorEfectivo" class="from-group row div-error">
-                                            <div class="text-center text-error">
-                                                <div v-for="error in errorMostrarMsjDescripcion" :key="error" v-text="error">
-                                                    
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
                                  <div class="form-group row">
-                                    <label class="col-md-3 form-control-label" for="text-input">Monto*</label>
-                                    <div class="col-md-9">
-                                        <input type="text" v-model="monto" class="form-control" placeholder="$00.00">
+                                    <label class="col-md-2 form-control-label">Monto</label>
+                                    <label>$</label>
+                                    <div class="col-md-5">
+                                      <input type="text" tabindexgt="-1" v-model="monto" class="form-control" placeholder="00.00">
                                     </div>
                                 </div>
-                                      <div>
-                                        <div v-show="errorEfectivo" class="from-group row div-error">
-                                            <div class="text-center text-error">
-                                                <div v-for="error in errorMostrarMsjMonto" :key="error" v-text="error">
-                                                    
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div> 
-                                    <div class="form-group row">
-                                     <label class="col-md-3 form-control-label" for="text-input">Tipo*</label>
-                                    <div class="col-md-9">
-                                        <table>
-                                            <tr> <input type="radio" v-model="tipo" value="1" name="tipo" required> Ingreso</tr>
-                                            <tr> <input type="radio" v-model="tipo" value="2" name="tipo"> Egreso</tr>
-                                        </table>
-                                    </div>
-                                </div> 
-                                    <div>
-                                        <div v-show="errorEfectivo" class="from-group row div-error">
-                                            <div class="text-center text-error">
-                                                <div v-for="error in errorMostrarMsjTipo" :key="error" v-text="error">
-                                                    
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-
                                 <div class="form-group row">
-                                     <label class="col-md-3 form-control-label" for="text-input">Precios fijos</label>
-                                </div>
-                                    <div class="col-md-12">
-                                        <table class="table-precios">
-                                        <colgroup>
-				                            <col class="col1-precios"/>
-				                            <col class="col2-precios"/>
-                                            <col class="col3-precios"/>
-			                            </colgroup>
-                                            <tr> 
-                                                <td><input type="radio" name="montoFijo" value="1" v-model="montoFijo" @click="autollenado(montoFi)"> Bautismo</td>
-                                                <td><input type="radio" name="montoFijo" value="2" v-model="montoFijo">Certificaciones </td>
-                                                <td><input type="radio" name="montoFijo" value="3" v-model="montoFijo"> Alquiler de salón</td>
-                                            </tr>
-                                            <tr> 
-                                                <td><input type="radio" name="montoFijo" value="4" v-model="montoFijo"> Confirmación</td>
-                                                <td><input type="radio" name="montoFijo" value="5" v-model="montoFijo"> Autentica </td>
-                                                <td><input type="radio" name="montoFijo" value="6" v-model="montoFijo"> Alquiler de Santuario</td>
-                                            </tr>
-                                            <tr> 
-                                                <td><input type="radio" name="montoFijo" value="7" v-model="montoFijo"> Matrimonio</td>
-                                                <td><input type="radio" name="montoFijo" value="8" v-model="montoFijo">Permiso de matrimonio</td>
-                                                <td><input type="radio" name="montoFijo" value="9" v-model="montoFijo"> Alquiler de chalet</td>
-                                            </tr>
-                                            <tr> 
-                                                <td><input type="radio" name="montoFijo" value="19" v-model="montoFijo"> Expediente matrimonial</td>
-                                                <td><input type="radio" name="montoFijo" value="11" v-model="montoFijo"> Misa de 15 años</td>
-                                                <td></td>
-                                            </tr>
+                                     <label class="col-md-2 form-control-label" for="text-input">Tipo<b class="alerta">*</b></label>
+                                    <div class="col-md-5">
+                                        <table>
+                                            <tr> <input tabindexgt="-1" type="radio" v-model="tipo" value="1" name="tipo" required> Ingreso</tr>
+                                            <tr> <input tabindexgt="-1" type="radio" v-model="tipo" value="2" name="tipo"> Egreso</tr>
                                         </table>
-                                </div>                      
+                                    </div>
+                                    <div class="col-md-4 modal-fo">
+                                        <button type="button" class="btn btn-secondary" @click="cerrarModal()">Cerrar</button>
+                                        <button type="button" class="btn btn-primary" v-if="tipoAccion==1" @click="registrarEfectivos()">Guardar</button>
+                                        <button type="button" class="btn btn-primary" v-if="tipoAccion==2" @click="actualizarEfectivos()">Actualizar</button>
+                                    </div>
+                                </div>  
+                                 <div v-show="errorDatos" class="form-group row div-error">
+                                <div class="text-center text-error">
+                                <div v-for="error in errorMostrarMsj" :key="error" v-text="error">
+                                </div>
+                                </div>
+                                </div>  
+                            
+                                <div class="form-group row color-o">
+                                <div class="div-texto1-pf">
+                                     Precios fijos</div>
+                                    <div class="col-md-3">
+                                        <table>
+                                                <tr v-for="montos in arraymontos.slice(0,4)" :key="montos.id"><input type="radio" v-model="montoFijo" v-bind:value="montos.id" @change="autollenado(montoFijo)">{{montos.nombremf}} </tr>                         
+                                        </table>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <table>
+                                                <tr v-for="montos in arraymontos.slice(5,9)" :key="montos.id"><input type="radio" v-model="montoFijo" v-bind:value="montos.id" @change="autollenado(montoFijo)">{{montos.nombremf}} </tr>                         
+                                        </table>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <table>
+                                                <tr v-for="montos in arraymontos.slice(10,14)" :key="montos.id"><input type="radio"  v-model="montoFijo" v-bind:value="montos.id" @change="autollenado(montoFijo)">{{montos.nombremf}} </tr>                         
+                                        </table>
+                                    </div>
+                                    <div class="col-md-3 ">
+                                        <table>
+                                                <tr v-for="montos in arraymontos.slice(15,19)" :key="montos.id"><input type="radio"  v-model="montoFijo" v-bind:value="montos.id" @change="autollenado(montoFijo)">{{montos.nombremf}} </tr>                         
+                                        </table>
+                                    </div>      
+                                </div>  
+                                                   
                             </form>
                         </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" @click="cerrarModal()">Cerrar</button>
-                            <button type="button" class="btn btn-primary" v-if="tipoAccion==1" @click="registrarEfectivos()">Guardar</button>
-                            <button type="button" class="btn btn-primary" v-if="tipoAccion==2" @click="actualizarEfectivos()">Actualizar</button>
-                        </div>
                     </div>
+                    <!-- /.modal-content -->
                 </div>
                 <!-- /.modal-dialog -->
             </div>
             <!--Fin del modal-->
-            <!-- Inicio del modal Eliminar -->
+     <!-- Inicio del modal Eliminar -->
             <div class="modal fade" tabindex="-1" :class="{'mostrar': modalE}" role="dialog" aria-labelledby="myModalLabel" style="display: none;" aria-hidden="true">
                 <div class="modal-dialog modal-danger" role="document">
                     <div class="modal-content">
@@ -208,25 +191,26 @@
                                         <div class="form-group row">
                                             <label class="col-md-3 form-control-label" for="text-input">Factura</label>
                                                 <div class="col-md-9">
-                                                    <input type="text" readonly="readonly" v-model="num_recibo" class="form-control" placeholder="Numero de factura">
+                                                    <label class="col-md-3 form-control-label"  v-text="num_recibo" ></label> 
                                                 </div>
                                         </div>
                                         <div class="form-group row">
                                             <label class="col-md-3 form-control-label" for="email-input">Concepto</label>
                                                     <div class="col-md-9">
-                                                        <input type="text" readonly="readonly" v-model="descripcion_efectivo" class="form-control" placeholder="Descripción de movimiento">
+                                                        <label class="col-md-3 form-control-label"  v-text="descripcion_efectivo" ></label>
                                                     </div>
                                         </div>
                                         <div class="form-group row">
                                             <label class="col-md-3 form-control-label" for="text-input">Monto</label>
                                                     <div class="col-md-9">
-                                                        <input type="text" readonly="readonly" v-model="monto" class="form-control" placeholder="$00.00">
+                                                        <label class="col-md-3 form-control-label"  v-text="monto" ></label>
                                                     </div>
                                         </div>    
                                         <div class="form-group row">
                                             <label class="col-md-3 form-control-label" for="text-input">Tipo</label>
                                                     <div class="col-md-9">
-                                                        <input type="text" readonly="readonly" class="form-control" v-model="tipo"> 
+                                                        <label class="col-md-3 form-control-label"  v-if="tipo==1" >Ingreso</label> 
+                                                        <label class="col-md-3 form-control-label"  v-if="tipo==2" >Egreso</label> 
                                                     </div>
                                         </div>
                             </form>
@@ -248,7 +232,6 @@
 <script>
     export default {
       data(){
-
             return{
                 efectivo_id:0,
                 num_recibo:'',
@@ -260,10 +243,17 @@
                 modal : 0,
                 tituloModal : '',
                 tipoAccion:0,
-                montoFijo:1,
+                montoFijo:0,
                 arrayMontoFijo:[],
-                montoFi:1,
+                arraymontos:[],
+                to:[],
+                totalAcum:'',
+                totalAcumIngre:'',
+                totalAcumEgre:'',
+                errorDatos:0,
+                errorMostrarMsj:[],
                 modalE:0,
+                tipocomponente:1,
 
                 errorEfectivo:0,
                 errorMostrarMsjDescripcion:[],
@@ -280,10 +270,12 @@
                 },
                 offset: 3,
                 criterio:'num_recibo', //
-                buscar: ''                     
+                buscar: ''    
+                
+                   //
             }
         },
-        computed:{
+               computed:{
             isActived: function(){
                 return this.pagination.current_page;
             },
@@ -309,10 +301,66 @@
             }
         },
         methods:{
-
-            listarEfectivo(page,buscar,criterio){
+             sumat(){
                 let me=this;
-                var url='/efectivo?page='+ page + '&buscar=' + buscar + '&criterio=' + criterio;
+                var to=[];
+                axios.get('/efectivo/suma') .then(function (response) {
+                  to=response.data; 
+                  me.llenarsuma(to);
+                  me.sumaegre();
+                  me.sumaingre();
+                })
+                .catch(function (error) {
+                    console.log(error);
+                });
+            
+            },
+            sumaegre(){
+                let me=this;
+                var to=[];
+                axios.get('/efectivo/sumaegresos') .then(function (response) {
+                  to=response.data; 
+                  me.llenaregreso(to);
+                })
+                .catch(function (error) {
+                    console.log(error);
+                });
+            
+            },
+            sumaingre(){
+                let me=this;
+                var to=[];
+                axios.get('/efectivo/sumaingresos') .then(function (response) {
+                  to=response.data; 
+                  me.llenaringreso(to);
+                })
+                .catch(function (error) {
+                    console.log(error);
+                });
+            
+            },
+             llenadoradiobotones(buscar,criterio){
+                let me=this;
+                var url='/montofijo?buscar=' + buscar + '&criterio=' + criterio;
+                axios.get(url) .then(function (response) {
+                    me.arraymontos=response.data;
+                })
+                .catch(function (error) {
+                    console.log(error);
+                });
+            
+            },
+               
+            listarEfectivo(page,buscar,criterio,tipocomponente){
+                let me=this;
+                 var lengthbuscar = this.buscar.length;
+                 if(lengthbuscar >0)
+                 {
+                     var buscar2= this.buscar.toUpperCase();
+                 }else
+                 buscar2=this.buscar;
+                
+                var url='/efectivo?page='+ page + '&buscar=' + buscar2 + '&criterio=' + criterio + '&componente=' + tipocomponente;
                 axios.get(url) .then(function (response) {
                     // handle success
                     var respuesta= response.data;
@@ -325,71 +373,57 @@
                 });
             
             },
-        cambiarPagina(page,buscar,criterio){
+             cambiarPagina(page,buscar,criterio,tipocomponente){
             let me = this;
             //Actualiza la pagina actualizar
             me.pagination.current_page = page;
             //Envia la peticion para visualizar la data de esa pagina
-            me.listarEfectivo(page,buscar,criterio);
+            me.listarEfectivo(page,buscar,criterio,tipocomponente);
         },
         
          registrarEfectivos(){
-             
-             if(this.validarEfectivo()){
-                 return;
-             }
+             if(this.validarvalores()){
+                  return;   
+                 }
              let me=this;
+             
               axios.put('/efectivo/registrar',{
                   'num_recibo': this.num_recibo,
-                  'descripcion_efectivo':this.descripcion_efectivo,
+                  'descripcion_efectivo': this.descripcion_efectivo.toUpperCase(),
                   'monto':this.monto,
                   'tipo':this.tipo
               }) .then(function (response) {
                     me.cerrarModal();
-                    me.listarEfectivo(1,'','num_recibo');
+                    me.listarEfectivo(1,'','num_recibo',1);
+                    me.sumat();
                 })
                 .catch(function (error) {
                     // handle error
                     console.log(error);
                 });
-             
+
             },
             actualizarEfectivos(){
-                if(this.validarEfectivo()){
-                 return;
-             }
+                if(this.validarvalores()){
+                  return;   
+                 }
                
                let me=this;
               axios.put('/efectivo/actualizar',{
                   'num_recibo': this.num_recibo,
-                  'descripcion_efectivo':this.descripcion_efectivo,
+                  'descripcion_efectivo':this.descripcion_efectivo.toUpperCase(),
                   'monto':this.monto,
                   'tipo':this.tipo,
                   'id':this.efectivo_id,
               }) .then(function (response) {
                     me.cerrarModal();
-                    me.listarEfectivo(1,'','num_recibo');
+                    me.listarEfectivo(1,'','num_recibo',1);
+                    me.sumat();
                 })
                 .catch(function (error) {
                     // handle error
                     console.log(error);
                 });
-            },
-            validarEfectivo(){
-                this.errorEfectivo=0;
-                this.errorMostrarMsjDescripcion=[];
-                this.errorMostrarMsjMonto=[];
-                this.errorMostrarMsjTipo=[];
-
-                if(!this.descripcion_efectivo)this.errorMostrarMsjDescripcion.push("Debe llenar este campo.");
-                if(!this.monto)this.errorMostrarMsjMonto.push("Debe llenar este campo y debe ser un valor numerico");
-                if(!this.tipo)this.errorMostrarMsjTipo.push("Debe seleccionar uno");
-
-                if(this.errorMostrarMsjDescripcion.length)this.errorEfectivo=1;
-                if(this.errorMostrarMsjMonto.length)this.errorEfectivo=1;
-                if(this.errorMostrarMsjTipo.length)this.errorEfectivo=1;
-
-                return this.errorEfectivo;
             },
             cerrarModal(){
                 this.modal=0;
@@ -398,10 +432,10 @@
                 this.num_recibo='';
                 this.descripcion_efectivo='';
                 this.monto='';
+                this.montoFijo=0;
                 this.tipo='';
 
             },
-
             cerrarModalE(){
                 this.modalE=0;
                 this.tituloModal='';
@@ -412,35 +446,67 @@
                 this.tipo='';
 
             },
-            autollenado(montoFi){
-
+            autollenado(montoFijo){
+               // console.log(this.montoFijo); 
                 let me=this;
-              axios.get('/efectivo/buscarmf',{
-                  'id':this.montoFi,
-              }) .then(function (response) {
-                 /*  me.arrayMontoFijo=response.data;
-                this.descripcion_efectivo=arrayMontoFijo['nombremf']; 
-                this.monto=arrayMontoFijo['montof'];      */   
-                console.log(response);       
+                var arrayMontoFijo= [];
+             axios.post('/montofijo/buscarmf',{
+               'id':this.montoFijo}) 
+              .then(function (response) { 
+                arrayMontoFijo = response.data;      
+                me.llenar(arrayMontoFijo);       
                 })
                 .catch(function (error) {
                     // handle error
                     console.log(error);
                 });
             },
-            eliminarEfectivo(){
+            llenar(d=[]){
+                this.descripcion_efectivo=d["nombremf"]; 
+                this.monto= d["montof"];    
+
+            },
+             validarvalores(){
+                this.errorDatos=0;
+                this.errorMostrarMsj=[];
+                var RE = /^\d*(\.\d{1})?\d{0,1}$/;
+               var Max_Length = 50;
+               var Min_Length = 5;
+               if(!this.tipo) this.errorMostrarMsj.push("El tipo no puede estar vacío");
+               var lengthmax = this.descripcion_efectivo.length;
+               var lengthmin = this.descripcion_efectivo.length;
+               if (lengthmax > Max_Length)this.errorMostrarMsj.push("El concepto debe tener menos de 50 letras");
+                if (lengthmin < Min_Length)this.errorMostrarMsj.push("El concepto debe tener más de 5 letras");
+                if (!RE.test(this.monto))  this.errorMostrarMsj.push("El monto solo pueden ser decimales");
+                if(this.errorMostrarMsj.length) this.errorDatos=1;
+            
+
+                return this.errorDatos;
+            },
+             eliminarEfectivo(){
            
               let me=this;
               axios.put('/efectivo/eliminar',{
                   'id':this.efectivo_id,
               }) .then(function (response) {
                 me.cerrarModalE();
-                me.listarEfectivo(1,'','num_recibo');
+                me.listarEfectivo(1,'','num_recibo',1);
+                me.sumat();
                 })
                 .catch(function (error) {
                     // handle error
                     console.log(error);
                 });
+            },
+             
+             llenarsuma(d=[]){
+                this.totalAcum= d;    
+            },
+            llenaringreso(d=[]){
+                this.totalAcumIngre= d;    
+            },
+            llenaregreso(d=[]){
+                this.totalAcumEgre= d;    
             },
             abrirModal(modelo, accion, data=[]){
                 switch(modelo){
@@ -472,7 +538,7 @@
                                 this.tipo=data['tipo'];
                                break;
                             }
-                             case 'eliminar':
+                            case 'eliminar':
                             {
                                 this.modalE=1;
                                 this.tituloModal='Eliminar Movimiento',
@@ -492,7 +558,9 @@
         },
         
         mounted() {
-            this.listarEfectivo(1,this.buscar,this.criterio);
+            this.listarEfectivo(1,this.buscar,this.criterio,this.tipocomponente);
+            this.llenadoradiobotones('','');
+            this.sumat();
            
         }
     }
@@ -511,12 +579,5 @@
     .margen{
         margin-bottom: 10px;
     }
-    .div-error{
-        display: flex;
-        justify-content: center;
-    }
-    .text-error{
-        color: red !important;
-        font-weight: bold;
-    }
+    
 </style>
