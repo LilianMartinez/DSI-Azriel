@@ -19,6 +19,9 @@ class CreatePersonasTable extends Migration
             $table->string('apellido_persona',100);
             $table->timestamps();
         });
+
+        DB::table('personas')->insert(array('id'=>'1','nombre_persona'=>'DELFINA EUGENIA','apellido_persona'=>'DE AMAS'));
+        DB::table('personas')->insert(array('id'=>'2','nombre_persona'=>'PÍO AGUSTIN','apellido_persona'=>'GONZÁLES RIVERA'));
     }
 
     /**

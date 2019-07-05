@@ -64,14 +64,17 @@ class UserController extends Controller
          
         try{
             DB::beginTransaction();
+            $id_persona = Persona::max('id');
+            $id=$id_persona+1;
             $persona = new Persona();
+            $persona->id=$id;
             $persona->nombre_persona = $request->nombre_persona;
             $persona->apellido_persona = $request->apellido_persona;
             $persona->save();
  
             $user = new User();
             $user->usuario = $request->usuario;
-            $user->password = bcrypt( $request->password);
+            $user->password =bcrypt( $request->password);
             $user->condicion = '1';
             $user->idrol = $request->idrol;          
  

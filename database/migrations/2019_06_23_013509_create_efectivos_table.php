@@ -22,6 +22,10 @@ class CreateEfectivosTable extends Migration
             $table->date('fecha');
             $table->timestamps();
         });
+
+        DB::table('efectivos')->insert(array('id'=>'1','num_recibo'=>'','descripcion_efectivo'=>'FOTOCOPIAS','tipo'=>'1','monto'=>'3.00','fecha'=>'2019-06-30'));
+        DB::table('efectivos')->insert(array('id'=>'2','num_recibo'=>'N°00025','descripcion_efectivo'=>'SILLAS','tipo'=>'2','monto'=>'25.00','fecha'=>'2019-07-04'));
+
     }
 
     /**

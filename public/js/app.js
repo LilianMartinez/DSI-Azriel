@@ -3208,6 +3208,8 @@ __webpack_require__.r(__webpack_exports__);
     validarPersona: function validarPersona() {
       this.errorPersona = 0;
       this.errorMostrarMsjPersona = [];
+      var RE = /^[a-zA-Z]+( [a-zA-z]+)*$/; ///^[A-Z]+$/i
+
       var max_length = 6;
       var min_length = 6;
       var min_length_contra = 9;
@@ -3220,8 +3222,10 @@ __webpack_require__.r(__webpack_exports__);
       if (lengthMax > max_length) this.errorMostrarMsjPersona.push("El nombre de usuario no debe ser mayor a 6 letras");
       if (lengthMin < min_length) this.errorMostrarMsjPersona.push("El nombre de usuario no debe ser menor a 6 letras");
       if (!this.password) this.errorMostrarMsjPersona.push("El campo password no puede estar vacío");
-      if (lengthMin_contra < min_length_contra) this.errorMostrarMsjPersona.push("El nombre de usuario no debe ser menor a 9 digitos");
+      if (lengthMin_contra < min_length_contra) this.errorMostrarMsjPersona.push("El password no debe ser menor a 9 digitos");
       if (this.idrol == 0) this.errorMostrarMsjPersona.push("Debe seleccionar un rol para el usuario");
+      if (!RE.test(this.nombre_persona)) this.errorMostrarMsjPersona.push("No pueden ir números en el nombre");
+      if (!RE.test(this.apellido_persona)) this.errorMostrarMsjPersona.push("No pueden ir números en el apellido");
       if (this.errorMostrarMsjPersona.length) this.errorPersona = 1;
       return this.errorPersona;
     },
@@ -3236,30 +3240,6 @@ __webpack_require__.r(__webpack_exports__);
       this.idrol = 0;
       this.errorPersona = 0;
     },
-
-    /* cerrarModalE(){
-         this.modalE=0;
-         this.tituloModal='';
-         this.tipoAccion=0;
-         this.nombre_persona='';
-         this.apellido_persona='';
-         this.tipo='';
-      },
-     
-      eliminarEfectivo(){
-    
-       let me=this;
-       axios.put('/efectivo/eliminar',{
-           'id':this.efectivo_id,
-       }) .then(function (response) {
-         me.cerrarModalE();
-         me.listarPersona(1,'','nombre_persona');
-         })
-         .catch(function (error) {
-             // handle error
-             console.log(error);
-         });
-     },*/
     abrirModal: function abrirModal(modelo, accion) {
       var data = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : [];
       this.selectRol();

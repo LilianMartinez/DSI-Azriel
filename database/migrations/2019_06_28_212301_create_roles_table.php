@@ -23,6 +23,7 @@ class CreateRolesTable extends Migration
 
         DB::table('roles')->insert(array('id'=>'1','nombre_rol'=>'Parroco','descripcion'=>'Sacerdote encargado de la Parroquia San Luis Gonzaga'));
         DB::table('roles')->insert(array('id'=>'2','nombre_rol'=>'Secretaria','descripcion'=>'Secretaria de la Parroquia San Luis Gonzaga'));
+
     }
 
     /**

@@ -75,7 +75,12 @@ class EfectivoController extends Controller
             'monto'=>'required|between:0,9999.99'
  
          ]);
+         $id_efectivo = Efectivo::max('id');
+         $id=$id_efectivo+1;
+
+
         $efectivo = new Efectivo();
+        $efectivo->id=$id;
         $efectivo->num_recibo= $request->num_recibo;
         $efectivo->descripcion_efectivo=$request->descripcion_efectivo;
         $efectivo->tipo=$request->tipo;

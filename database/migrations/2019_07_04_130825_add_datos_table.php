@@ -3,8 +3,9 @@
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Support\Facades\DB;
 
-class AddMontosFijosTable extends Migration
+class AddDatosTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,10 +14,8 @@ class AddMontosFijosTable extends Migration
      */
     public function up()
     {
-        Schema::table('montos_fijos', function (Blueprint $table) {
-        $table->integer('estado')->nullable()
-               ->after('montof');
-            });
+       
+        DB::table('montos_fijos')->insertGetId(['id'=>'1','nombremf'=>'ALQUILER SALÓN SANTUARIO','montof'=>'25.0','estado'=>'1']);
     }
 
     /**

@@ -56,7 +56,14 @@ class MontoFijoController extends Controller
            'montof'=>'required|between:0,9999.99'
 
         ]);
+
+            
+        $id_montoFijo = MontoFijo::max('id');
+        $id=$id_montoFijo+1;
+           
+
         $montoFijo = new MontoFijo();
+        $montoFijo->id=$id;
         $montoFijo->nombremf= $request->nombremf;
         $montoFijo->montof=$request->montof;
         $montoFijo->estado=1;
