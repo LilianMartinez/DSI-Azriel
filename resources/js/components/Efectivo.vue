@@ -145,10 +145,10 @@
                             
                                 <div class="form-group row color-o">
                                 <div class="div-texto1-pf">
-                                     Precios fijos</div>
+                                     Precios fijos Ingresados</div>
                                     <div class="col-md-3">
                                         <table>
-                                                <tr v-for="montos in arraymontos.slice(0,4)" :key="montos.id"><input type="radio" v-model="montoFijo" v-bind:value="montos.id" @change="autollenado(montoFijo)">{{montos.nombremf}} </tr>                         
+                                                <tr v-for="montos in arraymontos.slice(0,4)" :key="montos.id"><input type="radio" v-model="montoFijo" v-bind:valor="montos.montof" v-bind:value="montos.id" @change="autollenado(montoFijo)">{{montos.nombremf}} </tr>                         
                                         </table>
                                     </div>
                                     <div class="col-md-3">
@@ -307,8 +307,8 @@
                 axios.get('/efectivo/suma') .then(function (response) {
                   to=response.data; 
                   me.llenarsuma(to);
-                  me.sumaegre();
-                  me.sumaingre();
+                 // me.sumaegre();
+                 // me.sumaingre();
                 })
                 .catch(function (error) {
                     console.log(error);
@@ -500,7 +500,9 @@
             },
              
              llenarsuma(d=[]){
-                this.totalAcum= d;    
+                this.totalAcum= d['total']; 
+                this.totalAcumIngre= d['ingreso']; 
+                this.totalAcumEgre=d['egreso']; 
             },
             llenaringreso(d=[]){
                 this.totalAcumIngre= d;    

@@ -129,18 +129,31 @@ class EfectivoController extends Controller
 
     public function buscar(Request $request)
     {
-        if(!$request->ajax()) return redirect('/');
+        if(!$request->ajax()) 
+            return redirect('/');
+        $envio=array();
         $h=1;
         $h2=2;
        $efectivo = DB::table('efectivos')->where("tipo",$h)->sum("monto");
        $efectivo2=  DB::table('efectivos')->where("tipo",$h2)->sum("monto");
        $total= $efectivo-$efectivo2;
-       return $total; 
+       $envio['total']=$total;
+
+       $fechaActual=new \DateTime('2019-01-01');//OBJETIVO TIPO FECHA APARTIR DE 01-01-2019
+       $fechaActual=new \DateTime();//FECHA ACTUAL
+       $hoy=Carbon::now()->toDateString();
+       $efectivo = DB::table('efectivos') ->where('fecha', $fechaActual)->where("tipo",2)->sum("monto");
+       $envio['egreso']=$efectivo;
+       $efectivo = DB::table('efectivos') ->where('fecha', $fechaActual)->where("tipo",1)->sum("monto");
+       $envio['ingreso']=$efectivo;
+       $envio['fecha']=$fechaActual->format('d-m-Y');
+       return $envio; 
       // return $efectivo;  
     }
     public function buscaregreso(Request $request)
     {
-        if(!$request->ajax()) return redirect('/');
+        if(!$request->ajax()) 
+            return redirect('/');
         $h=2;
         $hoy=Carbon::now()->toDateString();
        $efectivo = DB::table('efectivos') ->where('fecha', $hoy)->where("tipo",$h)->sum("monto");

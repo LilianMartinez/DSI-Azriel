@@ -2172,9 +2172,8 @@ __webpack_require__.r(__webpack_exports__);
       var to = [];
       axios.get('/efectivo/suma').then(function (response) {
         to = response.data;
-        me.llenarsuma(to);
-        me.sumaegre();
-        me.sumaingre();
+        me.llenarsuma(to); // me.sumaegre();
+        // me.sumaingre();
       })["catch"](function (error) {
         console.log(error);
       });
@@ -2343,7 +2342,9 @@ __webpack_require__.r(__webpack_exports__);
     },
     llenarsuma: function llenarsuma() {
       var d = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];
-      this.totalAcum = d;
+      this.totalAcum = d['total'];
+      this.totalAcumIngre = d['ingreso'];
+      this.totalAcumEgre = d['egreso'];
     },
     llenaringreso: function llenaringreso() {
       var d = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];
@@ -27563,7 +27564,7 @@ var render = function() {
                     _c("div", { staticClass: "form-group row color-o" }, [
                       _c("div", { staticClass: "div-texto1-pf" }, [
                         _vm._v(
-                          "\n                                  Precios fijos"
+                          "\n                                  Precios fijos Ingresados"
                         )
                       ]),
                       _vm._v(" "),
@@ -27581,7 +27582,7 @@ var render = function() {
                                     expression: "montoFijo"
                                   }
                                 ],
-                                attrs: { type: "radio" },
+                                attrs: { type: "radio", valor: montos.montof },
                                 domProps: {
                                   value: montos.id,
                                   checked: _vm._q(_vm.montoFijo, montos.id)
@@ -28107,9 +28108,17 @@ var render = function() {
                     "tr",
                     { key: efectivo.id },
                     [
-                      _c("td", {
-                        domProps: { textContent: _vm._s(efectivo.fecha) }
-                      }),
+                      _c(
+                        "td",
+                        { domProps: { textContent: _vm._s(efectivo.fecha) } },
+                        [
+                          _vm._v(
+                            _vm._s(
+                              _vm._f("dateFormat")(efectivo.fecha, "d-m-Y")
+                            )
+                          )
+                        ]
+                      ),
                       _vm._v(" "),
                       _c("td", {
                         domProps: { textContent: _vm._s(efectivo.num_recibo) }
