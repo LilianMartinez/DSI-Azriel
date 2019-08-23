@@ -3,8 +3,9 @@
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Support\Facades\DB;
 
-class CreateMontosFijosTable extends Migration
+class AddDatosTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +14,8 @@ class CreateMontosFijosTable extends Migration
      */
     public function up()
     {
-        Schema::create('montos_fijos', function (Blueprint $table) {
-            $table->bigIncrements('id');
-            $table->string('nombremf',50);
-            $table->float('montof', 10,2);
-            $table->timestamps();
-        });
+       
+        DB::table('montos_fijos')->insertGetId(['id'=>'1','nombremf'=>'ALQUILER SALÓN SANTUARIO','montof'=>'25.0','estado'=>'1']);
     }
 
     /**
@@ -28,6 +25,6 @@ class CreateMontosFijosTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('montos_fijos');
+        //
     }
 }

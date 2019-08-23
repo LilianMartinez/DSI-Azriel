@@ -6,7 +6,7 @@
                     </li>
                     <li class="nav-title">
                         Mantenimiento
-                    </li>
+                   <!-- </li>
                     <li class="nav-item nav-dropdown">
                         <a class="nav-link nav-dropdown-toggle" href="#"><i class="icon-bag"></i> Calendario Parroquial</a>
                         <ul class="nav-dropdown-items">
@@ -17,7 +17,7 @@
                                 <a class="nav-link" href="#"><i class="icon-bag"></i> Calendario de Avisos</a>
                             </li>
                         </ul>
-                    </li>
+                    </li> 
                     <li class="nav-item nav-dropdown">
                         <a class="nav-link nav-dropdown-toggle" href="#"><i class="icon-bag"></i> Certificados</a>
                         <ul class="nav-dropdown-items">
@@ -34,8 +34,8 @@
                                 <a class="nav-link" href="#"><i class="icon-bag"></i> Matrimonio</a>
                             </li>
                         </ul>
-                    </li>
-                    <li class="nav-item nav-dropdown">
+                    </li>-->
+                   <!-- <li class="nav-item nav-dropdown">
                         <a class="nav-link nav-dropdown-toggle" href="#"><i class="icon-wallet"></i> Caja Chica</a>
                         <ul class="nav-dropdown-items">
                             <li @click="menu=16" class="nav-item">
@@ -48,27 +48,25 @@
                                 <a class="nav-link" href="#"><i class="icon-notebook"></i> Informe</a>
                             </li>
                         </ul>
-                    </li>
-                    <li class="nav-item nav-dropdown">
+                    </li>-->
+                    <!--<li class="nav-item nav-dropdown">
                         <a class="nav-link nav-dropdown-toggle" href="#"><i class="icon-basket"></i> Donaciones</a>
                         <ul class="nav-dropdown-items">
                             <li @click="menu=9" class="nav-item">
                                 <a class="nav-link" href="#"><i class="icon-notebook"></i> Listado donaciones</a>
                             </li>
                         </ul>
-                    </li>
+                    </li> -->
                     <li class="nav-item nav-dropdown">
                         <a class="nav-link nav-dropdown-toggle" href="#"><i class="icon-people"></i> Acceso</a>
                         <ul class="nav-dropdown-items">
                             <li @click="menu=10" class="nav-item">
-                                <a class="nav-link" href="#"><i class="icon-user"></i> Usuarios</a>
+                                <a class="nav-link active" href="#"><i class="icon-user"></i> Usuarios</a>
                             </li>
-                            <li @click="menu=11" class="nav-item">
-                                <a class="nav-link" href="#"><i class="icon-user-following"></i> Credenciales</a>
-                            </li>
+                           
                         </ul>
                     </li>
-                    <li class="nav-item nav-dropdown">
+                   <!-- <li class="nav-item nav-dropdown">
                         <a class="nav-link nav-dropdown-toggle" href="#"><i class="icon-pie-chart"></i> Control Sectorial</a>
                         <ul class="nav-dropdown-items">
                             <li @click="menu=12" class="nav-item">
@@ -79,12 +77,13 @@
                             </li>
                         </ul>
                     </li>
+
                     <li @click="menu=14" class="nav-item">
                         <a class="nav-link" href="#"><i class="icon-book-open"></i> Ayuda <span class="badge badge-danger">PDF</span></a>
                     </li>
                     <li @click="menu=15" class="nav-item">
                         <a class="nav-link" href="#"><i class="icon-info"></i> Acerca de...<span class="badge badge-info">IT</span></a>
-                    </li>
+                    </li>-->
                 </ul>
             </nav>
             <button class="sidebar-minimizer brand-minimizer" type="button"></button>
