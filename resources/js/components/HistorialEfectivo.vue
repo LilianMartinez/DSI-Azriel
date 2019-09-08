@@ -38,7 +38,7 @@
                             <tbody>
                                 <tr v-for="efectivo in arrayEfectivo" :key="efectivo.id">
                                     
-                                    <td v-text="efectivo.fecha">{{efectivo.fecha | dateFormat('d-m-Y')}}</td>
+                                    <td v-text="efectivo.fecha">{{format('DD/MM/YYYY')}}</td>
                                     <td v-text="efectivo.num_recibo"></td>
                                     <td v-text="efectivo.descripcion_efectivo"></td>
 

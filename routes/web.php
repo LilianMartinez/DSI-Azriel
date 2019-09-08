@@ -47,8 +47,6 @@ Route::group(['middleware'=>['auth']],function(){
                             Route::put('/efectivo/actualizar','EfectivoController@update');
                             Route::put('/efectivo/eliminar','EfectivoController@destroy');
                             Route::get('/efectivo/suma','EfectivoController@buscar');
-                            Route::get('/efectivo/sumaegresos','EfectivoController@buscaregreso');
-                            Route::get('/efectivo/sumaingresos','EfectivoController@buscaringreso');
                             
                             
                             //TABLA MONTO FIJO

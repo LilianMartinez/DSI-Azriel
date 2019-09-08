@@ -2076,21 +2076,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -2178,27 +2163,7 @@ __webpack_require__.r(__webpack_exports__);
         console.log(error);
       });
     },
-    sumaegre: function sumaegre() {
-      var me = this;
-      var to = [];
-      axios.get('/efectivo/sumaegresos').then(function (response) {
-        to = response.data;
-        me.llenaregreso(to);
-      })["catch"](function (error) {
-        console.log(error);
-      });
-    },
-    sumaingre: function sumaingre() {
-      var me = this;
-      var to = [];
-      axios.get('/efectivo/sumaingresos').then(function (response) {
-        to = response.data;
-        me.llenaringreso(to);
-      })["catch"](function (error) {
-        console.log(error);
-      });
-    },
-    llenadoradiobotones: function llenadoradiobotones(buscar, criterio) {
+    llenadolista: function llenadolista(buscar, criterio) {
       var me = this;
       var url = '/montofijo?buscar=' + buscar + '&criterio=' + criterio;
       axios.get(url).then(function (response) {
@@ -2294,7 +2259,7 @@ __webpack_require__.r(__webpack_exports__);
       this.tipo = '';
     },
     autollenado: function autollenado(montoFijo) {
-      // console.log(this.montoFijo); 
+      console.log(this.montoFijo);
       var me = this;
       var arrayMontoFijo = [];
       axios.post('/montofijo/buscarmf', {
@@ -2346,14 +2311,6 @@ __webpack_require__.r(__webpack_exports__);
       this.totalAcumIngre = d['ingreso'];
       this.totalAcumEgre = d['egreso'];
     },
-    llenaringreso: function llenaringreso() {
-      var d = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];
-      this.totalAcumIngre = d;
-    },
-    llenaregreso: function llenaregreso() {
-      var d = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];
-      this.totalAcumEgre = d;
-    },
     abrirModal: function abrirModal(modelo, accion) {
       var data = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : [];
 
@@ -2403,7 +2360,7 @@ __webpack_require__.r(__webpack_exports__);
   },
   mounted: function mounted() {
     this.listarEfectivo(1, this.buscar, this.criterio, this.tipocomponente);
-    this.llenadoradiobotones('', '');
+    this.llenadolista('', '');
     this.sumat();
   }
 });
@@ -27361,6 +27318,67 @@ var render = function() {
                     ]),
                     _vm._v(" "),
                     _c("div", { staticClass: "form-group row" }, [
+                      _c(
+                        "label",
+                        { staticClass: "col-md-2 form-control-label" },
+                        [_vm._v("Precios fijos")]
+                      ),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "col-md-5" }, [
+                        _c(
+                          "select",
+                          {
+                            directives: [
+                              {
+                                name: "model",
+                                rawName: "v-model",
+                                value: _vm.montoFijo,
+                                expression: "montoFijo"
+                              }
+                            ],
+                            staticClass: "form-control",
+                            on: {
+                              click: function($event) {
+                                return _vm.autollenado(_vm.montoFijo)
+                              },
+                              change: function($event) {
+                                var $$selectedVal = Array.prototype.filter
+                                  .call($event.target.options, function(o) {
+                                    return o.selected
+                                  })
+                                  .map(function(o) {
+                                    var val = "_value" in o ? o._value : o.value
+                                    return val
+                                  })
+                                _vm.montoFijo = $event.target.multiple
+                                  ? $$selectedVal
+                                  : $$selectedVal[0]
+                              }
+                            }
+                          },
+                          [
+                            _c(
+                              "option",
+                              { attrs: { value: "0", disabled: "" } },
+                              [_vm._v("Seleccione")]
+                            ),
+                            _vm._v(" "),
+                            _vm._l(_vm.arraymontos, function(montos) {
+                              return _c("option", {
+                                key: montos.id,
+                                domProps: {
+                                  value: montos.id,
+                                  textContent: _vm._s(montos.nombremf)
+                                }
+                              })
+                            })
+                          ],
+                          2
+                        )
+                      ])
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "form-group row" }, [
                       _vm._m(2),
                       _vm._v(" "),
                       _c("div", { staticClass: "col-md-5" }, [
@@ -27564,167 +27582,7 @@ var render = function() {
                           0
                         )
                       ]
-                    ),
-                    _vm._v(" "),
-                    _c("div", { staticClass: "form-group row color-o" }, [
-                      _c("div", { staticClass: "div-texto1-pf" }, [
-                        _vm._v(
-                          "\n                                  Precios fijos Ingresados"
-                        )
-                      ]),
-                      _vm._v(" "),
-                      _c("div", { staticClass: "col-md-3" }, [
-                        _c(
-                          "table",
-                          _vm._l(_vm.arraymontos.slice(0, 4), function(montos) {
-                            return _c("tr", { key: montos.id }, [
-                              _c("input", {
-                                directives: [
-                                  {
-                                    name: "model",
-                                    rawName: "v-model",
-                                    value: _vm.montoFijo,
-                                    expression: "montoFijo"
-                                  }
-                                ],
-                                attrs: { type: "radio", valor: montos.montof },
-                                domProps: {
-                                  value: montos.id,
-                                  checked: _vm._q(_vm.montoFijo, montos.id)
-                                },
-                                on: {
-                                  change: [
-                                    function($event) {
-                                      _vm.montoFijo = montos.id
-                                    },
-                                    function($event) {
-                                      return _vm.autollenado(_vm.montoFijo)
-                                    }
-                                  ]
-                                }
-                              }),
-                              _vm._v(_vm._s(montos.nombremf) + " ")
-                            ])
-                          }),
-                          0
-                        )
-                      ]),
-                      _vm._v(" "),
-                      _c("div", { staticClass: "col-md-3" }, [
-                        _c(
-                          "table",
-                          _vm._l(_vm.arraymontos.slice(5, 9), function(montos) {
-                            return _c("tr", { key: montos.id }, [
-                              _c("input", {
-                                directives: [
-                                  {
-                                    name: "model",
-                                    rawName: "v-model",
-                                    value: _vm.montoFijo,
-                                    expression: "montoFijo"
-                                  }
-                                ],
-                                attrs: { type: "radio" },
-                                domProps: {
-                                  value: montos.id,
-                                  checked: _vm._q(_vm.montoFijo, montos.id)
-                                },
-                                on: {
-                                  change: [
-                                    function($event) {
-                                      _vm.montoFijo = montos.id
-                                    },
-                                    function($event) {
-                                      return _vm.autollenado(_vm.montoFijo)
-                                    }
-                                  ]
-                                }
-                              }),
-                              _vm._v(_vm._s(montos.nombremf) + " ")
-                            ])
-                          }),
-                          0
-                        )
-                      ]),
-                      _vm._v(" "),
-                      _c("div", { staticClass: "col-md-3" }, [
-                        _c(
-                          "table",
-                          _vm._l(_vm.arraymontos.slice(10, 14), function(
-                            montos
-                          ) {
-                            return _c("tr", { key: montos.id }, [
-                              _c("input", {
-                                directives: [
-                                  {
-                                    name: "model",
-                                    rawName: "v-model",
-                                    value: _vm.montoFijo,
-                                    expression: "montoFijo"
-                                  }
-                                ],
-                                attrs: { type: "radio" },
-                                domProps: {
-                                  value: montos.id,
-                                  checked: _vm._q(_vm.montoFijo, montos.id)
-                                },
-                                on: {
-                                  change: [
-                                    function($event) {
-                                      _vm.montoFijo = montos.id
-                                    },
-                                    function($event) {
-                                      return _vm.autollenado(_vm.montoFijo)
-                                    }
-                                  ]
-                                }
-                              }),
-                              _vm._v(_vm._s(montos.nombremf) + " ")
-                            ])
-                          }),
-                          0
-                        )
-                      ]),
-                      _vm._v(" "),
-                      _c("div", { staticClass: "col-md-3 " }, [
-                        _c(
-                          "table",
-                          _vm._l(_vm.arraymontos.slice(15, 19), function(
-                            montos
-                          ) {
-                            return _c("tr", { key: montos.id }, [
-                              _c("input", {
-                                directives: [
-                                  {
-                                    name: "model",
-                                    rawName: "v-model",
-                                    value: _vm.montoFijo,
-                                    expression: "montoFijo"
-                                  }
-                                ],
-                                attrs: { type: "radio" },
-                                domProps: {
-                                  value: montos.id,
-                                  checked: _vm._q(_vm.montoFijo, montos.id)
-                                },
-                                on: {
-                                  change: [
-                                    function($event) {
-                                      _vm.montoFijo = montos.id
-                                    },
-                                    function($event) {
-                                      return _vm.autollenado(_vm.montoFijo)
-                                    }
-                                  ]
-                                }
-                              }),
-                              _vm._v(_vm._s(montos.nombremf) + " ")
-                            ])
-                          }),
-                          0
-                        )
-                      ])
-                    ])
+                    )
                   ]
                 )
               ])
@@ -28116,13 +27974,7 @@ var render = function() {
                       _c(
                         "td",
                         { domProps: { textContent: _vm._s(efectivo.fecha) } },
-                        [
-                          _vm._v(
-                            _vm._s(
-                              _vm._f("dateFormat")(efectivo.fecha, "d-m-Y")
-                            )
-                          )
-                        ]
+                        [_vm._v(_vm._s(_vm.format("DD/MM/YYYY")))]
                       ),
                       _vm._v(" "),
                       _c("td", {
@@ -42206,7 +42058,7 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! C:\xampp\htdocs\DSI-Azriel\resources\js\app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! C:\Users\win10\Documents\Diseño\II-2019\DSI-Azriel\resources\js\app.js */"./resources/js/app.js");
 
 
 /***/ })

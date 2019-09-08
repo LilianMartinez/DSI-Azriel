@@ -23,7 +23,8 @@ class EfectivoController extends Controller
         $buscar = $request->buscar;
         $criterio = $request->criterio;  
         $componente=$request->componente;
-        $hoy=Carbon::now()->toDateString();
+        $hoy=new \DateTime();
+        //$hoy=Carbon::now()->toDateString();
         if($componente==1){
             if ($buscar == ''){
              
@@ -39,9 +40,9 @@ class EfectivoController extends Controller
         } else{
             if($componente!=1){
             if ($buscar == ''){
-            $efectivos= Efectivo::orderBy('id','desc')->paginate(15);
+            $efectivos= DB::table('efectivos')->orderBy('id','desc')->select('fecha','num_recibo','descripcion_efectivo','monto','tipo')->paginate(15);
             } else {
-            $efectivos= Efectivo::where($criterio, 'like','%' . $buscar .'%')->orderBy('id','desc')->paginate(15);
+            $efectivos= DB::table('efectivos')->where($criterio, 'like','%' . $buscar .'%')->orderBy('id','desc')->paginate(15);
             }
         }
     }
@@ -85,7 +86,8 @@ class EfectivoController extends Controller
         $efectivo->descripcion_efectivo=$request->descripcion_efectivo;
         $efectivo->tipo=$request->tipo;
         $efectivo->monto=$request->monto;
-        $efectivo->fecha=Carbon::now()->toDateString();
+        $efectivo->fecha= new \DateTime();
+       // $efectivo->fecha=Carbon::now()->toDateString();
         $efectivo->save();
 
     }
@@ -111,7 +113,6 @@ class EfectivoController extends Controller
         $efectivo->descripcion_efectivo=$request->descripcion_efectivo;
         $efectivo->tipo=$request->tipo;
         $efectivo->monto=$request->monto;
-        //$efectivo->fecha=$request->fecha;
         $efectivo->save();
     }
 
@@ -139,32 +140,13 @@ class EfectivoController extends Controller
        $total= $efectivo-$efectivo2;
        $envio['total']=$total;
 
-       $fechaActual=new \DateTime('2019-01-01');//OBJETIVO TIPO FECHA APARTIR DE 01-01-2019
        $fechaActual=new \DateTime();//FECHA ACTUAL
-       $hoy=Carbon::now()->toDateString();
        $efectivo = DB::table('efectivos') ->where('fecha', $fechaActual)->where("tipo",2)->sum("monto");
        $envio['egreso']=$efectivo;
        $efectivo = DB::table('efectivos') ->where('fecha', $fechaActual)->where("tipo",1)->sum("monto");
        $envio['ingreso']=$efectivo;
-       $envio['fecha']=$fechaActual->format('d-m-Y');
        return $envio; 
-      // return $efectivo;  
+      
     }
-    public function buscaregreso(Request $request)
-    {
-        if(!$request->ajax()) 
-            return redirect('/');
-        $h=2;
-        $hoy=Carbon::now()->toDateString();
-       $efectivo = DB::table('efectivos') ->where('fecha', $hoy)->where("tipo",$h)->sum("monto");
-       return $efectivo;  
-    }
-    public function buscaringreso(Request $request)
-    {
-        if(!$request->ajax()) return redirect('/');
-        $h=1;
-        $hoy=Carbon::now()->toDateString();
-       $efectivo = DB::table('efectivos') ->where('fecha', $hoy)->where("tipo",$h)->sum("monto");
-      return $efectivo;  
-    }
+
 }

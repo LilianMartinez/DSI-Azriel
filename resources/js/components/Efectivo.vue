@@ -109,6 +109,16 @@
                                         <input type="text" tabindexgt="0" v-model="num_recibo" class="form-control" placeholder="Numero de factura">
                                     </div>
                                 </div>
+                                
+                                <div class="form-group row">
+                                    <label class="col-md-2 form-control-label">Precios fijos</label>
+                                  <div class="col-md-5">
+                                        <select class="form-control" v-model="montoFijo" @click="autollenado(montoFijo)"> 
+                                        <option value="0" disabled>Seleccione</option>
+                                        <option v-for="montos in arraymontos" :key="montos.id"  v-bind:value="montos.id" v-text="montos.nombremf"></option>
+                                        </select>
+                                    </div>
+                                </div>
                                 <div class="form-group row">
                                     <label class="col-md-2 form-control-label">Concepto<b class="alerta">*</b></label>
                                     <div class="col-md-5">
@@ -122,6 +132,7 @@
                                       <input type="text" tabindexgt="-1" v-model="monto" class="form-control" placeholder="00.00">
                                     </div>
                                 </div>
+                                
                                 <div class="form-group row">
                                      <label class="col-md-2 form-control-label" for="text-input">Tipo<b class="alerta">*</b></label>
                                     <div class="col-md-5">
@@ -141,33 +152,7 @@
                                 <div v-for="error in errorMostrarMsj" :key="error" v-text="error">
                                 </div>
                                 </div>
-                                </div>  
-                            
-                                <div class="form-group row color-o">
-                                <div class="div-texto1-pf">
-                                     Precios fijos Ingresados</div>
-                                    <div class="col-md-3">
-                                        <table>
-                                                <tr v-for="montos in arraymontos.slice(0,4)" :key="montos.id"><input type="radio" v-model="montoFijo" v-bind:valor="montos.montof" v-bind:value="montos.id" @change="autollenado(montoFijo)">{{montos.nombremf}} </tr>                         
-                                        </table>
-                                    </div>
-                                    <div class="col-md-3">
-                                        <table>
-                                                <tr v-for="montos in arraymontos.slice(5,9)" :key="montos.id"><input type="radio" v-model="montoFijo" v-bind:value="montos.id" @change="autollenado(montoFijo)">{{montos.nombremf}} </tr>                         
-                                        </table>
-                                    </div>
-                                    <div class="col-md-3">
-                                        <table>
-                                                <tr v-for="montos in arraymontos.slice(10,14)" :key="montos.id"><input type="radio"  v-model="montoFijo" v-bind:value="montos.id" @change="autollenado(montoFijo)">{{montos.nombremf}} </tr>                         
-                                        </table>
-                                    </div>
-                                    <div class="col-md-3 ">
-                                        <table>
-                                                <tr v-for="montos in arraymontos.slice(15,19)" :key="montos.id"><input type="radio"  v-model="montoFijo" v-bind:value="montos.id" @change="autollenado(montoFijo)">{{montos.nombremf}} </tr>                         
-                                        </table>
-                                    </div>      
-                                </div>  
-                                                   
+                                </div>                         
                             </form>
                         </div>
                     </div>
@@ -315,31 +300,7 @@
                 });
             
             },
-            sumaegre(){
-                let me=this;
-                var to=[];
-                axios.get('/efectivo/sumaegresos') .then(function (response) {
-                  to=response.data; 
-                  me.llenaregreso(to);
-                })
-                .catch(function (error) {
-                    console.log(error);
-                });
-            
-            },
-            sumaingre(){
-                let me=this;
-                var to=[];
-                axios.get('/efectivo/sumaingresos') .then(function (response) {
-                  to=response.data; 
-                  me.llenaringreso(to);
-                })
-                .catch(function (error) {
-                    console.log(error);
-                });
-            
-            },
-             llenadoradiobotones(buscar,criterio){
+             llenadolista(buscar,criterio){
                 let me=this;
                 var url='/montofijo?buscar=' + buscar + '&criterio=' + criterio;
                 axios.get(url) .then(function (response) {
@@ -348,7 +309,6 @@
                 .catch(function (error) {
                     console.log(error);
                 });
-            
             },
                
             listarEfectivo(page,buscar,criterio,tipocomponente){
@@ -447,14 +407,14 @@
 
             },
             autollenado(montoFijo){
-               // console.log(this.montoFijo); 
+               console.log(this.montoFijo)
                 let me=this;
                 var arrayMontoFijo= [];
              axios.post('/montofijo/buscarmf',{
                'id':this.montoFijo}) 
               .then(function (response) { 
                 arrayMontoFijo = response.data;      
-                me.llenar(arrayMontoFijo);       
+                me.llenar(arrayMontoFijo);  
                 })
                 .catch(function (error) {
                     // handle error
@@ -504,14 +464,9 @@
                 this.totalAcumIngre= d['ingreso']; 
                 this.totalAcumEgre=d['egreso']; 
             },
-            llenaringreso(d=[]){
-                this.totalAcumIngre= d;    
-            },
-            llenaregreso(d=[]){
-                this.totalAcumEgre= d;    
-            },
             abrirModal(modelo, accion, data=[]){
                 switch(modelo){
+        
                     case "efectivos":
                     {
                         switch(accion){
@@ -555,13 +510,12 @@
                         }
                     }
                 }
-
             }
         },
         
         mounted() {
             this.listarEfectivo(1,this.buscar,this.criterio,this.tipocomponente);
-            this.llenadoradiobotones('','');
+            this.llenadolista('','');
             this.sumat();
            
         }
