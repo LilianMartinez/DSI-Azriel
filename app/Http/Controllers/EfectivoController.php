@@ -39,9 +39,12 @@ class EfectivoController extends Controller
         } else{
             if($componente!=1){
             if ($buscar == ''){
-            $efectivos= Efectivo::orderBy('id','desc')->paginate(15);
+            $fechaActual=new \DateTime();
+            $anio=$fechaActual->format('Y');
+            $mes=$fechaActual->format('m');
+             $efectivos= DB::table('efectivos')->whereYear('fecha', $anio)->whereMonth('fecha', $mes)->orderBy('id','desc')->paginate(30);
             } else {
-            $efectivos= Efectivo::where($criterio, 'like','%' . $buscar .'%')->orderBy('id','desc')->paginate(15);
+            $efectivos= DB::table('efectivos')->where($criterio, 'like','%' . $buscar .'%')->orderBy('id','desc')->paginate(15);
             }
         }
     }
@@ -137,16 +140,16 @@ class EfectivoController extends Controller
        $efectivo = DB::table('efectivos')->where("tipo",$h)->sum("monto");
        $efectivo2=  DB::table('efectivos')->where("tipo",$h2)->sum("monto");
        $total= $efectivo-$efectivo2;
-       $envio['total']=$total;
+       $envio['total']= number_format($total, 2);
 
-       $fechaActual=new \DateTime('2019-01-01');//OBJETIVO TIPO FECHA APARTIR DE 01-01-2019
+       //$fechaActual=new \DateTime('2019-01-01');//OBJETIVO TIPO FECHA APARTIR DE 01-01-2019
        $fechaActual=new \DateTime();//FECHA ACTUAL
        $hoy=Carbon::now()->toDateString();
        $efectivo = DB::table('efectivos') ->where('fecha', $fechaActual)->where("tipo",2)->sum("monto");
        $envio['egreso']=$efectivo;
        $efectivo = DB::table('efectivos') ->where('fecha', $fechaActual)->where("tipo",1)->sum("monto");
        $envio['ingreso']=$efectivo;
-       $envio['fecha']=$fechaActual->format('d-m-Y');
+       //$envio['fecha']=$fechaActual->format('d-m-Y');
        return $envio; 
       // return $efectivo;  
     }
@@ -167,4 +170,17 @@ class EfectivoController extends Controller
        $efectivo = DB::table('efectivos') ->where('fecha', $hoy)->where("tipo",$h)->sum("monto");
       return $efectivo;  
     }
+
+    public function listarPdfGeneral(){
+
+        $fechaActual=new \DateTime();
+        $anio=$fechaActual->format('Y');
+        $mes=$fechaActual->format('m');
+        $efectivos= DB::table('efectivos')->whereYear('fecha', $anio)->whereMonth('fecha', $mes)->orderBy('id','desc')->get();
+        
+
+        $pdf= \PDF::loadView('pdf.efectivosCEMpdf',['efectivos'=>$efectivos]);
+        return $pdf->download('ControlEconomicoMensual.pdf');
+    }
+
 }

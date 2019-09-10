@@ -69,7 +69,7 @@
                         </template>
                         
                         <template v-if="menu==8">
-                            <h1>Informe</h1>
+                            <resumeneconomico></resumeneconomico>
                         </template>
                         
                         <template v-if="menu==9">

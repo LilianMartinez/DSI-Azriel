@@ -49,6 +49,7 @@ Route::group(['middleware'=>['auth']],function(){
                             Route::get('/efectivo/suma','EfectivoController@buscar');
                             Route::get('/efectivo/sumaegresos','EfectivoController@buscaregreso');
                             Route::get('/efectivo/sumaingresos','EfectivoController@buscaringreso');
+                            Route::get('/efectivo/listarPdfGeneral','EfectivoController@listarPdfGeneral')->name('efectivos_pdf');
                             
                             
                             //TABLA MONTO FIJO
@@ -57,7 +58,6 @@ Route::group(['middleware'=>['auth']],function(){
                             Route::post('/montofijo/buscarmf','MontoFijoController@buscar');
                             Route::put('/montofijo/actualizar','MontoFijoController@update');
                             Route::put('/montofijo/eliminar','MontoFijoController@eliminar');
-
             });
 
 });

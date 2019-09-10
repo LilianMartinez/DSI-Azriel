@@ -270,7 +270,7 @@
                 },
                 offset: 3,
                 criterio:'num_recibo', //
-                buscar: ''    
+                buscar: '',
                 
                    //
             }
@@ -378,7 +378,9 @@
             //Actualiza la pagina actualizar
             me.pagination.current_page = page;
             //Envia la peticion para visualizar la data de esa pagina
+            if(tipocomponente=1){
             me.listarEfectivo(page,buscar,criterio,tipocomponente);
+            }
         },
         
          registrarEfectivos(){

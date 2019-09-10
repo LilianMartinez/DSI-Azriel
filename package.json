@@ -25,6 +25,9 @@
         "vue-template-compiler": "^2.6.10"
     },
     "dependencies": {
+        "@carbon/vue": "^2.12.6",
+        "fecha": "^3.0.3",
+        "moment": "^2.24.0",
         "sweetalert2": "^8.13.0"
     }
 }

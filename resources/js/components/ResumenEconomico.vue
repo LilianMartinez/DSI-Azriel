@@ -7,7 +7,7 @@
             <div class="container-fluid">
                 <!-- Ejemplo de tabla Listado -->
                 <div class="card">
-                    <div class="card-header"><label class="titulo-encabezados">Historial de Registros</label>
+                    <div class="card-header"><label class="titulo-encabezados">Resumen Economico</label>
                         
                     </div>
                     <div class="card-body">
@@ -28,6 +28,7 @@
                         <table class="table table-bordered table-striped table-sm">
                             <thead>
                                 <tr>
+                                    <th></th>
                                     <th>Fecha</th>
                                     <th>Factura</th>
                                     <th>Concepto</th>
@@ -38,6 +39,14 @@
                             <tbody>
                                 <tr v-for="efectivo in arrayEfectivo" :key="efectivo.id">
                                     <!--{{efectivo.fecha | dateFormat('d-m-Y')}}--> 
+                                   <!--<script language="JavaScript" type="text/javascript">
+                                        
+                                       
+                                        @change="comprobar(checkedNa)"
+
+                                    </script>-->
+                                    <td><input type="checkbox" v-model="checked"  v-bind:value="efectivo.id" @change="comprobar(checked)">
+                                    holi</td>
                                     <td v-text="efectivo.fecha"> {{moment(efectivo.fecha).format('DD/MM/YYYY')}} </td>
                                     <td v-text="efectivo.num_recibo"></td>
                                     <td v-text="efectivo.descripcion_efectivo"></td>
@@ -53,10 +62,13 @@
                                 </tr>
                             </tbody>
                         </table>
-                         <div class="input-group margen">
-                            <button type="button" @click="cargarPDF()" class="btn btn-info">
-                                    <i class="icon-doc"></i>&nbsp;Reporte Mensual
+                        <div class="input-group margen">
+                            <button type="button" id="boton" @click="abrirModal('efectivos','agrupar')" class="btn btn-primary"> 
+                                    <i></i>&nbsp;Agrupar
                             </button>
+                            <!--
+                                <button type="button" class="btn btn-primary" v-if="tipoAccion==1" @click="registrarEfectivos()">Guardar</button>
+                                <button type="button" class="btn btn-primary" v-if="tipoAccion==2" @click="actualizarEfectivos()">Actualizar</button>-->
                         </div>
                         <nav>
                             <ul class="pagination">
@@ -75,7 +87,58 @@
                 </div>
                 <!-- Fin ejemplo de tabla Listado -->
             </div>
-   
+    <!--Inicio del modal agregar/actualizar-->
+            <div class="modal fade"  tabindex="-1" :class="{'mostrar': modal}" role="dialog" aria-labelledby="myModalLabel" style="display: none;" aria-hidden="true">
+                <div class="modal-dialog modal-primary modal-lg" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h4 class="modal-title" v-text="tituloModal"></h4>
+                            <button type="button" class="close" @click="cerrarModal()" aria-label="Close">
+                              <span aria-hidden="true">×</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <form action="" method="post" enctype="multipart/form-data" class="form-horizontal">
+                                <div class="form-group row">
+                                    <label class="col-md-2 form-control-label" for="text-input">Nombre</label>
+                                    <div class="col-md-5">
+                                        <input type="text" tabindexgt="0" v-model="num_recibo" class="form-control" placeholder="Nombre de la agrupacion">
+                                    </div>
+                                </div>
+                                 <div class="form-group row">
+                                    <label class="col-md-2 form-control-label">Monto</label>
+                                    <label>$</label>
+                                    <div class="col-md-5">
+                                      <input type="text" tabindexgt="-1" v-model="monto" class="form-control" placeholder="00.00">
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                     <label class="col-md-2 form-control-label" for="text-input">Tipo<b class="alerta">*</b></label>
+                                    <div class="col-md-5">
+                                        <table>
+                                            <tr> <input tabindexgt="-1" type="radio" v-model="tipo" value="1" name="tipo" required> Ingreso</tr>
+                                            <tr> <input tabindexgt="-1" type="radio" v-model="tipo" value="2" name="tipo"> Egreso</tr>
+                                        </table>
+                                    </div>
+                                    <div class="col-md-4 modal-fo">
+                                        <button type="button" class="btn btn-secondary" @click="cerrarModal()">Cerrar</button>
+                                        <button type="button" class="btn btn-primary" v-if="tipoAccion==1" @click="agruparSeleccionados()">Guardar</button>
+                                    </div>
+                                </div>  
+                                <!-- <div v-show="errorDatos" class="form-group row div-error">
+                                <div class="text-center text-error">
+                                <div v-for="error in errorMostrarMsj" :key="error" v-text="error">
+                                </div>
+                                </div>
+                                </div>     -->                                                
+                            </form>
+                        </div>
+                    </div>
+                    <!-- /.modal-content -->
+                </div>
+                <!-- /.modal-dialog -->
+            </div>
+            <!--Fin del modal-->
            
             
            
@@ -104,6 +167,9 @@
                 idEfectivo:'',
                 modalE:0,
                 tipocomponente:2,
+                checkedNa:[],
+                checked:0,
+                arrayEfectivoSel:[],
 
                 errorEfectivo:0,
                 errorMostrarMsjDescripcion:[],
@@ -171,17 +237,58 @@
                 });
             
             },
-        cargarPDF(){
-            window.open('http:///127.0.0.1:8000/efectivo/listarPdfGeneral','_blank');
-        },
         cambiarPagina(page,buscar,criterio,tipocomponente){
             let me = this;
             //Actualiza la pagina actualizar
             me.pagination.current_page = page;
             //Envia la peticion para visualizar la data de esa pagina
             me.listarEfectivo(page,buscar,criterio,tipocomponente);
-        }
-        
+        },
+        agruparSeleccionados(){
+
+        },
+         cerrarModal(){
+                this.modal=0;
+                this.tituloModal='';
+                this.tipoAccion=0;
+                this.num_recibo='';
+                this.descripcion_efectivo='';
+                this.monto='';
+                this.montoFijo=0;
+                this.tipo='';
+
+            },
+        abrirModal(modelo, accion, data=[]){
+                switch(modelo){
+                    case "efectivos":
+                    {
+                        switch(accion){
+                            case 'agrupar':
+                            {
+                                this.modal=1;
+                                this.tituloModal='Agrupar Movimientos'
+                                this.tipoAccion=1;
+                                this.efectivo_id=data['id'];
+                                this.num_recibo=data['num_recibo'];
+                                this.descripcion_efectivo=data['descripcion_efectivo'];
+                                this.monto=data['monto'];
+                                this.tipo=data['tipo'];
+                                break;
+
+                            }
+                        }
+                    }
+                }
+
+            },
+    comprobar(checked)
+       {   
+        if (checked==0)
+        document.getElementById("boton").disabled = true;
+        else
+        document.getElementById("boton").disabled = false;
+       }
+
     
         },
         
