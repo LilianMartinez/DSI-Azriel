@@ -17,6 +17,11 @@ class CreatePersonasTable extends Migration
             $table->increments('id');
             $table->string('nombre_persona',100);
             $table->string('apellido_persona',100);
+            $table->date('fecha_nacimiento')->nullable();
+            $table->string('dui_pasaporte',9)->nullable();
+            $table->string('sexo',1)->nullable();
+            $table->Integer('id_padre')->nullable();
+            $table->Integer('id_madre')->nullable();
             $table->timestamps();
         });
 

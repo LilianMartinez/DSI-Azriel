@@ -23,7 +23,8 @@ class EfectivoController extends Controller
         $buscar = $request->buscar;
         $criterio = $request->criterio;  
         $componente=$request->componente;
-        $hoy=Carbon::now()->toDateString();
+        $hoy=new \DateTime();
+        //$hoy=Carbon::now()->toDateString();
         if($componente==1){
             if ($buscar == ''){
              
@@ -88,7 +89,8 @@ class EfectivoController extends Controller
         $efectivo->descripcion_efectivo=$request->descripcion_efectivo;
         $efectivo->tipo=$request->tipo;
         $efectivo->monto=$request->monto;
-        $efectivo->fecha=Carbon::now()->toDateString();
+        $efectivo->fecha= new \DateTime();
+       // $efectivo->fecha=Carbon::now()->toDateString();
         $efectivo->save();
 
     }
@@ -114,7 +116,6 @@ class EfectivoController extends Controller
         $efectivo->descripcion_efectivo=$request->descripcion_efectivo;
         $efectivo->tipo=$request->tipo;
         $efectivo->monto=$request->monto;
-        //$efectivo->fecha=$request->fecha;
         $efectivo->save();
     }
 
@@ -144,14 +145,13 @@ class EfectivoController extends Controller
 
        //$fechaActual=new \DateTime('2019-01-01');//OBJETIVO TIPO FECHA APARTIR DE 01-01-2019
        $fechaActual=new \DateTime();//FECHA ACTUAL
-       $hoy=Carbon::now()->toDateString();
        $efectivo = DB::table('efectivos') ->where('fecha', $fechaActual)->where("tipo",2)->sum("monto");
        $envio['egreso']=$efectivo;
        $efectivo = DB::table('efectivos') ->where('fecha', $fechaActual)->where("tipo",1)->sum("monto");
        $envio['ingreso']=$efectivo;
        //$envio['fecha']=$fechaActual->format('d-m-Y');
        return $envio; 
-      // return $efectivo;  
+      
     }
     public function buscaregreso(Request $request)
     {
