@@ -98,6 +98,9 @@
                         <template v-if="menu==17">
                         <montofijom></montofijom>
                         </template>
+                        <template v-if="menu==18">
+                        <categoriaresumen></categoriaresumen>
+                        </template>
             @else
             @endif
       @endif

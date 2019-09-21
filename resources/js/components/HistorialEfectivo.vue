@@ -53,6 +53,18 @@
                                 </tr>
                             </tbody>
                         </table>
+                        <div class="totales2">
+                            <label>Total de ingresos en  el mes: $</label>                              
+                            <label v-text="totalAcumIngre" ></label> 
+                        </div>
+                        <div class="totales2">
+                            <label>Total de egresos en el mes: $</label>                              
+                            <label v-text="totalAcumEgre" ></label> 
+                        </div>
+                          <div class="totales">
+                            <label>Total Acumulado en el mes: $</label>                              
+                            <label v-text="totalAcum" ></label> 
+                        </div>
                          <div class="input-group margen">
                             <button type="button" @click="cargarPDF()" class="btn btn-info">
                                     <i class="icon-doc"></i>&nbsp;Reporte Mensual
@@ -105,6 +117,10 @@
                 modalE:0,
                 tipocomponente:2,
 
+                totalAcum:'',
+                totalAcumIngre:'',
+                totalAcumEgre:'',
+
                 errorEfectivo:0,
                 errorMostrarMsjDescripcion:[],
                 errorMostrarMsjMonto:[],
@@ -149,7 +165,25 @@
             }
         },
         methods:{
-
+             sumat(){
+                let me=this;
+                var to=[];
+                axios.get('/efectivo/sumaM') .then(function (response) {
+                  to=response.data; 
+                  me.llenarsuma(to);
+                 // me.sumaegre();
+                 // me.sumaingre();
+                })
+                .catch(function (error) {
+                    console.log(error);
+                });
+            
+            },
+             llenarsuma(d=[]){
+                this.totalAcum= d['total']; 
+                this.totalAcumIngre= d['ingreso']; 
+                this.totalAcumEgre=d['egreso']; 
+            },
             listarEfectivo(page,buscar,criterio,tipocomponente){
                 let me=this;
                 var lengthbuscar = this.buscar.length;
@@ -161,6 +195,7 @@
                 var url='/efectivo?page='+ page + '&buscar=' + buscar2 + '&criterio=' + criterio +'&componente=' + tipocomponente;
                 axios.get(url) .then(function (response) {
                     // handle success
+                    console.log(response);
                     var respuesta= response.data;
                     me.arrayEfectivo=respuesta.efectivos.data;
                     me.pagination= respuesta.pagination;
@@ -187,6 +222,7 @@
         
         mounted() {
             this.listarEfectivo(1,this.buscar,this.criterio,this.tipocomponente);
+            this.sumat();
            
         }
     }

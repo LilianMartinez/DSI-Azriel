@@ -29,6 +29,7 @@ Vue.component('user', require('./components/User.vue').default);
 Vue.component('historialefectivo', require('./components/HistorialEfectivo.vue').default);
 Vue.component('montofijom', require('./components/MantenimientoMontoFijo.vue').default);
 Vue.component('resumeneconomico', require('./components/ResumenEconomico.vue').default);
+Vue.component('categoriaresumen', require('./components/MantenimientoCategoriaResumen.vue').default);
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application

@@ -47,7 +47,9 @@ Route::group(['middleware'=>['auth']],function(){
                             Route::put('/efectivo/actualizar','EfectivoController@update');
                             Route::put('/efectivo/eliminar','EfectivoController@destroy');
                             Route::get('/efectivo/suma','EfectivoController@buscar');
+                            Route::get('/efectivo/sumaM','EfectivoController@buscarM');
                             Route::get('/efectivo/listarPdfGeneral','EfectivoController@listarPdfGeneral')->name('efectivos_pdf');
+                            Route::get('/efectivo/buscarResumen','EfectivoController@buscarResumen');
                             
                             
                             //TABLA MONTO FIJO
@@ -56,6 +58,17 @@ Route::group(['middleware'=>['auth']],function(){
                             Route::post('/montofijo/buscarmf','MontoFijoController@buscar');
                             Route::put('/montofijo/actualizar','MontoFijoController@update');
                             Route::put('/montofijo/eliminar','MontoFijoController@eliminar');
+
+                            //TABLA DE CATEGORIA RESUMEN
+                            Route::get('/categoriaresumen','CategoriaResumenController@index');
+                            Route::put('/categoriaresumen/eliminarCR','CategoriaResumenController@eliminarCR');
+                            Route::put('/categoriaresumen/registrar','CategoriaResumenController@store');
+                            Route::put('/categoriaresumen/actualizar','CategoriaResumenController@update');
+                            Route::get('/categoriaresumen/selectCategoriaRe','CategoriaResumenController@selectCategoriaRe');
+
+                            //TABLA DE RESUMEN ECONOMICO
+                            Route::get('/resumeneconomico','ResumenEconomicoController@index');
+                            
             });
 
 });

@@ -132,7 +132,15 @@
                                       <input type="text" tabindexgt="-1" v-model="monto" class="form-control" placeholder="00.00">
                                     </div>
                                 </div>
-                                
+                                <div class="form-group row">
+                                    <label class="col-md-2 form-control-label">Categoria</label>
+                                  <div class="col-md-5">
+                                        <select class="form-control" v-model="idcare"> 
+                                        <option value="0" disabled>Seleccione</option>
+                                        <option v-for="categorias in arraycategorias" :key="categorias.id"  v-bind:value="categorias.id" v-text="categorias.nombre_categoria"></option>
+                                        </select>
+                                    </div>
+                                </div>
                                 <div class="form-group row">
                                      <label class="col-md-2 form-control-label" for="text-input">Tipo<b class="alerta">*</b></label>
                                     <div class="col-md-5">
@@ -224,6 +232,8 @@
                 tipo:'',
                 monto:'',
                 fecha:'',
+                idcare:'', //<--------------------------- idcare:0,
+                nombre_categoria:'',
                 arrayEfectivo:[],
                 modal : 0,
                 tituloModal : '',
@@ -231,6 +241,11 @@
                 montoFijo:0,
                 arrayMontoFijo:[],
                 arraymontos:[],
+
+                //categoriaResumen:0,
+                arrayCategoriaResumen:[],
+                arraycategorias:[], //<------------------------
+
                 to:[],
                 totalAcum:'',
                 totalAcumIngre:'',
@@ -292,8 +307,6 @@
                 axios.get('/efectivo/suma') .then(function (response) {
                   to=response.data; 
                   me.llenarsuma(to);
-                 // me.sumaegre();
-                 // me.sumaingre();
                 })
                 .catch(function (error) {
                     console.log(error);
@@ -310,6 +323,19 @@
                     console.log(error);
                 });
             },
+            selectCategoria(){
+                 let me=this;
+                var url='/categoriaresumen/selectCategoriaRe';
+                axios.get(url) .then(function (response) {
+                    // handle success
+                    var respuesta= response.data;
+                    me.arraycategorias=respuesta.categorias;
+                })
+                .catch(function (error) {
+                    // handle error
+                    console.log(error);
+                });
+            },
                
             listarEfectivo(page,buscar,criterio,tipocomponente){
                 let me=this;
@@ -323,6 +349,7 @@
                 var url='/efectivo?page='+ page + '&buscar=' + buscar2 + '&criterio=' + criterio + '&componente=' + tipocomponente;
                 axios.get(url) .then(function (response) {
                     // handle success
+                    console.log(response);
                     var respuesta= response.data;
                     me.arrayEfectivo=respuesta.efectivos.data;
                     me.pagination= respuesta.pagination;
@@ -350,6 +377,7 @@
              let me=this;
              
               axios.put('/efectivo/registrar',{
+                  'idcare':this.idcare,
                   'num_recibo': this.num_recibo,
                   'descripcion_efectivo': this.descripcion_efectivo.toUpperCase(),
                   'monto':this.monto,
@@ -372,6 +400,7 @@
                
                let me=this;
               axios.put('/efectivo/actualizar',{
+                  'idcare':this.idcare,
                   'num_recibo': this.num_recibo,
                   'descripcion_efectivo':this.descripcion_efectivo.toUpperCase(),
                   'monto':this.monto,
@@ -396,6 +425,8 @@
                 this.monto='';
                 this.montoFijo=0;
                 this.tipo='';
+                this.idcare='';
+                this.errorEfectivo=0;
 
             },
             cerrarModalE(){
@@ -406,6 +437,7 @@
                 this.descripcion_efectivo='';
                 this.monto='';
                 this.tipo='';
+                this.idcare='';
 
             },
             autollenado(montoFijo){
@@ -482,6 +514,7 @@
                                 this.monto='';
                                 this.tipo='';
                                 this.fecha='';
+                                this.idcare='';
                                 break;
 
                             }
@@ -495,6 +528,7 @@
                                 this.descripcion_efectivo=data['descripcion_efectivo'];
                                 this.monto=data['monto'];
                                 this.tipo=data['tipo'];
+                                this.idcare=data['idcare'];
                                break;
                             }
                             case 'eliminar':
@@ -506,12 +540,15 @@
                                 this.num_recibo=data['num_recibo'];
                                 this.descripcion_efectivo=data['descripcion_efectivo'];
                                 this.monto=data['monto'];
-                                this.tipo=data['tipo'];
+                                this.tipo=data['tipo']; 
+                                this.idcare=data['idcare']; 
+                                
                                break;
                             }
                         }
                     }
                 }
+                this.selectCategoria();
             }
         },
         
