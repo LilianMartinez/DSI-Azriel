@@ -32,6 +32,8 @@ Vue.component('registroprimeracomunion', require('./components/RegistroPrimeraCo
 Vue.component('historialprimeracomunion', require('./components/HistorialPrimeraComunion.vue').default);
 Vue.component('historialconfirmas', require('./components/HistorialConfirmas.vue').default);
 Vue.component('historialsupletorias', require('./components/HistorialSupletorias.vue').default);
+Vue.component('resumeneconomico', require('./components/ResumenEconomico.vue').default);
+Vue.component('categoriaresumen', require('./components/MantenimientoCategoriaResumen.vue').default);
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application

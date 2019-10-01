@@ -11,6 +11,6 @@ class Efectivo extends Model
     protected $table = 'efectivos';
     protected $primaryKey = 'id';
 
-    protected $fillable = ['num_recibo','descripcion_efectivo','tipo', 'monto','fecha'];
+    protected $fillable = ['num_recibo','descripcion_efectivo','tipo', 'monto','fecha','idcare'];
 
 }

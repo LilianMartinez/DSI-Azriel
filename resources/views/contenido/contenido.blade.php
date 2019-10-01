@@ -69,7 +69,7 @@
                         </template>
                         
                         <template v-if="menu==8">
-                            <h1>Informe</h1>
+                            <resumeneconomico></resumeneconomico>
                         </template>
                         
                         <template v-if="menu==9">
@@ -103,6 +103,9 @@
                         </template>
                         <template v-if="menu==17">
                         <montofijom></montofijom>
+                        </template>
+                        <template v-if="menu==18">
+                        <categoriaresumen></categoriaresumen>
                         </template>
             @else
             @endif
