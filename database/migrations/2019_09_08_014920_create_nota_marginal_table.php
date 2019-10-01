@@ -13,7 +13,7 @@ class CreateNotaMarginalTable extends Migration
      */
     public function up()
     {
-        Schema::create('nota_marginal', function (Blueprint $table) {
+        Schema::create('notas_marginales', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->timestamps();
             $table->string('nota',100);

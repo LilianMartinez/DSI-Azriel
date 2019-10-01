@@ -53,11 +53,11 @@
                         </template>
                         
                         <template v-if="menu==4">
-                            <h1>Primera Comunión</h1>
+                        <registroprimeracomunion></registroprimeracomunion>
                         </template>
                         
                         <template v-if="menu==5">
-                            <h1>Confirma</h1>
+                        <historialprimeracomunion></historialprimeracomunion>
                         </template>
                         
                         <template v-if="menu==6">
@@ -82,6 +82,12 @@
                         
                         <template v-if="menu==13">
                             <h1>Inventario de Iglesias</h1>
+                        </template>
+                        <template v-if="menu==20">
+                        <historialconfirmas></historialconfirmas>
+                        </template>
+                        <template v-if="menu==21">
+                        <historialsupletorias></historialsupletorias>
                         </template>
                         
                         <template v-if="menu==14">

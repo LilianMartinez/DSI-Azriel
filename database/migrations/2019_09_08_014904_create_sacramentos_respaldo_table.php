@@ -13,7 +13,7 @@ class CreateSacramentosRespaldoTable extends Migration
      */
     public function up()
     {
-        Schema::create('sacramentos_respaldo', function (Blueprint $table) {
+        Schema::create('sacramentos_respaldos', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->bigInteger('id_sacramentos')->unsigned();
             $table->foreign('id_sacramentos')->references('id')->on('sacramentos');

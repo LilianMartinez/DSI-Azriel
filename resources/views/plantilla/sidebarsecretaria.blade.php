@@ -15,24 +15,36 @@
                                 <a class="nav-link" href="#"><i class="icon-bag"></i> Calendario de Avisos</a>
                             </li>
                         </ul>
-                    </li>
+                    </li>-->
                     <li class="nav-item nav-dropdown">
-                        <a class="nav-link nav-dropdown-toggle" href="#"><i class="icon-bag"></i> Certificados</a>
+                        <a class="nav-link nav-dropdown-toggle" href="#"><i class="icon-bag"></i>Sacramentos</a>
                         <ul class="nav-dropdown-items">
                             <li @click="menu=3" class="nav-item">
                                 <a class="nav-link" href="#"><i class="icon-bag"></i> Bautizo</a>
                             </li>
+                            <li class="nav-item nav-dropdown">
+                            <a class="nav-link nav-dropdown-toggle" href="#"><i class="icon-bag"></i>Primera Comunion</a>
+                            <ul class="nav-dropdown-items">
                             <li @click="menu=4" class="nav-item">
-                                <a class="nav-link" href="#"><i class="icon-bag"></i> Primera Comunión</a>
+                                <a class="nav-link" href="#"><i class="icon-bag"></i>Hacer registro</a>
                             </li>
                             <li @click="menu=5" class="nav-item">
+                                <a class="nav-link" href="#"><i class="icon-bag"></i>Historial</a>
+                            </li>
+                            </ul>
+                            </li>
+                            <li @click="menu=20" class="nav-item">
                                 <a class="nav-link" href="#"><i class="icon-bag"></i> Confirma</a>
                             </li>
                             <li @click="menu=6" class="nav-item">
                                 <a class="nav-link" href="#"><i class="icon-bag"></i> Matrimonio</a>
                             </li>
+                            <li @click="menu=21" class="nav-item">
+                                <a class="nav-link" href="#"><i class="icon-bag"></i> Supletorias</a>
+                            </li>
                         </ul>
-                    </li>-->
+                    </li>
+        
                     <li class="nav-item nav-dropdown">
                         <a class="nav-link nav-dropdown-toggle" href="#"><i class="icon-wallet"></i> Caja Chica</a>
                         <ul class="nav-dropdown-items">

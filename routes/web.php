@@ -56,6 +56,24 @@ Route::group(['middleware'=>['auth']],function(){
                             Route::put('/montofijo/actualizar','MontoFijoController@update');
                             Route::put('/montofijo/eliminar','MontoFijoController@eliminar');
 
+                            //TABLA PERSONA
+                            Route::get('/persona/obtener','PersonaController@realizante');
+                            Route::get('/persona/buscarsacerdote','PersonaController@buscarsacerdote');
+                            Route::get('/persona/duis','PersonaController@buscarduis');
+                            Route::get('/persona/pan','PersonaController@show');
+                            Route::put('/persona/registrar','PersonaController@store'); 
+                            Route::get('/persona/listarcomuniones','PersonaController@listaPC');//para el realizante
+                            Route::get('/persona/listarconfirmaciones','PersonaController@listaC');//para el realizante
+                            Route::get('/persona/listarsupletorias','PersonaController@listaS');//para el realizante
+
+                            //TABLA Partida
+                            Route::get('/partida/busqueda','PartidaNacimientoController@realizante');
+
+
+                            //TABLA sacramentos
+                            Route::put('/sacramento/registrar','Sacramentos3Controller@registro');
+                            
+
             });
 
 });
