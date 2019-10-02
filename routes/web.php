@@ -56,6 +56,23 @@ Route::group(['middleware'=>['auth']],function(){
                             Route::post('/montofijo/buscarmf','MontoFijoController@buscar');
                             Route::put('/montofijo/actualizar','MontoFijoController@update');
                             Route::put('/montofijo/eliminar','MontoFijoController@eliminar');
+
+                            //TABLA BAUTIZO
+                            Route::get('/bautizo','BautizoController@index');
+                            Route::put('/bautizo/registrar','BautizoController@store');
+                            Route::put('/bautizo/marginaracta','BautizoController@marginacionacta');
+
+
+                            //TABLA PERSONA
+                            Route::get('/persona/obtener','PersonaController@realizante');
+                            Route::get('/persona/duis','PersonaController@buscarduis');
+                            Route::get('/persona/pan','PersonaController@show');
+                            Route::put('/persona/registrar','PersonaController@store');
+                            Route::get('/persona/listar','PersonaController@lista');
+                            
+
+                            //TABLA PARTIDA NACIMIENTO
+                            Route::get('/partida/busqueda','PartidaNacimientoController@realizante');
             });
 
 });
