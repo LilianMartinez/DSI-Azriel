@@ -20,7 +20,7 @@
                         </template>
                         
                         <template v-if="menu==6">
-                            <h1> Matrimonio</h1>
+                                <matrimonio1></matrimonio1>
                         </template>
 
                         <template v-if="menu==10">
@@ -53,7 +53,7 @@
                         </template>
                         
                         <template v-if="menu==4">
-                            <h1>Primera Comunión</h1>
+                            <registroprimeracomunion></registroprimeracomunion>
                         </template>
                         
                         <template v-if="menu==5">
@@ -61,7 +61,7 @@
                         </template>
                         
                         <template v-if="menu==6">
-                            <h1> Matrimonio</h1>
+                            <matrimonio1></matrimonio1>
                         </template>
                         
                         <template v-if="menu==7">
