@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="Azriel Laravel Vue Js- ">
     <meta name="author" content="">
-    <meta name="keyword" content="Azriel Laravel Vue Js, Sistema compras Laravel Vue Js">
+    <meta name="keyword" content="Azriel Laravel Vue Js, Sistema parroquial Laravel Vue Js">
     <link rel="shortcut icon" href="img/logo-msc.png">
     <title>Azriel-Parroquia San Luis Mariona</title>
     <meta name="csrf-token" content="{{ csrf_token() }}">
@@ -17,45 +17,26 @@
 </head>
 
 <body class="app header-fixed sidebar-fixed aside-menu-fixed aside-menu-hidden">
-    <div class="div-general-banner">
-        <div class="div-imagen-banner"><img src="img/logo-msc.png" class="img-logos"></div>
-        <div class="div-textos-banner">
-        <div class="div-texto1-banner"><label class="font-banner1">PARROQUIA DE SAN LUIS MARIONA</label></div>
-        <div class="div-texto1-banner">MISIONEROS DEL SAGRADO CORAZÓN</div>
-        </div>
-        </div>
-    </div>
-    <div id="app">
-    <header class="app-header navbar">
+<div id="app">    
+<header class="app-header navbar">
         <button class="navbar-toggler mobile-sidebar-toggler d-lg-none mr-auto" type="button">
           <span class="navbar-toggler-icon"></span>
+          <a>Menú</a>
         </button>
+        <a class="div-imagen-banner">
+        <img src="img/logo-msc.png" class="img-logos">
+        </a>
         <button class="navbar-toggler sidebar-toggler d-md-down-none" type="button">
           <span class="navbar-toggler-icon"></span>
+          <a>Menú</a>
         </button>
-       <div class="divmenu">
-        <a>Menú</a>
-       </div>
-       <!-- <ul class="nav navbar-nav d-md-down-none">
-            <li class="nav-item px-3">
-                <a>Menú</a>
-            </li>
-        </ul>-->
-        <!-- -->
-         <ul class="nav navbar-nav ml-auto">
-            <li class="nav-item d-md-down-none">
-                <div class="dropdown-menu dropdown-menu-right">
-                  
-                   <!-- <a class="dropdown-item" href="#">
-                        <i class="fa fa-envelope-o"></i> Ingresos
-                        <span class="badge badge-success">3</span>
-                    </a>
-                    <a class="dropdown-item" href="#">
-                        <i class="fa fa-tasks"></i> Ventas
-                        <span class="badge badge-danger">2</span>
-                    </a> -->
-                </div>
-            </li>
+        
+            <div class="div-textos-banner">
+            <div class="div-texto1-banner"><label class="font-banner1">PARROQUIA DE SAN LUIS MARIONA</label></div>
+            <div class="div-texto1-banner">MISIONEROS DEL SAGRADO CORAZÓN</div>
+            </div>
+            <ul class="nav navbar-nav ml-auto">
+            
             <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle nav-link" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
                  <label>Sesion</label>

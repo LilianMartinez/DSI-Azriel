@@ -24,6 +24,7 @@ class CreateSacramentosTable extends Migration
             $table->Integer('id_realizante1')->nullable();
             $table->Integer('id_realizante2')->nullable();
             $table->Integer('id_sacerdote')->nullable();
+            $table->string('titulo',20)->nullable();
             $table->Integer('id_padrino')->nullable();
             $table->Integer('id_padrino2')->nullable();
             $table->Integer('id_padrino3')->nullable();

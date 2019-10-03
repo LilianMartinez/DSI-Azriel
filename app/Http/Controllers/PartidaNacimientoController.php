@@ -19,6 +19,7 @@ class PartidaNacimientoController extends Controller
         $envio=array();
         $nada=0;
         $algo=1;
+        $repetido=2;
 
         if(!$request->ajax()) return redirect('/');
         $persona = DB::table('partidas_nacimientos')->where('alcaldia',  $alcaldia )
@@ -27,11 +28,18 @@ class PartidaNacimientoController extends Controller
         ->where('folio', $folio )
         ->where('ano', $ano )->first();
         if(empty($persona)){
+
             $envio['solo']=$nada;
         }else{
-        $envio['solo']=$algo;
-        $envio['realizante']=$persona;
-        }
+            $persona2 = DB::table('sacramentos')->where('id_realizante1',  $persona->idpersona)
+            ->where('tipo_sacramento',  2 )
+            ->first();
+            if(empty($persona2)){
+                $envio['solo']=$algo;
+                $envio['realizante']=$persona;
+            }else{
+                $envio['solo']=$repetido;
+        }}
         return $envio;
     }
     public function registro(Request $request)
