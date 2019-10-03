@@ -7,7 +7,9 @@
             <div class="container-fluid">
                 <!-- Ejemplo de tabla Listado -->
                 <div class="card">
-                    <div class="card-header"><label class="titulo-encabezados">Historial de registros</label>
+
+                    <div class="card-header"><label class="titulo-encabezados">Resumen económico del mes</label>
+
                         
                     </div>
                     <div class="card-body">
@@ -15,62 +17,61 @@
                             <div class="col-md-6">
                                 <div class="input-group">
                                     <select class="form-control col-md-3" v-model="criterio">
-                                       <option value="fecha">Fecha</option>
-                                      <option value="num_recibo">Factura</option>
                                       <option value="descripcion_efectivo">Concepto</option>
                                       <option value="monto">Cantidad de dinero</option>
                                     </select>
-                                    <input type="text" v-model="buscar" @keyup.enter="listarEfectivo(1,buscar,criterio,2)" class="form-control" placeholder="Texto a buscar">
-                                    <button type="submit" @click="listarEfectivo(1,buscar,criterio,2) " class="btn btn-primary"><i class="fa fa-search"></i> Buscar</button>
+                                    <input type="text" v-model="buscar" @keyup.enter="listaResumenEconomico(1,buscar,criterio,2)" class="form-control" placeholder="Texto a buscar">
+                                    <button type="submit" @click="listaResumenEconomico(1,buscar,criterio,2) " class="btn btn-primary"><i class="fa fa-search"></i> Buscar</button>
                                 </div>
                             </div>
                         </div>
                         <table class="table table-bordered table-striped table-sm">
                             <thead>
                                 <tr>
-                                    <th>Fecha</th>
-                                    <th>Factura</th>
                                     <th>Concepto</th>
                                     <th>Ingreso</th>
                                     <th>Egreso </th>
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr v-for="efectivo in arrayEfectivo" :key="efectivo.id">
-                                    
-                                    <td v-text="efectivo.fecha"></td>
-                                    <td v-text="efectivo.num_recibo"></td>
-                                    <td v-text="efectivo.descripcion_efectivo"></td>
+                            
+                                
+                                   <tr v-for="resumEco in arrayResumenEco" :key="resumEco.id_temp"> 
+                                    <td v-text="resumEco.nombres"></td>
 
-                                    <template v-if="efectivo.tipo == 1">
-                                        <td v-text="efectivo.monto"></td>
+                                    <template v-if="resumEco.tipo == 1">
+                                        <td v-text="resumEco.montos"></td>
                                         <td></td>
                                     </template>
-                                    <template v-else-if="efectivo.tipo == 2">
+                                    <template v-else-if="resumEco.tipo == 2">
                                         <td></td>
-                                        <td v-text="efectivo.monto"></td>
+                                        <td v-text="resumEco.montos"></td>
                                     </template>
+                                </tr>
+                                <tr v-for="resumEco in arrayResumenEconull" :key="resumEco.id_tempnul"> 
+                                    <td v-text="resumEco.descripcion_efectivo"></td>
+
+                                    <template v-if="resumEco.tipo == 1">
+                                        <td v-text="resumEco.monto"></td>
+                                        <td></td>
+                                    </template>
+                                    <template v-else-if="resumEco.tipo == 2">
+                                        <td></td>
+                                        <td v-text="resumEco.monto"></td>
+                                    </template>
+                                </tr>
+                                <tr>
+                                <td>SUBTOTALES</td>
+                                <td>{{ingresos}}</td>
+                                <td>{{egresos}}</td>
+                                </tr>
+                                <tr>
+                                <td>TOTAL</td>
+                                <td colspan="2">{{total}}</td>
                                 </tr>
                             </tbody>
                         </table>
-                        <div class="totales2">
-                            <label>Total de ingresos en  el mes: $</label>                              
-                            <label v-text="totalAcumIngre" ></label> 
-                        </div>
-                        <div class="totales2">
-                            <label>Total de egresos en el mes: $</label>                              
-                            <label v-text="totalAcumEgre" ></label> 
-                        </div>
-                          <div class="totales">
-                            <label>Total acumulado en el mes: $</label>                              
-                            <label v-text="totalAcum" ></label> 
-                        </div>
-                         <div class="input-group margen">
-                            <button type="button" @click="cargarPDF()" class="btn btn-info">
-                                    <i class="icon-doc"></i>&nbsp;Reporte mensual
-                            </button>
-                        </div>
-                        <nav>
+                     <!--   <nav>
                             <ul class="pagination">
                                 <li class="page-item" v-if="pagination.current_page > 1">
                                     <a class="page-link" href="#" @click.prevent="cambiarPagina(pagination.current_page - 1,buscar,criterio)">Ant</a>
@@ -82,13 +83,11 @@
                                     <a class="page-link" href="#" @click.prevent="cambiarPagina(pagination.current_page + 1, buscar, criterio)">Sig</a>
                                 </li>
                             </ul>
-                        </nav>
+                        </nav>-->
                     </div>
                 </div>
                 <!-- Fin ejemplo de tabla Listado -->
             </div>
-   
-           
             
            
         </main>
@@ -106,7 +105,12 @@
                 tipo:'',
                 monto:'',
                 fecha:'',
-                arrayEfectivo:[],
+                nombre_categoria:'',
+                arrayResumenEconull:[],
+                arrayResumenEco:[],
+                ingresos:'',
+                egresos:'',
+                total:'',
                 modal : 0,
                 tituloModal : '',
                 tipoAccion:0,
@@ -115,11 +119,9 @@
                 montoFi:1,   //
                 idEfectivo:'',
                 modalE:0,
-                tipocomponente:2,
-
-                totalAcum:'',
-                totalAcumIngre:'',
-                totalAcumEgre:'',
+                checkedNa:[],
+                checked:0,
+                arrayResumenEcoSel:[],
 
                 errorEfectivo:0,
                 errorMostrarMsjDescripcion:[],
@@ -165,26 +167,8 @@
             }
         },
         methods:{
-             sumat(){
-                let me=this;
-                var to=[];
-                axios.get('/efectivo/sumaM') .then(function (response) {
-                  to=response.data; 
-                  me.llenarsuma(to);
-                 // me.sumaegre();
-                 // me.sumaingre();
-                })
-                .catch(function (error) {
-                    console.log(error);
-                });
-            
-            },
-             llenarsuma(d=[]){
-                this.totalAcum= d['total']; 
-                this.totalAcumIngre= d['ingreso']; 
-                this.totalAcumEgre=d['egreso']; 
-            },
-            listarEfectivo(page,buscar,criterio,tipocomponente){
+
+            listaResumenEconomico(page,buscar,criterio){
                 let me=this;
                 var lengthbuscar = this.buscar.length;
                  if(lengthbuscar >0)
@@ -192,13 +176,17 @@
                      var buscar2= this.buscar.toUpperCase();
                  }else
                  buscar2=this.buscar;
-                var url='/efectivo?page='+ page + '&buscar=' + buscar2 + '&criterio=' + criterio +'&componente=' + tipocomponente;
+                var url='/resumeneconomico?page='+ page + '&buscar=' + buscar2 + '&criterio=' + criterio;
                 axios.get(url) .then(function (response) {
                     // handle success
                     console.log(response);
                     var respuesta= response.data;
-                    me.arrayEfectivo=respuesta.efectivos.data;
-                    me.pagination= respuesta.pagination;
+                    me.arrayResumenEco=respuesta.categoria;
+                    me.arrayResumenEconull=respuesta.nullo;
+                    me.egresos=respuesta.egresos;
+                    me.ingresos=respuesta.ingresos;
+                    me.total=respuesta.total;
+                 //   me.pagination= respuesta.pagination;
                 })
                 .catch(function (error) {
                     // handle error
@@ -206,23 +194,18 @@
                 });
             
             },
-        cargarPDF(){
-            window.open('http:///127.0.0.1:8000/efectivo/listarPdfGeneral','_blank');
-        },
-        cambiarPagina(page,buscar,criterio,tipocomponente){
+        cambiarPagina(page,buscar,criterio){
             let me = this;
             //Actualiza la pagina actualizar
             me.pagination.current_page = page;
             //Envia la peticion para visualizar la data de esa pagina
-            me.listarEfectivo(page,buscar,criterio,tipocomponente);
-        }
-        
+            me.listaResumenEconomico(page,buscar,criterio);
+        },
     
         },
         
         mounted() {
-            this.listarEfectivo(1,this.buscar,this.criterio,this.tipocomponente);
-            this.sumat();
+            this.listaResumenEconomico(1,this.buscar,this.criterio);
            
         }
     }

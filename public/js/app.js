@@ -47739,16 +47739,9 @@ module.exports = function(module) {
   !*** ./resources/js/app.js ***!
   \*****************************/
 /*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
+/***/ (function(module, exports) {
 
-/**
- * First we will load all of this project's JavaScript dependencies which
- * includes Vue and other libraries. It is a great starting point when
- * building robust, powerful web applications using Vue and Laravel.
- */
-//import swal from 'sweetalert2';
-//window.swal = swal;
-__webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
+throw new Error("Module build failed (from ./node_modules/babel-loader/lib/index.js):\nSyntaxError: C:\\Users\\win10\\Documents\\Diseño\\II-2019\\DSI-Azriel\\package.json: Error while parsing JSON - Unexpected token < in JSON at position 1439\n    at JSON.parse (<anonymous>)\n    at readConfigPackage (C:\\Users\\win10\\Documents\\Diseño\\II-2019\\DSI-Azriel\\node_modules\\@babel\\core\\lib\\config\\files\\package.js:57:20)\n    at C:\\Users\\win10\\Documents\\Diseño\\II-2019\\DSI-Azriel\\node_modules\\@babel\\core\\lib\\config\\files\\utils.js:29:12\n    at cachedFunction (C:\\Users\\win10\\Documents\\Diseño\\II-2019\\DSI-Azriel\\node_modules\\@babel\\core\\lib\\config\\caching.js:33:19)\n    at findPackageData (C:\\Users\\win10\\Documents\\Diseño\\II-2019\\DSI-Azriel\\node_modules\\@babel\\core\\lib\\config\\files\\package.js:33:11)\n    at buildRootChain (C:\\Users\\win10\\Documents\\Diseño\\II-2019\\DSI-Azriel\\node_modules\\@babel\\core\\lib\\config\\config-chain.js:105:85)\n    at loadPrivatePartialConfig (C:\\Users\\win10\\Documents\\Diseño\\II-2019\\DSI-Azriel\\node_modules\\@babel\\core\\lib\\config\\partial.js:85:55)\n    at Object.loadPartialConfig (C:\\Users\\win10\\Documents\\Diseño\\II-2019\\DSI-Azriel\\node_modules\\@babel\\core\\lib\\config\\partial.js:110:18)\n    at Object.<anonymous> (C:\\Users\\win10\\Documents\\Diseño\\II-2019\\DSI-Azriel\\node_modules\\babel-loader\\lib\\index.js:144:26)\n    at Generator.next (<anonymous>)\n    at asyncGeneratorStep (C:\\Users\\win10\\Documents\\Diseño\\II-2019\\DSI-Azriel\\node_modules\\babel-loader\\lib\\index.js:3:103)\n    at _next (C:\\Users\\win10\\Documents\\Diseño\\II-2019\\DSI-Azriel\\node_modules\\babel-loader\\lib\\index.js:5:194)\n    at C:\\Users\\win10\\Documents\\Diseño\\II-2019\\DSI-Azriel\\node_modules\\babel-loader\\lib\\index.js:5:364\n    at new Promise (<anonymous>)\n    at Object.<anonymous> (C:\\Users\\win10\\Documents\\Diseño\\II-2019\\DSI-Azriel\\node_modules\\babel-loader\\lib\\index.js:5:97)\n    at Object.loader (C:\\Users\\win10\\Documents\\Diseño\\II-2019\\DSI-Azriel\\node_modules\\babel-loader\\lib\\index.js:60:18)\n    at Object.<anonymous> (C:\\Users\\win10\\Documents\\Diseño\\II-2019\\DSI-Azriel\\node_modules\\babel-loader\\lib\\index.js:55:12)");
 
 window.Vue = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.common.js");
 /**

@@ -47,6 +47,9 @@ Route::group(['middleware'=>['auth']],function(){
                             Route::put('/efectivo/actualizar','EfectivoController@update');
                             Route::put('/efectivo/eliminar','EfectivoController@destroy');
                             Route::get('/efectivo/suma','EfectivoController@buscar');
+                            Route::get('/efectivo/sumaM','EfectivoController@buscarM');
+                            Route::get('/efectivo/listarPdfGeneral','EfectivoController@listarPdfGeneral')->name('efectivos_pdf');
+                            Route::get('/efectivo/buscarResumen','EfectivoController@buscarResumen');
                             
                             
                             //TABLA MONTO FIJO
@@ -56,6 +59,48 @@ Route::group(['middleware'=>['auth']],function(){
                             Route::put('/montofijo/actualizar','MontoFijoController@update');
                             Route::put('/montofijo/eliminar','MontoFijoController@eliminar');
 
+                            //TABLA PERSONA
+                            Route::get('/persona/obtener','PersonaController@realizante');
+                            Route::get('/persona/buscarsacerdote','PersonaController@buscarsacerdote');
+                            Route::get('/persona/duis','PersonaController@buscarduis');
+                            Route::get('/persona/pan','PersonaController@show');
+                            Route::put('/persona/registrar','PersonaController@store'); 
+                            Route::get('/persona/listarcomuniones','PersonaController@listaPC');//para el realizante
+                            Route::get('/persona/listarconfirmaciones','PersonaController@listaC');//para el realizante
+                            Route::get('/persona/listarsupletorias','PersonaController@listaS');//para el realizante
+
+                                           //MANTENIMIENTO PERSONAS RELIGIOSAS
+                                           Route::get('/religioso/index','PersonaController@indexRel');
+                                           Route::put('/religioso/registrar','PersonaController@storeReli');
+                                           Route::post('/religioso/buscarReli','PersonaController@buscarReli');
+                                           Route::put('/religioso/actualizar','PersonaController@updateReli');
+                                           Route::put('/religioso/eliminar','PersonaController@eliminarReli');
+
+                            //TABLA Partida
+                            Route::get('/partida/busqueda','PartidaNacimientoController@realizante');
+
+
+                            //TABLA sacramentos
+                            Route::put('/sacramento/registrar','Sacramentos3Controller@registro');
+                            
+
+                            //TABLA DE CATEGORIA RESUMEN
+                            Route::get('/categoriaresumen','CategoriaResumenController@index');
+                            Route::put('/categoriaresumen/eliminarCR','CategoriaResumenController@eliminarCR');
+                            Route::put('/categoriaresumen/registrar','CategoriaResumenController@store');
+                            Route::put('/categoriaresumen/actualizar','CategoriaResumenController@update');
+                            Route::get('/categoriaresumen/selectCategoriaRe','CategoriaResumenController@selectCategoriaRe');
+
+                            //TABLA DE RESUMEN ECONOMICO
+                            Route::get('/resumeneconomico','ResumenEconomicoController@index');
+
+                            //TABLA IGLESIA
+                            Route::get('/iglesia','IglesiaController@index');
+                            Route::put('/iglesia/registrar','IglesiaController@store');
+                            Route::post('/iglesia/buscarIgle','IglesiaController@buscar');
+                            Route::put('/iglesia/actualizar','IglesiaController@update');
+                            Route::put('/iglesia/eliminar','IglesiaController@eliminar');
+                            
                             //Tabla Sacramento
                             Route::get('/sacramento','SacramentoController@index');
                             Route::get('/sacramentoplus','SacramentoController@index'); //POR SI ACASO... LUEGO DEBEMOS CAMBIAR LA "BUSQUEDA" AL INDEX DE PERSONA
@@ -66,16 +111,10 @@ Route::group(['middleware'=>['auth']],function(){
                             Route::put('/sacramento/activarexpediente','SacramentoController@activarexpediente');
                             Route::put('/sacramento/desactivarexpediente','SacramentoController@desactivarexpediente');
                             //Route::put('/sacramento/finalizarexpediente','SacramentoController@finalizarexpediente');
-
-                            //Tabla Persona
-                            Route::get('/persona/obtener','PersonaController@realizante');
-                            Route::get('/persona/duis','PersonaController@buscarduis');
                             Route::get('/persona/duihombre','PersonaController@buscarduihombre');//este se utiliza para novio, padrinos y sacerdote
                             Route::get('/persona/duimujer','PersonaController@buscarduimujer');//este se utiliza para novia y madrinas
-                            Route::get('/persona/pan','PersonaController@show');
                             Route::put('/persona/registrar','PersonaController@store');//Modificado para poder registrar nuevo expediente matrimonial
                             Route::put('/persona/actualizar','PersonaController@update');
-                            Route::get('/persona/listar','PersonaController@lista');//para el realiante
             });
 
 });

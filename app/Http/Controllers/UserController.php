@@ -12,7 +12,7 @@ class UserController extends Controller
     public function index(Request $request)
     {
         //$efectivos = Efectivo::all();
-      //  if(!$request->ajax()) return redirect('/');
+        if(!$request->ajax()) return redirect('/');
         
 
           $buscar = $request->buscar;
@@ -60,7 +60,7 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-      //  if (!$request->ajax()) return redirect('/');
+        if (!$request->ajax()) return redirect('/');
          
         try{
             DB::beginTransaction();
@@ -100,7 +100,7 @@ class UserController extends Controller
      */
     public function update(Request $request)
     {
-       // if (!$request->ajax()) return redirect('/');
+        if (!$request->ajax()) return redirect('/');
          
         try{
             DB::beginTransaction();
@@ -109,12 +109,10 @@ class UserController extends Controller
             $user = User::findOrFail($request->id);
  
             $persona = Persona::findOrFail($user->id);
- 
             $persona->nombre_persona = $request->nombre_persona;
             $persona->apellido_persona = $request->apellido_persona;
             $persona->save();
  
-             
             $user->usuario = $request->usuario;
             $user->password = bcrypt( $request->password);
             $user->condicion = '1';
@@ -131,7 +129,7 @@ class UserController extends Controller
 
     public function desactivar(Request $request)
     {
-      //  if (!$request->ajax()) return redirect('/');
+       if (!$request->ajax()) return redirect('/');
         $user = User::findOrFail($request->id);
         $user->condicion = '0';
         $user->save();
@@ -139,7 +137,7 @@ class UserController extends Controller
  
     public function activar(Request $request)
     {
-      //  if (!$request->ajax()) return redirect('/');
+       if (!$request->ajax()) return redirect('/');
         $user = User::findOrFail($request->id);
         $user->condicion = '1';
         $user->save();

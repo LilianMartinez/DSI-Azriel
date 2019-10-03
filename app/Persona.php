@@ -8,10 +8,10 @@ class Persona extends Model
 {
     protected $table = 'personas';
     protected $primaryKey = 'id';
-    protected $fillable=['nombre_persona','apellido_persona','dui_pasaporte'];
+    protected $fillable=['nombre_persona','apellido_persona','fecha_nacimiento','dui_pasaporte','sexo','id_padre','id_madre','tipo_persona','estado'];
 
 
-   /*  public function user()
+    public function user()
     {
         return $this->hasOne('App\User');
     } */

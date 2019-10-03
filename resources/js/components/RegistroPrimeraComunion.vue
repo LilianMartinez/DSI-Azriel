@@ -14,35 +14,41 @@
                                 <label class="col-md-3 form-control-label" for="text-input"><b>Datos de partida de nacimiento</b></label>
                             </div>
                             <div class="form-group row">
-                                <label class="col-md-3 form-control-label" for="text-input">Alcaldia</label>
-                                <div class="col-md-5">
-                                    <input type="text" tabindexgt="0" v-model="alcaldia" class="form-control">
+                                <label class="col-md-3 form-control-label" for="text-input">Alcaldía<b class="alerta">*</b></label>
+                                <div class="col-md-4">
+                                    <input type="text" tabindexgt="0" v-model="alcaldia" class="form-control" placeholder="Nombre de alcaldía"  @keydown.tab="validarvalores('1')">
                                 </div>
                             </div>
                             <div class="form-group row">
-                                <label class="col-md-3 form-control-label" for="text-input">libro<b class="alerta">*</b></label>
-                                <div class="col-md-5">
-                                    <input type="text" tabindexgt="0" v-model="libro" class="form-control" placeholder="# de Libro">
+                                <label class="col-md-3 form-control-label" for="text-input">Libro<b class="alerta">*</b></label>
+                                <div class="col-md-4">
+                                    <input type="text" tabindexgt="0" v-model="libro" class="form-control" placeholder="Número de libro" @keydown.tab="validarvalores('2')">
                                 </div>
                             </div>
                             <div class="form-group row">
                                 <label class="col-md-3 form-control-label" for="text-input">Partida<b class="alerta">*</b></label>
-                                <div class="col-md-5">
-                                    <input type="text" tabindexgt="0" v-model="partida" class="form-control" placeholder="# de Partida">
+                                <div class="col-md-4">
+                                    <input type="text" tabindexgt="0" v-model="partida" class="form-control" placeholder="Número de partida" @keydown.tab="validarvalores('3')">
                                 </div>
                             </div>
                             <div class="form-group row">
                                 <label class="col-md-3 form-control-label" for="text-input">Folio<b class="alerta">*</b></label>
-                                <div class="col-md-5">
-                                    <input type="text" tabindexgt="0" v-model="folio" class="form-control" placeholder="# de folio">
+                                <div class="col-md-4">
+                                    <input type="text" tabindexgt="0" v-model="folio" class="form-control" placeholder="Número de folio" @keydown.tab="validarvalores('4')">
                                 </div>
                             </div>
                             <div class="form-group row">
                                 <label class="col-md-3 form-control-label" for="text-input">Año<b class="alerta">*</b></label>
-                                <div class="col-md-4">
-                                    <input type="text" tabindexgt="0" v-model="ano" class="form-control" placeholder="9999">
+                                <div class="col-md-2">
+                                    <input type="text" tabindexgt="0" v-model="ano" class="form-control" placeholder="9999" @keydown.tab="validarvalores('5')">
                                 </div>
                             </div>
+                            <div v-show="errorDatos" class="form-group row div-error">
+                                <div class="text-center text-error">
+                                <div v-for="error in errorMostrarMsj" :key="error" v-text="error">
+                                </div>
+                                </div>
+                                </div> 
                             <div class="col-md-4 modal-fo">
                                 <button type="button" class="btn btn-secondary" @click="siguiente('1')">Siguiente</button>
                             </div>  
@@ -80,7 +86,7 @@
                             </div>
                             <div class="form-group row" v-show="Acciondui==1">
                                 <label class="col-md-3 form-control-label" for="text-input">DUI</label>
-                                <div class="col-md-5">
+                                <div class="col-md-4">
                                     <input tabindexgt="0" v-model="dui" class="form-control" placeholder="999999999">
                                 </div>
                             </div>
@@ -103,13 +109,13 @@
                                 </div>
                             </div>
                             <div class="form-group row">
-                                <label class="col-md-3 form-control-label" for="text-input">Nombres<b class="alerta">*</b></label>
+                                <label class="col-md-3 form-control-label" for="text-input">Nombres</label>
                                 <div class="col-md-5">
                                     <input type="text" tabindexgt="0" v-model="nombremadre" class="form-control" placeholder="Nombres de la madre">
                                 </div>
                             </div>
                             <div class="form-group row">
-                                <label class="col-md-3 form-control-label" for="text-input">Apellidos<b class="alerta">*</b></label>
+                                <label class="col-md-3 form-control-label" for="text-input">Apellidos</label>
                                 <div class="col-md-5">
                                     <input type="text" tabindexgt="0" v-model="apellidomadre" class="form-control" placeholder="Apellidos de la madre">
                                 </div>
@@ -147,14 +153,35 @@
                                 <div class="form-group row">
                                 <label class="col-md-3 form-control-label" for="text-input">Ofrenda</label>
                                 <div class="col-md-5">
-                                    <input type="text" tabindexgt="0" v-model="monto" class="form-control">
+                                    <input type="text"  v-model="monto" class="form-control">
                                 </div>
                             </div>
                             <div class="form-group row">
+                                    <label class="col-md-3 form-control-label">Categoria</label>
+                                  <div class="col-md-5">
+                                        <select class="form-control" v-model="idcare"> 
+                                        <option value="0" disabled>Seleccione</option>
+                                        <option v-for="categorias in arraycategorias" :key="categorias.id"  v-bind:value="categorias.id" v-text="categorias.nombre_categoria"></option>
+                                        </select>
+                                    </div>
+                                </div>
+                            <div class="form-group row">
                                 <label class="col-md-3 form-control-label" for="text-input">Nombre del sacerdote<b class="alerta">*</b></label>
                                 <div class="col-md-5">
-                                    <input tabindexgt="0" v-model="nombresacerdote" class="form-control" placeholder="Nombre del celebrante" >
-                                </div>
+                                        <select class="form-control" v-model="idsacerdote"> 
+                                        <option value="0" disabled>Seleccione</option>
+                                        <option v-for="sacerdote in arraysacerdote" :key="sacerdote.id" v-bind:value="sacerdote.id" >{{sacerdote.nombre_persona}}, {{sacerdote.apellido_persona}}</option>
+                                        </select >
+                                    </div>
+                            </div>
+                                <div class="form-group row">
+                                <label class="col-md-3 form-control-label" for="text-input">Cargo<b class="alerta">*</b></label>
+                                <div class="col-md-5">
+                                        <select class="form-control" v-model="cargosacerdote"> 
+                                        <option value="0" disabled>Cargo</option>
+                                        <option v-for="sacerdote in arraycargo" :key="sacerdote.id" v-bind:value="sacerdote" v-text="sacerdote"></option>
+                                        </select>
+                                    </div>
                             </div>
                             <div class="form-group row">
                                 <label class="col-md-3 form-control-label" for="text-input">Fecha de realización<b class="alerta">*</b></label>
@@ -253,10 +280,6 @@
                                             <label class="col-md-6 form-control-label" >{{fecharealizacion}}</label>
                                         </div>
                                         <div class="form-group row">
-                                            <label class="col-md-4 form-control-label" for="text-input">Celebrada por:</label>
-                                            <label class="col-md-6 form-control-label" > {{nombresacerdote}}</label>
-                                        </div>
-                                        <div class="form-group row">
                                             <label class="col-md-3 form-control-label" for="text-input">Ofrenda</label>
                                             <label class="col-md-3 form-control-label" >{{monto}}</label>
                                         </div>
@@ -300,9 +323,12 @@
                 duipadre:'',
                 idmadre:'',
                 idpadre:'',
+                idsacerdote:'',
                 id:'',
                 tipo:'',
                 nombresacerdote:'',
+                apellidosacerdote:'',
+                cargosacerdote:'',
                 fecharealizacion:'',
                 fechana:'',
                 fechana2:'',
@@ -310,6 +336,10 @@
                 sexo:'',
                 Acciondui:0,
                 modal : 0,
+                idcare:'',
+                arraysacerdote:[],
+                arraycategorias:[],
+                arraycargo:[],
                 tituloModal : '',
                 accion:0,
                 accionsexo:0,
@@ -322,6 +352,9 @@
                 ano:'',
                 verificacion:0,
                 accionbotones:0,
+
+                errorDatos:0,
+                errorMostrarMsj:[],
                 
                 
             }
@@ -371,7 +404,13 @@
                 switch(d){
                     case '1':
                         {
-                            this.verificarpersona();
+                            this.validarvalores('5');
+                            if(this.errorDatos==1){
+                                this.cambiarm=0;
+                            }
+                            else{
+                                this.verificarpersona();
+                            }
                             break;
                         }
                     case '2':
@@ -382,6 +421,7 @@
                     case '3':
                         {
                             this.cambiarm=3;
+                            this.llenadolista('','');
                             break;
                         }
                     case '4':
@@ -409,6 +449,8 @@
                 }
 
             },
+    
+           
             //Mt. cuando da eliminar en el formulario
             cerrar(){
                 this.monto=0;
@@ -421,6 +463,7 @@
                 this.apellidopadre='';
                 this.duipadre='';
                 this.nombresacerdote='';
+                this.cargosacerdote='';
                 this.fecharealizacion='';
                 this.fechana='';
                 this.dui='';
@@ -448,6 +491,7 @@
                 this.apellidopadre='';
                 this.duipadre='';
                 this.nombresacerdote='';
+                this.cargosacerdote='';
                 this.fecharealizacion='';
                 this.fechana='';
                 this.dui='';
@@ -474,6 +518,8 @@
                     this.modal=0;
                    
             },
+            
+            
             //Mostrar datos para confirmar el ingreso
             abrirmodal(){
                 this.modal=1;
@@ -499,6 +545,25 @@
                 }
 
             },
+            //autocompletar sacerdotes
+            llenadolista(buscar,criterio){
+                let me=this;
+                var url='/persona/buscarsacerdote';
+                axios.get(url) .then(function (response) {
+                    me.arraysacerdote=response.data;
+                })
+                .catch(function (error) {
+                    console.log(error);
+                });
+            },
+            //autocompletar sacerdotes
+            llenadoarray(){
+                
+                    this.arraycargo= new Array('DIACONO','PADRE','ARZOBISPO','CARDENAL','NUNCIO APOSTOLICO','MONSEÑOR');
+            
+                
+            },
+            
             abrirmodal2(){
                 this.modal=1;
                 this.tituloModal='Confirmar datos'
@@ -523,6 +588,7 @@
                 }
 
             },
+            
             llenarcamposm(data=[]){
                 this.nombremadre= data['nombre_persona'];
                 this.apellidomadre= data['apellido_persona'];
@@ -578,8 +644,86 @@
 
             },
             //Validar datos
-            validarvalores(){
-               
+            validarvalores(d){
+                this.errorDatos=0;
+                this.errorMostrarMsj=[];
+                var RE = /^([0-9])*$/;
+                switch(d){
+                    case '1':
+                        {
+                            var Min_Length = 5;
+                            var lengthmin = this.alcaldia.length;
+                            if (lengthmin < Min_Length )this.errorMostrarMsj.push("La alcaldía debe tener más de 5 letras");
+                            if (RE.test(this.alcaldia))this.errorMostrarMsj.push("La alcaldía solo debe tener letras");
+                            if(this.errorMostrarMsj.length) this.errorDatos=1;
+                            return this.errorDatos;
+                            break;
+                        }
+                    case '2':
+                        {
+                            var Min_Length = 5;
+                            var lengthmin = this.alcaldia.length;
+                            if (lengthmin < Min_Length)this.errorMostrarMsj.push("La alcaldía debe tener más de 5 letras");
+                            if(!this.libro) this.errorMostrarMsj.push("El numero de libro no puede estar vacío");
+                            if (!RE.test(this.libro))  this.errorMostrarMsj.push("El numero de libro debe ser un numero entero");
+                            if(this.errorMostrarMsj.length) this.errorDatos=1;
+                            return this.errorDatos;
+                            break;
+                        }
+                    case '3':
+                        {
+                            var Min_Length = 5;
+                            var lengthmin = this.alcaldia.length;
+                            if (lengthmin < Min_Length)this.errorMostrarMsj.push("La alcaldía debe tener más de 5 letras");
+                            if(!this.libro) this.errorMostrarMsj.push("El numero de libro no puede estar vacío");
+                            if (!RE.test(this.libro))  this.errorMostrarMsj.push("El numero de libro debe ser un numero entero");
+                            if(!this.partida) this.errorMostrarMsj.push("En numero de partida no puede estar vacío");
+                            if (!RE.test(this.partida))  this.errorMostrarMsj.push("El numero de partida debe ser un numero entero");
+                            if(this.errorMostrarMsj.length) this.errorDatos=1;
+                            return this.errorDatos;
+                            break;
+                        }
+                    case '4':
+                        {
+                            var Min_Length = 5;
+                            var lengthmin = this.alcaldia.length;
+                            if (lengthmin < Min_Length)this.errorMostrarMsj.push("La alcaldía debe tener más de 5 letras");
+                            if(!this.libro) this.errorMostrarMsj.push("El numero de libro no puede estar vacío");
+                            if (!RE.test(this.libro))  this.errorMostrarMsj.push("El numero de libro debe ser un numero entero");
+                            if(!this.partida) this.errorMostrarMsj.push("En numero de partida no puede estar vacío");
+                            if (!RE.test(this.partida))  this.errorMostrarMsj.push("El numero de partida debe ser un numero entero");
+                            if(!this.folio) this.errorMostrarMsj.push("El numero de folio no puede estar vacío");
+                            if (!RE.test(this.folio))  this.errorMostrarMsj.push("El numero de folio debe ser un numero entero");
+                            if(this.errorMostrarMsj.length) this.errorDatos=1;
+                            return this.errorDatos;
+                            break;
+                        }
+                    case '5':
+                        {
+                            var Min_Length = 5;
+                            var lengthmin = this.alcaldia.length;
+                            if (lengthmin < Min_Length)this.errorMostrarMsj.push("La alcaldía debe tener más de 5 letras");
+                            if(!this.libro) this.errorMostrarMsj.push("El numero de libro no puede estar vacío");
+                            if (!RE.test(this.libro))  this.errorMostrarMsj.push("El numero de libro debe ser un numero entero");
+                            if(!this.partida) this.errorMostrarMsj.push("En numero de partida no puede estar vacío");
+                            if (!RE.test(this.partida))  this.errorMostrarMsj.push("El numero de partida debe ser un numero entero");
+                            if(!this.folio) this.errorMostrarMsj.push("El numero de folio no puede estar vacío");
+                            if (!RE.test(this.folio))  this.errorMostrarMsj.push("El numero de folio debe ser un numero entero");
+                            if(!this.ano) this.errorMostrarMsj.push("El año no puede estar vacío");
+                            if (!RE.test(this.ano))  this.errorMostrarMsj.push("El año debe ser un numero entero");
+                            if(this.errorMostrarMsj.length) this.errorDatos=1;
+                            return this.errorDatos;
+                            break;
+                        }
+                        case '6':
+                            {
+                                this.errorMostrarMsj.push("Esta persona ya realizo este sacramento, favor verificar datos");
+                               if(this.errorMostrarMsj.length) this.errorDatos=1;
+                               break;
+                            }
+
+                }  
+                
             },
             //Buscar si ya hay datos del realizante
             verificarpersona(){
@@ -589,18 +733,25 @@
                 var partida= this.partida;
                 var folio= this.folio;
                 var ano= this.ano;
+                
 
                 var url='/partida/busqueda?alcaldia=' + alcaldia + '&libro=' + libro + '&partida=' + partida + '&folio=' + folio + '&ano=' + ano;
                     axios.get(url) .then(function (response) {
                         var respuesta=response.data.solo;
+                        console.log(respuesta);
                     if(respuesta==1){
                         me.id=response.data.realizante.idpersona;
                         me.llenarmodal(me.id);
-                    }else{
+                    }
+                    if(respuesta==0){
                         me.cambiarm=1;
                         me.cambiarmb=1;
                     }
-                     
+                     if(respuesta==2){
+                         me.validarvalores('6');
+                        
+
+                     }
                     }).catch(function (error) {
                     console.log(error);
                     });
@@ -640,6 +791,19 @@
                 }
                     
                 },
+                selectCategoria(){
+                 let me=this;
+                var url='/categoriaresumen/selectCategoriaRe';
+                axios.get(url) .then(function (response) {
+                    // handle success
+                    var respuesta= response.data;
+                    me.arraycategorias=respuesta.categorias;
+                })
+                .catch(function (error) {
+                    // handle error
+                    console.log(error);
+                });
+            },
             
             registrar(){
                
@@ -680,18 +844,6 @@
                 if(duip!='' &&  p==''){ // es nuevo papa, no tiene mama
                     this.tipo=9;
                 }
-                /*if(s==4 && nomm!=''){
-                    this.tipo=7;
-                }
-                if(s==4 &&  nomp!=''){
-                    this.tipo=10;
-                }
-                if(s==4 && nomm!='' &&  nomp!=''){
-                    this.tipo=11;
-                }
-                if(duim=='' && duip=='' &&  nomp=='' && nomm==''){
-                    this.tipo=12;
-                } */
                     axios.put('/persona/registrar',{
                         'tipo':this.tipo,
                         'nombre_m': this.nombremadre.toUpperCase(),
@@ -712,6 +864,11 @@
                         'partida':this.partida,
                         'folio':this.folio,
                         'ano':this.ano,
+                        'monto': this.monto,
+                        'idcate':this.idcare,
+                        'sacerdote':this.idsacerdote,
+                        'fecha': this.fecharealizacion,
+                        'titulo': this.cargosacerdote,
                 }) .then(function (response) {
                     me.modal=0;
                     me.cambiarm=0;
@@ -732,7 +889,10 @@
                 axios.put('/sacramento/registrar',{
                 'fecha': this.fecharealizacion,
                 'realizante': this.id,
-                'sacerdote':this.nombresacerdote,
+                'sacerdote':this.idsacerdote,
+                'monto':this.monto,
+                'idcate':this.idcare,
+                'titulo': this.cargosacerdote,
                 }) .then(function (response) {
                      me.modal=0;
                     me.cambiarm=0;
@@ -749,6 +909,8 @@
             },
             
         mounted() {
+            this.llenadoarray();
+            this.selectCategoria();
             
         }
     }

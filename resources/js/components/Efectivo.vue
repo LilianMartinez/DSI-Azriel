@@ -5,7 +5,7 @@
                 <!-- caja chica -->
                 <div class="card">
                     <div class="card-header">
-                       <label class="titulo-encabezados">Caja Chica</label>
+                       <label class="titulo-encabezados">Caja chica</label>
                     </div>
                     <div class="card-body">
                          <div class="input-group margen">
@@ -27,7 +27,7 @@
                             </div>
                         </div>
                         <div class="totales">
-                            <label>Total Acumulado: $</label>                              
+                            <label>Total acumulado: $</label>                              
                             <label v-text="totalAcum" ></label> 
                         </div>
                         <div class="totales2">
@@ -132,7 +132,15 @@
                                       <input type="text" tabindexgt="-1" v-model="monto" class="form-control" placeholder="00.00">
                                     </div>
                                 </div>
-                                
+                                <div class="form-group row">
+                                    <label class="col-md-2 form-control-label">Categoria</label>
+                                  <div class="col-md-5">
+                                        <select class="form-control" v-model="idcare"> 
+                                        <option value="0" disabled>Seleccione</option>
+                                        <option v-for="categorias in arraycategorias" :key="categorias.id"  v-bind:value="categorias.id" v-text="categorias.nombre_categoria"></option>
+                                        </select>
+                                    </div>
+                                </div>
                                 <div class="form-group row">
                                      <label class="col-md-2 form-control-label" for="text-input">Tipo<b class="alerta">*</b></label>
                                     <div class="col-md-5">
@@ -166,7 +174,7 @@
                 <div class="modal-dialog modal-danger" role="document">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h4 class="modal-title">Eliminar Movimiento</h4>
+                            <h4 class="modal-title">Eliminar movimiento</h4>
                             <button type="button" class="close" @click="cerrarModalE()" aria-label="Close">
                               <span aria-hidden="true">×</span>
                             </button>
@@ -224,6 +232,8 @@
                 tipo:'',
                 monto:'',
                 fecha:'',
+                idcare:'', //<--------------------------- idcare:0,
+                nombre_categoria:'',
                 arrayEfectivo:[],
                 modal : 0,
                 tituloModal : '',
@@ -231,6 +241,11 @@
                 montoFijo:0,
                 arrayMontoFijo:[],
                 arraymontos:[],
+
+                //categoriaResumen:0,
+                arrayCategoriaResumen:[],
+                arraycategorias:[], //<------------------------
+
                 to:[],
                 totalAcum:'',
                 totalAcumIngre:'',
@@ -255,7 +270,7 @@
                 },
                 offset: 3,
                 criterio:'num_recibo', //
-                buscar: ''    
+                buscar: '',
                 
                    //
             }
@@ -292,8 +307,6 @@
                 axios.get('/efectivo/suma') .then(function (response) {
                   to=response.data; 
                   me.llenarsuma(to);
-                 // me.sumaegre();
-                 // me.sumaingre();
                 })
                 .catch(function (error) {
                     console.log(error);
@@ -310,6 +323,19 @@
                     console.log(error);
                 });
             },
+            selectCategoria(){
+                 let me=this;
+                var url='/categoriaresumen/selectCategoriaRe';
+                axios.get(url) .then(function (response) {
+                    // handle success
+                    var respuesta= response.data;
+                    me.arraycategorias=respuesta.categorias;
+                })
+                .catch(function (error) {
+                    // handle error
+                    console.log(error);
+                });
+            },
                
             listarEfectivo(page,buscar,criterio,tipocomponente){
                 let me=this;
@@ -323,6 +349,7 @@
                 var url='/efectivo?page='+ page + '&buscar=' + buscar2 + '&criterio=' + criterio + '&componente=' + tipocomponente;
                 axios.get(url) .then(function (response) {
                     // handle success
+                    console.log(response);
                     var respuesta= response.data;
                     me.arrayEfectivo=respuesta.efectivos.data;
                     me.pagination= respuesta.pagination;
@@ -338,7 +365,9 @@
             //Actualiza la pagina actualizar
             me.pagination.current_page = page;
             //Envia la peticion para visualizar la data de esa pagina
+            if(tipocomponente=1){
             me.listarEfectivo(page,buscar,criterio,tipocomponente);
+            }
         },
         
          registrarEfectivos(){
@@ -348,6 +377,7 @@
              let me=this;
              
               axios.put('/efectivo/registrar',{
+                  'idcare':this.idcare,
                   'num_recibo': this.num_recibo,
                   'descripcion_efectivo': this.descripcion_efectivo.toUpperCase(),
                   'monto':this.monto,
@@ -370,6 +400,7 @@
                
                let me=this;
               axios.put('/efectivo/actualizar',{
+                  'idcare':this.idcare,
                   'num_recibo': this.num_recibo,
                   'descripcion_efectivo':this.descripcion_efectivo.toUpperCase(),
                   'monto':this.monto,
@@ -394,6 +425,8 @@
                 this.monto='';
                 this.montoFijo=0;
                 this.tipo='';
+                this.idcare='';
+                this.errorEfectivo=0;
 
             },
             cerrarModalE(){
@@ -404,10 +437,11 @@
                 this.descripcion_efectivo='';
                 this.monto='';
                 this.tipo='';
+                this.idcare='';
 
             },
             autollenado(montoFijo){
-               console.log(this.montoFijo)
+               
                 let me=this;
                 var arrayMontoFijo= [];
              axios.post('/montofijo/buscarmf',{
@@ -473,43 +507,48 @@
                             case 'registrar':
                             {
                                 this.modal=1;
-                                this.tituloModal='Nuevo Movimiento'
+                                this.tituloModal='Nuevo movimiento'
                                 this.tipoAccion=1;
                                 this.num_recibo='';
                                 this.descripcion_efectivo='';
                                 this.monto='';
                                 this.tipo='';
                                 this.fecha='';
+                                this.idcare='';
                                 break;
 
                             }
                              case 'actualizar':
                             {
                                 this.modal=1;
-                                this.tituloModal='Modificar Movimiento',
+                                this.tituloModal='Modificar movimiento',
                                 this.tipoAccion=2;
                                 this.efectivo_id=data['id'];
                                 this.num_recibo=data['num_recibo'];
                                 this.descripcion_efectivo=data['descripcion_efectivo'];
                                 this.monto=data['monto'];
                                 this.tipo=data['tipo'];
+                                this.idcare=data['idcare'];
                                break;
                             }
                             case 'eliminar':
                             {
                                 this.modalE=1;
-                                this.tituloModal='Eliminar Movimiento',
+                                this.tituloModal='Eliminar movimiento',
                                
                                 this.efectivo_id=data['id'];
                                 this.num_recibo=data['num_recibo'];
                                 this.descripcion_efectivo=data['descripcion_efectivo'];
                                 this.monto=data['monto'];
-                                this.tipo=data['tipo'];
+                                this.tipo=data['tipo']; 
+                                this.idcare=data['idcare']; 
+                                
                                break;
                             }
                         }
                     }
                 }
+                this.selectCategoria();
             }
         },
         
