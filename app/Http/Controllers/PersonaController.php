@@ -702,14 +702,6 @@ class PersonaController extends Controller
             }
         }
         
-        
-   
-        
-        
-
-        
-        
-
     } //llave funcion
 
 
@@ -765,5 +757,84 @@ class PersonaController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    ///////////////////////////////////////////////MANTENIMIENTO PERSONAS RELIGIOSAS///////////////////////////////////////////////////////////
+
+    public function indexRel(Request $request)
+    {
+        if(!$request->ajax()) return redirect('/');
+  
+        $buscar = $request->buscar;
+        $criterio = $request->criterio;
+        
+        
+        if ($buscar == ''){
+            $religiosos = Persona::where('estado','1')->orderBy('id')->get();
+        } else {
+            $religiosos = Persona::where($criterio, 'like','%' . $buscar .'%')
+            ->where('estado','1')
+            ->orderBy('id')->get();
+        }
+        return $religiosos;
+    }
+
+    public function eliminarReli(Request $id)
+    {
+        if(!$id->ajax()) return redirect('/');
+        $cambiar=2;
+     
+        $religiosos = DB::table('personas')->where("id",$id->id)->update(["estado"=>$cambiar]);
+    }
+
+
+    public function storeReli(Request $request)
+    {
+        if(!$request->ajax()) return redirect('/');
+        $this->validate($request, [
+           'nombre_persona'=> 'required|min:3|max:70',
+           'apellido_persona'=> 'required|min:3|max:70',
+
+
+        ]);
+  
+        $id_religioso = Persona::max('id');
+        $id=$id_religioso+1;
+           
+
+        $religiosos = new Persona();
+        $religiosos->id=$id;
+        $religiosos->nombre_persona= $request->nombre_persona;
+        $religiosos->apellido_persona=$request->apellido_persona;
+        $religiosos->dui_pasaporte=$request->dui_pasaporte;
+        $religiosos->estado=1;
+        $religiosos->tipo_persona=1;
+        $religiosos->save();
+    }
+
+    
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function updateReli(Request $id)
+    {
+        if(!$id->ajax()) return redirect('/');
+        $this->validate($id, [
+            'nombre_persona'=> 'required|min:3|max:70',
+            'apellido_persona'=> 'required|min:3|max:70',
+        
+         ]);
+        $religiosos = DB::table('personas')->where("id",$id->id)->update(["nombre_persona"=>$id->nombre_persona, "apellido_persona" => $id->apellido_persona, "dui_pasaporte" => $id->dui_pasaporte]);
+    }
+
+    public function buscarReli(Request $id)
+    {
+        if(!$id->ajax()) return redirect('/');
+       $religiosos = DB::table('personas')->where("id",$id->id)->first();
+       return response()->json($religiosos);    
     }
 }

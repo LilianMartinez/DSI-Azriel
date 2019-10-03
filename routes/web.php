@@ -69,6 +69,13 @@ Route::group(['middleware'=>['auth']],function(){
                             Route::get('/persona/listarconfirmaciones','PersonaController@listaC');//para el realizante
                             Route::get('/persona/listarsupletorias','PersonaController@listaS');//para el realizante
 
+                                           //MANTENIMIENTO PERSONAS RELIGIOSAS
+                                           Route::get('/religioso/index','PersonaController@indexRel');
+                                           Route::put('/religioso/registrar','PersonaController@storeReli');
+                                           Route::post('/religioso/buscarReli','PersonaController@buscarReli');
+                                           Route::put('/religioso/actualizar','PersonaController@updateReli');
+                                           Route::put('/religioso/eliminar','PersonaController@eliminarReli');
+
                             //TABLA Partida
                             Route::get('/partida/busqueda','PartidaNacimientoController@realizante');
 
@@ -86,6 +93,13 @@ Route::group(['middleware'=>['auth']],function(){
 
                             //TABLA DE RESUMEN ECONOMICO
                             Route::get('/resumeneconomico','ResumenEconomicoController@index');
+
+                            //TABLA IGLESIA
+                            Route::get('/iglesia','IglesiaController@index');
+                            Route::put('/iglesia/registrar','IglesiaController@store');
+                            Route::post('/iglesia/buscarIgle','IglesiaController@buscar');
+                            Route::put('/iglesia/actualizar','IglesiaController@update');
+                            Route::put('/iglesia/eliminar','IglesiaController@eliminar');
                             
             });
 

@@ -107,6 +107,12 @@
                         <template v-if="menu==18">
                         <categoriaresumen></categoriaresumen>
                         </template>
+                        <template v-if="menu==19">
+                        <religiosos></religiosos>
+                        </template>
+                        <template v-if="menu==22">
+                        <iglesias></iglesias>
+                        </template>
             @else
             @endif
       @endif

@@ -7,7 +7,7 @@
             <div class="container-fluid">
                 <!-- Ejemplo de tabla Listado -->
                 <div class="card">
-                    <div class="card-header"><label class="titulo-encabezados">Resumen Economico</label>
+                    <div class="card-header"><label class="titulo-encabezados">Resumen económico del mes</label>
                         
                     </div>
                     <div class="card-body">

@@ -94,6 +94,12 @@
                             <li @click="menu=18" class="nav-item">
                                 <a class="nav-link" href="#"><i class="icon-wallet"></i>Categorias para resumenes</a>
                             </li>
+                            <li @click="menu=19" class="nav-item">
+                                <a class="nav-link" href="#"><i class="icon-wallet"></i>Personal Religioso</a>
+                            </li>
+                            <li @click="menu=22" class="nav-item">
+                                <a class="nav-link" href="#"><i class="icon-wallet"></i>Iglesias</a>
+                            </li>
                         </ul>
                     </li>
                 </ul>
