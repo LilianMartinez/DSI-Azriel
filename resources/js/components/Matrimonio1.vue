@@ -211,20 +211,23 @@
                                 </div><tr></tr>
                                 
                                  <div class="form-group row">
-                                    <label class="col-md-2 form-control-label" for="text-input">DUI</label>
-                                    <div class="col-md-5">
-                                        <input type="number" v-model="sacerdoteD" class="form-control" placeholder="00000000-0" @keydown.tab="sacerdoteDui()">
+                                <label class="col-md-3 form-control-label" for="text-input">Nombre del sacerdote<b class="alerta">*</b></label>
+                                <div class="col-md-5">
+                                        <select class="form-control" v-model="idsacerdote"> 
+                                        <option value="0" disabled>Seleccione</option>
+                                        <option v-for="sacerdote in arraysacerdote" :key="sacerdote.id" v-bind:value="sacerdote.id" >{{sacerdote.nombre_persona}}, {{sacerdote.apellido_persona}}</option>
+                                        </select >
                                     </div>
-                                </div>
-                                <div class="form-group row">
-                                    <label class="col-md-2 form-control-label" for="text-input">Sacerdote que realizó la boda<b class="alerta">*</b></label>
-                                    <div class="col-md-5">
-                                        <input type="text" v-model="sacerdoteNom" class="form-control" placeholder="Nombres del Sacerdote">
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-md-3 form-control-label" for="text-input">Cargo<b class="alerta">*</b></label>
+                                <div class="col-md-5">
+                                        <select class="form-control" v-model="cargosacerdote"> 
+                                        <option value="0" disabled>Cargo</option>
+                                        <option v-for="sacerdote in arraycargo" :key="sacerdote.id" v-bind:value="sacerdote" v-text="sacerdote"></option>
+                                        </select>
                                     </div>
-                                    <div class="col-md-5">
-                                        <input type="text" v-model="sacerdoteAp" class="form-control" placeholder="Apellidos del Sacerdote">
-                                    </div>
-                                </div>
+                            </div>
 
                                 </form>
                         </div>
@@ -367,7 +370,16 @@
                                     <label class="col-md-3 form-control-label" for="text-input"></label>
                                      <button type="button" class="btn btn-secondary">Cobrar</button>&nbsp;  <!-- @click="enviarCajaChica()" -->
                                 <div class="col-md-4.3">
-                                <input type="number" v-model="ofrendaBoda" class="form-control" placeholder="Ofrenda">
+                                <input type="number" v-model="monto" class="form-control" placeholder="Ofrenda">
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-md-3 form-control-label">Categoria</label>
+                                  <div class="col-md-5">
+                                        <select class="form-control" v-model="idcare"> 
+                                        <option value="0" disabled>Seleccione</option>
+                                        <option v-for="categorias in arraycategorias" :key="categorias.id"  v-bind:value="categorias.id" v-text="categorias.nombre_categoria"></option>
+                                        </select>
+                                    </div>
                                 </div>
                                 <div class="col-md-3">
                                 <button type="button" class="btn btn-success">Matrimonio Realizado</button> <!-- @click="finalizarExpediente(sacramento.id)" -->
@@ -470,8 +482,16 @@
                 iglesiaNom: '',
                 tipo:0,
                 estado :0,
-                ofrendaBoda:30,
+                monto:30,
                 ofrendaExp:20,
+
+                idcare:'',
+                cargosacerdote:'',
+                idsacerdote:'',
+                arraysacerdote:[],
+                arraycargo:[],
+                arraycategorias:[],
+
                 arrayMatrimonio1 : [], //Nos sirve para almacenar objetos de tipo sacramento
                 modal:0, //Nos sirve para poder activar o desactivar el modal
                 modal2:0,
@@ -765,7 +785,7 @@
 
             if(idNovio==''){//Cuando No exista el id el novio
                 if(idNovia==''){//Cuando no exista el id de la novia
-                     axios.put('/persona/registrar',{
+                     axios.put('/persona/registrar2',{
                     'tipo':'4.1',
                     'libro':this.libro,
                     'num_expediente':this.num_expediente,
@@ -782,7 +802,7 @@
                         console.log(error);
                     });
                 }else{//Cuando si exista el id de la novia, pero No del novio
-                     axios.put('/persona/registrar',{
+                     axios.put('/persona/registrar2',{
                     'tipo':'4.2',
                     'libro':this.libro,
                     'num_expediente':this.num_expediente,
@@ -799,7 +819,7 @@
                 }
             }else{//Sí existe el id del novio y...
                 if(idNovia==''){//Cuando no exista el id de la novia
-                     axios.put('/persona/registrar',{
+                     axios.put('/persona/registrar2',{
                     'tipo':'4.3',
                     'libro':this.libro,
                     'num_expediente':this.num_expediente,
@@ -814,7 +834,7 @@
                         console.log(error);
                     });
                 }else{//Cuando existen ambos novios
-                     axios.put('/persona/registrar',{
+                     axios.put('/persona/registrar2',{
                     'tipo':'4.4',
                     'libro':this.libro,
                     'num_expediente':this.num_expediente,
@@ -859,7 +879,7 @@
             var idNovio=this.id_realizante1;
             var idNovia=this.id_realizante2;
 
-            axios.put('/persona/actualizar',{
+            axios.put('/persona/actualizar2',{
                 'tipo':'4',
                 'libro':this.libro,
                 'num_expediente':this.num_expediente,
@@ -1055,11 +1075,13 @@
                     'mad2Ap': this.mad2Ap.toUpperCase(),
                     'mad2D':this.mad2D,
                     'mad2Sexo':this.mad2Sexo,
-                    'id_sacerdote':this.id_sacerdote,
+                    'id_sacerdote':this.idsacerdote,
                     'id_padrino1':this.id_padrino1,
                     'id_madrina1':this.id_madrina1,
                     'id_padrino2':this.id_padrino2,
-                    'id_madrina2':this.id_madrina2
+                    'id_madrina2':this.id_madrina2,
+                    'monto': this.monto,
+                    'idcate':this.idcare
 
                 }).then(function (response) { //si todo funciona:
                     me.listarMatrimonio1();
@@ -1204,6 +1226,37 @@
                     }
             }
         },
+
+        selectCategoria(){
+                 let me=this;
+                var url='/categoriaresumen/selectCategoriaRe';
+                axios.get(url) .then(function (response) {
+                    // handle success
+                    var respuesta= response.data;
+                    me.arraycategorias=respuesta.categorias;
+                })
+                .catch(function (error) {
+                    // handle error
+                    console.log(error);
+                });
+            },
+
+        //autocompletar sacerdotes
+        llenadolista(buscar,criterio){
+            let me=this;
+            var url='/persona/buscarsacerdote';
+            axios.get(url) .then(function (response) {
+                me.arraysacerdote=response.data;
+            })
+            .catch(function (error) {
+                console.log(error);
+            });
+        },
+        //autocompletar sacerdotes
+        llenadoarray(){            
+                this.arraycargo= new Array('DIACONO','PADRE','ARZOBISPO','CARDENAL','NUNCIO APOSTOLICO','MONSEÑOR');                
+            },
+
         //Aquí comienza el modal del paso 2: Agregar lugar y fecha de boda, sacerdote encargado y...
         abrirModal2(modelo, accion, data = []){
             switch (modelo) {
@@ -1377,7 +1430,9 @@
         
         mounted() {
             this.listarMatrimonio1(1,this.buscar,this.criterio);
-            //this.llenadolista('','');
+            this.llenadoarray();
+            this.selectCategoria();
+            this.llenadolista('','');
            
         }
     }

@@ -4,7 +4,7 @@
             <div class="container-fluid">
                 <!-- Tabla Primera comunion -->
                 <div class="card">
-                    <div class="card-header"><label class="titulo-encabezados">Historial de primeras comuniónes</label>
+                    <div class="card-header"><label class="titulo-encabezados">Historial de primeras comuniones</label>
                     </div>
                     <div class="card-body">
                         <div class="form-group row">

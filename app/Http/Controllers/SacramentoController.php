@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 //importamos el modelo Sacramento
 use App\Sacramento;
 use App\Persona;
+use App\Efectivo;
 //usamos esto para poder usar las funciones DB::table
 use Illuminate\Support\Facades\DB;
 //El carbón es para darle fuego a las fechas :v
@@ -174,6 +175,17 @@ class SacramentoController extends Controller
                 $id_pad2=$id_mad1+1;
                 $id_mad2=$id_pad2+1;
                 $id_sacerdote=$request->id_sacerdote;
+                $monto_p= Efectivo::max('id');
+                $montos=$monto_p+1;
+
+                $efectivo = new Efectivo();
+                $efectivo->id=$montos;
+                $efectivo->descripcion_efectivo='Matrimonio';
+                $efectivo->idcare=$request->idcate;
+                $efectivo->tipo= 4;
+                $efectivo->monto=$request->monto;
+                $efectivo->fecha= new \DateTime();
+                $efectivo->save();
         
                 $pad1 = new Persona();
                 $pad1->id=$id_pad1;
@@ -230,6 +242,17 @@ class SacramentoController extends Controller
                 $id_mad2=$id_pad2+1;
                 $id_pad1=$request->id_padrino1;
                 $id_sacerdote=$request->id_sacerdote;
+                $monto_p= Efectivo::max('id');
+                $montos=$monto_p+1;
+
+                $efectivo = new Efectivo();
+                $efectivo->id=$montos;
+                $efectivo->descripcion_efectivo='Matrimonio';
+                $efectivo->idcare=$request->idcate;
+                $efectivo->tipo= 4;
+                $efectivo->monto=$request->monto;
+                $efectivo->fecha= new \DateTime();
+                $efectivo->save();
 
                 $pad2 = new Persona();
                 $pad2->id=$id_mad1;
@@ -279,6 +302,17 @@ class SacramentoController extends Controller
                 $id_mad2=$id_pad2+1;
                 $id_mad1=$request->id_madrina1;
                 $id_sacerdote=$request->id_sacerdote;
+                $monto_p= Efectivo::max('id');
+                $montos=$monto_p+1;
+
+                $efectivo = new Efectivo();
+                $efectivo->id=$montos;
+                $efectivo->descripcion_efectivo='Matrimonio';
+                $efectivo->idcare=$request->idcate;
+                $efectivo->tipo= 4;
+                $efectivo->monto=$request->monto;
+                $efectivo->fecha= new \DateTime();
+                $efectivo->save();
 
                 $pad1 = new Persona();
                 $pad1->id=$id_pad1;
@@ -327,6 +361,17 @@ class SacramentoController extends Controller
                 $id_pad1=$request->id_padrino1;
                 $id_mad1=$request->id_madrina1;
                 $id_sacerdote=$request->id_sacerdote;
+                $monto_p= Efectivo::max('id');
+                $montos=$monto_p+1;
+
+                $efectivo = new Efectivo();
+                $efectivo->id=$montos;
+                $efectivo->descripcion_efectivo='Matrimonio';
+                $efectivo->idcare=$request->idcate;
+                $efectivo->tipo= 4;
+                $efectivo->monto=$request->monto;
+                $efectivo->fecha= new \DateTime();
+                $efectivo->save();
 
                 $pad3 = new Persona();
                 $pad3->id=$id_pad2;
@@ -367,6 +412,17 @@ class SacramentoController extends Controller
                 $id_mad2=$id_mad1+1;
                 $id_pad2=$request->id_padrino2;
                 $id_sacerdote=$request->id_sacerdote;
+                $monto_p= Efectivo::max('id');
+                $montos=$monto_p+1;
+
+                $efectivo = new Efectivo();
+                $efectivo->id=$montos;
+                $efectivo->descripcion_efectivo='Matrimonio';
+                $efectivo->idcare=$request->idcate;
+                $efectivo->tipo= 4;
+                $efectivo->monto=$request->monto;
+                $efectivo->fecha= new \DateTime();
+                $efectivo->save();
 
                 $pad1 = new Persona();
                 $pad1->id=$id_pad1;
@@ -415,6 +471,17 @@ class SacramentoController extends Controller
                 $id_pad1=$request->id_padrino1;
                 $id_pad2=$request->id_padrino2;
                 $id_sacerdote=$request->id_sacerdote;
+                $monto_p= Efectivo::max('id');
+                $montos=$monto_p+1;
+
+                $efectivo = new Efectivo();
+                $efectivo->id=$montos;
+                $efectivo->descripcion_efectivo='Matrimonio';
+                $efectivo->idcare=$request->idcate;
+                $efectivo->tipo= 4;
+                $efectivo->monto=$request->monto;
+                $efectivo->fecha= new \DateTime();
+                $efectivo->save();
 
                 $pad2 = new Persona();
                 $pad2->id=$id_mad1;
@@ -455,6 +522,17 @@ class SacramentoController extends Controller
                 $id_mad1=$request->id_madrina1;
                 $id_pad2=$request->id_padrino2;
                 $id_sacerdote=$request->id_sacerdote;
+                $monto_p= Efectivo::max('id');
+                $montos=$monto_p+1;
+
+                $efectivo = new Efectivo();
+                $efectivo->id=$montos;
+                $efectivo->descripcion_efectivo='Matrimonio';
+                $efectivo->idcare=$request->idcate;
+                $efectivo->tipo= 4;
+                $efectivo->monto=$request->monto;
+                $efectivo->fecha= new \DateTime();
+                $efectivo->save();
 
                 $pad1 = new Persona();
                 $pad1->id=$id_pad1;
@@ -495,6 +573,17 @@ class SacramentoController extends Controller
                 $id_mad1=$request->id_madrina1;
                 $id_pad2=$request->id_padrino2;
                 $id_sacerdote=$request->id_sacerdote;
+                $monto_p= Efectivo::max('id');
+                $montos=$monto_p+1;
+
+                $efectivo = new Efectivo();
+                $efectivo->id=$montos;
+                $efectivo->descripcion_efectivo='Matrimonio';
+                $efectivo->idcare=$request->idcate;
+                $efectivo->tipo= 4;
+                $efectivo->monto=$request->monto;
+                $efectivo->fecha= new \DateTime();
+                $efectivo->save();
 
                 $pad4 = new Persona();
                 $pad4->id=$id_mad2;
@@ -527,6 +616,17 @@ class SacramentoController extends Controller
                 $id_pad2=$id_mad1+1;
                 $id_mad2=$request->id_madrina2;
                 $id_sacerdote=$request->id_sacerdote;
+                $monto_p= Efectivo::max('id');
+                $montos=$monto_p+1;
+
+                $efectivo = new Efectivo();
+                $efectivo->id=$montos;
+                $efectivo->descripcion_efectivo='Matrimonio';
+                $efectivo->idcare=$request->idcate;
+                $efectivo->tipo= 4;
+                $efectivo->monto=$request->monto;
+                $efectivo->fecha= new \DateTime();
+                $efectivo->save();
 
                 $pad1 = new Persona();
                 $pad1->id=$id_pad1;
@@ -575,6 +675,17 @@ class SacramentoController extends Controller
                 $id_mad2=$request->id_madrina2;
                 $id_pad1=$request->id_padrino1;
                 $id_sacerdote=$request->id_sacerdote;
+                $monto_p= Efectivo::max('id');
+                $montos=$monto_p+1;
+
+                $efectivo = new Efectivo();
+                $efectivo->id=$montos;
+                $efectivo->descripcion_efectivo='Matrimonio';
+                $efectivo->idcare=$request->idcate;
+                $efectivo->tipo= 4;
+                $efectivo->monto=$request->monto;
+                $efectivo->fecha= new \DateTime();
+                $efectivo->save();
 
                 $pad2 = new Persona();
                 $pad2->id=$id_mad1;
@@ -615,6 +726,17 @@ class SacramentoController extends Controller
                 $id_mad2=$request->id_madrina2;
                 $id_mad1=$request->id_madrina1;
                 $id_sacerdote=$request->id_sacerdote;
+                $monto_p= Efectivo::max('id');
+                $montos=$monto_p+1;
+
+                $efectivo = new Efectivo();
+                $efectivo->id=$montos;
+                $efectivo->descripcion_efectivo='Matrimonio';
+                $efectivo->idcare=$request->idcate;
+                $efectivo->tipo= 4;
+                $efectivo->monto=$request->monto;
+                $efectivo->fecha= new \DateTime();
+                $efectivo->save();
 
                 $pad1 = new Persona();
                 $pad1->id=$id_pad1;
@@ -655,6 +777,17 @@ class SacramentoController extends Controller
                 $id_mad1=$request->id_madrina1;
                 $id_mad2=$request->id_madrina2;
                 $id_sacerdote=$request->id_sacerdote;
+                $monto_p= Efectivo::max('id');
+                $montos=$monto_p+1;
+
+                $efectivo = new Efectivo();
+                $efectivo->id=$montos;
+                $efectivo->descripcion_efectivo='Matrimonio';
+                $efectivo->idcare=$request->idcate;
+                $efectivo->tipo= 4;
+                $efectivo->monto=$request->monto;
+                $efectivo->fecha= new \DateTime();
+                $efectivo->save();
 
                 $pad3 = new Persona();
                 $pad3->id=$id_pad2;
@@ -687,6 +820,17 @@ class SacramentoController extends Controller
                 $id_mad2=$request->id_madrina2;
                 $id_pad2=$request->id_padrino2;
                 $id_sacerdote=$request->id_sacerdote;
+                $monto_p= Efectivo::max('id');
+                $montos=$monto_p+1;
+
+                $efectivo = new Efectivo();
+                $efectivo->id=$montos;
+                $efectivo->descripcion_efectivo='Matrimonio';
+                $efectivo->idcare=$request->idcate;
+                $efectivo->tipo= 4;
+                $efectivo->monto=$request->monto;
+                $efectivo->fecha= new \DateTime();
+                $efectivo->save();
 
                 $pad2 = new Persona();
                 $pad2->id=$id_mad1;
@@ -727,6 +871,17 @@ class SacramentoController extends Controller
                 $id_mad2=$request->id_madrina2;
                 $id_pad2=$request->id_padrino2;
                 $id_sacerdote=$request->id_sacerdote;
+                $monto_p= Efectivo::max('id');
+                $montos=$monto_p+1;
+
+                $efectivo = new Efectivo();
+                $efectivo->id=$montos;
+                $efectivo->descripcion_efectivo='Matrimonio';
+                $efectivo->idcare=$request->idcate;
+                $efectivo->tipo= 4;
+                $efectivo->monto=$request->monto;
+                $efectivo->fecha= new \DateTime();
+                $efectivo->save();
 
                 $pad2 = new Persona();
                 $pad2->id=$id_mad1;
@@ -759,6 +914,17 @@ class SacramentoController extends Controller
                 $id_mad1=$request->id_madrina1;
                 $id_pad2=$request->id_padrino2;
                 $id_sacerdote=$request->id_sacerdote;
+                $monto_p= Efectivo::max('id');
+                $montos=$monto_p+1;
+
+                $efectivo = new Efectivo();
+                $efectivo->id=$montos;
+                $efectivo->descripcion_efectivo='Matrimonio';
+                $efectivo->idcare=$request->idcate;
+                $efectivo->tipo= 4;
+                $efectivo->monto=$request->monto;
+                $efectivo->fecha= new \DateTime();
+                $efectivo->save();
 
                 $pad1 = new Persona();
                 $pad1->id=$id_pad1;
@@ -789,6 +955,18 @@ class SacramentoController extends Controller
                 $id_mad1=$request->id_madrina1;//SI NO FUNCIONA CAMBIAR id_padrino2 POR id_madrina1
                 $id_pad2=$request->id_padrino2;
                 $id_mad2=$request->id_madrina2;
+
+                $monto_p= Efectivo::max('id');
+                $montos=$monto_p+1;
+
+                $efectivo = new Efectivo();
+                $efectivo->id=$montos;
+                $efectivo->descripcion_efectivo='Matrimonio';
+                $efectivo->idcare=$request->idcate;
+                $efectivo->tipo= 4;
+                $efectivo->monto=$request->monto;
+                $efectivo->fecha= new \DateTime();
+                $efectivo->save();
 
                 $sacramento = Sacramento::findOrFail($request->id);
                 //$sacramento->sacramento_id=$sacramento_id;

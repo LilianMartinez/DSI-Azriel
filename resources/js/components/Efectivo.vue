@@ -349,7 +349,7 @@
                 var url='/efectivo?page='+ page + '&buscar=' + buscar2 + '&criterio=' + criterio + '&componente=' + tipocomponente;
                 axios.get(url) .then(function (response) {
                     // handle success
-                    console.log(response);
+                    //console.log(response);
                     var respuesta= response.data;
                     me.arrayEfectivo=respuesta.efectivos.data;
                     me.pagination= respuesta.pagination;

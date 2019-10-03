@@ -69,6 +69,11 @@ Route::group(['middleware'=>['auth']],function(){
                             Route::get('/persona/listarconfirmaciones','PersonaController@listaC');//para el realizante
                             Route::get('/persona/listarsupletorias','PersonaController@listaS');//para el realizante
 
+                            Route::get('/persona/duihombre','PersonaController2@buscarduihombre');//este se utiliza para novio, padrinos y sacerdote
+                            Route::get('/persona/duimujer','PersonaController2@buscarduimujer');//este se utiliza para novia y madrinas
+                            Route::put('/persona/registrar2','PersonaController2@store');//Modificado para poder registrar nuevo expediente matrimonial
+                            Route::put('/persona/actualizar2','PersonaController2@update');
+
                                            //MANTENIMIENTO PERSONAS RELIGIOSAS
                                            Route::get('/religioso/index','PersonaController@indexRel');
                                            Route::put('/religioso/registrar','PersonaController@storeReli');
@@ -111,10 +116,7 @@ Route::group(['middleware'=>['auth']],function(){
                             Route::put('/sacramento/activarexpediente','SacramentoController@activarexpediente');
                             Route::put('/sacramento/desactivarexpediente','SacramentoController@desactivarexpediente');
                             //Route::put('/sacramento/finalizarexpediente','SacramentoController@finalizarexpediente');
-                            Route::get('/persona/duihombre','PersonaController@buscarduihombre');//este se utiliza para novio, padrinos y sacerdote
-                            Route::get('/persona/duimujer','PersonaController@buscarduimujer');//este se utiliza para novia y madrinas
-                            Route::put('/persona/registrar','PersonaController@store');//Modificado para poder registrar nuevo expediente matrimonial
-                            Route::put('/persona/actualizar','PersonaController@update');
+                            
             });
 
 });
