@@ -9,7 +9,7 @@
                     </div>
                     <!-- cuerpo -->
                     <div class="card-body">
-                        <div v-show="cambiarm==0 || cambiarm==10">
+                        <div v-show="cambiarm==0 || cambiarm==12">
                             <div class="form-group row">
                                 <label class="col-md-3 form-control-label" for="text-input"><b>Datos de partida de nacimiento</b></label>
                             </div>
@@ -47,7 +47,7 @@
                                 <button type="button" class="btn btn-secondary" @click="siguiente('1')">Siguiente</button>
                             </div>  
                         </div>
-                        <div v-show="cambiarm==1 || cambiarm==9">
+                        <div v-show="cambiarm==1 || cambiarm==11">
                             <div class="form-group row">
                                 <label class="col-md-3 form-control-label" for="text-input"><b>Datos generales del realizante</b></label>
                             </div>
@@ -85,11 +85,11 @@
                                 </div>
                             </div>
                             <div class="col-md-4 modal-fo">
-                                <button type="button" class="btn btn-secondary" @click="siguiente('10')">Regresar</button>
+                                <button type="button" class="btn btn-secondary" @click="siguiente('12')">Regresar</button>
                                 <button type="button" class="btn btn-secondary" @click="siguiente('2')">Siguiente</button>
                             </div>  
                         </div>
-                        <div v-show="cambiarm==2 || cambiarm==8">
+                        <div v-show="cambiarm==2 || cambiarm==10">
                             <div class="form-group row">
                                 <label class="col-md-3 form-control-label" for="text-input"><b>Datos de los padres</b></label>
                             </div>
@@ -136,11 +136,11 @@
                                 </div>
                             </div>
                             <div class="col-md-5 modal-fo">
-                                <button type="button" class="btn btn-secondary" @click="siguiente('9')">Regresar</button>
+                                <button type="button" class="btn btn-secondary" @click="siguiente('11')">Regresar</button>
                                 <button type="button" class="btn btn-primary" @click="siguiente('3')">Siguiente</button>
                             </div> 
                         </div>
-                        <div v-show="cambiarm==3 || cambiarm==7">
+                        <div v-show="cambiarm==3 || cambiarm==9">
                             <div class="form-group row">
                                 <label class="col-md-3 form-control-label" for="text-input"><b>Datos de los padrinos</b></label>
                             </div>
@@ -165,13 +165,22 @@
                                     <input type="text" tabindexgt="0" v-model="apellidopd1" class="form-control" placeholder="Apellidos del padrino 1">
                                 </div>
                             </div>
+                            <div class="form-group row">
+                                <label class="col-md-3 form-control-label" for="text-input">Sexo<b class="alerta">*</b></label>
+                                <div class="col-md-5">
+                                    <table>
+                                        <tr> <input tabindexgt="-1" type="radio" v-model="sexopd1" value="F" name="sexo">Femenino</tr>
+                                        <tr> <input tabindexgt="-1" type="radio" v-model="sexopd1" value="M" name="sexo">Masculino</tr>
+                                    </table>
+                                </div>
+                            </div>
                             <div class="col-md-5 modal-fo">
-                                <button type="button" class="btn btn-secondary" @click="siguiente('8')">Regresar</button>
-                                <button type="button" class="btn btn-primary" @click="siguiente('10')">Nuevo padrino</button>
-                                <button type="button" class="btn btn-primary" @click="siguiente('5')">Continuar</button>
+                                <button type="button" class="btn btn-secondary" @click="siguiente('10')">Regresar</button>
+                                <button type="button" class="btn btn-primary" @click="siguiente('4')">Nuevo padrino</button>
+                                <button type="button" class="btn btn-primary" @click="siguiente('7')">Continuar</button>
                             </div>
                         </div>
-                        <div v-show="cambiarm==10 || cambiarm==7">
+                        <div v-show="cambiarm==4 || cambiarm==9">
                             <div class="form-group row">
                                 <label class="col-md-3 form-control-label" for="text-input"><b>Datos del padrino 2</b></label>
                             </div>
@@ -193,13 +202,22 @@
                                     <input type="text" tabindexgt="0" v-model="apellidopd2" class="form-control" placeholder="Apellidos del padrino 2">
                                 </div>
                             </div>
+                            <div class="form-group row">
+                                <label class="col-md-3 form-control-label" for="text-input">Sexo<b class="alerta">*</b></label>
+                                <div class="col-md-5">
+                                    <table>
+                                        <tr> <input tabindexgt="-1" type="radio" v-model="sexopd2" value="F" name="sexo">Femenino</tr>
+                                        <tr> <input tabindexgt="-1" type="radio" v-model="sexopd2" value="M" name="sexo">Masculino</tr>
+                                    </table>
+                                </div>
+                            </div>
                             <div class="col-md-5 modal-fo">
-                                <button type="button" class="btn btn-secondary" @click="siguiente('12')">Regresar</button>
-                                <button type="button" class="btn btn-primary" @click="siguiente('11')">Nuevo Padrino</button>
-                                <button type="button" class="btn btn-primary" @click="siguiente('5')">Continuar</button>
+                                <button type="button" class="btn btn-secondary" @click="siguiente('10')">Regresar</button>
+                                <button type="button" class="btn btn-primary" @click="siguiente('5')">Nuevo Padrino</button>
+                                <button type="button" class="btn btn-primary" @click="siguiente('7')">Continuar</button>
                             </div> 
                         </div>
-                        <div v-show="cambiarm==4 || cambiarm==6">
+                        <div v-show="cambiarm==5 || cambiarm==9">
                             <div class="form-group row">
                                 <label class="col-md-3 form-control-label" for="text-input"><b>Datos de los padrinos</b></label>
                             </div>
@@ -225,6 +243,22 @@
                                 </div>
                             </div>
                             <div class="form-group row">
+                                <label class="col-md-3 form-control-label" for="text-input">Sexo<b class="alerta">*</b></label>
+                                <div class="col-md-5">
+                                    <table>
+                                        <tr> <input tabindexgt="-1" type="radio" v-model="sexopd3" value="F" name="sexo">Femenino</tr>
+                                        <tr> <input tabindexgt="-1" type="radio" v-model="sexopd3" value="M" name="sexo">Masculino</tr>
+                                    </table>
+                                </div>
+                            </div>
+                            <div class="col-md-5 modal-fo">
+                                <button type="button" class="btn btn-secondary" @click="siguiente('10')">Regresar</button>
+                                <button type="button" class="btn btn-primary" @click="siguiente('6')">Nuevo Padrino</button>
+                                <button type="button" class="btn btn-primary" @click="siguiente('7')">Continuar</button>
+                            </div> 
+                        </div>
+                        <div v-show="cambiarm==6 || cambiarm==9">
+                            <div class="form-group row">
                                 <label class="col-md-3 form-control-label" for="text-input"><b>Datos del padrino 4</b></label>
                             </div>
                             <div class="form-group row">
@@ -245,12 +279,21 @@
                                     <input type="text" tabindexgt="0" v-model="apellidopd4" class="form-control" placeholder="Apellidos del padrino 4">
                                 </div>
                             </div>
+                            <div class="form-group row">
+                                <label class="col-md-3 form-control-label" for="text-input">Sexo<b class="alerta">*</b></label>
+                                <div class="col-md-5">
+                                    <table>
+                                        <tr> <input tabindexgt="-1" type="radio" v-model="sexopd4" value="F" name="sexo">Femenino</tr>
+                                        <tr> <input tabindexgt="-1" type="radio" v-model="sexopd4" value="M" name="sexo">Masculino</tr>
+                                    </table>
+                                </div>
+                            </div>
                             <div class="col-md-5 modal-fo">
-                                <button type="button" class="btn btn-secondary" @click="siguiente('7')">Regresar</button>
-                                <button type="button" class="btn btn-primary" @click="siguiente('5')">Siguiente</button>
+                                <button type="button" class="btn btn-secondary" @click="siguiente('10')">Regresar</button>
+                                <button type="button" class="btn btn-primary" @click="siguiente('7')">Siguiente</button>
                             </div> 
                         </div>
-                        <div v-show="cambiarm==5">
+                        <div v-show="cambiarm==7">
                             <div class="form-group row">
                                 <label class="col-md-3 form-control-label" for="text-input"><b>Datos de la celebración</b></label>
                             </div>
@@ -281,7 +324,7 @@
                             <div class="form-group row">
                                 <label class="col-md-3 form-control-label" for="text-input">Nombre del sacerdote<b class="alerta">*</b></label>
                                 <div class="col-md-5">
-                                    <input tabindexgt="0" v-model="nombresacerdote" class="form-control" placeholder="Nombre del celebrante" >
+                                    
                                 </div>
                             </div>
                             <div class="form-group row">
@@ -292,7 +335,7 @@
                             </div>
                             <div v-show="cambiarmb==1">
                                 <div class="col-md-6">
-                                    <button type="button" class="btn btn-secondary" @click="siguiente('6')">Regresar</button>
+                                    <button type="button" class="btn btn-secondary" @click="siguiente('10')">Regresar</button>
                                     <button type="button" class="btn btn-secondary" @click="cerrarm()">Cancelar</button>
                                     <button type="submit"  class="btn btn-primary" @click="abrirmodal()">Guardar</button>
                                 </div>
@@ -309,7 +352,7 @@
             </div>
             <!--fin del formulario-->
             <!--Inicio del modal mostrar-->
-            <div class="modal fade"  tabindex="-1" :class="{'mostrar': modal}" role="dialog" aria-labelledby="myModalLabel" style="display: none;" aria-hidden="true">
+            <div class="modal fade"  tabindex="-1" :class="{'mostrar': modal}" role="dialog" aria-labelledby="myModalLabel" style="overflow-y: scroll;" aria-hidden="true">
                 <div class="modal-dialog modal-primary modal-lg" role="document">
                     <div class="modal-content">
                         <div class="modal-header">
@@ -479,7 +522,7 @@
                                     </div>
                                     <div v-show="accionbotones==2">
                                         <div class="form-group row">
-                                            <label class="col-md-4 form-control-label" for="text-input">Realizó su Primera Comunión:</label>
+                                            <label class="col-md-4 form-control-label" for="text-input">Realizó su bautizo:</label>
                                             <label class="col-md-6 form-control-label" >{{fecharealizacion}}</label>
                                         </div>
                                         <div class="form-group row">
@@ -498,7 +541,7 @@
                                     <div v-show="accionbotones==1">
                                         <div class="col-md-4 modal-fo">
                                             <button type="button" class="btn btn-secondary" @click="cerrar()">Cancelar</button>
-                                            <button type="submit"  class="btn btn-primary" @click="siguiente('11')">Continuar</button>
+                                            <button type="submit"  class="btn btn-primary" @click="siguiente('13')">Continuar</button>
                                         </div>
                                     </div>                         
                                 </div>
@@ -537,6 +580,7 @@ export default {
             duimadre:'',
             duipadre:'',
             nombresacerdote:'',
+            arraysacerdote:[],
             sexo:'',
             fechana:'',
             idpd1:'',
@@ -576,6 +620,10 @@ export default {
             fechana2:'',
             alcaldia:'',
             id_realizante:'',
+            sexopd1:'',
+            sexopd2:'',
+            sexopd3:'',
+            sexopd4:'',
         }
     },
 
@@ -635,45 +683,55 @@ export default {
                 }
                 case '3':
                 {
-                    this.cambiarm=3;  //padrino 1 y 2
+                    this.cambiarm=3;  //padrino 1 
                     break;
                 }
                 case '4':
                 {
-                    this.cambiarm=4;   //padrino 3 y 4
+                    this.cambiarm=4;   //padrino 2
                     break;
                 }
                 case '5':
                 {
-                    this.cambiarm=5;   //datos de la celebracion
+                    this.cambiarm=5;   //padrino 3
                     break;
-                } 
+                }
                 case '6':
                 {
-                    this.cambiarm=6;  //regresar a 5
+                    this.cambiarm=6;   //padrino 4
                     break;
                 }
                 case '7':
                 {
-                    this.cambiarm=7;  //regresar a 4
+                    this.cambiarm=7;   //datos de la celebracion
                     break;
-                }
+                } 
                 case '8':
                 {
-                    this.cambiarm=8;  //regresar a 3
+                    this.cambiarm=8;  //regresar a 5
                     break;
                 }
                 case '9':
                 {
-                    this.cambiarm=9;  //regresar a 2
+                    this.cambiarm=9;  //regresar a 4
                     break;
                 }
                 case '10':
                 {
-                    this.cambiarm=10;  //regresar a 2
+                    this.cambiarm=10;  //regresar a 3
                     break;
                 }
                 case '11':
+                {
+                    this.cambiarm=11;  //regresar a 2
+                    break;
+                }
+                case '12':
+                {
+                    this.cambiarm=12;  //regresar a 2
+                    break;
+                }
+                case '13':
                 {
                     this.cambiarm=3;
                     this.modal=0;
@@ -723,7 +781,10 @@ export default {
             this.alcaldia='';
             this.librob='';
             this.foliob='';
-                
+            this.sexopd1='';
+            this.sexopd2='';
+            this.sexopd3='';
+            this.sexopd4='';    
 
         },
         cerrarm(){ //botones cancelat
@@ -770,7 +831,10 @@ export default {
             this.cambiarmb=0;
             this.librob='';
             this.foliob='';
-                
+            this.sexopd1='';
+            this.sexopd2='';
+            this.sexopd3='';
+            this.sexopd4='';       
 
         },
             //Mt. cuando le da modificar en el modal
@@ -846,6 +910,8 @@ export default {
 
             },
 
+            
+
             llenarmodal(id){
                 let me=this;
                 var url='/persona/obtener?id=' + id;
@@ -908,56 +974,110 @@ export default {
                 var dp2 = this.duipd2;
                 var dp3 = this.duipd3;
                 var dp4 = this.duipd4;
-                if(m!='' && p!='' && pd1!='' && pd2!='' && pd3!='' && pd4!=''){
+                if(m!='' && p!='' && pd1!='' && pd2!='' && pd3!='' && pd4!=''){ //introduje los duis
                     this.tipo=1;
                 }
-                if(m!='' && p!='' && pd1!='' && pd2!='' && pd3=='' && pd4==''){
+                if(m!='' && p!='' && pd1!='' && pd2!='' && pd3=='' && pd4==''){ // introduje los duis pero padrino 3 y 4 no esta
                     this.tipo=2;
                 }
-                if(m!='' && p!='' && pd1!='' && pd2!='' && pd3!='' && pd4==''){
+                if(m!='' && p!='' && pd1!='' && pd2!='' && pd3!='' && pd4==''){ // introduje los duis pero padrino 4 no esta
                     this.tipo=3;
                 }
-                if(m!='' && p!='' && pd1!='' && pd2=='' && pd3=='' && pd4==''){
+                if(m!='' && p!='' && pd1!='' && pd2=='' && pd3=='' && pd4==''){  // introduje los duis pero padrino 2, 3 y 4 no esta
                     this.tipo=4;
                 }
-                if(m!='' && p=='' && pd1!='' && pd2!='' && pd3=='' && pd4==''){
+                if(m!='' && p=='' && pd1!='' && pd2!='' && pd3=='' && pd4==''){  // introduje los duis pero papa no esta y padrino 3 y 4 no estan
                     this.tipo=5;
                 }
-                if(m!='' && p=='' && pd1!='' && pd2!='' && pd3!='' && pd4==''){
+                if(m!='' && p=='' && pd1!='' && pd2!='' && pd3!='' && pd4==''){  // introduje los duis pero papa y padrino 4 no estan
                     this.tipo=6;
                 }
-                if(m!='' && p=='' && pd1!='' && pd2=='' && pd3=='' && pd4==''){
+                if(m!='' && p=='' && pd1!='' && pd2=='' && pd3=='' && pd4==''){  // introduje los duis pero papa y padrino 2, 3 y 4 no estan
                     this.tipo=7;
                 }
-                if(m!='' && p=='' && pd1!='' && pd2!='' && pd3!='' && pd4!=''){
+                if(m!='' && p=='' && pd1!='' && pd2!='' && pd3!='' && pd4!=''){  // introduje los duis pero papa no esta
                     this.tipo=8;
                 }
-                if(m=='' && p!='' && pd1!='' && pd2!='' && pd3!='' && pd4!=''){
+                if(m=='' && p!='' && pd1!='' && pd2!='' && pd3!='' && pd4!=''){  // introduje los duis pero mama no esta
                     this.tipo=9;
                 }
-                if(m=='' && p!='' && pd1!='' && pd2!='' && pd3!='' && pd4==''){
+                if(m=='' && p!='' && pd1!='' && pd2!='' && pd3!='' && pd4==''){ // introduje los duis pero mama y padrino 4 no esta
                     this.tipo=10;
                 }
-                if(m=='' && p!='' && pd1!='' && pd2!='' && pd3=='' && pd4==''){
+                if(m=='' && p!='' && pd1!='' && pd2!='' && pd3=='' && pd4==''){  // introduje los duis pero mama y padrino 3 y 4 no esta
                     this.tipo=11;
                 }
-                if(m=='' && p!='' && pd1!='' && pd2=='' && pd3=='' && pd4==''){
+                if(m=='' && p!='' && pd1!='' && pd2=='' && pd3=='' && pd4==''){  // introduje los duis pero mama y padrino 2, 3 y 4 no esta
                     this.tipo=12;
                 }
-                if(m=='' && p=='' && pd1=='' && pd2=='' && pd3=='' && pd4==''){
+                if(m=='' && p=='' && pd1=='' && pd2=='' && pd3=='' && pd4==''){  // introduje los duis pero ninguno esta
                     this.tipo=13;
                 }
-                if(m=='' && p=='' && pd1!='' && pd2!='' && pd3!='' && pd4!=''){
+                if(m=='' && p=='' && pd1!='' && pd2!='' && pd3!='' && pd4!=''){  // introduje los duis pero mama y papa no estan
                     this.tipo=14;
                 }
-                if(m=='' && p=='' && pd1!='' && pd2!='' && pd3!='' && pd4==''){
+                if(m=='' && p=='' && pd1!='' && pd2!='' && pd3!='' && pd4==''){  // introduje los duis pero mama, papa y padrino 4 no esta
                     this.tipo=15;
                 }
-                if(m=='' && p=='' && pd1!='' && pd2!='' && pd3=='' && pd4==''){
+                if(m=='' && p=='' && pd1!='' && pd2!='' && pd3=='' && pd4==''){  // introduje los duis pero mama, papa, padrino 3 y 4 no esta
                     this.tipo=16;
                 }
-                if(m=='' && p=='' && pd1!='' && pd2=='' && pd3=='' && pd4==''){
+                if(m=='' && p=='' && pd1!='' && pd2=='' && pd3=='' && pd4==''){ // introduje los duis pero mama, papa, padrino 2, 3 y 4 no esta
                     this.tipo=17;
+                }
+                if(m!='' && p!='' && pd1!='' && pd2!='' && pd3!='' && dp4==''){ // introduje los duis pero no hay datos de padrino 4
+                    this.tipo=18;
+                }
+                if(m!='' && p!='' && pd1!='' && pd2!='' && dp3=='' && dp4==''){ // introduje los duis pero no hay datos de padrino 3 y 4
+                    this.tipo=19;
+                }
+                if(m!='' && p!='' && pd1!='' && dp2=='' && dp3=='' && dp4==''){ // introduje los duis pero no hay datos de padrino 4
+                    this.tipo=20;
+                }
+                if(m!='' && p!='' && dp1=='' && dp2=='' && dp3=='' && dp4==''){ // introduje los duis pero no hay datos de padrino 4
+                    this.tipo=21;
+                }
+                if(m!='' && duip=='' && pd1!='' && pd2!='' && pd3!='' && pd4!=''){ // introduje los duis pero no hay datos de padrino 4
+                    this.tipo=22;
+                }
+                if(m!='' && duip=='' && pd1!='' && pd2!='' && pd3!='' && dp4==''){ // introduje los duis pero no hay datos de padrino 4
+                    this.tipo=23;
+                }
+                if(m!='' &&duip=='' && pd1!='' && pd2!='' && dp3=='' && dp4==''){ // introduje los duis pero no hay datos de padrino 4
+                    this.tipo=24;
+                }
+                if(m!='' && duip=='' && pd1!='' && dp2=='' && dp3=='' && dp4==''){ // introduje los duis pero no hay datos de padrino 4
+                    this.tipo=25;
+                }
+                if(m!='' && duip=='' && dp1=='' && dp2=='' && dp3=='' && dp4==''){ // introduje los duis pero no hay datos de padrino 4
+                    this.tipo=26;
+                }
+                if(duim=='' && p!='' && pd1!='' && pd2!='' && pd3!='' && pd4!=''){ // introduje los duis pero no hay datos de padrino 4
+                    this.tipo=27;
+                }
+                if(duim=='' && p!='' && pd1!='' && pd2!='' && pd3!='' && dp4==''){ // introduje los duis pero no hay datos de padrino 4
+                    this.tipo=28;
+                }
+                if(duim=='' && p!='' && pd1!='' && pd2!='' && dp3=='' && dp4==''){ // introduje los duis pero no hay datos de padrino 4
+                    this.tipo=29;
+                }
+                if(duim=='' && p!='' && pd1!='' && dp2=='' &&dp3=='' && dp4==''){ // introduje los duis pero no hay datos de padrino 4
+                    this.tipo=30;
+                }
+                if(duim=='' && duip=='' && dp1=='' && dp2=='' && dp3=='' && dp4==''){ // introduje los duis pero no hay datos de padrino 4
+                    this.tipo=31;
+                }
+                if(duim=='' && duip=='' && pd1!='' && pd2!='' && pd3!='' &&pd4!=''){ // introduje los duis pero no hay datos de padrino 4
+                    this.tipo=32;
+                }
+                if(duim=='' && duip=='' && pd1!='' &&pd2!='' && pd3!='' && dp4==''){ // introduje los duis pero no hay datos de padrino 4
+                    this.tipo=33;
+                }
+                if(duim=='' && duip=='' && pd1!='' && pd2!='' && dp3=='' && dp4==''){ // introduje los duis pero no hay datos de padrino 4
+                    this.tipo=34;
+                }
+                if(duim=='' && duip=='' &&pd1!='' && dp2=='' && dp3=='' && dp4==''){ // introduje los duis pero no hay datos de padrino 4
+                    this.tipo=35;
                 }
                     axios.put('/bautizo/registrar',{
                         'tipo':this.tipo,
@@ -998,6 +1118,10 @@ export default {
                         'librob':this.librob,
                         'foliob':this.foliob,
                         'asiento':this.asiento,
+                        'sexo_pd1':this.sexopd1,
+                        'sexo_pd2':this.sexopd2,
+                        'sexo_pd3':this.sexopd3,
+                        'sexo_pd4':this.sexopd4,
                 }) .then(function (response) {
                     me.modal=0;
                     me.cambiarm=0;

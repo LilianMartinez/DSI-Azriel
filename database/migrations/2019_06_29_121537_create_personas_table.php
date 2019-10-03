@@ -22,6 +22,7 @@ class CreatePersonasTable extends Migration
             $table->string('sexo',1)->nullable();
             $table->Integer('id_padre')->nullable();
             $table->Integer('id_madre')->nullable();
+            $table->Integer('tipo_persona')->nullable();
             $table->timestamps();
         });
 

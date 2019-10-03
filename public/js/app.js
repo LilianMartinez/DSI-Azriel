@@ -3795,6 +3795,49 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -3818,6 +3861,7 @@ __webpack_require__.r(__webpack_exports__);
       duimadre: '',
       duipadre: '',
       nombresacerdote: '',
+      arraysacerdote: [],
       sexo: '',
       fechana: '',
       idpd1: '',
@@ -3856,7 +3900,11 @@ __webpack_require__.r(__webpack_exports__);
       accionbotones: 0,
       fechana2: '',
       alcaldia: '',
-      id_realizante: ''
+      id_realizante: '',
+      sexopd1: '',
+      sexopd2: '',
+      sexopd3: '',
+      sexopd4: ''
     };
   },
   methods: {
@@ -3915,61 +3963,75 @@ __webpack_require__.r(__webpack_exports__);
 
         case '3':
           {
-            this.cambiarm = 3; //padrino 1 y 2
+            this.cambiarm = 3; //padrino 1 
 
             break;
           }
 
         case '4':
           {
-            this.cambiarm = 4; //padrino 3 y 4
+            this.cambiarm = 4; //padrino 2
 
             break;
           }
 
         case '5':
           {
-            this.cambiarm = 5; //datos de la celebracion
+            this.cambiarm = 5; //padrino 3
 
             break;
           }
 
         case '6':
           {
-            this.cambiarm = 6; //regresar a 5
+            this.cambiarm = 6; //padrino 4
 
             break;
           }
 
         case '7':
           {
-            this.cambiarm = 7; //regresar a 4
+            this.cambiarm = 7; //datos de la celebracion
 
             break;
           }
 
         case '8':
           {
-            this.cambiarm = 8; //regresar a 3
+            this.cambiarm = 8; //regresar a 5
 
             break;
           }
 
         case '9':
           {
-            this.cambiarm = 9; //regresar a 2
+            this.cambiarm = 9; //regresar a 4
 
             break;
           }
 
         case '10':
           {
-            this.cambiarm = 10; //regresar a 2
+            this.cambiarm = 10; //regresar a 3
 
             break;
           }
 
         case '11':
+          {
+            this.cambiarm = 11; //regresar a 2
+
+            break;
+          }
+
+        case '12':
+          {
+            this.cambiarm = 12; //regresar a 2
+
+            break;
+          }
+
+        case '13':
           {
             this.cambiarm = 3;
             this.modal = 0;
@@ -4017,6 +4079,10 @@ __webpack_require__.r(__webpack_exports__);
       this.alcaldia = '';
       this.librob = '';
       this.foliob = '';
+      this.sexopd1 = '';
+      this.sexopd2 = '';
+      this.sexopd3 = '';
+      this.sexopd4 = '';
     },
     cerrarm: function cerrarm() {
       //botones cancelat
@@ -4063,6 +4129,10 @@ __webpack_require__.r(__webpack_exports__);
       this.cambiarmb = 0;
       this.librob = '';
       this.foliob = '';
+      this.sexopd1 = '';
+      this.sexopd2 = '';
+      this.sexopd3 = '';
+      this.sexopd4 = '';
     },
     //Mt. cuando le da modificar en el modal
     cerrarmodal: function cerrarmodal() {
@@ -4211,71 +4281,178 @@ __webpack_require__.r(__webpack_exports__);
       var dp4 = this.duipd4;
 
       if (m != '' && p != '' && pd1 != '' && pd2 != '' && pd3 != '' && pd4 != '') {
+        //introduje los duis
         this.tipo = 1;
       }
 
       if (m != '' && p != '' && pd1 != '' && pd2 != '' && pd3 == '' && pd4 == '') {
+        // introduje los duis pero padrino 3 y 4 no esta
         this.tipo = 2;
       }
 
       if (m != '' && p != '' && pd1 != '' && pd2 != '' && pd3 != '' && pd4 == '') {
+        // introduje los duis pero padrino 4 no esta
         this.tipo = 3;
       }
 
       if (m != '' && p != '' && pd1 != '' && pd2 == '' && pd3 == '' && pd4 == '') {
+        // introduje los duis pero padrino 2, 3 y 4 no esta
         this.tipo = 4;
       }
 
       if (m != '' && p == '' && pd1 != '' && pd2 != '' && pd3 == '' && pd4 == '') {
+        // introduje los duis pero papa no esta y padrino 3 y 4 no estan
         this.tipo = 5;
       }
 
       if (m != '' && p == '' && pd1 != '' && pd2 != '' && pd3 != '' && pd4 == '') {
+        // introduje los duis pero papa y padrino 4 no estan
         this.tipo = 6;
       }
 
       if (m != '' && p == '' && pd1 != '' && pd2 == '' && pd3 == '' && pd4 == '') {
+        // introduje los duis pero papa y padrino 2, 3 y 4 no estan
         this.tipo = 7;
       }
 
       if (m != '' && p == '' && pd1 != '' && pd2 != '' && pd3 != '' && pd4 != '') {
+        // introduje los duis pero papa no esta
         this.tipo = 8;
       }
 
       if (m == '' && p != '' && pd1 != '' && pd2 != '' && pd3 != '' && pd4 != '') {
+        // introduje los duis pero mama no esta
         this.tipo = 9;
       }
 
       if (m == '' && p != '' && pd1 != '' && pd2 != '' && pd3 != '' && pd4 == '') {
+        // introduje los duis pero mama y padrino 4 no esta
         this.tipo = 10;
       }
 
       if (m == '' && p != '' && pd1 != '' && pd2 != '' && pd3 == '' && pd4 == '') {
+        // introduje los duis pero mama y padrino 3 y 4 no esta
         this.tipo = 11;
       }
 
       if (m == '' && p != '' && pd1 != '' && pd2 == '' && pd3 == '' && pd4 == '') {
+        // introduje los duis pero mama y padrino 2, 3 y 4 no esta
         this.tipo = 12;
       }
 
       if (m == '' && p == '' && pd1 == '' && pd2 == '' && pd3 == '' && pd4 == '') {
+        // introduje los duis pero ninguno esta
         this.tipo = 13;
       }
 
       if (m == '' && p == '' && pd1 != '' && pd2 != '' && pd3 != '' && pd4 != '') {
+        // introduje los duis pero mama y papa no estan
         this.tipo = 14;
       }
 
       if (m == '' && p == '' && pd1 != '' && pd2 != '' && pd3 != '' && pd4 == '') {
+        // introduje los duis pero mama, papa y padrino 4 no esta
         this.tipo = 15;
       }
 
       if (m == '' && p == '' && pd1 != '' && pd2 != '' && pd3 == '' && pd4 == '') {
+        // introduje los duis pero mama, papa, padrino 3 y 4 no esta
         this.tipo = 16;
       }
 
       if (m == '' && p == '' && pd1 != '' && pd2 == '' && pd3 == '' && pd4 == '') {
+        // introduje los duis pero mama, papa, padrino 2, 3 y 4 no esta
         this.tipo = 17;
+      }
+
+      if (m != '' && p != '' && pd1 != '' && pd2 != '' && pd3 != '' && dp4 == '') {
+        // introduje los duis pero no hay datos de padrino 4
+        this.tipo = 18;
+      }
+
+      if (m != '' && p != '' && pd1 != '' && pd2 != '' && dp3 == '' && dp4 == '') {
+        // introduje los duis pero no hay datos de padrino 3 y 4
+        this.tipo = 19;
+      }
+
+      if (m != '' && p != '' && pd1 != '' && dp2 == '' && dp3 == '' && dp4 == '') {
+        // introduje los duis pero no hay datos de padrino 4
+        this.tipo = 20;
+      }
+
+      if (m != '' && p != '' && dp1 == '' && dp2 == '' && dp3 == '' && dp4 == '') {
+        // introduje los duis pero no hay datos de padrino 4
+        this.tipo = 21;
+      }
+
+      if (m != '' && duip == '' && pd1 != '' && pd2 != '' && pd3 != '' && pd4 != '') {
+        // introduje los duis pero no hay datos de padrino 4
+        this.tipo = 22;
+      }
+
+      if (m != '' && duip == '' && pd1 != '' && pd2 != '' && pd3 != '' && dp4 == '') {
+        // introduje los duis pero no hay datos de padrino 4
+        this.tipo = 23;
+      }
+
+      if (m != '' && duip == '' && pd1 != '' && pd2 != '' && dp3 == '' && dp4 == '') {
+        // introduje los duis pero no hay datos de padrino 4
+        this.tipo = 24;
+      }
+
+      if (m != '' && duip == '' && pd1 != '' && dp2 == '' && dp3 == '' && dp4 == '') {
+        // introduje los duis pero no hay datos de padrino 4
+        this.tipo = 25;
+      }
+
+      if (m != '' && duip == '' && dp1 == '' && dp2 == '' && dp3 == '' && dp4 == '') {
+        // introduje los duis pero no hay datos de padrino 4
+        this.tipo = 26;
+      }
+
+      if (duim == '' && p != '' && pd1 != '' && pd2 != '' && pd3 != '' && pd4 != '') {
+        // introduje los duis pero no hay datos de padrino 4
+        this.tipo = 27;
+      }
+
+      if (duim == '' && p != '' && pd1 != '' && pd2 != '' && pd3 != '' && dp4 == '') {
+        // introduje los duis pero no hay datos de padrino 4
+        this.tipo = 28;
+      }
+
+      if (duim == '' && p != '' && pd1 != '' && pd2 != '' && dp3 == '' && dp4 == '') {
+        // introduje los duis pero no hay datos de padrino 4
+        this.tipo = 29;
+      }
+
+      if (duim == '' && p != '' && pd1 != '' && dp2 == '' && dp3 == '' && dp4 == '') {
+        // introduje los duis pero no hay datos de padrino 4
+        this.tipo = 30;
+      }
+
+      if (duim == '' && duip == '' && dp1 == '' && dp2 == '' && dp3 == '' && dp4 == '') {
+        // introduje los duis pero no hay datos de padrino 4
+        this.tipo = 31;
+      }
+
+      if (duim == '' && duip == '' && pd1 != '' && pd2 != '' && pd3 != '' && pd4 != '') {
+        // introduje los duis pero no hay datos de padrino 4
+        this.tipo = 32;
+      }
+
+      if (duim == '' && duip == '' && pd1 != '' && pd2 != '' && pd3 != '' && dp4 == '') {
+        // introduje los duis pero no hay datos de padrino 4
+        this.tipo = 33;
+      }
+
+      if (duim == '' && duip == '' && pd1 != '' && pd2 != '' && dp3 == '' && dp4 == '') {
+        // introduje los duis pero no hay datos de padrino 4
+        this.tipo = 34;
+      }
+
+      if (duim == '' && duip == '' && pd1 != '' && dp2 == '' && dp3 == '' && dp4 == '') {
+        // introduje los duis pero no hay datos de padrino 4
+        this.tipo = 35;
       }
 
       axios.put('/bautizo/registrar', {
@@ -4316,7 +4493,11 @@ __webpack_require__.r(__webpack_exports__);
         'ano': this.anio,
         'librob': this.librob,
         'foliob': this.foliob,
-        'asiento': this.asiento
+        'asiento': this.asiento,
+        'sexo_pd1': this.sexopd1,
+        'sexo_pd2': this.sexopd2,
+        'sexo_pd3': this.sexopd3,
+        'sexo_pd4': this.sexopd4
       }).then(function (response) {
         me.modal = 0;
         me.cambiarm = 0; //     me.guardarsacramento();
@@ -49615,8 +49796,8 @@ var render = function() {
                 {
                   name: "show",
                   rawName: "v-show",
-                  value: _vm.cambiarm == 0 || _vm.cambiarm == 10,
-                  expression: "cambiarm==0 || cambiarm==10"
+                  value: _vm.cambiarm == 0 || _vm.cambiarm == 12,
+                  expression: "cambiarm==0 || cambiarm==12"
                 }
               ]
             },
@@ -49811,8 +49992,8 @@ var render = function() {
                 {
                   name: "show",
                   rawName: "v-show",
-                  value: _vm.cambiarm == 1 || _vm.cambiarm == 9,
-                  expression: "cambiarm==1 || cambiarm==9"
+                  value: _vm.cambiarm == 1 || _vm.cambiarm == 11,
+                  expression: "cambiarm==1 || cambiarm==11"
                 }
               ]
             },
@@ -50037,7 +50218,7 @@ var render = function() {
                     attrs: { type: "button" },
                     on: {
                       click: function($event) {
-                        return _vm.siguiente("10")
+                        return _vm.siguiente("12")
                       }
                     }
                   },
@@ -50068,8 +50249,8 @@ var render = function() {
                 {
                   name: "show",
                   rawName: "v-show",
-                  value: _vm.cambiarm == 2 || _vm.cambiarm == 8,
-                  expression: "cambiarm==2 || cambiarm==8"
+                  value: _vm.cambiarm == 2 || _vm.cambiarm == 10,
+                  expression: "cambiarm==2 || cambiarm==10"
                 }
               ]
             },
@@ -50318,7 +50499,7 @@ var render = function() {
                     attrs: { type: "button" },
                     on: {
                       click: function($event) {
-                        return _vm.siguiente("9")
+                        return _vm.siguiente("11")
                       }
                     }
                   },
@@ -50349,8 +50530,8 @@ var render = function() {
                 {
                   name: "show",
                   rawName: "v-show",
-                  value: _vm.cambiarm == 3 || _vm.cambiarm == 7,
-                  expression: "cambiarm==3 || cambiarm==7"
+                  value: _vm.cambiarm == 3 || _vm.cambiarm == 9,
+                  expression: "cambiarm==3 || cambiarm==9"
                 }
               ]
             },
@@ -50467,6 +50648,66 @@ var render = function() {
                 ])
               ]),
               _vm._v(" "),
+              _c("div", { staticClass: "form-group row" }, [
+                _vm._m(20),
+                _vm._v(" "),
+                _c("div", { staticClass: "col-md-5" }, [
+                  _c("table", [
+                    _c("tr", [
+                      _c("input", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.sexopd1,
+                            expression: "sexopd1"
+                          }
+                        ],
+                        attrs: {
+                          tabindexgt: "-1",
+                          type: "radio",
+                          value: "F",
+                          name: "sexo"
+                        },
+                        domProps: { checked: _vm._q(_vm.sexopd1, "F") },
+                        on: {
+                          change: function($event) {
+                            _vm.sexopd1 = "F"
+                          }
+                        }
+                      }),
+                      _vm._v("Femenino")
+                    ]),
+                    _vm._v(" "),
+                    _c("tr", [
+                      _c("input", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.sexopd1,
+                            expression: "sexopd1"
+                          }
+                        ],
+                        attrs: {
+                          tabindexgt: "-1",
+                          type: "radio",
+                          value: "M",
+                          name: "sexo"
+                        },
+                        domProps: { checked: _vm._q(_vm.sexopd1, "M") },
+                        on: {
+                          change: function($event) {
+                            _vm.sexopd1 = "M"
+                          }
+                        }
+                      }),
+                      _vm._v("Masculino")
+                    ])
+                  ])
+                ])
+              ]),
+              _vm._v(" "),
               _c("div", { staticClass: "col-md-5 modal-fo" }, [
                 _c(
                   "button",
@@ -50475,7 +50716,7 @@ var render = function() {
                     attrs: { type: "button" },
                     on: {
                       click: function($event) {
-                        return _vm.siguiente("8")
+                        return _vm.siguiente("10")
                       }
                     }
                   },
@@ -50489,7 +50730,7 @@ var render = function() {
                     attrs: { type: "button" },
                     on: {
                       click: function($event) {
-                        return _vm.siguiente("10")
+                        return _vm.siguiente("4")
                       }
                     }
                   },
@@ -50503,7 +50744,7 @@ var render = function() {
                     attrs: { type: "button" },
                     on: {
                       click: function($event) {
-                        return _vm.siguiente("5")
+                        return _vm.siguiente("7")
                       }
                     }
                   },
@@ -50520,13 +50761,13 @@ var render = function() {
                 {
                   name: "show",
                   rawName: "v-show",
-                  value: _vm.cambiarm == 10 || _vm.cambiarm == 7,
-                  expression: "cambiarm==10 || cambiarm==7"
+                  value: _vm.cambiarm == 4 || _vm.cambiarm == 9,
+                  expression: "cambiarm==4 || cambiarm==9"
                 }
               ]
             },
             [
-              _vm._m(20),
+              _vm._m(21),
               _vm._v(" "),
               _c("div", { staticClass: "form-group row" }, [
                 _c(
@@ -50650,6 +50891,66 @@ var render = function() {
                 ])
               ]),
               _vm._v(" "),
+              _c("div", { staticClass: "form-group row" }, [
+                _vm._m(22),
+                _vm._v(" "),
+                _c("div", { staticClass: "col-md-5" }, [
+                  _c("table", [
+                    _c("tr", [
+                      _c("input", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.sexopd2,
+                            expression: "sexopd2"
+                          }
+                        ],
+                        attrs: {
+                          tabindexgt: "-1",
+                          type: "radio",
+                          value: "F",
+                          name: "sexo"
+                        },
+                        domProps: { checked: _vm._q(_vm.sexopd2, "F") },
+                        on: {
+                          change: function($event) {
+                            _vm.sexopd2 = "F"
+                          }
+                        }
+                      }),
+                      _vm._v("Femenino")
+                    ]),
+                    _vm._v(" "),
+                    _c("tr", [
+                      _c("input", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.sexopd2,
+                            expression: "sexopd2"
+                          }
+                        ],
+                        attrs: {
+                          tabindexgt: "-1",
+                          type: "radio",
+                          value: "M",
+                          name: "sexo"
+                        },
+                        domProps: { checked: _vm._q(_vm.sexopd2, "M") },
+                        on: {
+                          change: function($event) {
+                            _vm.sexopd2 = "M"
+                          }
+                        }
+                      }),
+                      _vm._v("Masculino")
+                    ])
+                  ])
+                ])
+              ]),
+              _vm._v(" "),
               _c("div", { staticClass: "col-md-5 modal-fo" }, [
                 _c(
                   "button",
@@ -50658,7 +50959,7 @@ var render = function() {
                     attrs: { type: "button" },
                     on: {
                       click: function($event) {
-                        return _vm.siguiente("12")
+                        return _vm.siguiente("10")
                       }
                     }
                   },
@@ -50672,7 +50973,7 @@ var render = function() {
                     attrs: { type: "button" },
                     on: {
                       click: function($event) {
-                        return _vm.siguiente("11")
+                        return _vm.siguiente("5")
                       }
                     }
                   },
@@ -50686,7 +50987,7 @@ var render = function() {
                     attrs: { type: "button" },
                     on: {
                       click: function($event) {
-                        return _vm.siguiente("5")
+                        return _vm.siguiente("7")
                       }
                     }
                   },
@@ -50703,15 +51004,15 @@ var render = function() {
                 {
                   name: "show",
                   rawName: "v-show",
-                  value: _vm.cambiarm == 4 || _vm.cambiarm == 6,
-                  expression: "cambiarm==4 || cambiarm==6"
+                  value: _vm.cambiarm == 5 || _vm.cambiarm == 9,
+                  expression: "cambiarm==5 || cambiarm==9"
                 }
               ]
             },
             [
-              _vm._m(21),
+              _vm._m(23),
               _vm._v(" "),
-              _vm._m(22),
+              _vm._m(24),
               _vm._v(" "),
               _c("div", { staticClass: "form-group row" }, [
                 _c(
@@ -50758,7 +51059,7 @@ var render = function() {
               ]),
               _vm._v(" "),
               _c("div", { staticClass: "form-group row" }, [
-                _vm._m(23),
+                _vm._m(25),
                 _vm._v(" "),
                 _c("div", { staticClass: "col-md-5" }, [
                   _c("input", {
@@ -50790,7 +51091,7 @@ var render = function() {
               ]),
               _vm._v(" "),
               _c("div", { staticClass: "form-group row" }, [
-                _vm._m(24),
+                _vm._m(26),
                 _vm._v(" "),
                 _c("div", { staticClass: "col-md-5" }, [
                   _c("input", {
@@ -50821,7 +51122,126 @@ var render = function() {
                 ])
               ]),
               _vm._v(" "),
-              _vm._m(25),
+              _c("div", { staticClass: "form-group row" }, [
+                _vm._m(27),
+                _vm._v(" "),
+                _c("div", { staticClass: "col-md-5" }, [
+                  _c("table", [
+                    _c("tr", [
+                      _c("input", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.sexopd3,
+                            expression: "sexopd3"
+                          }
+                        ],
+                        attrs: {
+                          tabindexgt: "-1",
+                          type: "radio",
+                          value: "F",
+                          name: "sexo"
+                        },
+                        domProps: { checked: _vm._q(_vm.sexopd3, "F") },
+                        on: {
+                          change: function($event) {
+                            _vm.sexopd3 = "F"
+                          }
+                        }
+                      }),
+                      _vm._v("Femenino")
+                    ]),
+                    _vm._v(" "),
+                    _c("tr", [
+                      _c("input", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.sexopd3,
+                            expression: "sexopd3"
+                          }
+                        ],
+                        attrs: {
+                          tabindexgt: "-1",
+                          type: "radio",
+                          value: "M",
+                          name: "sexo"
+                        },
+                        domProps: { checked: _vm._q(_vm.sexopd3, "M") },
+                        on: {
+                          change: function($event) {
+                            _vm.sexopd3 = "M"
+                          }
+                        }
+                      }),
+                      _vm._v("Masculino")
+                    ])
+                  ])
+                ])
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "col-md-5 modal-fo" }, [
+                _c(
+                  "button",
+                  {
+                    staticClass: "btn btn-secondary",
+                    attrs: { type: "button" },
+                    on: {
+                      click: function($event) {
+                        return _vm.siguiente("10")
+                      }
+                    }
+                  },
+                  [_vm._v("Regresar")]
+                ),
+                _vm._v(" "),
+                _c(
+                  "button",
+                  {
+                    staticClass: "btn btn-primary",
+                    attrs: { type: "button" },
+                    on: {
+                      click: function($event) {
+                        return _vm.siguiente("6")
+                      }
+                    }
+                  },
+                  [_vm._v("Nuevo Padrino")]
+                ),
+                _vm._v(" "),
+                _c(
+                  "button",
+                  {
+                    staticClass: "btn btn-primary",
+                    attrs: { type: "button" },
+                    on: {
+                      click: function($event) {
+                        return _vm.siguiente("7")
+                      }
+                    }
+                  },
+                  [_vm._v("Continuar")]
+                )
+              ])
+            ]
+          ),
+          _vm._v(" "),
+          _c(
+            "div",
+            {
+              directives: [
+                {
+                  name: "show",
+                  rawName: "v-show",
+                  value: _vm.cambiarm == 6 || _vm.cambiarm == 9,
+                  expression: "cambiarm==6 || cambiarm==9"
+                }
+              ]
+            },
+            [
+              _vm._m(28),
               _vm._v(" "),
               _c("div", { staticClass: "form-group row" }, [
                 _c(
@@ -50945,6 +51365,66 @@ var render = function() {
                 ])
               ]),
               _vm._v(" "),
+              _c("div", { staticClass: "form-group row" }, [
+                _vm._m(29),
+                _vm._v(" "),
+                _c("div", { staticClass: "col-md-5" }, [
+                  _c("table", [
+                    _c("tr", [
+                      _c("input", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.sexopd4,
+                            expression: "sexopd4"
+                          }
+                        ],
+                        attrs: {
+                          tabindexgt: "-1",
+                          type: "radio",
+                          value: "F",
+                          name: "sexo"
+                        },
+                        domProps: { checked: _vm._q(_vm.sexopd4, "F") },
+                        on: {
+                          change: function($event) {
+                            _vm.sexopd4 = "F"
+                          }
+                        }
+                      }),
+                      _vm._v("Femenino")
+                    ]),
+                    _vm._v(" "),
+                    _c("tr", [
+                      _c("input", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.sexopd4,
+                            expression: "sexopd4"
+                          }
+                        ],
+                        attrs: {
+                          tabindexgt: "-1",
+                          type: "radio",
+                          value: "M",
+                          name: "sexo"
+                        },
+                        domProps: { checked: _vm._q(_vm.sexopd4, "M") },
+                        on: {
+                          change: function($event) {
+                            _vm.sexopd4 = "M"
+                          }
+                        }
+                      }),
+                      _vm._v("Masculino")
+                    ])
+                  ])
+                ])
+              ]),
+              _vm._v(" "),
               _c("div", { staticClass: "col-md-5 modal-fo" }, [
                 _c(
                   "button",
@@ -50953,7 +51433,7 @@ var render = function() {
                     attrs: { type: "button" },
                     on: {
                       click: function($event) {
-                        return _vm.siguiente("7")
+                        return _vm.siguiente("10")
                       }
                     }
                   },
@@ -50967,7 +51447,7 @@ var render = function() {
                     attrs: { type: "button" },
                     on: {
                       click: function($event) {
-                        return _vm.siguiente("5")
+                        return _vm.siguiente("7")
                       }
                     }
                   },
@@ -50984,13 +51464,13 @@ var render = function() {
                 {
                   name: "show",
                   rawName: "v-show",
-                  value: _vm.cambiarm == 5,
-                  expression: "cambiarm==5"
+                  value: _vm.cambiarm == 7,
+                  expression: "cambiarm==7"
                 }
               ]
             },
             [
-              _vm._m(26),
+              _vm._m(30),
               _vm._v(" "),
               _c("div", { staticClass: "form-group row" }, [
                 _c(
@@ -51148,39 +51628,10 @@ var render = function() {
                 ])
               ]),
               _vm._v(" "),
-              _c("div", { staticClass: "form-group row" }, [
-                _vm._m(27),
-                _vm._v(" "),
-                _c("div", { staticClass: "col-md-5" }, [
-                  _c("input", {
-                    directives: [
-                      {
-                        name: "model",
-                        rawName: "v-model",
-                        value: _vm.nombresacerdote,
-                        expression: "nombresacerdote"
-                      }
-                    ],
-                    staticClass: "form-control",
-                    attrs: {
-                      tabindexgt: "0",
-                      placeholder: "Nombre del celebrante"
-                    },
-                    domProps: { value: _vm.nombresacerdote },
-                    on: {
-                      input: function($event) {
-                        if ($event.target.composing) {
-                          return
-                        }
-                        _vm.nombresacerdote = $event.target.value
-                      }
-                    }
-                  })
-                ])
-              ]),
+              _vm._m(31),
               _vm._v(" "),
               _c("div", { staticClass: "form-group row" }, [
-                _vm._m(28),
+                _vm._m(32),
                 _vm._v(" "),
                 _c("div", { staticClass: "col-md-5" }, [
                   _c("input", {
@@ -51228,7 +51679,7 @@ var render = function() {
                         attrs: { type: "button" },
                         on: {
                           click: function($event) {
-                            return _vm.siguiente("6")
+                            return _vm.siguiente("10")
                           }
                         }
                       },
@@ -51321,7 +51772,7 @@ var render = function() {
       {
         staticClass: "modal fade",
         class: { mostrar: _vm.modal },
-        staticStyle: { display: "none" },
+        staticStyle: { "overflow-y": "scroll" },
         attrs: {
           tabindex: "-1",
           role: "dialog",
@@ -52324,7 +52775,7 @@ var render = function() {
                             staticClass: "col-md-4 form-control-label",
                             attrs: { for: "text-input" }
                           },
-                          [_vm._v("Realizó su Primera Comunión:")]
+                          [_vm._v("Realizó su bautizo:")]
                         ),
                         _vm._v(" "),
                         _c(
@@ -52435,7 +52886,7 @@ var render = function() {
                             attrs: { type: "submit" },
                             on: {
                               click: function($event) {
-                                return _vm.siguiente("11")
+                                return _vm.siguiente("13")
                               }
                             }
                           },
@@ -52732,6 +53183,19 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
+    return _c(
+      "label",
+      {
+        staticClass: "col-md-3 form-control-label",
+        attrs: { for: "text-input" }
+      },
+      [_vm._v("Sexo"), _c("b", { staticClass: "alerta" }, [_vm._v("*")])]
+    )
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
     return _c("div", { staticClass: "form-group row" }, [
       _c(
         "label",
@@ -52742,6 +53206,19 @@ var staticRenderFns = [
         [_c("b", [_vm._v("Datos del padrino 2")])]
       )
     ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "label",
+      {
+        staticClass: "col-md-3 form-control-label",
+        attrs: { for: "text-input" }
+      },
+      [_vm._v("Sexo"), _c("b", { staticClass: "alerta" }, [_vm._v("*")])]
+    )
   },
   function() {
     var _vm = this
@@ -52803,6 +53280,19 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
+    return _c(
+      "label",
+      {
+        staticClass: "col-md-3 form-control-label",
+        attrs: { for: "text-input" }
+      },
+      [_vm._v("Sexo"), _c("b", { staticClass: "alerta" }, [_vm._v("*")])]
+    )
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
     return _c("div", { staticClass: "form-group row" }, [
       _c(
         "label",
@@ -52813,6 +53303,19 @@ var staticRenderFns = [
         [_c("b", [_vm._v("Datos del padrino 4")])]
       )
     ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "label",
+      {
+        staticClass: "col-md-3 form-control-label",
+        attrs: { for: "text-input" }
+      },
+      [_vm._v("Sexo"), _c("b", { staticClass: "alerta" }, [_vm._v("*")])]
+    )
   },
   function() {
     var _vm = this
@@ -52833,17 +53336,21 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c(
-      "label",
-      {
-        staticClass: "col-md-3 form-control-label",
-        attrs: { for: "text-input" }
-      },
-      [
-        _vm._v("Nombre del sacerdote"),
-        _c("b", { staticClass: "alerta" }, [_vm._v("*")])
-      ]
-    )
+    return _c("div", { staticClass: "form-group row" }, [
+      _c(
+        "label",
+        {
+          staticClass: "col-md-3 form-control-label",
+          attrs: { for: "text-input" }
+        },
+        [
+          _vm._v("Nombre del sacerdote"),
+          _c("b", { staticClass: "alerta" }, [_vm._v("*")])
+        ]
+      ),
+      _vm._v(" "),
+      _c("div", { staticClass: "col-md-5" })
+    ])
   },
   function() {
     var _vm = this
