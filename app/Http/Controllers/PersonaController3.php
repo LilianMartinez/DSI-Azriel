@@ -8,7 +8,7 @@ use App\PartidaNacimiento;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 
-class PersonaController extends Controller
+class PersonaController3 extends Controller
 {
     /**
      * Display a listing of the resource.

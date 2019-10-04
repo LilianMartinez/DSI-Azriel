@@ -2080,18 +2080,6 @@ class BautizoController extends Controller
         //
     }
 
-    public function marginacionacta(Request $request){
-        if(!$request->ajax()) return redirect('/');
-
-        $id_nota = NotaMarginal::max('id');
-        $idnota = $id_nota+1;
-
-        $notam = new NotaMarginal();
-        $notam->id = $idnota;
-        $notam->nota = $request->nota;
-        $notam->save();
-    }
-
     /**
      * Show the form for editing the specified resource.
      *

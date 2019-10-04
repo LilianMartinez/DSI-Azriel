@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use App\PartidaNacimiento;
 use Illuminate\Support\Facades\DB;
 
-class PartidaNacimientoController extends Controller
+class PartidaNacimientoController2 extends Controller
 {
     //
     public function realizante(Request $request)

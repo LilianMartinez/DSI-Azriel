@@ -64,15 +64,15 @@ Route::group(['middleware'=>['auth']],function(){
 
 
                             //TABLA PERSONA
-                            Route::get('/persona/obtener','PersonaController@realizante');
-                            Route::get('/persona/duis','PersonaController@buscarduis');
-                            Route::get('/persona/pan','PersonaController@show');
-                            Route::put('/persona/registrar','PersonaController@store');
-                            Route::get('/persona/listar','PersonaController@lista');
+                            Route::get('/persona/obtener','PersonaController3@realizante');
+                            Route::get('/persona/duis','PersonaController3@buscarduis');
+                            Route::get('/persona/pan','PersonaController3@show');
+                            Route::put('/persona/registrar','PersonaController3@store');
+                            Route::get('/persona/listar','PersonaController3@lista');
                             
 
                             //TABLA PARTIDA NACIMIENTO
-                            Route::get('/partida/busqueda','PartidaNacimientoController@realizante');
+                            Route::get('/partida/busqueda','PartidaNacimientoController2@realizante');
             });
 
 });
