@@ -49,7 +49,11 @@
                         </template>
                         
                         <template v-if="menu==3">
-                            <h1>Bautizo</h1>
+                            <bautizo></bautizo>
+                        </template>
+
+                        <template v-if="menu==18">
+                            <registrobautizo></registrobautizo>
                         </template>
                         
                         <template v-if="menu==4">

@@ -59,6 +59,23 @@ Route::group(['middleware'=>['auth']],function(){
                             Route::put('/montofijo/actualizar','MontoFijoController@update');
                             Route::put('/montofijo/eliminar','MontoFijoController@eliminar');
 
+                            //TABLA BAUTIZO
+                            Route::get('/bautizo','BautizoController@index');
+                            Route::put('/bautizo/registrar','BautizoController@store');
+                            Route::put('/bautizo/marginaracta','BautizoController@marginacionacta');
+
+
+                            //TABLA PERSONA
+                            Route::get('/persona/obtener','PersonaController3@realizante');
+                            Route::get('/persona/duis','PersonaController3@buscarduis');
+                            Route::get('/persona/pan','PersonaController3@show');
+                            Route::put('/persona/registrar','PersonaController3@store');
+                            Route::get('/persona/listar','PersonaController3@lista');
+                            
+
+                            //TABLA PARTIDA NACIMIENTO
+                            Route::get('/partida/busqueda','PartidaNacimientoController2@realizante');
+
                             //TABLA PERSONA
                             Route::get('/persona/obtener','PersonaController@realizante');
                             Route::get('/persona/buscarsacerdote','PersonaController@buscarsacerdote');

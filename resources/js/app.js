@@ -34,6 +34,8 @@ Vue.component('historialprimeracomunion', require('./components/HistorialPrimera
 Vue.component('historialconfirmas', require('./components/HistorialConfirmas.vue').default);
 Vue.component('historialsupletorias', require('./components/HistorialSupletorias.vue').default);
 Vue.component('resumeneconomico', require('./components/ResumenEconomico.vue').default);
+Vue.component('bautizo', require('./components/Bautizo.vue').default);
+Vue.component('registrobautizo', require('./components/RegistroBautizo.vue').default);
 Vue.component('categoriaresumen', require('./components/MantenimientoCategoriaResumen.vue').default);
 Vue.component('religiosos', require('./components/MantenimientoReligiosos.vue').default);
 Vue.component('iglesias', require('./components/MantenimientoIglesia.vue').default);
