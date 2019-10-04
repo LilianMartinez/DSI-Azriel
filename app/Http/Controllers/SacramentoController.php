@@ -38,8 +38,7 @@ class SacramentoController extends Controller
             'mad1.dui_pasaporte as mad1D', 'mad1.nombre_persona as mad1Nom', 'mad1.apellido_persona as mad1Ap', 'mad1.id as id_madrina1',
             'pad2.dui_pasaporte as pad2D', 'pad2.nombre_persona as pad2Nom', 'pad2.apellido_persona as pad2Ap', 'pad2.id as id_padrino2',
             'mad2.dui_pasaporte as mad2D', 'mad2.nombre_persona as mad2Nom', 'mad2.apellido_persona as mad2Ap', 'mad2.id as id_madrina2',
-            'sacerdote.dui_pasaporte as sacerdoteD', 'sacerdote.nombre_persona as sacerdoteNom', 'sacerdote.apellido_persona as sacerdoteAp', 'sacerdote.id as id_sacerdote',
-            )
+            'sacerdote.dui_pasaporte as sacerdoteD', 'sacerdote.nombre_persona as sacerdoteNom', 'sacerdote.apellido_persona as sacerdoteAp', 'sacerdote.id as id_sacerdote')
             ->where('s.tipo_sacramento','=',4)
             ->orderBy('s.id', 'desc')
             ->paginate(10);
@@ -63,8 +62,7 @@ class SacramentoController extends Controller
                 'mad1.dui_pasaporte as mad1D', 'mad1.nombre_persona as mad1Nom', 'mad1.apellido_persona as mad1Ap', 'mad1.id as id_madrina1',
                 'pad2.dui_pasaporte as pad2D', 'pad2.nombre_persona as pad2Nom', 'pad2.apellido_persona as pad2Ap', 'pad2.id as id_padrino2',
                 'mad2.dui_pasaporte as mad2D', 'mad2.nombre_persona as mad2Nom', 'mad2.apellido_persona as mad2Ap', 'mad2.id as id_madrina2',
-                'sacerdote.dui_pasaporte as sacerdoteD', 'sacerdote.nombre_persona as sacerdoteNom', 'sacerdote.apellido_persona as sacerdoteAp', 'sacerdote.id as id_sacerdote',
-                )                     
+                'sacerdote.dui_pasaporte as sacerdoteD', 'sacerdote.nombre_persona as sacerdoteNom', 'sacerdote.apellido_persona as sacerdoteAp', 'sacerdote.id as id_sacerdote')                     
                 ->where('s.tipo_sacramento','=',4)
                 ->where('s.'.$criterio, 'like', '%'. $buscar . '%')
                 ->orderBy('s.id', 'desc')->paginate(10);
@@ -86,8 +84,7 @@ class SacramentoController extends Controller
                     'mad1.dui_pasaporte as mad1D', 'mad1.nombre_persona as mad1Nom', 'mad1.apellido_persona as mad1Ap', 'mad1.id as id_madrina1',
                     'pad2.dui_pasaporte as pad2D', 'pad2.nombre_persona as pad2Nom', 'pad2.apellido_persona as pad2Ap', 'pad2.id as id_padrino2',
                     'mad2.dui_pasaporte as mad2D', 'mad2.nombre_persona as mad2Nom', 'mad2.apellido_persona as mad2Ap', 'mad2.id as id_madrina2',
-                    'sacerdote.dui_pasaporte as sacerdoteD', 'sacerdote.nombre_persona as sacerdoteNom', 'sacerdote.apellido_persona as sacerdoteAp', 'sacerdote.id as id_sacerdote',
-                    )                     
+                    'sacerdote.dui_pasaporte as sacerdoteD', 'sacerdote.nombre_persona as sacerdoteNom', 'sacerdote.apellido_persona as sacerdoteAp', 'sacerdote.id as id_sacerdote')                     
                     ->where('s.tipo_sacramento','=',4)
                     ->where('p1.apellido_persona', 'like', '%'. $buscar . '%')
                     ->orWhere('p2.apellido_persona', 'like', '%'. $buscar . '%')
@@ -109,8 +106,7 @@ class SacramentoController extends Controller
                     'mad1.dui_pasaporte as mad1D', 'mad1.nombre_persona as mad1Nom', 'mad1.apellido_persona as mad1Ap', 'mad1.id as id_madrina1',
                     'pad2.dui_pasaporte as pad2D', 'pad2.nombre_persona as pad2Nom', 'pad2.apellido_persona as pad2Ap', 'pad2.id as id_padrino2',
                     'mad2.dui_pasaporte as mad2D', 'mad2.nombre_persona as mad2Nom', 'mad2.apellido_persona as mad2Ap', 'mad2.id as id_madrina2',
-                    'sacerdote.dui_pasaporte as sacerdoteD', 'sacerdote.nombre_persona as sacerdoteNom', 'sacerdote.apellido_persona as sacerdoteAp', 'sacerdote.id as id_sacerdote',
-                    )                     
+                    'sacerdote.dui_pasaporte as sacerdoteD', 'sacerdote.nombre_persona as sacerdoteNom', 'sacerdote.apellido_persona as sacerdoteAp', 'sacerdote.id as id_sacerdote')                     
                     ->where('s.tipo_sacramento','=',4)
                     ->where('p1.nombre_persona', 'like', '%'. $buscar . '%')
                     ->orWhere('p2.nombre_persona', 'like', '%'. $buscar . '%')
@@ -182,7 +178,7 @@ class SacramentoController extends Controller
                 $efectivo->id=$montos;
                 $efectivo->descripcion_efectivo='Matrimonio';
                 $efectivo->idcare=$request->idcate;
-                $efectivo->tipo= 4;
+                $efectivo->tipo= 1;
                 $efectivo->monto=$request->monto;
                 $efectivo->fecha= new \DateTime();
                 $efectivo->save();
@@ -249,7 +245,7 @@ class SacramentoController extends Controller
                 $efectivo->id=$montos;
                 $efectivo->descripcion_efectivo='Matrimonio';
                 $efectivo->idcare=$request->idcate;
-                $efectivo->tipo= 4;
+                $efectivo->tipo= 1;
                 $efectivo->monto=$request->monto;
                 $efectivo->fecha= new \DateTime();
                 $efectivo->save();
@@ -309,7 +305,7 @@ class SacramentoController extends Controller
                 $efectivo->id=$montos;
                 $efectivo->descripcion_efectivo='Matrimonio';
                 $efectivo->idcare=$request->idcate;
-                $efectivo->tipo= 4;
+                $efectivo->tipo= 1;
                 $efectivo->monto=$request->monto;
                 $efectivo->fecha= new \DateTime();
                 $efectivo->save();
@@ -368,7 +364,7 @@ class SacramentoController extends Controller
                 $efectivo->id=$montos;
                 $efectivo->descripcion_efectivo='Matrimonio';
                 $efectivo->idcare=$request->idcate;
-                $efectivo->tipo= 4;
+                $efectivo->tipo= 1;
                 $efectivo->monto=$request->monto;
                 $efectivo->fecha= new \DateTime();
                 $efectivo->save();
@@ -419,7 +415,7 @@ class SacramentoController extends Controller
                 $efectivo->id=$montos;
                 $efectivo->descripcion_efectivo='Matrimonio';
                 $efectivo->idcare=$request->idcate;
-                $efectivo->tipo= 4;
+                $efectivo->tipo= 1;
                 $efectivo->monto=$request->monto;
                 $efectivo->fecha= new \DateTime();
                 $efectivo->save();
@@ -478,7 +474,7 @@ class SacramentoController extends Controller
                 $efectivo->id=$montos;
                 $efectivo->descripcion_efectivo='Matrimonio';
                 $efectivo->idcare=$request->idcate;
-                $efectivo->tipo= 4;
+                $efectivo->tipo= 1;
                 $efectivo->monto=$request->monto;
                 $efectivo->fecha= new \DateTime();
                 $efectivo->save();
@@ -529,7 +525,7 @@ class SacramentoController extends Controller
                 $efectivo->id=$montos;
                 $efectivo->descripcion_efectivo='Matrimonio';
                 $efectivo->idcare=$request->idcate;
-                $efectivo->tipo= 4;
+                $efectivo->tipo= 1;
                 $efectivo->monto=$request->monto;
                 $efectivo->fecha= new \DateTime();
                 $efectivo->save();
@@ -580,7 +576,7 @@ class SacramentoController extends Controller
                 $efectivo->id=$montos;
                 $efectivo->descripcion_efectivo='Matrimonio';
                 $efectivo->idcare=$request->idcate;
-                $efectivo->tipo= 4;
+                $efectivo->tipo= 1;
                 $efectivo->monto=$request->monto;
                 $efectivo->fecha= new \DateTime();
                 $efectivo->save();
@@ -623,7 +619,7 @@ class SacramentoController extends Controller
                 $efectivo->id=$montos;
                 $efectivo->descripcion_efectivo='Matrimonio';
                 $efectivo->idcare=$request->idcate;
-                $efectivo->tipo= 4;
+                $efectivo->tipo= 1;
                 $efectivo->monto=$request->monto;
                 $efectivo->fecha= new \DateTime();
                 $efectivo->save();
@@ -682,7 +678,7 @@ class SacramentoController extends Controller
                 $efectivo->id=$montos;
                 $efectivo->descripcion_efectivo='Matrimonio';
                 $efectivo->idcare=$request->idcate;
-                $efectivo->tipo= 4;
+                $efectivo->tipo= 1;
                 $efectivo->monto=$request->monto;
                 $efectivo->fecha= new \DateTime();
                 $efectivo->save();
@@ -733,7 +729,7 @@ class SacramentoController extends Controller
                 $efectivo->id=$montos;
                 $efectivo->descripcion_efectivo='Matrimonio';
                 $efectivo->idcare=$request->idcate;
-                $efectivo->tipo= 4;
+                $efectivo->tipo= 1;
                 $efectivo->monto=$request->monto;
                 $efectivo->fecha= new \DateTime();
                 $efectivo->save();
@@ -784,7 +780,7 @@ class SacramentoController extends Controller
                 $efectivo->id=$montos;
                 $efectivo->descripcion_efectivo='Matrimonio';
                 $efectivo->idcare=$request->idcate;
-                $efectivo->tipo= 4;
+                $efectivo->tipo= 1;
                 $efectivo->monto=$request->monto;
                 $efectivo->fecha= new \DateTime();
                 $efectivo->save();
@@ -827,7 +823,7 @@ class SacramentoController extends Controller
                 $efectivo->id=$montos;
                 $efectivo->descripcion_efectivo='Matrimonio';
                 $efectivo->idcare=$request->idcate;
-                $efectivo->tipo= 4;
+                $efectivo->tipo= 1;
                 $efectivo->monto=$request->monto;
                 $efectivo->fecha= new \DateTime();
                 $efectivo->save();
@@ -878,7 +874,7 @@ class SacramentoController extends Controller
                 $efectivo->id=$montos;
                 $efectivo->descripcion_efectivo='Matrimonio';
                 $efectivo->idcare=$request->idcate;
-                $efectivo->tipo= 4;
+                $efectivo->tipo= 1;
                 $efectivo->monto=$request->monto;
                 $efectivo->fecha= new \DateTime();
                 $efectivo->save();
@@ -921,7 +917,7 @@ class SacramentoController extends Controller
                 $efectivo->id=$montos;
                 $efectivo->descripcion_efectivo='Matrimonio';
                 $efectivo->idcare=$request->idcate;
-                $efectivo->tipo= 4;
+                $efectivo->tipo= 1;
                 $efectivo->monto=$request->monto;
                 $efectivo->fecha= new \DateTime();
                 $efectivo->save();
@@ -963,7 +959,7 @@ class SacramentoController extends Controller
                 $efectivo->id=$montos;
                 $efectivo->descripcion_efectivo='Matrimonio';
                 $efectivo->idcare=$request->idcate;
-                $efectivo->tipo= 4;
+                $efectivo->tipo= 1;
                 $efectivo->monto=$request->monto;
                 $efectivo->fecha= new \DateTime();
                 $efectivo->save();
