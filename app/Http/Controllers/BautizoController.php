@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Sacramentos3;
 use App\Persona;
-use App\NotaMarginal;
+use App\Efectivo;
 use App\PartidaNacimiento;
 use Illuminate\Support\Facades\DB;
 
@@ -67,6 +67,17 @@ class BautizoController extends Controller
                 $idsacramento = $idsacra+1;
                 $idpartida = PartidaNacimiento::max('id');
                 $idp = $idpartida+1;
+                $monto_p= Efectivo::max('id');
+                $montos=$monto_p+1;
+
+                $efectivo = new Efectivo();
+                $efectivo->id=$montos;
+                $efectivo->descripcion_efectivo='BAUTISMO';
+                $efectivo->idcare=$request->idcate;
+                $efectivo->tipo= 1;
+                $efectivo->monto=$request->monto;
+                $efectivo->fecha= new \DateTime();
+                $efectivo->save();
 
                 $persona_reali = new Persona();
                 $persona_reali->id = $idreali;
@@ -116,6 +127,18 @@ class BautizoController extends Controller
                 $idsacramento = $idsacra+1;
                 $idpartida = PartidaNacimiento::max('id');
                 $idp = $idpartida+1;
+                $monto_p= Efectivo::max('id');
+                $montos=$monto_p+1;
+
+                $efectivo = new Efectivo();
+                $efectivo->id=$montos;
+                $efectivo->descripcion_efectivo='BAUTISMO';
+                $efectivo->idcare=$request->idcate;
+                $efectivo->tipo= 1;
+                $efectivo->monto=$request->monto;
+                $efectivo->fecha= new \DateTime();
+                $efectivo->save();
+
 
                 $personapd3=new Persona();
                 $personapd3->id=$idpa3;
@@ -180,6 +203,18 @@ class BautizoController extends Controller
                 $idsacramento = $idsacra+1;
                 $idpartida = PartidaNacimiento::max('id');
                 $idp = $idpartida+1;
+                $monto_p= Efectivo::max('id');
+                $montos=$monto_p+1;
+
+                $efectivo = new Efectivo();
+                $efectivo->id=$montos;
+                $efectivo->descripcion_efectivo='BAUTISMO';
+                $efectivo->idcare=$request->idcate;
+                $efectivo->tipo= 1;
+                $efectivo->monto=$request->monto;
+                $efectivo->fecha= new \DateTime();
+                $efectivo->save();
+
 
                 $personapd4=new Persona();
                 $personapd4->id=$idpa4;
@@ -238,6 +273,18 @@ class BautizoController extends Controller
                 $idsacramento = $idsacra+1;
                 $idpartida = PartidaNacimiento::max('id');
                 $idp = $idpartida+1;
+                $monto_p= Efectivo::max('id');
+                $montos=$monto_p+1;
+
+                $efectivo = new Efectivo();
+                $efectivo->id=$montos;
+                $efectivo->descripcion_efectivo='BAUTISMO';
+                $efectivo->idcare=$request->idcate;
+                $efectivo->tipo= 1;
+                $efectivo->monto=$request->monto;
+                $efectivo->fecha= new \DateTime();
+                $efectivo->save();
+
 
                 $personapd2=new Persona();
                 $personapd2->id=$idpa2;
@@ -312,6 +359,17 @@ class BautizoController extends Controller
                 $idsacramento = $idsacra+1;
                 $idpartida = PartidaNacimiento::max('id');
                 $idp = $idpartida+1;
+                $monto_p= Efectivo::max('id');
+                $montos=$monto_p+1;
+
+                $efectivo = new Efectivo();
+                $efectivo->id=$montos;
+                $efectivo->descripcion_efectivo='BAUTISMO';
+                $efectivo->idcare=$request->idcate;
+                $efectivo->tipo= 1;
+                $efectivo->monto=$request->monto;
+                $efectivo->fecha= new \DateTime();
+                $efectivo->save();
 
                 $personap=new Persona();
                 $personap->id=$idpa;
@@ -384,6 +442,18 @@ class BautizoController extends Controller
                 $idsacramento = $idsacra+1;
                 $idpartida = PartidaNacimiento::max('id');
                 $idp = $idpartida+1;
+                $monto_p= Efectivo::max('id');
+                $montos=$monto_p+1;
+
+                $efectivo = new Efectivo();
+                $efectivo->id=$montos;
+                $efectivo->descripcion_efectivo='BAUTISMO';
+                $efectivo->idcare=$request->idcate;
+                $efectivo->tipo= 1;
+                $efectivo->monto=$request->monto;
+                $efectivo->fecha= new \DateTime();
+                $efectivo->save();
+
 
                 $personap=new Persona();
                 $personap->id=$idpa;
@@ -450,6 +520,17 @@ class BautizoController extends Controller
                 $idsacramento = $idsacra+1;
                 $idpartida = PartidaNacimiento::max('id');
                 $idp = $idpartida+1;
+                $monto_p= Efectivo::max('id');
+                $montos=$monto_p+1;
+
+                $efectivo = new Efectivo();
+                $efectivo->id=$montos;
+                $efectivo->descripcion_efectivo='BAUTISMO';
+                $efectivo->idcare=$request->idcate;
+                $efectivo->tipo= 1;
+                $efectivo->monto=$request->monto;
+                $efectivo->fecha= new \DateTime();
+                $efectivo->save();
 
                 $personap=new Persona();
                 $personap->id=$idpa;
@@ -529,6 +610,17 @@ class BautizoController extends Controller
                 $idsacramento = $idsacra+1;
                 $idpartida = PartidaNacimiento::max('id');
                 $idp = $idpartida+1;
+                $monto_p= Efectivo::max('id');
+                $montos=$monto_p+1;
+
+                $efectivo = new Efectivo();
+                $efectivo->id=$montos;
+                $efectivo->descripcion_efectivo='BAUTISMO';
+                $efectivo->idcare=$request->idcate;
+                $efectivo->tipo= 1;
+                $efectivo->monto=$request->monto;
+                $efectivo->fecha= new \DateTime();
+                $efectivo->save();
 
                 $personap=new Persona();
                 $personap->id=$idpa;
@@ -584,6 +676,17 @@ class BautizoController extends Controller
                 $idsacramento = $idsacra+1;
                 $idpartida = PartidaNacimiento::max('id');
                 $idp = $idpartida+1;
+                $monto_p= Efectivo::max('id');
+                $montos=$monto_p+1;
+
+                $efectivo = new Efectivo();
+                $efectivo->id=$montos;
+                $efectivo->descripcion_efectivo='BAUTISMO';
+                $efectivo->idcare=$request->idcate;
+                $efectivo->tipo= 1;
+                $efectivo->monto=$request->monto;
+                $efectivo->fecha= new \DateTime();
+                $efectivo->save();
 
                 $personam=new Persona();
                 $personam->id=$idma;
@@ -640,6 +743,17 @@ class BautizoController extends Controller
                 $idsacramento = $idsacra+1;
                 $idpartida = PartidaNacimiento::max('id');
                 $idp = $idpartida+1;
+                $monto_p= Efectivo::max('id');
+                $montos=$monto_p+1;
+
+                $efectivo = new Efectivo();
+                $efectivo->id=$montos;
+                $efectivo->descripcion_efectivo='BAUTISMO';
+                $efectivo->idcare=$request->idcate;
+                $efectivo->tipo= 1;
+                $efectivo->monto=$request->monto;
+                $efectivo->fecha= new \DateTime();
+                $efectivo->save();
 
                 $personam=new Persona();
                 $personam->id=$idma;
@@ -705,6 +819,17 @@ class BautizoController extends Controller
                 $idsacramento = $idsacra+1;
                 $idpartida = PartidaNacimiento::max('id');
                 $idp = $idpartida+1;
+                $monto_p= Efectivo::max('id');
+                $montos=$monto_p+1;
+
+                $efectivo = new Efectivo();
+                $efectivo->id=$montos;
+                $efectivo->descripcion_efectivo='BAUTISMO';
+                $efectivo->idcare=$request->idcate;
+                $efectivo->tipo= 1;
+                $efectivo->monto=$request->monto;
+                $efectivo->fecha= new \DateTime();
+                $efectivo->save();
 
                 $personam=new Persona();
                 $personam->id=$idma;
@@ -779,6 +904,17 @@ class BautizoController extends Controller
                 $idsacramento = $idsacra+1;
                 $idpartida = PartidaNacimiento::max('id');
                 $idp = $idpartida+1;
+                $monto_p= Efectivo::max('id');
+                $montos=$monto_p+1;
+
+                $efectivo = new Efectivo();
+                $efectivo->id=$montos;
+                $efectivo->descripcion_efectivo='BAUTISMO';
+                $efectivo->idcare=$request->idcate;
+                $efectivo->tipo= 1;
+                $efectivo->monto=$request->monto;
+                $efectivo->fecha= new \DateTime();
+                $efectivo->save();
 
                 $personam=new Persona();
                 $personam->id=$idma;
@@ -863,6 +999,17 @@ class BautizoController extends Controller
                 $idsacramento = $idsacra+1;
                 $idpartida = PartidaNacimiento::max('id');
                 $idp = $idpartida+1;
+                $monto_p= Efectivo::max('id');
+                $montos=$monto_p+1;
+
+                $efectivo = new Efectivo();
+                $efectivo->id=$montos;
+                $efectivo->descripcion_efectivo='BAUTISMO';
+                $efectivo->idcare=$request->idcate;
+                $efectivo->tipo= 1;
+                $efectivo->monto=$request->monto;
+                $efectivo->fecha= new \DateTime();
+                $efectivo->save();
 
                 $personam=new Persona();
                 $personam->id=$idma;
@@ -958,6 +1105,17 @@ class BautizoController extends Controller
                 $idsacramento = $idsacra+1;
                 $idpartida = PartidaNacimiento::max('id');
                 $idp = $idpartida+1;
+                $monto_p= Efectivo::max('id');
+                $montos=$monto_p+1;
+
+                $efectivo = new Efectivo();
+                $efectivo->id=$montos;
+                $efectivo->descripcion_efectivo='BAUTISMO';
+                $efectivo->idcare=$request->idcate;
+                $efectivo->tipo= 1;
+                $efectivo->monto=$request->monto;
+                $efectivo->fecha= new \DateTime();
+                $efectivo->save();
 
                 $personam=new Persona();
                 $personam->id=$idma;
@@ -1022,6 +1180,17 @@ class BautizoController extends Controller
                 $idsacramento = $idsacra+1;
                 $idpartida = PartidaNacimiento::max('id');
                 $idp = $idpartida+1;
+                $monto_p= Efectivo::max('id');
+                $montos=$monto_p+1;
+
+                $efectivo = new Efectivo();
+                $efectivo->id=$montos;
+                $efectivo->descripcion_efectivo='BAUTISMO';
+                $efectivo->idcare=$request->idcate;
+                $efectivo->tipo= 1;
+                $efectivo->monto=$request->monto;
+                $efectivo->fecha= new \DateTime();
+                $efectivo->save();
 
                 $personam=new Persona();
                 $personam->id=$idma;
@@ -1095,6 +1264,17 @@ class BautizoController extends Controller
                 $idsacramento = $idsacra+1;
                 $idpartida = PartidaNacimiento::max('id');
                 $idp = $idpartida+1;
+                $monto_p= Efectivo::max('id');
+                $montos=$monto_p+1;
+
+                $efectivo = new Efectivo();
+                $efectivo->id=$montos;
+                $efectivo->descripcion_efectivo='BAUTISMO';
+                $efectivo->idcare=$request->idcate;
+                $efectivo->tipo= 1;
+                $efectivo->monto=$request->monto;
+                $efectivo->fecha= new \DateTime();
+                $efectivo->save();
 
                 $personam=new Persona();
                 $personam->id=$idma;
@@ -1177,6 +1357,17 @@ class BautizoController extends Controller
                 $idsacramento = $idsacra+1;
                 $idpartida = PartidaNacimiento::max('id');
                 $idp = $idpartida+1;
+                $monto_p= Efectivo::max('id');
+                $montos=$monto_p+1;
+
+                $efectivo = new Efectivo();
+                $efectivo->id=$montos;
+                $efectivo->descripcion_efectivo='BAUTISMO';
+                $efectivo->idcare=$request->idcate;
+                $efectivo->tipo= 1;
+                $efectivo->monto=$request->monto;
+                $efectivo->fecha= new \DateTime();
+                $efectivo->save();
 
                 $personam=new Persona();
                 $personam->id=$idma;
@@ -1262,6 +1453,17 @@ class BautizoController extends Controller
                 $idsacramento = $idsacra+1;
                 $idpartida = PartidaNacimiento::max('id');
                 $idp = $idpartida+1;
+                $monto_p= Efectivo::max('id');
+                $montos=$monto_p+1;
+
+                $efectivo = new Efectivo();
+                $efectivo->id=$montos;
+                $efectivo->descripcion_efectivo='BAUTISMO';
+                $efectivo->idcare=$request->idcate;
+                $efectivo->tipo= 1;
+                $efectivo->monto=$request->monto;
+                $efectivo->fecha= new \DateTime();
+                $efectivo->save();
 
                 $persona_reali = new Persona();
                 $persona_reali->id = $idreali;
@@ -1308,6 +1510,17 @@ class BautizoController extends Controller
                 $idsacramento = $idsacra+1;
                 $idpartida = PartidaNacimiento::max('id');
                 $idp = $idpartida+1;
+                $monto_p= Efectivo::max('id');
+                $montos=$monto_p+1;
+
+                $efectivo = new Efectivo();
+                $efectivo->id=$montos;
+                $efectivo->descripcion_efectivo='BAUTISMO';
+                $efectivo->idcare=$request->idcate;
+                $efectivo->tipo= 1;
+                $efectivo->monto=$request->monto;
+                $efectivo->fecha= new \DateTime();
+                $efectivo->save();
 
                 $persona_reali = new Persona();
                 $persona_reali->id = $idreali;
@@ -1353,6 +1566,17 @@ class BautizoController extends Controller
                 $idsacramento = $idsacra+1;
                 $idpartida = PartidaNacimiento::max('id');
                 $idp = $idpartida+1;
+                $monto_p= Efectivo::max('id');
+                $montos=$monto_p+1;
+
+                $efectivo = new Efectivo();
+                $efectivo->id=$montos;
+                $efectivo->descripcion_efectivo='BAUTISMO';
+                $efectivo->idcare=$request->idcate;
+                $efectivo->tipo= 1;
+                $efectivo->monto=$request->monto;
+                $efectivo->fecha= new \DateTime();
+                $efectivo->save();
 
                 $persona_reali = new Persona();
                 $persona_reali->id = $idreali;
@@ -1397,6 +1621,17 @@ class BautizoController extends Controller
                 $idsacramento = $idsacra+1;
                 $idpartida = PartidaNacimiento::max('id');
                 $idp = $idpartida+1;
+                $monto_p= Efectivo::max('id');
+                $montos=$monto_p+1;
+
+                $efectivo = new Efectivo();
+                $efectivo->id=$montos;
+                $efectivo->descripcion_efectivo='BAUTISMO';
+                $efectivo->idcare=$request->idcate;
+                $efectivo->tipo= 1;
+                $efectivo->monto=$request->monto;
+                $efectivo->fecha= new \DateTime();
+                $efectivo->save();
 
                 $persona_reali = new Persona();
                 $persona_reali->id = $idreali;
@@ -1440,6 +1675,17 @@ class BautizoController extends Controller
                 $idsacramento = $idsacra+1;
                 $idpartida = PartidaNacimiento::max('id');
                 $idp = $idpartida+1;
+                $monto_p= Efectivo::max('id');
+                $montos=$monto_p+1;
+
+                $efectivo = new Efectivo();
+                $efectivo->id=$montos;
+                $efectivo->descripcion_efectivo='BAUTISMO';
+                $efectivo->idcare=$request->idcate;
+                $efectivo->tipo= 1;
+                $efectivo->monto=$request->monto;
+                $efectivo->fecha= new \DateTime();
+                $efectivo->save();
 
                 $persona_reali = new Persona();
                 $persona_reali->id = $idreali;
@@ -1486,6 +1732,17 @@ class BautizoController extends Controller
                 $idsacramento = $idsacra+1;
                 $idpartida = PartidaNacimiento::max('id');
                 $idp = $idpartida+1;
+                $monto_p= Efectivo::max('id');
+                $montos=$monto_p+1;
+
+                $efectivo = new Efectivo();
+                $efectivo->id=$montos;
+                $efectivo->descripcion_efectivo='BAUTISMO';
+                $efectivo->idcare=$request->idcate;
+                $efectivo->tipo= 1;
+                $efectivo->monto=$request->monto;
+                $efectivo->fecha= new \DateTime();
+                $efectivo->save();
 
                 $persona_reali = new Persona();
                 $persona_reali->id = $idreali;
@@ -1531,6 +1788,17 @@ class BautizoController extends Controller
                 $idsacramento = $idsacra+1;
                 $idpartida = PartidaNacimiento::max('id');
                 $idp = $idpartida+1;
+                $monto_p= Efectivo::max('id');
+                $montos=$monto_p+1;
+
+                $efectivo = new Efectivo();
+                $efectivo->id=$montos;
+                $efectivo->descripcion_efectivo='BAUTISMO';
+                $efectivo->idcare=$request->idcate;
+                $efectivo->tipo= 1;
+                $efectivo->monto=$request->monto;
+                $efectivo->fecha= new \DateTime();
+                $efectivo->save();
 
                 $persona_reali = new Persona();
                 $persona_reali->id = $idreali;
@@ -1575,6 +1843,17 @@ class BautizoController extends Controller
                 $idsacramento = $idsacra+1;
                 $idpartida = PartidaNacimiento::max('id');
                 $idp = $idpartida+1;
+                $monto_p= Efectivo::max('id');
+                $montos=$monto_p+1;
+
+                $efectivo = new Efectivo();
+                $efectivo->id=$montos;
+                $efectivo->descripcion_efectivo='BAUTISMO';
+                $efectivo->idcare=$request->idcate;
+                $efectivo->tipo= 1;
+                $efectivo->monto=$request->monto;
+                $efectivo->fecha= new \DateTime();
+                $efectivo->save();
 
                 $persona_reali = new Persona();
                 $persona_reali->id = $idreali;
@@ -1618,6 +1897,17 @@ class BautizoController extends Controller
                 $idsacramento = $idsacra+1;
                 $idpartida = PartidaNacimiento::max('id');
                 $idp = $idpartida+1;
+                $monto_p= Efectivo::max('id');
+                $montos=$monto_p+1;
+
+                $efectivo = new Efectivo();
+                $efectivo->id=$montos;
+                $efectivo->descripcion_efectivo='BAUTISMO';
+                $efectivo->idcare=$request->idcate;
+                $efectivo->tipo= 1;
+                $efectivo->monto=$request->monto;
+                $efectivo->fecha= new \DateTime();
+                $efectivo->save();
 
                 $persona_reali = new Persona();
                 $persona_reali->id = $idreali;
@@ -1660,6 +1950,17 @@ class BautizoController extends Controller
                 $idsacramento = $idsacra+1;
                 $idpartida = PartidaNacimiento::max('id');
                 $idp = $idpartida+1;
+                $monto_p= Efectivo::max('id');
+                $montos=$monto_p+1;
+
+                $efectivo = new Efectivo();
+                $efectivo->id=$montos;
+                $efectivo->descripcion_efectivo='BAUTISMO';
+                $efectivo->idcare=$request->idcate;
+                $efectivo->tipo= 1;
+                $efectivo->monto=$request->monto;
+                $efectivo->fecha= new \DateTime();
+                $efectivo->save();
 
                 $persona_reali = new Persona();
                 $persona_reali->id = $idreali;
@@ -1706,6 +2007,17 @@ class BautizoController extends Controller
                 $idsacramento = $idsacra+1;
                 $idpartida = PartidaNacimiento::max('id');
                 $idp = $idpartida+1;
+                $monto_p= Efectivo::max('id');
+                $montos=$monto_p+1;
+
+                $efectivo = new Efectivo();
+                $efectivo->id=$montos;
+                $efectivo->descripcion_efectivo='BAUTISMO';
+                $efectivo->idcare=$request->idcate;
+                $efectivo->tipo= 1;
+                $efectivo->monto=$request->monto;
+                $efectivo->fecha= new \DateTime();
+                $efectivo->save();
 
                 $persona_reali = new Persona();
                 $persona_reali->id = $idreali;
@@ -1751,6 +2063,17 @@ class BautizoController extends Controller
                 $idsacramento = $idsacra+1;
                 $idpartida = PartidaNacimiento::max('id');
                 $idp = $idpartida+1;
+                $monto_p= Efectivo::max('id');
+                $montos=$monto_p+1;
+
+                $efectivo = new Efectivo();
+                $efectivo->id=$montos;
+                $efectivo->descripcion_efectivo='BAUTISMO';
+                $efectivo->idcare=$request->idcate;
+                $efectivo->tipo= 1;
+                $efectivo->monto=$request->monto;
+                $efectivo->fecha= new \DateTime();
+                $efectivo->save();
 
                 $persona_reali = new Persona();
                 $persona_reali->id = $idreali;
@@ -1795,6 +2118,17 @@ class BautizoController extends Controller
                 $idsacramento = $idsacra+1;
                 $idpartida = PartidaNacimiento::max('id');
                 $idp = $idpartida+1;
+                $monto_p= Efectivo::max('id');
+                $montos=$monto_p+1;
+
+                $efectivo = new Efectivo();
+                $efectivo->id=$montos;
+                $efectivo->descripcion_efectivo='BAUTISMO';
+                $efectivo->idcare=$request->idcate;
+                $efectivo->tipo= 1;
+                $efectivo->monto=$request->monto;
+                $efectivo->fecha= new \DateTime();
+                $efectivo->save();
 
                 $persona_reali = new Persona();
                 $persona_reali->id = $idreali;
@@ -1838,6 +2172,17 @@ class BautizoController extends Controller
                 $idsacramento = $idsacra+1;
                 $idpartida = PartidaNacimiento::max('id');
                 $idp = $idpartida+1;
+                $monto_p= Efectivo::max('id');
+                $montos=$monto_p+1;
+
+                $efectivo = new Efectivo();
+                $efectivo->id=$montos;
+                $efectivo->descripcion_efectivo='BAUTISMO';
+                $efectivo->idcare=$request->idcate;
+                $efectivo->tipo= 1;
+                $efectivo->monto=$request->monto;
+                $efectivo->fecha= new \DateTime();
+                $efectivo->save();
 
                 $persona_reali = new Persona();
                 $persona_reali->id = $idreali;
@@ -1879,6 +2224,17 @@ class BautizoController extends Controller
                 $idsacramento = $idsacra+1;
                 $idpartida = PartidaNacimiento::max('id');
                 $idp = $idpartida+1;
+                $monto_p= Efectivo::max('id');
+                $montos=$monto_p+1;
+
+                $efectivo = new Efectivo();
+                $efectivo->id=$montos;
+                $efectivo->descripcion_efectivo='BAUTISMO';
+                $efectivo->idcare=$request->idcate;
+                $efectivo->tipo= 1;
+                $efectivo->monto=$request->monto;
+                $efectivo->fecha= new \DateTime();
+                $efectivo->save();
 
                 $persona_reali = new Persona();
                 $persona_reali->id = $idreali;
@@ -1924,6 +2280,17 @@ class BautizoController extends Controller
                 $idsacramento = $idsacra+1;
                 $idpartida = PartidaNacimiento::max('id');
                 $idp = $idpartida+1;
+                $monto_p= Efectivo::max('id');
+                $montos=$monto_p+1;
+
+                $efectivo = new Efectivo();
+                $efectivo->id=$montos;
+                $efectivo->descripcion_efectivo='BAUTISMO';
+                $efectivo->idcare=$request->idcate;
+                $efectivo->tipo= 1;
+                $efectivo->monto=$request->monto;
+                $efectivo->fecha= new \DateTime();
+                $efectivo->save();
 
                 $persona_reali = new Persona();
                 $persona_reali->id = $idreali;
@@ -1968,6 +2335,17 @@ class BautizoController extends Controller
                 $idsacramento = $idsacra+1;
                 $idpartida = PartidaNacimiento::max('id');
                 $idp = $idpartida+1;
+                $monto_p= Efectivo::max('id');
+                $montos=$monto_p+1;
+
+                $efectivo = new Efectivo();
+                $efectivo->id=$montos;
+                $efectivo->descripcion_efectivo='BAUTISMO';
+                $efectivo->idcare=$request->idcate;
+                $efectivo->tipo= 1;
+                $efectivo->monto=$request->monto;
+                $efectivo->fecha= new \DateTime();
+                $efectivo->save();
 
                 $persona_reali = new Persona();
                 $persona_reali->id = $idreali;
@@ -2011,6 +2389,17 @@ class BautizoController extends Controller
                 $idsacramento = $idsacra+1;
                 $idpartida = PartidaNacimiento::max('id');
                 $idp = $idpartida+1;
+                $monto_p= Efectivo::max('id');
+                $montos=$monto_p+1;
+
+                $efectivo = new Efectivo();
+                $efectivo->id=$montos;
+                $efectivo->descripcion_efectivo='BAUTISMO';
+                $efectivo->idcare=$request->idcate;
+                $efectivo->tipo= 1;
+                $efectivo->monto=$request->monto;
+                $efectivo->fecha= new \DateTime();
+                $efectivo->save();
 
                 $persona_reali = new Persona();
                 $persona_reali->id = $idreali;

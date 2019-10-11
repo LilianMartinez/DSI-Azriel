@@ -43,6 +43,12 @@
                                     <input type="text" tabindexgt="0" v-model="anio" class="form-control" placeholder="9999">
                                 </div>
                             </div>
+                            <div v-show="errorDatos" class="form-group row div-error">
+                                <div class="text-center text-error">
+                                    <div v-for="error in errorMostrarMsj" :key="error" v-text="error">
+                                    </div>
+                                </div>
+                            </div> 
                             <div class="col-md-4 modal-fo">
                                 <button type="button" class="btn btn-secondary" @click="siguiente('1')">Siguiente</button>
                             </div>  
@@ -579,8 +585,13 @@ export default {
             dui:'',
             duimadre:'',
             duipadre:'',
+            tipo:'',
+            idsacerdote:'',
             nombresacerdote:'',
+            apellidosacerdote:'',
             arraysacerdote:[],
+            arraycategorias:[],
+            arraycargo:[],
             sexo:'',
             fechana:'',
             idpd1:'',
@@ -613,7 +624,7 @@ export default {
             partida:'',
             tipoAccion:0,
             errorDatos:0,
-            errorMostrarMjs:[],
+            errorMostrarMsj:[],
             anio:'',
             verificacion:0,
             accionbotones:0,
@@ -957,11 +968,33 @@ export default {
 
             },
 
+            validarvalores(){
+                this.errorDatos=0;
+                this.errorMostrarMsj=[];
+                var RE = /^([0-9])*$/;
+                
+                var Min_Length = 5;
+                var lengthmin = this.alcaldia.length;
+                if (lengthmin < Min_Length)this.errorMostrarMsj.push("La alcaldía debe tener más de 5 letras");
+                if(!this.libro) this.errorMostrarMsj.push("El numero de libro no puede estar vacío");
+                if (!RE.test(this.libro))  this.errorMostrarMsj.push("El numero de libro debe ser un numero entero");
+                if(!this.partida) this.errorMostrarMsj.push("En numero de partida no puede estar vacío");
+                if (!RE.test(this.partida))  this.errorMostrarMsj.push("El numero de partida debe ser un numero entero");
+                if(!this.folio) this.errorMostrarMsj.push("El numero de folio no puede estar vacío");
+                if (!RE.test(this.folio))  this.errorMostrarMsj.push("El numero de folio debe ser un numero entero");
+                if(!this.ano) this.errorMostrarMsj.push("El año no puede estar vacío");
+                if (!RE.test(this.ano))  this.errorMostrarMsj.push("El año debe ser un numero entero");
+                if(this.errorMostrarMsj.length) this.errorDatos=1;
+                return this.errorDatos;
+                
+            },
+
             registrar(){
-               
+                if(this.validarvalores()){
+                    return;
+                }
                 let me=this;
               
-                
                 var m=this.idmadre;
                 var p=this.idpadre;
                 var duim=this.duimadre;
@@ -1031,13 +1064,13 @@ export default {
                 if(m!='' && p!='' && pd1!='' && pd2!='' && dp3=='' && dp4==''){ // introduje los duis pero no hay datos de padrino 3 y 4
                     this.tipo=19;
                 }
-                if(m!='' && p!='' && pd1!='' && dp2=='' && dp3=='' && dp4==''){ // introduje los duis pero no hay datos de padrino 4
+                if(m!='' && p!='' && pd1!='' && dp2=='' && dp3=='' && dp4==''){ // introduje los duis pero no hay datos de padrino 2, 3 y 4
                     this.tipo=20;
                 }
-                if(m!='' && p!='' && dp1=='' && dp2=='' && dp3=='' && dp4==''){ // introduje los duis pero no hay datos de padrino 4
+                if(m!='' && p!='' && dp1=='' && dp2=='' && dp3=='' && dp4==''){ // introduje los duis pero no hay datos de padrinos
                     this.tipo=21;
                 }
-                if(m!='' && duip=='' && pd1!='' && pd2!='' && pd3!='' && pd4!=''){ // introduje los duis pero no hay datos de padrino 4
+                if(m!='' && duip=='' && pd1!='' && pd2!='' && pd3!='' && pd4!=''){ // introduje los duis pero no hay datos de papa
                     this.tipo=22;
                 }
                 if(m!='' && duip=='' && pd1!='' && pd2!='' && pd3!='' && dp4==''){ // introduje los duis pero no hay datos de padrino 4
@@ -1078,6 +1111,12 @@ export default {
                 }
                 if(duim=='' && duip=='' &&pd1!='' && dp2=='' && dp3=='' && dp4==''){ // introduje los duis pero no hay datos de padrino 4
                     this.tipo=35;
+                }
+                if(m=='' && p=='' && pd1=='' && dp2=='' && dp3=='' && dp4==''){ // no tiene datos en el sistema y no tiene padrino 2, 3 y 4
+                    this.tipo = 36;
+                }
+                if(m=='' && p=='' && pd1=='' && pd2=='' && dp3=='' && dp4==''){ // no tiene datos en el sistema y no tiene padrino 3 y 4
+                    this.tipo = 37;
                 }
                     axios.put('/bautizo/registrar',{
                         'tipo':this.tipo,

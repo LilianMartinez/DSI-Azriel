@@ -3280,6 +3280,14 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -3840,7 +3848,9 @@ __webpack_require__.r(__webpack_exports__);
 //
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
-    return {
+    var _ref;
+
+    return _ref = {
       id: '',
       tipo: '',
       folio: '',
@@ -3859,53 +3869,8 @@ __webpack_require__.r(__webpack_exports__);
       nombremadre: '',
       dui: '',
       duimadre: '',
-      duipadre: '',
-      nombresacerdote: '',
-      arraysacerdote: [],
-      sexo: '',
-      fechana: '',
-      idpd1: '',
-      idpd2: '',
-      idpd3: '',
-      idpd4: '',
-      duipd1: '',
-      duipd2: '',
-      duipd3: '',
-      duipd4: '',
-      nombrepd1: '',
-      apellidopd1: '',
-      Acciondui: 0,
-      accion: 0,
-      accionp: 0,
-      accionsexo: 0,
-      cambiarm: 0,
-      cambiarmb: 0,
-      monto: 0,
-      arraybautizo: [],
-      nombrepd2: '',
-      apellidopd2: '',
-      nombrepd3: '',
-      apellidopd3: '',
-      nombrepd4: '',
-      apellidopd4: '',
-      precio: 0,
-      modal: 0,
-      tituloModal: '',
-      partida: '',
-      tipoAccion: 0,
-      errorDatos: 0,
-      errorMostrarMjs: [],
-      anio: '',
-      verificacion: 0,
-      accionbotones: 0,
-      fechana2: '',
-      alcaldia: '',
-      id_realizante: '',
-      sexopd1: '',
-      sexopd2: '',
-      sexopd3: '',
-      sexopd4: ''
-    };
+      duipadre: ''
+    }, _defineProperty(_ref, "tipo", ''), _defineProperty(_ref, "idsacerdote", ''), _defineProperty(_ref, "nombresacerdote", ''), _defineProperty(_ref, "apellidosacerdote", ''), _defineProperty(_ref, "arraysacerdote", []), _defineProperty(_ref, "arraycategorias", []), _defineProperty(_ref, "arraycargo", []), _defineProperty(_ref, "sexo", ''), _defineProperty(_ref, "fechana", ''), _defineProperty(_ref, "idpd1", ''), _defineProperty(_ref, "idpd2", ''), _defineProperty(_ref, "idpd3", ''), _defineProperty(_ref, "idpd4", ''), _defineProperty(_ref, "duipd1", ''), _defineProperty(_ref, "duipd2", ''), _defineProperty(_ref, "duipd3", ''), _defineProperty(_ref, "duipd4", ''), _defineProperty(_ref, "nombrepd1", ''), _defineProperty(_ref, "apellidopd1", ''), _defineProperty(_ref, "Acciondui", 0), _defineProperty(_ref, "accion", 0), _defineProperty(_ref, "accionp", 0), _defineProperty(_ref, "accionsexo", 0), _defineProperty(_ref, "cambiarm", 0), _defineProperty(_ref, "cambiarmb", 0), _defineProperty(_ref, "monto", 0), _defineProperty(_ref, "arraybautizo", []), _defineProperty(_ref, "nombrepd2", ''), _defineProperty(_ref, "apellidopd2", ''), _defineProperty(_ref, "nombrepd3", ''), _defineProperty(_ref, "apellidopd3", ''), _defineProperty(_ref, "nombrepd4", ''), _defineProperty(_ref, "apellidopd4", ''), _defineProperty(_ref, "precio", 0), _defineProperty(_ref, "modal", 0), _defineProperty(_ref, "tituloModal", ''), _defineProperty(_ref, "partida", ''), _defineProperty(_ref, "tipoAccion", 0), _defineProperty(_ref, "errorDatos", 0), _defineProperty(_ref, "errorMostrarMsj", []), _defineProperty(_ref, "anio", ''), _defineProperty(_ref, "verificacion", 0), _defineProperty(_ref, "accionbotones", 0), _defineProperty(_ref, "fechana2", ''), _defineProperty(_ref, "alcaldia", ''), _defineProperty(_ref, "id_realizante", ''), _defineProperty(_ref, "sexopd1", ''), _defineProperty(_ref, "sexopd2", ''), _defineProperty(_ref, "sexopd3", ''), _defineProperty(_ref, "sexopd4", ''), _ref;
   },
   methods: {
     //Mt. para calcular edad y ver si se muestra o no el div que contiene el dui del realizante
@@ -4265,7 +4230,29 @@ __webpack_require__.r(__webpack_exports__);
         console.log(error);
       });
     },
+    validarvalores: function validarvalores() {
+      this.errorDatos = 0;
+      this.errorMostrarMsj = [];
+      var RE = /^([0-9])*$/;
+      var Min_Length = 5;
+      var lengthmin = this.alcaldia.length;
+      if (lengthmin < Min_Length) this.errorMostrarMsj.push("La alcaldía debe tener más de 5 letras");
+      if (!this.libro) this.errorMostrarMsj.push("El numero de libro no puede estar vacío");
+      if (!RE.test(this.libro)) this.errorMostrarMsj.push("El numero de libro debe ser un numero entero");
+      if (!this.partida) this.errorMostrarMsj.push("En numero de partida no puede estar vacío");
+      if (!RE.test(this.partida)) this.errorMostrarMsj.push("El numero de partida debe ser un numero entero");
+      if (!this.folio) this.errorMostrarMsj.push("El numero de folio no puede estar vacío");
+      if (!RE.test(this.folio)) this.errorMostrarMsj.push("El numero de folio debe ser un numero entero");
+      if (!this.ano) this.errorMostrarMsj.push("El año no puede estar vacío");
+      if (!RE.test(this.ano)) this.errorMostrarMsj.push("El año debe ser un numero entero");
+      if (this.errorMostrarMsj.length) this.errorDatos = 1;
+      return this.errorDatos;
+    },
     registrar: function registrar() {
+      if (this.validarvalores()) {
+        return;
+      }
+
       var me = this;
       var m = this.idmadre;
       var p = this.idpadre;
@@ -4376,17 +4363,17 @@ __webpack_require__.r(__webpack_exports__);
       }
 
       if (m != '' && p != '' && pd1 != '' && dp2 == '' && dp3 == '' && dp4 == '') {
-        // introduje los duis pero no hay datos de padrino 4
+        // introduje los duis pero no hay datos de padrino 2, 3 y 4
         this.tipo = 20;
       }
 
       if (m != '' && p != '' && dp1 == '' && dp2 == '' && dp3 == '' && dp4 == '') {
-        // introduje los duis pero no hay datos de padrino 4
+        // introduje los duis pero no hay datos de padrinos
         this.tipo = 21;
       }
 
       if (m != '' && duip == '' && pd1 != '' && pd2 != '' && pd3 != '' && pd4 != '') {
-        // introduje los duis pero no hay datos de padrino 4
+        // introduje los duis pero no hay datos de papa
         this.tipo = 22;
       }
 
@@ -4453,6 +4440,16 @@ __webpack_require__.r(__webpack_exports__);
       if (duim == '' && duip == '' && pd1 != '' && dp2 == '' && dp3 == '' && dp4 == '') {
         // introduje los duis pero no hay datos de padrino 4
         this.tipo = 35;
+      }
+
+      if (m == '' && p == '' && pd1 == '' && dp2 == '' && dp3 == '' && dp4 == '') {
+        // no tiene datos en el sistema y no tiene padrino 2, 3 y 4
+        this.tipo = 36;
+      }
+
+      if (m == '' && p == '' && pd1 == '' && pd2 == '' && dp3 == '' && dp4 == '') {
+        // no tiene datos en el sistema y no tiene padrino 3 y 4
+        this.tipo = 37;
       }
 
       axios.put('/bautizo/registrar', {
@@ -49966,6 +49963,34 @@ var render = function() {
                   })
                 ])
               ]),
+              _vm._v(" "),
+              _c(
+                "div",
+                {
+                  directives: [
+                    {
+                      name: "show",
+                      rawName: "v-show",
+                      value: _vm.errorDatos,
+                      expression: "errorDatos"
+                    }
+                  ],
+                  staticClass: "form-group row div-error"
+                },
+                [
+                  _c(
+                    "div",
+                    { staticClass: "text-center text-error" },
+                    _vm._l(_vm.errorMostrarMsj, function(error) {
+                      return _c("div", {
+                        key: error,
+                        domProps: { textContent: _vm._s(error) }
+                      })
+                    }),
+                    0
+                  )
+                ]
+              ),
               _vm._v(" "),
               _c("div", { staticClass: "col-md-4 modal-fo" }, [
                 _c(
