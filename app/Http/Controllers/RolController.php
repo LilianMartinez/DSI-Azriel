@@ -8,8 +8,7 @@ class RolController extends Controller
 {
     public function index(Request $request)
     {
-        //$efectivos = Efectivo::all();
-      //  if(!$request->ajax()) return redirect('/');
+        if(!$request->ajax()) return redirect('/');
         
 
           $buscar = $request->buscar;

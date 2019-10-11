@@ -21,14 +21,16 @@ class CreateSacramentosTable extends Migration
             $table->integer('asiento')->nullable();
             $table->integer('num_expediente')->nullable();
             $table->date('fecha_realizacion')->nullable();
-            $table->Integer('id_realizante1')->nullable();
-            $table->Integer('id_realizante2')->nullable();
-            $table->Integer('id_sacerdote')->nullable();
-            $table->Integer('id_padrino')->nullable();
-            $table->Integer('id_padrino2')->nullable();
-            $table->Integer('id_padrino3')->nullable();
-            $table->Integer('id_padrino4')->nullable();
-            $table->Integer('id_iglesia')->nullable();
+            $table->string('titulo',20)->nullable();
+            $table->integer('id_realizante1')->nullable();
+            $table->integer('id_realizante2')->nullable();
+            $table->integer('id_sacerdote')->nullable();
+            $table->integer('id_padrino')->nullable();
+            $table->integer('id_padrino2')->nullable();
+            $table->integer('id_padrino3')->nullable();
+            $table->integer('id_padrino4')->nullable();
+            $table->integer('id_iglesia')->nullable();
+            $table->integer('estado')->nullable();
 
             $table->timestamps();
         });

@@ -1,0 +1,1464 @@
+<template>
+   <main class="main">
+
+            <div class="container-fluid">
+                <!-- Ejemplo de tabla Listado -->
+                <div class="card">
+                    <div class="card-header">
+                        <label class="titulo-encabezados">Matrimonios</label>
+                    </div>
+                    <div class="card-body">
+                        <div class="input-group margen">
+                            <button type="button" @click="abrirModal('sacramento','registrar')" class="btn btn-primary">
+                                    <i class="icon-plus"></i>&nbsp;Nuevo
+                            </button>
+                        </div>
+                        <div class="form-group row">
+                            <div class="col-md-6">
+                                <div class="input-group">
+                                    <select class="form-control col-md-3" v-model="criterio">
+                                     <option value="libro">Libro</option>
+                                      <option value="num_expediente">Expediente</option>
+                                      <option value="Apellidos">Apellidos</option>
+                                      <option value="Nombres">Nombres</option>
+                                    </select>
+                                    <input type="text" v-model="buscar" @keyup.enter="listarMatrimonio1(1,buscar,criterio)"  class="form-control" placeholder="Texto a buscar">
+                                    <button type="submit" @click="listarMatrimonio1(1,buscar,criterio)" class="btn btn-primary"><i class="fa fa-search"></i> Buscar</button>
+                                </div>
+                            </div>
+                        </div>
+                        <table class="table table-bordered table-striped table-sm">
+                            <thead>
+                                <tr>
+                                    <th>Libro</th>
+                                    <th>Expediente</th>
+                                    <th>Nombre del Novio</th>
+                                    <th>Nombre de la Novia</th>
+                                    <th>Estado</th>
+                                    <th>Opciones</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <!-- en el v-for use "modelo", "array de la vista" y "ley del modelo"-->
+                                <tr v-for="sacramento in arrayMatrimonio1" :key="sacramento.id">
+                                    <!--Utilice el formato modelo.elemento -->
+                                    <td v-text="sacramento.libro"></td>
+                                    <td v-text="sacramento.num_expediente"></td>
+                                    <td>{{sacramento.novioAp}}, {{sacramento.novioNom}}</td>
+                                    <td>{{sacramento.noviaAp}}, {{sacramento.noviaNom}}</td>
+                                    <td>
+                                        <!--CAMBIAR CAMPO CONDICIÓN POR EL ESTADO -->
+                                        <div v-if="sacramento.estado==1"><!--En la base de Datos, "Activo" equivale a 1 -->
+                                            <span class="badge badge-primary">Activo</span>
+                                        </div>
+                                        <div v-else-if="sacramento.estado==0"><!--En la base de Datos, "Cancelado" equivale a 0 -->
+                                            <span class="badge badge-danger">Cancelado</span>
+                                        </div>
+                                        <div v-else><!--En la base de Datos, "Realizado" equivale a 2 -->
+                                            <span class="badge badge-success">Realizado</span>
+                                        </div>                                       
+                                    </td>
+                                    <td> <!-- Aquí relizamos el if para saber que botones mostrar u ocultar -->
+                                        <template v-if="sacramento.estado==1">
+                                            <button type="button" @click="abrirModal('sacramento','actualizar',sacramento)">
+                                              <i class="icon-pencil  enter"></i>
+                                            </button> &nbsp;
+                                            <button type="button" @click="abrirModal2('sacramento','paso2',sacramento)">
+                                              <i class="icon-folder  enter"></i>
+                                            </button> &nbsp;
+                                            <button type="button" class="btn btn-danger btn-sm" @click="desactivarExpediente(sacramento.id)">
+                                              <i class="icon-trash"></i>
+                                            </button>
+                                        </template>
+                                        <template v-else-if="sacramento.estado==0"> <!-- Cuando el matrimonio esta cancelado -->
+                                            <button type="button" class="btn btn-info btn-sm" @click="activarExpediente(sacramento.id)">
+                                                <i class="icon-check"></i>&nbsp;Reactivar
+                                            </button> &nbsp;
+                                        </template>
+                                        <template v-else> <!-- Cuando el matrimonio ya se realizo y se puede imprimir la constancia -->
+                                            <button type="button" class="btn btn-success btn-sm"> <!-- @click="Imprimir este volado" -->
+                                              <i class="icon-plus"></i>&nbsp;Imprimir
+                                            </button>
+                                        </template>
+                                    </td>
+                                </tr>
+                                
+                            </tbody>
+                        </table>
+                        <nav>
+                            <ul class="pagination">
+                                <li class="page-item" v-if="pagination.current_page > 1">
+                                    <a class="page-link" href="#" @click.prevent="cambiarPagina(pagination.current_page - 1,buscar,criterio)">Ant</a>
+                                </li>
+                                <li class="page-item" v-for="page in pagesNumber" :key="page" :class="[page == isActived ? 'active' : '']">
+                                    <a class="page-link" href="#" @click.prevent="cambiarPagina(page,buscar,criterio)" v-text="page"></a>
+                                </li>
+                                <li class="page-item" v-if="pagination.current_page < pagination.last_page">
+                                    <a class="page-link" href="#" @click.prevent="cambiarPagina(pagination.current_page + 1,buscar,criterio)">Sig</a>
+                                </li>
+                            </ul>
+                        </nav>
+                    </div>
+                </div>
+                <!-- Fin ejemplo de tabla Listado -->
+            </div>
+
+            <!--Inicio del modal agregar/actualizar-->
+            <div class="modal fade" tabindex="-1" :class="{'mostrar' : modal}" role="dialog" aria-labelledby="myModalLabel" style="display: none;" aria-hidden="true">
+                <div class="modal-dialog modal-primary modal-lg" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <!--el v-text="tituloModal" muestra el titulo segun el metodo mostrarModal -->
+                            <h4 class="modal-title" v-text="tituloModal"></h4>
+                            <button type="button" class="close" @click="cerrarModal()" aria-label="Close">
+                              <span aria-hidden="true">×</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <form action="" method="post" enctype="multipart/form-data" class="form-horizontal">
+                                
+                                <div class="form-group row">
+                                    <label class="col-md-2 form-control-label" for="text-input">Libro</label>
+                                    <div class="col-md-4">
+                                        <input type="number" v-model="libro" class="form-control" placeholder="Numero de Libro">
+                                    </div>
+                                
+                                    <label class="col-md-2 form-control-label" for="text-input">Expediente</label>
+                                    <div class="col-md-4">
+                                        <input type="number" v-model="num_expediente" class="form-control" placeholder="Numero de Expediente">
+                                    </div>
+                                </div>
+
+                                <!-- Datos del Realizante1 -->
+                                <div class="form-group row">
+                                    <label class="col-md-2 form-control-label" for="text-input">DUI</label>
+                                    <div class="col-md-5">
+                                        <input type="number" v-model="novioD" class="form-control" placeholder="00000000-0" @keydown.tab="novioDui()">
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-md-2 form-control-label" for="text-input">Nombre del Novio</label>
+                                    <div class="col-md-5">
+                                        <input type="text" v-model="novioNom" class="form-control" placeholder="Nombres">
+                                    </div>
+                                    <div class="col-md-5">
+                                        <input type="text" v-model="novioAp" class="form-control" placeholder="Apellidos">
+                                    </div>
+                                </div>
+                                
+                                <!-- Datos del Realizante2 -->
+                                <div class="form-group row">
+                                    <label class="col-md-2 form-control-label" for="text-input">DUI</label>
+                                    <div class="col-md-5">
+                                        <input type="number" v-model="noviaD" class="form-control" placeholder="00000000-0" @keydown.tab="noviaDui()">
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-md-2 form-control-label" for="text-input">Nombre de la Novia</label>
+                                    <div class="col-md-5">
+                                        <input type="text" v-model="noviaNom" class="form-control" placeholder="Nombres">
+                                    </div>
+                                    <div class="col-md-5">
+                                        <input type="text" v-model="noviaAp" class="form-control" placeholder="Apellidos">
+                                    </div>
+                                </div>
+                                
+                                <!-- Este div se utiliza para la validación -->
+                                <div v-show="errorMatrimonio1" class="form-group row div-error">
+                                    <div class="text-center text-error">
+                                        <div v-for="error in errorMostrarMsjMatrimonio1" :key="error" v-text="error">
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </form>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" @click="cerrarModal()">Cerrar</button>
+                            <button type="button" v-if="tipoAccion==1" class="btn btn-primary" @click="registrar()">Guardar</button>
+                            <button type="button" v-if="tipoAccion==2" class="btn btn-primary" @click="actualizarMatrimonio1()"  >Actualizar</button>
+                        </div>
+                    </div>
+                    <!-- /.modal-content -->
+                </div>
+                <!-- /.modal-dialog -->
+            </div>
+            <!--Fin del modal Registrar/Actualizar-->
+
+            <!--Inicio del modal 2 -->
+            <div class="modal fade" tabindex="-1" :class="{'mostrar' : modal2}" role="dialog" aria-labelledby="myModalLabel" style="display: none;" aria-hidden="true">
+                <div class="modal-dialog modal-primary modal-lg" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <!--el v-text="tituloModal" muestra el titulo segun el metodo mostrarModal -->
+                            <h4 class="modal-title" v-text="tituloModal"></h4>
+                            <button type="button" class="close" @click="cerrarModal2()" aria-label="Close">
+                              <span aria-hidden="true">×</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <form action="" method="post" enctype="multipart/form-data" class="form-horizontal">
+                                
+                                <div class="form-group row">
+                                    <label class="col-md-2 form-control-label" for="text-input">Fecha<b class="alerta">*</b></label>
+                                    <div class="col-md-4">
+                                        <input type="date" v-model="fecha_realizacion" class="form-control" placeholder="Fecha de boda">
+                                    </div>
+                                    <label class="col-md-1 form-control-label" for="text-input">Lugar<b class="alerta">*</b></label>
+                                    <div class="col-md-5">
+                                        <input type="text" v-model="id_iglesia" class="form-control" placeholder="Nombre de la Iglesia">
+                                    </div>
+                                </div><tr></tr>
+                                
+                                 <div class="form-group row">
+                                <label class="col-md-3 form-control-label" for="text-input">Nombre del sacerdote<b class="alerta">*</b></label>
+                                <div class="col-md-5">
+                                        <select class="form-control" v-model="idsacerdote"> 
+                                        <option value="0" disabled>Seleccione</option>
+                                        <option v-for="sacerdote in arraysacerdote" :key="sacerdote.id" v-bind:value="sacerdote.id" >{{sacerdote.nombre_persona}}, {{sacerdote.apellido_persona}}</option>
+                                        </select >
+                                    </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-md-3 form-control-label" for="text-input">Cargo<b class="alerta">*</b></label>
+                                <div class="col-md-5">
+                                        <select class="form-control" v-model="cargosacerdote"> 
+                                        <option value="0" disabled>Cargo</option>
+                                        <option v-for="sacerdote in arraycargo" :key="sacerdote.id" v-bind:value="sacerdote" v-text="sacerdote"></option>
+                                        </select>
+                                    </div>
+                            </div>
+
+                                </form>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" @click="cerrarModal2()">Cerrar</button>
+                            <button type="button" class="btn btn-primary" @click="siguiente('1')">Siguiente</button>
+                        </div>
+                    </div>
+                    <!-- /.modal-content -->
+                </div>
+                <!-- /.modal-dialog -->
+            </div>
+            <!--Fin del modal 2 -->
+            <!--Inicio del modal 3 -->
+            <div class="modal fade" tabindex="-1" :class="{'mostrar' : modal3}" role="dialog" aria-labelledby="myModalLabel" style="display: none;" aria-hidden="true">
+                <div class="modal-dialog modal-primary modal-lg" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <!--el v-text="tituloModal" muestra el titulo segun el metodo mostrarModal -->
+                            <h4 class="modal-title" v-text="tituloModal"></h4>
+                            <button type="button" class="close" @click="cerrarModal3()" aria-label="Close">
+                              <span aria-hidden="true">×</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <form action="" method="post" enctype="multipart/form-data" class="form-horizontal">
+                                <!-- Datos de los Padrinos  -->
+                                
+                                <div class="form-group row">
+                                  <label class="col-md-5 form-control-label" for="text-input"><b>Datos Persona 1</b></label>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-md-2 form-control-label" for="text-input">DUI</label>
+                                    <div class="col-md-5">
+                                        <input type="text" v-model="pad1D" class="form-control" placeholder="00000000-0" @keydown.tab="pad1Dui()">
+                                    </div>
+                                     <label class="col-md-1 form-control-label">Sexo</label>
+                                    <div class="col-md-4">
+                                        <select class="form-control" v-model="pad1Sexo"> 
+                                        <option value="0" disabled>Seleccione</option>
+                                        <option value="M">Masculino</option>
+                                        <option value="F">Femenino</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-md-2 form-control-label" for="text-input">Nombre Completo<b class="alerta">*</b></label>
+                                    <div class="col-md-5">
+                                        <input type="text" v-model="pad1Nom" class="form-control" placeholder="Nombres del padrino">
+                                    </div>
+                                    <div class="col-md-5">
+                                        <input type="text" v-model="pad1Ap" class="form-control" placeholder="Apellidos del Padrino">
+                                    </div>
+                                </div>
+                                
+                                <div class="form-group row">
+                                  <label class="col-md-5 form-control-label" for="text-input"><b>Datos Persona 2</b></label>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-md-2 form-control-label" for="text-input">DUI</label>
+                                    <div class="col-md-5">
+                                        <input type="text" v-model="mad1D" class="form-control" placeholder="00000000-0" @keydown.tab="mad1Dui()">
+                                    </div>
+                                     <label class="col-md-1 form-control-label">Sexo</label>
+                                    <div class="col-md-4">
+                                        <select class="form-control" v-model="mad1Sexo"> 
+                                        <option value="0" disabled>Seleccione</option>
+                                        <option value="M">Masculino</option>
+                                        <option value="F">Femenino</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-md-2 form-control-label" for="text-input">Nombre Completo<b class="alerta">*</b></label>
+                                    <div class="col-md-5">
+                                        <input type="text" v-model="mad1Nom" class="form-control" placeholder="Nombres del padrino">
+                                    </div>
+                                    <div class="col-md-5">
+                                        <input type="text" v-model="mad1Ap" class="form-control" placeholder="Apellidos del padrino">
+                                    </div>
+                                </div>
+
+                                <div class="form-group row">
+                                  <label class="col-md-5 form-control-label" for="text-input"><b>Datos Persona 3</b></label>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-md-2 form-control-label" for="text-input">DUI</label>
+                                    <div class="col-md-5">
+                                        <input type="text" v-model="pad2D" class="form-control" placeholder="00000000-0" @keydown.tab="pad2Dui()">
+                                    </div>
+                                     <label class="col-md-1 form-control-label">Sexo</label>
+                                    <div class="col-md-4">
+                                        <select class="form-control" v-model="pad2Sexo"> 
+                                        <option value="0" disabled>Seleccione</option>
+                                        <option value="M">Masculino</option>
+                                        <option value="F">Femenino</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-md-2 form-control-label" for="text-input">Nombre Completo</label>
+                                    <div class="col-md-5">
+                                        <input type="text" v-model="pad2Nom" class="form-control" placeholder="Nombres del padrino">
+                                    </div>
+                                    <div class="col-md-5">
+                                        <input type="text" v-model="pad2Ap" class="form-control" placeholder="Apellidos del Padrino">
+                                    </div>
+                                </div>
+
+                                <div class="form-group row">
+                                  <label class="col-md-5 form-control-label" for="text-input"><b>Datos Persona 4</b></label>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-md-2 form-control-label" for="text-input">DUI</label>
+                                    <div class="col-md-5">
+                                        <input type="text" v-model="mad2D" class="form-control" placeholder="00000000-0" @keydown.tab="mad2Dui()">
+                                    </div>
+                                     <label class="col-md-1 form-control-label">Sexo</label>
+                                    <div class="col-md-4">
+                                        <select class="form-control" v-model="mad2Sexo"> 
+                                        <option value="0" disabled>Seleccione</option>
+                                        <option value="M">Masculino</option>
+                                        <option value="F">Femenino</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-md-2 form-control-label" for="text-input">Nombre Completo</label>
+                                    <div class="col-md-5">
+                                        <input type="text" v-model="mad2Nom" class="form-control" placeholder="Nombres del padrino">
+                                    </div>
+                                    <div class="col-md-5">
+                                        <input type="text" v-model="mad2Ap" class="form-control" placeholder="Apellidos del padrino">
+                                    </div>
+                                </div>
+
+                                    <!-- BOTON COBRAR Y MATRIMONIO REALIZADO--> 
+
+                                <div class="form-group row">
+                                    <label class="col-md-3 form-control-label" for="text-input"></label>
+                                     <button type="button" class="btn btn-secondary">Cobrar</button>&nbsp;  <!-- @click="enviarCajaChica()" -->
+                                <div class="col-md-4.3">
+                                <input type="number" v-model="monto" class="form-control" placeholder="Ofrenda">
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-md-3 form-control-label">Categoria</label>
+                                  <div class="col-md-5">
+                                        <select class="form-control" v-model="idcare"> 
+                                        <option value="0" disabled>Seleccione</option>
+                                        <option v-for="categorias in arraycategorias" :key="categorias.id"  v-bind:value="categorias.id" v-text="categorias.nombre_categoria"></option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                <button type="button" class="btn btn-success">Matrimonio Realizado</button> <!-- @click="finalizarExpediente(sacramento.id)" -->
+                                </div>
+                                </div>
+
+                                <!-- Fin de datos de lo padrinos -->
+                                
+                                <!-- Este div se utiliza para la validación -->
+                                <div v-show="errorMatrimonio1" class="form-group row div-error">
+                                    <div class="text-center text-error">
+                                        <div v-for="error in errorMostrarMsjMatrimonio1" :key="error" v-text="error">
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </form>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" @click="cerrarModal3()">Cerrar</button>
+                            <button type="button" class="btn btn-secondary" @click="siguiente('2')">Anterior</button>
+                            <button type="button" v-if="tipoAccion==3" class="btn btn-primary" @click="registrarBoda(), cerrarModal3()" >Guardar</button>
+                        </div>
+                    </div>
+                    <!-- /.modal-content -->
+                </div>
+                <!-- /.modal-dialog -->
+            </div>
+            <!--Fin del modal 3 -->
+
+            <!-- Inicio del modal Eliminar -->
+            <div class="modal fade" id="modalEliminar" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" style="display: none;" aria-hidden="true">
+                <div class="modal-dialog modal-danger" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h4 class="modal-title">Desactivar Expediente</h4>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                              <span aria-hidden="true">×</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <p>Estas seguro de desactivar el expediente</p>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                            <button type="button" class="btn btn-danger">Eliminar</button>
+                        </div>
+                    </div>
+                    <!-- /.modal-content -->
+                </div>
+                <!-- /.modal-dialog -->
+            </div>
+            <!-- Fin del modal Eliminar -->
+           
+        </main>
+</template>
+
+<script>
+    export default {
+      data(){
+          //Dave: En esta función declaramos las variables que utilizaremos
+            return{
+                sacramento_id:0,
+                libro : '',
+                num_expediente : '',
+                fecha_realizacion : '',
+                id_realizante1 : '',
+                novioD :'',
+                novioNom:'',
+                novioAp:'',
+                id_realizante2 : '',
+                noviaD :'',
+                noviaNom:'',
+                noviaAp:'',
+                id_sacerdote : '',
+                sacerdoteD : '',
+                sacerdoteNom : '',
+                sacerdoteAp : '',
+                id_padrino1 : '',
+                pad1D : '',
+                pad1Nom : '',
+                pad1Ap : '',
+                pad1Sexo :'',
+                id_padrino2 : '',
+                pad2D : '',
+                pad2Nom : '',
+                pad2Ap : '',
+                pad2Sexo :'',
+                id_madrina1 : '',
+                mad1D : '',
+                mad1Nom : '',
+                mad1Ap : '',
+                mad1Sexo :'',
+                id_madrina2 : '',
+                mad2D : '',
+                mad2Nom : '',
+                mad2Ap : '',
+                mad2Sexo :'',
+                id_iglesia : '',
+                iglesiaNom: '',
+                tipo:0,
+                estado :0,
+                monto:30,
+                ofrendaExp:20,
+
+                idcare:'',
+                cargosacerdote:'',
+                idsacerdote:'',
+                arraysacerdote:[],
+                arraycargo:[],
+                arraycategorias:[],
+
+                arrayMatrimonio1 : [], //Nos sirve para almacenar objetos de tipo sacramento
+                modal:0, //Nos sirve para poder activar o desactivar el modal
+                modal2:0,
+                modal3:0,
+                tituloModal : '', //solo para registrar el título que queremos que aparezca en el modal
+                tipoAccion :0,
+                errorMatrimonio1 :0,//variable para validación
+                errorMostrarMsjMatrimonio1 : [],//variable para validación
+                pagination:{
+                    'total' :0,
+                    'current_page' :0,
+                    'per_page' :0,
+                    'last_page' :0,
+                    'from' :0,
+                    'to' :0,
+                },
+                offset: 3,
+                criterio:'libro',
+                buscar: ''
+            }
+        },//Fin de Data()
+      computed:{
+            isActived: function(){
+                return this.pagination.current_page;
+            },
+            //calcula los elementos de la paginacion
+            pagesNumber: function(){
+                if(!this.pagination.to){
+                    return[];
+                }
+
+                var from = this.pagination.current_page - this.offset;
+                if(from < 1){
+                    from = 1;
+                }
+                
+                var to = from + (this.offset * 2);
+                if(to >= this.pagination.last_page){
+                    to=this.pagination.last_page;
+                }
+
+                 var pagesArray=[];
+                 while(from <= to){
+                     pagesArray.push(from);
+                     from++;
+                 }
+                    return pagesArray;
+
+            }
+        },
+    methods:{
+
+        listarMatrimonio1(page, buscar, criterio){
+            let me=this;
+            var lengthbuscar = this.buscar.length;
+                 if(lengthbuscar >0)
+                 {
+                     var buscar2= this.buscar.toUpperCase();
+                 }else
+                 buscar2=this.buscar;
+
+            if (criterio=='nombre_persona' || 'apellido_persona'){
+                var url='/sacramentoplus?page=' + page + '&buscar=' + buscar2 + '&criterio=' + criterio;
+                axios.get(url).then(function (response){
+                var respuesta=response.data;
+                me.arrayMatrimonio1=respuesta.sacramentos.data;
+                me.pagination=respuesta.pagination;
+                })
+                .catch(function(error){
+                    console.log(error);
+                });
+            }else{
+                var url='/sacramento?page=' + page + '&buscar=' + buscar + '&criterio=' + criterio;
+                axios.get(url).then(function (response){
+                var respuesta=response.data;
+                me.arrayMatrimonio1=respuesta.sacramentos.data;
+                me.pagination=respuesta.pagination;
+                })
+                .catch(function(error){
+                    console.log(error);
+                });
+            }
+            
+        },
+
+        cambiarPagina(page,buscar,criterio){
+            let me = this;
+            //Actualiza la pagina del listado de matrimonios
+            me.pagination.current_page = page;
+            //Envia la peticion para visualizar la data de esa pagina
+            me.listarMatrimonio1(page,buscar,criterio);
+        },
+
+        //Esto se usa para el autollenado con el num de dui
+        llenarCamposNovio(data=[]){
+                this.novioNom= data['nombre_persona'];
+                this.novioAp= data['apellido_persona'];
+                this.id_realizante1=data['id'];
+        },
+
+        //Esto tambien es para el autollenado con el num de dui; invocamos al metodo "buscarduis" del controlador
+        novioDui(){
+                let me=this;
+                var d= this.novioD;
+
+                if(d != ''){
+                var url='/persona/duihombre?dui=' + d;
+                    axios.get(url) .then(function (response) {
+                        var respuesta=response.data.solo;
+                        var datos= response.data.persona;
+                    if(respuesta==2){
+                        me.llenarCamposNovio(datos);
+                    }
+                    }).catch(function (error) {
+                    console.log(error);
+                    });
+                }
+        },
+
+        //Esto se usa para el autollenado con el num de dui
+        llenarCamposNovia(data=[]){
+                this.noviaNom= data['nombre_persona'];
+                this.noviaAp= data['apellido_persona'];
+                this.id_realizante2=data['id'];
+        },
+
+        //Esto tambien es para el autollenado con el num de dui; invocamos al metodo "buscarduis" del controlador
+        noviaDui(){
+                let me=this;
+                var d= this.noviaD;
+
+                if(d != ''){
+                var url='/persona/duimujer?dui=' + d;
+                    axios.get(url) .then(function (response) {
+                        var respuesta=response.data.solo;
+                        var datos= response.data.persona;
+                    if(respuesta==2){
+                        me.llenarCamposNovia(datos);
+                    }
+                    }).catch(function (error) {
+                    console.log(error);
+                    });
+                }
+        },
+
+        //Esto se usa para el autollenado con el num de dui
+        //Usaremos 1 para el sacerdote y 4 para los padrinos
+        llenarCamposPadrino1(data=[]){
+                this.pad1Nom= data['nombre_persona'];
+                this.pad1Ap= data['apellido_persona'];
+                this.id_padrino1=data['id'];
+                this.pad1Sexo=data['sexo'];
+        },
+
+        //Esto tambien es para el autollenado con el num de dui; invocamos al metodo "buscarduis" del controlador
+        //usaremos 1 para el sacerdote y 4 para los padrinos
+        pad1Dui(){
+                let me=this;
+                var d= this.pad1D;
+
+                if(d != ''){
+                var url='/persona/duis?dui=' + d;
+                    axios.get(url) .then(function (response) {
+                        var respuesta=response.data.solo;
+                        var datos= response.data.persona;
+                    if(respuesta==2){
+                        me.llenarCamposPadrino1(datos);
+                    }
+                    }).catch(function (error) {
+                    console.log(error);
+                    });
+                }
+        },
+
+        llenarCamposMadrina1(data=[]){
+                this.mad1Nom= data['nombre_persona'];
+                this.mad1Ap= data['apellido_persona'];
+                this.id_madrina1=data['id'];
+                this.mad1Sexo=data['sexo'];
+        },
+
+        //Esto tambien es para el autollenado con el num de dui; invocamos al metodo "buscarduis" del controlador
+        mad1Dui(){
+                let me=this;
+                var d= this.mad1D;
+
+                if(d != ''){
+                var url='/persona/duis?dui=' + d;
+                    axios.get(url) .then(function (response) {
+                        var respuesta=response.data.solo;
+                        var datos= response.data.persona;
+                    if(respuesta==2){
+                        me.llenarCamposMadrina1(datos);
+                    }
+                    }).catch(function (error) {
+                    console.log(error);
+                    });
+                }
+        },
+
+        //Esto se usa para el autollenado con el num de dui
+        llenarCamposPadrino2(data=[]){
+                this.pad2Nom= data['nombre_persona'];
+                this.pad2Ap= data['apellido_persona'];
+                this.id_padrino2=data['id'];
+                this.pad2Sexo=data['sexo'];
+        },
+
+        //Esto tambien es para el autollenado con el num de dui; invocamos al metodo "buscarduis" del controlador
+        pad2Dui(){
+                let me=this;
+                var d= this.pad2D;
+
+                if(d != ''){
+                var url='/persona/duis?dui=' + d;
+                    axios.get(url) .then(function (response) {
+                        var respuesta=response.data.solo;
+                        var datos= response.data.persona;
+                    if(respuesta==2){
+                        me.llenarCamposPadrino2(datos);
+                    }
+                    }).catch(function (error) {
+                    console.log(error);
+                    });
+                }
+        },
+
+        llenarCamposMadrina2(data=[]){
+                this.mad2Nom= data['nombre_persona'];
+                this.mad2Ap= data['apellido_persona'];
+                this.id_madrina2=data['id'];
+                this.mad2Sexo=data['sexo'];
+        },
+
+        //Esto tambien es para el autollenado con el num de dui; invocamos al metodo "buscarduis" del controlador
+        mad2Dui(){
+                let me=this;
+                var d= this.mad2D;
+
+                if(d != ''){
+                var url='/persona/duis?dui=' + d;
+                    axios.get(url) .then(function (response) {
+                        var respuesta=response.data.solo;
+                        var datos= response.data.persona;
+                    if(respuesta==2){
+                        me.llenarCamposMadrina2(datos);
+                    }
+                    }).catch(function (error) {
+                    console.log(error);
+                    });
+                }
+        },
+
+        //Este es para la busqueda por dui del sacerdote
+        llenarCamposSacerdote(data=[]){
+                this.sacerdoteNom= data['nombre_persona'];
+                this.sacerdoteAp= data['apellido_persona'];
+                this.id_sacerdote=data['id'];
+        },
+
+        //Esto tambien es para el autollenado con el num de dui; invocamos al metodo "buscarduis" del controlador
+        sacerdoteDui(){
+                let me=this;
+                var d= this.sacerdoteD;
+
+                if(d != ''){
+                var url='/persona/duihombre?dui=' + d;
+                    axios.get(url) .then(function (response) {
+                        var respuesta=response.data.solo;
+                        var datos= response.data.persona;
+                    if(respuesta==2){
+                        me.llenarCamposSacerdote(datos);
+                    }
+                    }).catch(function (error) {
+                    console.log(error);
+                    });
+                }
+        },
+
+        //No se borra este wey!!! Este si sirve :v
+        registrar(){
+            if(this.validarMatrimonio1()){
+                return;
+            }
+
+            let me=this;
+            var novioD=this.novioD;
+            var noviaD=this.noviaD;
+            var idNovio=this.id_realizante1;
+            var idNovia=this.id_realizante2;
+
+            if(idNovio==''){//Cuando No exista el id el novio
+                if(idNovia==''){//Cuando no exista el id de la novia
+                     axios.put('/persona/registrar2',{
+                    'tipo':'4.1',
+                    'libro':this.libro,
+                    'num_expediente':this.num_expediente,
+                    'novioNom': this.novioNom.toUpperCase(),
+                    'novioAp': this.novioAp.toUpperCase(),
+                    'novioD':this.novioD,
+                    'noviaNom': this.noviaNom.toUpperCase(),
+                    'noviaAp': this.noviaAp.toUpperCase(),
+                    'noviaD':this.noviaD
+                    }).then(function (response) { //si todo funciona:
+                        me.listarMatrimonio1();
+                        me.cerrarModal();
+                    }) .catch(function (error) {
+                        console.log(error);
+                    });
+                }else{//Cuando si exista el id de la novia, pero No del novio
+                     axios.put('/persona/registrar2',{
+                    'tipo':'4.2',
+                    'libro':this.libro,
+                    'num_expediente':this.num_expediente,
+                    'novioNom': this.novioNom.toUpperCase(),
+                    'novioAp': this.novioAp.toUpperCase(),
+                    'novioD':this.novioD,
+                    'id_realizante2':this.id_realizante2
+                    }).then(function (response) { //si todo funciona:
+                        me.listarMatrimonio1();
+                        me.cerrarModal();
+                    }) .catch(function (error) {
+                        console.log(error);
+                    });
+                }
+            }else{//Sí existe el id del novio y...
+                if(idNovia==''){//Cuando no exista el id de la novia
+                     axios.put('/persona/registrar2',{
+                    'tipo':'4.3',
+                    'libro':this.libro,
+                    'num_expediente':this.num_expediente,
+                    'noviaNom': this.noviaNom.toUpperCase(),
+                    'noviaAp': this.noviaAp.toUpperCase(),
+                    'noviaD':this.noviaD,
+                    'id_realizante1':this.id_realizante1
+                    }).then(function (response) { //si todo funciona:
+                        me.listarMatrimonio1();
+                        me.cerrarModal();
+                    }) .catch(function (error) {
+                        console.log(error);
+                    });
+                }else{//Cuando existen ambos novios
+                     axios.put('/persona/registrar2',{
+                    'tipo':'4.4',
+                    'libro':this.libro,
+                    'num_expediente':this.num_expediente,
+                    'id_realizante1':this.id_realizante1,
+                    'id_realizante2':this.id_realizante2
+                    }).then(function (response) { //si todo funciona:
+                        me.listarMatrimonio1();
+                        me.cerrarModal();
+                    }) .catch(function (error) {
+                        console.log(error);
+                    });
+                }
+            }
+            /* }else{ //ESTO NO SE AUN PARA QUE SIRVE, por eso lo quité
+                me.guardarsacramento();
+            } */
+        },
+        guardarsacramento(){//Aun no se para que sirve :v
+            let me=this;
+            var tamaño =0;
+            //var length1 = this.id.length;
+            axios.put('/sacramento/registrar',{
+            'fecha': this.fecharealizacion,
+            'realizante': this.id,
+            'sacerdote':this.nombresacerdote,
+            }) .then(function (response) { //si todo funciona:
+                    me.cerrarModal();
+                    me.listarMatrimonio1();
+                }) .catch(function (error) {
+                    console.log(error);
+                });
+
+        },
+        
+        //ESTE ES PARA ACTUALIZAR.... ESTA ES LA BASURA QUE NO SERVIA
+        actualizarMatrimonio1(){
+            if(this.validarMatrimonio1()){
+                return;
+            }
+            
+            let me = this;
+            var idNovio=this.id_realizante1;
+            var idNovia=this.id_realizante2;
+
+            axios.put('/persona/actualizar2',{
+                'tipo':'4',
+                'libro':this.libro,
+                'num_expediente':this.num_expediente,
+                'novioNom': this.novioNom.toUpperCase(),
+                'novioAp': this.novioAp.toUpperCase(),
+                'novioD':this.novioD,
+                'noviaNom': this.noviaNom.toUpperCase(),
+                'noviaAp': this.noviaAp.toUpperCase(),
+                'noviaD':this.noviaD,
+                'id':this.sacramento_id,
+                'id_realizante1':this.id_realizante1,
+                'id_realizante2':this.id_realizante2
+            }) .then(function (response) { //si todo funciona:
+                me.listarMatrimonio1();
+                me.cerrarModal();
+            }) .catch(function (error) {
+                console.log(error);
+            });
+        },
+
+        //ESTOS METODOS (RegistrarBoda y validarBoda) SON PARA REGISTRAR PASO 2 Y PASO 3 //incompletos
+        /* registrarBoda(){
+            if(this.validarMatrimonio1()){
+                return;
+            }
+            
+            let me = this;
+            var id_sacerdote=this.id_sacerdote;
+            var id_padrino=this.id_padrino;
+            var id_madrina1=this.id_madrina1;
+            var id_padrino2=this.id_padrino2;
+            var id_madrina2=this.id_madrina2;
+
+            axios.put('/sacramento/registrarboda',{
+                
+                'fecha_realizacion': this.fecha_realizacion,
+                'id_iglesia':this.id_iglesia,
+                //'iglesiaNom':this.iglesiaNom,
+                'sacerdoteNom':this.sacerdoteNom.toUpperCase(),
+                'sacerdoteAp':this.sacerdoteAp.toUpperCase(),
+                'sacerdoteD':this.sacerdoteD,
+                'id_sacerdote':this.id_sacerdote,
+
+                'pad1Nom':this.pad1Nom.toUpperCase(),
+                'pad1Ap':this.pad1Ap.toUpperCase(),
+                'pad1D': this.pad1D,
+                'id_padrino':this.id_padrino,
+
+                'mad1Nom':this.mad1Nom.toUpperCase(),
+                'mad1Ap':this.mad1Ap.toUpperCase(),
+                'mad1D': this.mad1D,
+                'id_madrina1':this.id_madrina1,
+
+                'pad2Nom':this.pad2Nom.toUpperCase(),
+                'pad2Ap':this.pad2Ap.toUpperCase(),
+                'pad2D': this.pad2D,
+                'id_padrino2':this.id_padrino2,
+
+                'mad2Nom':this.mad2Nom.toUpperCase(),
+                'mad2Ap':this.mad2Ap.toUpperCase(),
+                'mad2D': this.mad2D,
+                'id_madrina2':this.id_madrina2,
+
+                'id':this.sacramento_id,
+                'id_realizante1':this.id_realizante1,
+                'id_realizante2':this.id_realizante2
+            }) .then(function (response) { //si todo funciona:
+                me.listarMatrimonio1();
+                me.cerrarModal2();
+            }) .catch(function (error) {
+                console.log(error);
+            });
+        }, */
+
+        registrarBoda(){
+            /* if(this.validarBoda()){
+                return;
+            } */
+
+            let me=this;
+            var sacerdoteD=this.sacerdoteD;
+            var pad1D=this.pad1D;
+            var mad1D=this.mad1D;
+            var pad2D=this.pad2D;
+            var mad2D=this.mad2D;
+            var id_sacerdote=this.id_sacerdote;
+            var id_padrino1=this.id_padrino1;
+            var id_madrina1=this.id_madrina1;
+            var id_padrino2=this.id_padrino2;
+            var id_madrina2=this.id_madrina2;
+
+            /* var novioD=this.novioD;
+            var noviaD=this.noviaD;
+            var idNovio=this.id_realizante1;
+            var idNovia=this.id_realizante2; */
+
+                if(id_madrina2==''){
+                    if(id_padrino2==''){
+                        if(id_madrina1==''){
+                            if(id_padrino1==''){
+                                //creamos los 4
+                                this.tipo=1;
+                            }else{
+                                // Recuperamos pad1, creamos los otros 3
+                                this.tipo=2;
+                            }
+                        }else{
+                            if(id_padrino1==''){
+                                //Recuperaremos madrina1; crearemos los otros 3
+                                this.tipo=3;
+                            }else{
+                                //recuperaremos madrina 1 y padrino 1; Y creamos los otros 2
+                                this.tipo=4;
+                            }
+                        }
+                    }else{
+                        if(id_madrina1==''){
+                            if(id_padrino1==''){
+                                //Solo , padrino2 y creamos los otros 3
+                                this.tipo=5;
+                            }else{
+                                //, padrino1 y padrino2; creamos los otros 2
+                                this.tipo=6;
+                            }
+                        }else{
+                            if(id_padrino1==''){
+                                //, madrina1 y padrino2; creamos los otros 2
+                                this.tipo=7;
+                            }else{
+                                //recuperaremos id del sacerdote, pad1, pad2 y mad1; creamos el otro
+                                this.tipo=8;
+                            }
+                        }
+                    }
+                }else{
+                    if(id_padrino2==''){
+                        if(id_madrina1==''){
+                            if(id_padrino1==''){
+                                //Recuperamos id sacerdote y madrina2; Creamos los otros 3
+                                this.tipo=9;
+                            }else{
+                                //, padrino1 y madrina2; Creamos los otros 2
+                                this.tipo=10;
+                            }
+                        }else{
+                            if(id_padrino1==''){
+                                //Recuperamos id sacerdote, madrina1 y madrina2; creamos los otros 2
+                                this.tipo=11;
+                            }else{
+                                //recuperaremos mad1, mad2 y pad1; creamos el otro
+                                this.tipo=12;
+                            }
+                        }
+                    }else{
+                        if(id_madrina1==''){
+                            if(id_padrino1==''){
+                                //, madrina2 y padrino2; creamos los otros2
+                                this.tipo=13;
+                            }else{
+                                //, madrina2, padrino1 y padrino2; creamos el otro
+                                this.tipo=14;
+                            }
+                        }else{
+                            if(id_padrino1==''){
+                                //, madrina1, madrina2 y padrino2; creamos el otro
+                                this.tipo=15;
+                            }else{
+                                //recuperaremos TODOS PORQUE YA EXISTEN
+                                this.tipo=16;
+                            }
+                        }
+                    }
+                }
+
+                axios.put('/sacramento/registrarboda',{
+                    'tipo':this.tipo,
+                    'id':this.sacramento_id,
+                    //'fecha_realizacion':this.fecha_realizacion,
+                    //'id_iglesia':this.id_iglesia,
+                    'pad1Nom': this.pad1Nom.toUpperCase(),
+                    'pad1Ap': this.pad1Ap.toUpperCase(),
+                    'pad1D':this.pad1D,
+                    'pad1Sexo':this.pad1Sexo,
+                    'mad1Nom': this.mad1Nom.toUpperCase(),
+                    'mad1Ap': this.mad1Ap.toUpperCase(),
+                    'mad1D':this.mad1D,
+                    'mad1Sexo':this.mad1Sexo,
+                    'pad2Nom': this.pad2Nom.toUpperCase(),
+                    'pad2Ap': this.pad2Ap.toUpperCase(),
+                    'pad2D':this.pad2D,
+                    'pad2Sexo':this.pad2Sexo,
+                    'mad2Nom': this.mad2Nom.toUpperCase(),
+                    'mad2Ap': this.mad2Ap.toUpperCase(),
+                    'mad2D':this.mad2D,
+                    'mad2Sexo':this.mad2Sexo,
+                    'id_sacerdote':this.idsacerdote,
+                    'id_padrino1':this.id_padrino1,
+                    'id_madrina1':this.id_madrina1,
+                    'id_padrino2':this.id_padrino2,
+                    'id_madrina2':this.id_madrina2,
+                    'monto': this.monto,
+                    'idcate':this.idcare
+
+                }).then(function (response) { //si todo funciona:
+                    me.listarMatrimonio1();
+                    me.cerrarModal3();
+                }) .catch(function (error) {
+                    console.log(error);
+                });
+
+        },
+
+        validarBoda(){
+
+        },
+
+        //este lo ocupa el método Registrar
+        validarMatrimonio1(){
+            this.errorMatrimonio1=0;
+            this.errorMostrarMsjMatrimonio1=[];
+
+            //Comprueba que la celda no esté vacía -- AGREGAR DESPUÉS LOS DEMÁS THIS EN EL IF
+            if (this.libro =='' || this.num_expediente =='' || this.novioD =='' || this.novioNom=='' || this.novioAp=='' || this.noviaD =='' || this.noviaNom=='' || this.noviaAp=='')
+                this.errorMostrarMsjMatrimonio1.push("Todos los datos son obligatorios");
+
+            if (this.errorMostrarMsjMatrimonio1.length) this.errorMatrimonio1 = 1;
+
+            return this.errorMatrimonio1;
+        },
+        //Este cambia de un modal a otro (adelante y atras)
+        siguiente(d){
+                switch(d){
+                    case '1':
+                        {
+                            this.modal3=1;
+                            this.modal2=0;
+                            break;
+                        }
+                    case '2':
+                        {
+                            this.modal2=1;
+                            this.modal3=0;
+                            break;
+                        }
+                }
+        },
+        //este cierra el modal del lapiz
+        cerrarModal(){
+            this.modal=0;
+            this.tituloModal='';
+            this.tipoAccion='';
+            this.sacramento_id='';
+            this.libro ='';
+            this.num_expediente ='';
+            this.id_realizante1 ='';
+            this.id_realizante2 ='';
+            this.novioD='';
+            this.novioNom='';
+            this.novioAp='';
+            this.noviaD='';
+            this.noviaNom='';
+            this.noviaAp='';
+
+        },
+        //estos dos, cierran los modales de paso 2 y paso3
+        cerrarModal2(){
+            this.modal2=0;
+            this.modal3=0;
+            this.tituloModal='';
+            this.fecha_realizacion ='';
+            this.id_iglesia ='';
+            this.id_sacerdote ='';
+        },
+        cerrarModal3(){
+            this.modal2=0;
+            this.modal3=0;
+            this.tituloModal='';
+            this.fecha_realizacion ='';
+            this.id_iglesia ='';
+            this.id_sacerdote ='';
+            this.id_padrino1 ='';
+            this.id_madrina1 ='';
+            this.id_padrino2 ='';
+            this.id_madrina2 ='';
+            this.pad1D='';
+            this.pad1Nom='';
+            this.pad1Ap='';
+            this.pad1Sexo=0;
+            this.mad1D='';
+            this.mad1Nom='';
+            this.mad1Ap='';
+            this.mad1Sexo=0;
+            this.pad2D='';
+            this.pad2Nom='';
+            this.pad2Ap='';
+            this.pad2Sexo=0;
+            this.mad2D='';
+            this.mad2Nom='';
+            this.mad2Ap='';
+            this.mad2Sexo=0;
+            this.tipo=0;
+
+        },
+
+        //En "modelo" va el nombre de la tabla guardada aquí, que por convencion de laravel es plural: "modelos"
+        abrirModal(modelo, accion, data = []){
+            switch (modelo) {
+                case "sacramento":
+                    switch (accion) {
+                        case 'registrar':
+                            {
+                                this.modal = 1;
+                                this.tituloModal = 'Registrar Expediente Matrimonial';
+                                this.libro ='';
+                                this.num_expediente ='';
+                                this.novioD='';
+                                this.novioNom='';
+                                this.novioAp='';
+                                this.noviaD='';
+                                this.noviaNom='';
+                                this.noviaAp='';
+                                this.tipoAccion = 1;
+                                break;
+                            }
+                        case 'actualizar':
+                            {
+                                //console.log(data);
+                                this.modal=1;
+                                this.tituloModal= 'Actualizar Expediente Matrimonial';
+                                this.tipoAccion=2;
+                                this.sacramento_id=data['id'];
+                                this.libro = data['libro'];
+                                this.num_expediente = data['num_expediente'];
+                                this.id_realizante1 = data['idNovio'];
+                                this.id_realizante2 = data['idNovia'];
+                                this.novioD=data['novioD'];
+                                this.novioNom=data['novioNom'];
+                                this.novioAp=data['novioAp'];
+                                this.noviaD=data['noviaD'];
+                                this.noviaNom=data['noviaNom'];
+                                this.noviaAp=data['noviaAp'];
+                                break;
+                            }
+                    }
+            }
+        },
+
+        selectCategoria(){
+                 let me=this;
+                var url='/categoriaresumen/selectCategoriaRe';
+                axios.get(url) .then(function (response) {
+                    // handle success
+                    var respuesta= response.data;
+                    me.arraycategorias=respuesta.categorias;
+                })
+                .catch(function (error) {
+                    // handle error
+                    console.log(error);
+                });
+            },
+
+        //autocompletar sacerdotes
+        llenadolista(buscar,criterio){
+            let me=this;
+            var url='/persona/buscarsacerdote';
+            axios.get(url) .then(function (response) {
+                me.arraysacerdote=response.data;
+            })
+            .catch(function (error) {
+                console.log(error);
+            });
+        },
+        //autocompletar sacerdotes
+        llenadoarray(){            
+                this.arraycargo= new Array('DIACONO','PADRE','ARZOBISPO','CARDENAL','NUNCIO APOSTOLICO','MONSEÑOR');                
+            },
+
+        //Aquí comienza el modal del paso 2: Agregar lugar y fecha de boda, sacerdote encargado y...
+        abrirModal2(modelo, accion, data = []){
+            switch (modelo) {
+                case "sacramento":
+                    switch (accion) {
+                        case 'paso2':
+                            {
+                                this.modal2 = 1;
+                                this.tituloModal = 'Datos de la Ceremonia';
+                                this.sacramento_id=data['id'];
+                                this.fecha_realizacion ='';
+                                this.iglesiaNom =''; //Conviene más poner un combobox
+                                //this.id_sacerdote ='';
+                                this.sacerdoteD='';
+                                this.sacerdoteNom='';
+                                this.sacerdoteAp='';
+                                //this.id_iglesia ='';
+                                //botones matrimonio realizado / Cancelado
+                                this.tipoAccion = 3;
+                                break;
+                            }
+                        case 'paso3':{
+                            this.modal3 = 1;
+                            this.tituloModal = 'Datos de los padrinos';
+                            this.sacramento_id=data['id'];
+                            //this.id_padrino ='';
+                            this.pad1D='';
+                            this.pad1Nom='';
+                            this.pad1Ap='';
+                            //this.id_madrina1 ='';
+                            this.mad1D='';
+                            this.mad1Nom='';
+                            this.mad1Ap='';
+                            //this.id_padrino2 ='';
+                            this.pad2D='';
+                            this.pad2Nom='';
+                            this.pad2Ap='';
+                            //this.id_madrina2 ='';
+                            this.mad2D='';
+                            this.mad2Nom='';
+                            this.mad2Ap='';
+                    //botones matrimonio realizado / Cancelado
+                            this.tipoAccion = 3;
+                            break;
+                        }
+                    }
+            }
+        },
+
+            //el metodo del botón del basurero
+            desactivarExpediente(id){
+               swal({
+                title: '¿Esta seguro de desactivar este expediente?',
+                type: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Aceptar!',
+                cancelButtonText: 'Cancelar',
+                confirmButtonClass: 'btn btn-success',
+                cancelButtonClass: 'btn btn-danger',
+                buttonsStyling: false,
+                reverseButtons: true
+                }).then((result) => {
+                if (result.value) {
+                    let me = this;
+
+                    axios.put('/sacramento/desactivarexpediente',{
+                        'id': id
+                    }).then(function (response) {
+                        me.listarMatrimonio1(1,'','libro');
+                        swal(
+                        'Desactivado!',
+                        'El registro ha sido desactivado con éxito.',
+                        'success'
+                        )
+                    }).catch(function (error) {
+                        console.log(error);
+                    });
+                    
+                    
+                } else if (
+                    // Read more about handling dismissals
+                    result.dismiss === swal.DismissReason.cancel
+                ) {
+                    
+                }
+                }) 
+            },
+            //activa el expediente :v
+            activarExpediente(id){
+               swal({
+                title: '¿Esta seguro de activar este expediente?',
+                type: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Aceptar!',
+                cancelButtonText: 'Cancelar',
+                confirmButtonClass: 'btn btn-success',
+                cancelButtonClass: 'btn btn-danger',
+                buttonsStyling: false,
+                reverseButtons: true
+                }).then((result) => {
+                if (result.value) {
+                    let me = this;
+
+                    axios.put('/sacramento/activarexpediente',{
+                        'id': id
+                    }).then(function (response) {
+                        me.listarMatrimonio1(1,'','libro');
+                        swal(
+                        'Activado!',
+                        'El registro ha sido activado con éxito.',
+                        'success'
+                        )
+                    }).catch(function (error) {
+                        console.log(error);
+                    });
+                    
+                    
+                } else if (
+                    // Read more about handling dismissals
+                    result.dismiss === swal.DismissReason.cancel
+                ) {
+                    
+                }
+                }) 
+            },
+
+            /* finalizarExpediente(id){
+               swal({
+                title: '¿Esta seguro de finalizar el expediente?',
+                type: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Aceptar!',
+                cancelButtonText: 'Cancelar',
+                confirmButtonClass: 'btn btn-success',
+                cancelButtonClass: 'btn btn-danger',
+                buttonsStyling: false,
+                reverseButtons: true
+                }).then((result) => {
+                if (result.value) {
+                    let me = this;
+
+                    axios.put('/sacramento/finalizarexpediente',{
+                        'id': id
+                    }).then(function (response) {
+                        me.listarMatrimonio1(1,'','libro');
+                        swal(
+                        'Activado!',
+                        'El registro ha sido activado con éxito.',
+                        'success'
+                        )
+                    }).catch(function (error) {
+                        console.log(error);
+                    });
+                    
+                    
+                } else if (
+                    // Read more about handling dismissals
+                    result.dismiss === swal.DismissReason.cancel
+                ) {
+                    
+                }
+                }) 
+            } */
+        },// Fin de methods
+        
+        mounted() {
+            this.listarMatrimonio1(1,this.buscar,this.criterio);
+            this.llenadoarray();
+            this.selectCategoria();
+            this.llenadolista('','');
+           
+        }
+    }
+</script>
+
+<style> /*Aquí ya comienza el CSS, ke kreisi */
+    .modal-content{
+        width: 100% !important;
+        position: absolute !important
+    }
+    .mostrar{
+        display: list-item !important;
+        opacity: 1 !important;
+        position: absolute !important;
+        background-color: #3c29297a !important;
+    }
+    .div-error{ /* estos dos estilos son para validación */
+        display: flex;
+        justify-content: center;
+    }
+    .text-error{
+        color: red !important;
+        font-weight: bold;
+    }
+    .margen{
+        margin-bottom: 10px;
+    }
+    
+</style>

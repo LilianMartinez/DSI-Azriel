@@ -13,7 +13,7 @@ class CreateLugarBautizoTable extends Migration
      */
     public function up()
     {
-        Schema::create('lugar_bautizo', function (Blueprint $table) {
+        Schema::create('lugares_bautizos', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->integer('id_iglesia')->unsigned();
             $table->Integer('id_persona')->unsigned();

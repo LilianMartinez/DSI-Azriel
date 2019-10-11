@@ -20,7 +20,7 @@
                         </template>
                         
                         <template v-if="menu==6">
-                            <h1> Matrimonio</h1>
+                                <matrimonio1></matrimonio1>
                         </template>
 
                         <template v-if="menu==10">
@@ -57,15 +57,15 @@
                         </template>
                         
                         <template v-if="menu==4">
-                            <h1>Primera Comunión</h1>
+                        <registroprimeracomunion></registroprimeracomunion>
                         </template>
                         
                         <template v-if="menu==5">
-                            <h1>Confirma</h1>
+                        <historialprimeracomunion></historialprimeracomunion>
                         </template>
                         
                         <template v-if="menu==6">
-                            <h1> Matrimonio</h1>
+                            <matrimonio1></matrimonio1>
                         </template>
                         
                         <template v-if="menu==7">
@@ -87,6 +87,12 @@
                         <template v-if="menu==13">
                             <h1>Inventario de Iglesias</h1>
                         </template>
+                        <template v-if="menu==20">
+                        <historialconfirmas></historialconfirmas>
+                        </template>
+                        <template v-if="menu==21">
+                        <historialsupletorias></historialsupletorias>
+                        </template>
                         
                         <template v-if="menu==14">
                             <h1>Ayuda</h1>
@@ -101,6 +107,15 @@
                         </template>
                         <template v-if="menu==17">
                         <montofijom></montofijom>
+                        </template>
+                        <template v-if="menu==18">
+                        <categoriaresumen></categoriaresumen>
+                        </template>
+                        <template v-if="menu==19">
+                        <religiosos></religiosos>
+                        </template>
+                        <template v-if="menu==22">
+                        <iglesias></iglesias>
                         </template>
             @else
             @endif

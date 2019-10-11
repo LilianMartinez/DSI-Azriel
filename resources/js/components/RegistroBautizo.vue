@@ -1132,6 +1132,8 @@ export default {
                         'apellido_reali': this.apellidorealizante.toUpperCase(),
                         'dui_reali':this.dui,
                         'sexo':this.sexo,
+                        'dui_pd1':this.duipd1,
+                        'dui_pd2':this.duipd2,
                         'dui_pd3':this.duipd3,
                         'fecha' : this.fecharealizacion,
                         'sacerdote' :this.nombresacerdote,

@@ -6,11 +6,11 @@
                 <!-- Ejemplo de tabla Listado -->
                 <div class="card">
                     <div class="card-header">
-                        <label class="titulo-encabezados">Precios Fijos</label>
+                        <label class="titulo-encabezados">Personal Religioso</label>
                     </div>
                     <div class="card-body">
                     <div class="input-group margen">
-                            <button type="button" @click="abrirModal('montos','registrar')" class="btn btn-primary">
+                            <button type="button" @click="abrirModal('religiosos','registrar')" class="btn btn-primary">
                                     <i class="icon-plus"></i>&nbsp;Nuevo
                             </button>
                         </div>
@@ -18,30 +18,33 @@
                             <div class="col-md-6">
                                 <div class="input-group">
                                     <select class="form-control col-md-3" v-model="criterio">
-                                      <option value="nombremf">Nombre</option>
-                                      <option value="montof">Precio</option>
+                                      <option value="nombre_persona">Nombre</option>
+                                      <option value="apellido_persona">Apellido</option>
+                                      <option value="dui_pasaporte">Dui o Pasaporte</option>
                                     </select>
-                                    <input type="text"  v-model="buscar" @keyup.enter="listarmontosfijos(buscar,criterio)" class="form-control" placeholder="Texto a buscar">
-                                    <button type="submit" @click="listarmontosfijos(buscar,criterio) " class="btn btn-primary"><i class="fa fa-search"></i> Buscar</button>
+                                    <input type="text"  v-model="buscar" @keyup.enter="listarreligiosos(buscar,criterio)" class="form-control" placeholder="Texto a buscar">
+                                    <button type="submit" @click="listarreligiosos(buscar,criterio) " class="btn btn-primary"><i class="fa fa-search"></i> Buscar</button>
                                 </div>
                             </div>
                         </div>
                         <table class="table table-bordered table-striped table-sm">
                             <thead>
                                 <tr>
-                                    <th>Nombre de monto fijo</th>
-                                    <th>Precio </th>
+                                    <th>Nombre</th>
+                                    <th>Apellido </th>
+                                    <th>Dui o Pasaporte</th>
                                     <th>Opcion</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr v-for="montosfijos in arraymontosfijos" :key="montosfijos.id">                              
-                                    <td v-text="montosfijos.nombremf"></td>
-                                    <td v-text="montosfijos.montof"></td>
-                                        <button type="button" @click="abrirModal('montos','actualizar',montosfijos)" >
+                                <tr v-for="religiosos in arrayreligiosos" :key="religiosos.id">                              
+                                    <td v-text="religiosos.nombre_persona"></td>
+                                    <td v-text="religiosos.apellido_persona"></td>
+                                    <td v-text="religiosos.dui_pasaporte"></td>
+                                        <button type="button" @click="abrirModal('religiosos','actualizar',religiosos)" >
                                           <i class="icon-pencil"></i>
                                         </button> &nbsp;
-                                         <button  type="button" class="btn btn-danger btn-sm"  @click="abrirModal('montos','eliminar',montosfijos)" >
+                                         <button  type="button" class="btn btn-danger btn-sm"  @click="abrirModal('religiosos','eliminar',religiosos)" >
                                           <i class="icon-trash  enter"></i>
                                         </button>
                                 </tr>
@@ -67,14 +70,19 @@
                             <div class="form-group row">
                                     <label class="col-md-3 form-control-label" for="text-input">Nombre<b class="alerta">*</b></label>
                                     <div class="col-md-5">
-                                        <input type="text" tabindexgt="0" v-model="nombremf" class="form-control" placeholder="Nombre de precio">
+                                        <input type="text" tabindexgt="0" v-model="nombre_persona" class="form-control" placeholder="Nombre del religioso">
                                     </div>
                                 </div>
                                  <div class="form-group row">
-                                    <label class="col-md-3 form-control-label" for="text-input">Monto<b class="alerta">*</b></label>
-                                    <label>$</label>
-                                    <div class="col-md-4">
-                                        <input type="text" tabindexgt="-1" v-model="montof" class="form-control" placeholder="00.00" >
+                                    <label class="col-md-3 form-control-label" for="text-input">Apellido<b class="alerta">*</b></label>
+                                    <div class="col-md-5">
+                                        <input type="text" tabindexgt="0" v-model="apellido_persona" class="form-control" placeholder="Apellido del religioso" >
+                                    </div>
+                                </div>
+                                 <div class="form-group row">
+                                    <label class="col-md-3 form-control-label" for="text-input">Dui o Pasaporte</label>
+                                    <div class="col-md-5">
+                                        <input type="text" tabindexgt="0" v-model="dui_pasaporte" class="form-control" placeholder="00000000-0">
                                     </div>
                                 </div>
                                 <div v-show="errorDatos" class="form-group row div-error">
@@ -87,8 +95,8 @@
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" @click="cerrarModal()">Cerrar</button>
-                            <button type="button" class="btn btn-primary" v-if="tipoAccion==1" @click="registrarmontosF()">Guardar</button>
-                            <button type="button" class="btn btn-primary" v-if="tipoAccion==2" @click="actualizarmontosfijos()">Actualizar</button>
+                            <button type="button" class="btn btn-primary" v-if="tipoAccion==1" @click="registrarreligiosos()">Guardar</button>
+                            <button type="button" class="btn btn-primary" v-if="tipoAccion==2" @click="actualizarreligiosos()">Actualizar</button>
                         </div>
                     </div>
                     <!-- /.modal-content -->
@@ -101,7 +109,7 @@
                 <div class="modal-dialog modal-danger" role="document">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h4 class="modal-title">¿Esta seguro de eliminar precio fijo?</h4>
+                            <h4 class="modal-title">¿Esta seguro de eliminar a este religioso?</h4>
                             <button type="button" class="close" @click="cerrarModal()" aria-label="Close">
                               <span aria-hidden="true">×</span>
                             </button>
@@ -109,11 +117,15 @@
                         <div class="modal-body">
                        <div class="form-group row">
                                    <b class="alerta"> <label class="col-md-1 form-control-label" for="text-input">Nombre</label></b>
-                                        <b class="alerta"><label class="col-md-3 form-control-label" for="text-input">{{nombremf}}</label></b>   
+                                        <b class="alerta"><label class="col-md-3 form-control-label" for="text-input">{{nombre_persona}}</label></b>   
                                 </div>
                                  <div class="form-group row">
-                                    <b class="alerta"><label class="col-md-1 form-control-label" for="text-input">Monto</label></b>
-                                    <b class="alerta"> <label class="col-md-3 form-control-label">$</label><label>{{montof}}</label></b>   
+                                    <b class="alerta"><label class="col-md-1 form-control-label" for="text-input">Apellido</label></b>
+                                    <b class="alerta"> <label class="col-md-3 form-control-label" for="text-input">{{apellido_persona}}</label></b>   
+                                </div>
+                                <div class="form-group row">
+                                   <b class="alerta"> <label class="col-md-1 form-control-label" for="text-input">Dui o Pasaporte</label></b>
+                                        <b class="alerta"><label class="col-md-3 form-control-label" for="text-input">{{dui_pasaporte}}</label></b>   
                                 </div>
                                 
                         <div class="modal-footer">
@@ -134,15 +146,16 @@
     export default {
       data(){
             return{
-                montosfijos_id:0,
-                nombremf:'',
-                montof:'',
-                arraymontosfijos:[],
+                religiosos_id:0,
+                nombre_persona:'',
+                apellido_persona:'',
+                dui_pasaporte:'',
+                arrayreligiosos:[],
                 modal : 0,
                 modal2: 0,
                 tituloModal : '',
                 tipoAccion:0,
-                criterio:'nombremf', 
+                criterio:'nombre_persona', 
                 buscar: '',
                 errorDatos:0,
                 errorMostrarMsj:[],
@@ -150,7 +163,7 @@
             }
         },
         methods:{
-            listarmontosfijos(buscar,criterio,estado){
+            listarreligiosos(buscar,criterio,estado){
                 let me=this;
                 var lengthbuscar = this.buscar.length;
                  if(lengthbuscar >0)
@@ -158,10 +171,10 @@
                      var buscar2= this.buscar.toUpperCase();
                  }else
                  buscar2=this.buscar;
-                var url='/montofijo?buscar=' + buscar2 + '&criterio=' + criterio;
+                var url='/religioso/index?buscar=' + buscar2 + '&criterio=' + criterio;
                 axios.get(url) .then(function (response) {
                     console.log(response);
-                    me.arraymontosfijos=response.data;
+                    me.arrayreligiosos=response.data;
                 })
                 .catch(function (error) {
                     console.log(error);
@@ -173,34 +186,40 @@
                 this.errorDatos=0;
                 this.errorMostrarMsj=[];
                 var RE = /^\d*(\.\d{1})?\d{0,1}$/;
-               var Max_Length = 50;
+               var Max_Length_DuiPasa = 9;
+               var Max_Length = 70;
                var Min_Length = 3;
-               var lengthmax = this.nombremf.length;
-               var lengthmin = this.nombremf.length;
-               if (!lengthmax > Max_Length)this.errorMostrarMsj.push("El nombre del precio fijo debe tener menos de 50 caracteres");
-                if (lengthmin < Min_Length)this.errorMostrarMsj.push("El nombre del precio fijo debe tener más 3 letras");
-                 if(!this.montof) this.errorMostrarMsj.push("El monto no puede estar vacío");
-                 if (!RE.test(this.montof))  this.errorMostrarMsj.push("El monto solo pueden ser decimales");
+               var lengthmax = this.nombre_persona.length;
+               var lengthmin = this.nombre_persona.length;
+               var lengthmax2 = this.apellido_persona.length;
+               var lengthmin2 = this.apellido_persona.length;
+               var lengthmaxDUIPA = this.dui_pasaporte.length;
+                if (!lengthmax > Max_Length)this.errorMostrarMsj.push("El nombre debe tener menos de 70 caracteres");
+                if (lengthmin < Min_Length)this.errorMostrarMsj.push("El nombre debe tener más 3 letras");
+                if (!lengthmax2 > Max_Length)this.errorMostrarMsj.push("El apellido debe tener menos de 70 caracteres");
+                if (lengthmin2 < Min_Length)this.errorMostrarMsj.push("El apellido debe tener más 3 letras");
+                if (lengthmaxDUIPA > Max_Length_DuiPasa)this.errorMostrarMsj.push("El Dui o Pasaporte debe tener menos de 9 caracteres");
                 if(this.errorMostrarMsj.length) this.errorDatos=1;
             
 
                 return this.errorDatos;
             },
              
-             registrarmontosF(){
+             registrarreligiosos(){
                  if(this.validarvalores()){
                   return;   
                  }
     
              let me=this;
               var buscar='';
-                var criterio='nombremf';
-              axios.put('/montofijo/registrar',{
-                  'nombremf': this.nombremf.toUpperCase(),
-                  'montof':this.montof,
+                var criterio='nombre_persona';
+              axios.put('/religioso/registrar',{
+                  'nombre_persona': this.nombre_persona.toUpperCase(),
+                  'apellido_persona':this.apellido_persona.toUpperCase(),
+                  'dui_pasaporte':this.dui_pasaporte.toUpperCase(),
               }) .then(function (response) {
                     me.cerrarModal();
-                    me.listarmontosfijos(buscar,criterio);
+                    me.listarreligiosos(buscar,criterio);
                 }) .catch(function (error) {
                  
                 });
@@ -208,22 +227,23 @@
             },
          
 
-            actualizarmontosfijos(){
+            actualizarreligiosos(){
                 if(this.validarvalores()){
                   return;   
                  }
                
                 let me=this;
                 var buscar='';
-                var criterio='nombremf';
-                axios.put('/montofijo/actualizar',{
-                  'nombremf': this.nombremf.toUpperCase(),
-                  'montof':this.montof,
-                  'id':this.montosfijos_id,
+                var criterio='nombre_persona';
+                axios.put('/religioso/actualizar',{
+                  'nombre_persona': this.nombre_persona.toUpperCase(),
+                  'apellido_persona':this.apellido_persona.toUpperCase(),
+                  'dui_pasaporte':this.dui_pasaporte.toUpperCase(),
+                  'id':this.religiosos_id,
                     }) .then(function (response) {
                     me.cerrarModal();
                     
-                    me.listarmontosfijos(buscar,criterio);
+                    me.listarreligiosos(buscar,criterio);
                 })
                 .catch(function (error) {
                     // handle error
@@ -233,12 +253,12 @@
              eliminar(){
                 let me=this;
                 var buscar='';
-                var criterio='nombremf';
-                axios.put('/montofijo/eliminar',{
-                  'id':this.montosfijos_id,
+                var criterio='nombre_persona';
+                axios.put('/religioso/eliminar',{
+                  'id':this.religiosos_id,
                     }) .then(function (response) {
                     me.cerrarModal();
-                    me.listarmontosfijos(buscar,criterio);
+                    me.listarreligiosos(buscar,criterio);
                 })
                 .catch(function (error) {
                     // handle error
@@ -250,44 +270,49 @@
                 this.modal2=0;
                 this.tituloModal='';
                 this.tipoAccion=0;
-                this.nombremf='';
+                this.nombre_persona='';
+                this.apellido_persona='';
+                this.dui_pasaporte='';
                 this.buscar='';
-                this.criterio='nombremf';
+                this.criterio='nombre_persona';
             
             },
     
           abrirModal(modelo, accion, data=[]){
                 switch(modelo){
-                    case "montos":
+                    case "religiosos":
                     {
                         switch(accion){
                             case 'registrar':
                             {
                                 this.modal=1;
-                                this.tituloModal='Nuevo Precio Fijo';
+                                this.tituloModal='Nuevo Religioso';
                                 this.tipoAccion=1;
-                                this.nombremf='';
-                                this.montof='';
+                                this.nombre_persona='';
+                                this.apellido_persona='';
+                                this.dui_pasaporte='';
                                 break;
 
                             }
                              case 'actualizar':
                             {
                                  this.modal=1;
-                                this.tituloModal='Modificar Precio Fijo';
+                                this.tituloModal='Modificar Religioso';
                                 this.tipoAccion=2;
-                                this.montosfijos_id=data['id'];
-                                this.nombremf=data['nombremf'];
-                                this.montof=data['montof'];
+                                this.religiosos_id=data['id'];
+                                this.nombre_persona=data['nombre_persona'];
+                                this.apellido_persona=data['apellido_persona'];
+                                this.dui_pasaporte=data['dui_pasaporte'];
                                break;
                             }
                              case 'eliminar':
                             {
                                 this.modal2=1;
-                                this.tituloModal='Eliminar Precio Fijo';
-                                this.montosfijos_id=data['id'];
-                                this.nombremf=data['nombremf'];
-                                this.montof=data['montof'];
+                                this.tituloModal='Eliminar Religioso';
+                                this.religiosos_id=data['id'];
+                                this.nombre_persona=data['nombre_persona'];
+                                this.apellido_persona=data['apellido_persona'];
+                                this.dui_pasaporte=data['dui_pasaporte'];
                                break;
                             }
                         }
@@ -297,7 +322,7 @@
             }
         },
         mounted() {
-            this.listarmontosfijos(this.buscar,this.criterio);
+            this.listarreligiosos(this.buscar,this.criterio);
         }
     }
 </script>

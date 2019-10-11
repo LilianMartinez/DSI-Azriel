@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Efectivo;
 use App\MontoFijo;
+use APP\CategoriaResumen;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 
@@ -24,7 +25,6 @@ class EfectivoController extends Controller
         $criterio = $request->criterio;  
         $componente=$request->componente;
         $hoy=new \DateTime();
-        //$hoy=Carbon::now()->toDateString();
         if($componente==1){
             if ($buscar == ''){
              
@@ -90,6 +90,7 @@ class EfectivoController extends Controller
         $efectivo->tipo=$request->tipo;
         $efectivo->monto=$request->monto;
         $efectivo->fecha= new \DateTime();
+        $efectivo->idcare=$request->idcare;
        // $efectivo->fecha=Carbon::now()->toDateString();
         $efectivo->save();
 
@@ -116,6 +117,7 @@ class EfectivoController extends Controller
         $efectivo->descripcion_efectivo=$request->descripcion_efectivo;
         $efectivo->tipo=$request->tipo;
         $efectivo->monto=$request->monto;
+        $efectivo->idcare=$request->idcare;
         $efectivo->save();
     }
 
@@ -138,6 +140,17 @@ class EfectivoController extends Controller
         $envio=array();
         $h=1;
         $h2=2;
+    
+
+        /* ------------------------------------------- */
+        $fechaActual=new \DateTime();
+        $anio=$fechaActual->format('Y');
+        $mes=$fechaActual->format('m');
+        /*--------------------------------------------- */
+
+       /* $efectivo = DB::table('efectivos')->whereYear('fecha', $anio)->whereMonth('fecha', $mes)->where("tipo",1)->sum("monto");
+        $efectivo2=  DB::table('efectivos')->whereYear('fecha', $anio)->whereMonth('fecha', $mes)->where("tipo",2)->sum("monto");*/
+
        $efectivo = DB::table('efectivos')->where("tipo",$h)->sum("monto");
        $efectivo2=  DB::table('efectivos')->where("tipo",$h2)->sum("monto");
        $total= $efectivo-$efectivo2;
@@ -153,23 +166,38 @@ class EfectivoController extends Controller
        return $envio; 
       
     }
-    public function buscaregreso(Request $request)
+    public function buscarM(Request $request)
     {
+      
         if(!$request->ajax()) 
             return redirect('/');
-        $h=2;
-        $hoy=Carbon::now()->toDateString();
-       $efectivo = DB::table('efectivos') ->where('fecha', $hoy)->where("tipo",$h)->sum("monto");
-       return $efectivo;  
+        $envio=array();
+       
+        $fechaActual=new \DateTime();
+        $anio=$fechaActual->format('Y');
+        $mes=$fechaActual->format('m');
+        
+        $efectivo = DB::table('efectivos')->whereYear('fecha', $anio)->whereMonth('fecha', $mes)->where("tipo",1)->sum("monto");
+        $efectivo2=  DB::table('efectivos')->whereYear('fecha', $anio)->whereMonth('fecha', $mes)->where("tipo",2)->sum("monto");
+        $total= $efectivo-$efectivo2;
+        $envio['total']= number_format($total, 2);
+
+       
+       $efectivo = DB::table('efectivos')->whereYear('fecha', $anio)->whereMonth('fecha', $mes)->where("tipo",2)->sum("monto");
+       $envio['egreso']=$efectivo;
+       $efectivo = DB::table('efectivos')->whereYear('fecha', $anio)->whereMonth('fecha', $mes)->where("tipo",1)->sum("monto");
+       $envio['ingreso']=$efectivo;
+       return $envio;  
     }
-    public function buscaringreso(Request $request)
+
+   /* public function buscaringreso(Request $request)
     {
         if(!$request->ajax()) return redirect('/');
         $h=1;
         $hoy=Carbon::now()->toDateString();
        $efectivo = DB::table('efectivos') ->where('fecha', $hoy)->where("tipo",$h)->sum("monto");
       return $efectivo;  
-    }
+    }*/
 
     public function listarPdfGeneral(){
 

@@ -15,11 +15,16 @@
                                 <a class="nav-link" href="#"><i class="icon-bag"></i> Calendario de Avisos</a>
                             </li>
                         </ul>
-                    </li>
+                    </li>-->
                     <li class="nav-item nav-dropdown">
-                        <a class="nav-link nav-dropdown-toggle" href="#"><i class="icon-bag"></i> Certificados</a>
-                        <li class="nav-item nav-dropdown">
-                            <a class="nav-link nav-dropdown-toggle" href="#"><i class="icon-bag"></i> Bautizo</a>
+                        <a class="nav-link nav-dropdown-toggle" href="#"><i class="icon-bag"></i>Sacramentos</a>
+                        <ul class="nav-dropdown-items">
+                            <li @click="menu=3" class="nav-item">
+                                <a class="nav-link" href="#"><i class="icon-bag"></i> Bautizo</a>
+                            </li>
+                            <li class="nav-item nav-dropdown">
+                            <a class="nav-link nav-dropdown-toggle" href="#"><i class="icon-bag"></i>Primera Comunion</a>
+                            <ul class="nav-dropdown-items">
                             <ul class="nav-dropdown-items">
                                 <li @click="menu=3" class="nav-item">
                                     <a class="nav-link" href="#"><i class="icon-bag"></i> Bautizo</a>
@@ -29,18 +34,27 @@
                                 </li>
                         </ul>
                             <li @click="menu=4" class="nav-item">
-                                <a class="nav-link" href="#"><i class="icon-bag"></i> Primera Comunión</a>
+                                <a class="nav-link" href="#"><i class="icon-bag"></i>Hacer registro</a>
                             </li>
                             <li @click="menu=5" class="nav-item">
+                                <a class="nav-link" href="#"><i class="icon-bag"></i>Historial</a>
+                            </li>
+                            </ul>
+                            </li>
+                            <li @click="menu=20" class="nav-item">
                                 <a class="nav-link" href="#"><i class="icon-bag"></i> Confirma</a>
                             </li>
                             <li @click="menu=6" class="nav-item">
                                 <a class="nav-link" href="#"><i class="icon-bag"></i> Matrimonio</a>
                             </li>
+                            <li @click="menu=21" class="nav-item">
+                                <a class="nav-link" href="#"><i class="icon-bag"></i> Supletorias</a>
+                            </li>
                         </ul>
-                    </li>-->
+                    </li>
+        
                     <li class="nav-item nav-dropdown">
-                        <a class="nav-link nav-dropdown-toggle" href="#"><i class="icon-wallet"></i> Caja Chica</a>
+                        <a class="nav-link nav-dropdown-toggle" href="#"><i class="icon-wallet"></i> Caja chica</a>
                         <ul class="nav-dropdown-items">
                             <li @click="menu=16" class="nav-item">
                                 <a class="nav-link" href="#"><i class="icon-wallet"></i>Caja chica diaria</a>
@@ -83,9 +97,17 @@
                         <a class="nav-link nav-dropdown-toggle" href="#"><i class="icon-pie-chart"></i> Mantenimientos</a>
                         <ul class="nav-dropdown-items">
                             <li @click="menu=17" class="nav-item">
-                                <a class="nav-link" href="#"><i class="icon-chart"></i> Precios Fijos</a>
+                                <a class="nav-link" href="#"><i class="icon-chart"></i> Precios fijos</a>
                             </li>
-                        
+                            <li @click="menu=18" class="nav-item">
+                                <a class="nav-link" href="#"><i class="icon-wallet"></i>Categorias para resumenes</a>
+                            </li>
+                            <li @click="menu=19" class="nav-item">
+                                <a class="nav-link" href="#"><i class="icon-wallet"></i>Personal Religioso</a>
+                            </li>
+                            <li @click="menu=22" class="nav-item">
+                                <a class="nav-link" href="#"><i class="icon-wallet"></i>Iglesias</a>
+                            </li>
                         </ul>
                     </li>
                 </ul>
