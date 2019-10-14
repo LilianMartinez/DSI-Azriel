@@ -162,7 +162,606 @@ class SacramentoController extends Controller
         $tipo=$request->tipo;
 
         switch($tipo){
-            case '1': //Ingresamos todos los datos por primera vez
+            /* Guardar 1 padrino (1-2)    *
+             * Guardar 2 padrinos (3-6)   *
+             * Guardar 3 padrinos (7-14)  *
+             * Guardar 4 padrinos (15-30) */
+            case '1':
+            {
+                //Creamos el pad1
+                $persona_idMax = Persona::max('id');
+                $id_pad1=$persona_idMax+1; //utilizo las variables $id_pad1 y etc, solo dentro de este método
+                $id_sacerdote=$request->id_sacerdote;
+                $id_iglesia=$request->id_iglesia;
+                $fecha_realizacion=$request->fecha_realizacion;
+                $monto_p= Efectivo::max('id');
+                $montos=$monto_p+1;
+
+                $efectivo = new Efectivo();
+                $efectivo->id=$montos;
+                $efectivo->descripcion_efectivo='Matrimonio';
+                $efectivo->idcare=$request->idcate;
+                $efectivo->tipo= 1;
+                $efectivo->monto=$request->monto;
+                $efectivo->fecha= new \DateTime();
+                $efectivo->save();
+        
+                $pad1 = new Persona();
+                $pad1->id=$id_pad1;
+                $pad1->nombre_persona= $request->pad1Nom;
+                $pad1->apellido_persona=$request->pad1Ap;
+                $pad1->dui_pasaporte=$request->pad1D;
+                $pad1->sexo=$request->pad1Sexo;
+                $pad1->save();
+        
+                $sacramento = Sacramento::findOrFail($request->id);
+                $sacramento->id_sacerdote=$id_sacerdote;
+                $sacramento->id_padrino=$id_pad1;
+                $sacramento->id_iglesia=$id_iglesia;
+                $sacramento->fecha_realizacion=$fecha_realizacion;
+                //$sacramento->estado=1; QUITAR DE AQUÍ ESTO, Y PONERLO EN BOTÓN "MATRIMONIO REALIZADO"
+                $sacramento->save();
+                break;
+            }
+
+            case '2':
+            {
+                //Recuperamos pad1
+                $id_sacerdote=$request->id_sacerdote;
+                $id_iglesia=$request->id_iglesia;
+                $fecha_realizacion=$request->fecha_realizacion;
+                $id_pad1=$request->id_padrino1;
+
+                $monto_p= Efectivo::max('id');
+                $montos=$monto_p+1;
+
+                $efectivo = new Efectivo();
+                $efectivo->id=$montos;
+                $efectivo->descripcion_efectivo='Matrimonio';
+                $efectivo->idcare=$request->idcate;
+                $efectivo->tipo= 1;
+                $efectivo->monto=$request->monto;
+                $efectivo->fecha= new \DateTime();
+                $efectivo->save();
+
+                $sacramento = Sacramento::findOrFail($request->id);
+                $sacramento->id_sacerdote=$id_sacerdote;
+                $sacramento->id_padrino=$id_pad1;
+                $sacramento->fecha_realizacion=$request->fecha_realizacion;
+                $sacramento->id_iglesia=$id_iglesia;
+                $sacramento->save();
+                break;
+            }
+
+            case '3':
+            {
+                //Creamos pad1 y mad1
+                $persona_idMax = Persona::max('id');
+                $id_pad1=$persona_idMax+1; //utilizo las variables $id_pad1 y etc, solo dentro de este método
+                $id_mad1=$id_pad1+1;
+                $id_sacerdote=$request->id_sacerdote;
+                $id_iglesia=$request->id_iglesia;
+                $fecha_realizacion=$request->fecha_realizacion;
+                $monto_p= Efectivo::max('id');
+                $montos=$monto_p+1;
+
+                $efectivo = new Efectivo();
+                $efectivo->id=$montos;
+                $efectivo->descripcion_efectivo='Matrimonio';
+                $efectivo->idcare=$request->idcate;
+                $efectivo->tipo= 1;
+                $efectivo->monto=$request->monto;
+                $efectivo->fecha= new \DateTime();
+                $efectivo->save();
+        
+                $pad1 = new Persona();
+                $pad1->id=$id_pad1;
+                $pad1->nombre_persona= $request->pad1Nom;
+                $pad1->apellido_persona=$request->pad1Ap;
+                $pad1->dui_pasaporte=$request->pad1D;
+                $pad1->sexo=$request->pad1Sexo;
+                $pad1->save();
+
+                $pad2 = new Persona();
+                $pad2->id=$id_mad1;
+                $pad2->nombre_persona= $request->mad1Nom;
+                $pad2->apellido_persona=$request->mad1Ap;
+                $pad2->dui_pasaporte=$request->mad1D;
+                $pad2->sexo=$request->mad1Sexo;
+                $pad2->save();
+        
+                $sacramento = Sacramento::findOrFail($request->id);
+                $sacramento->id_sacerdote=$id_sacerdote;
+                $sacramento->id_padrino=$id_pad1;
+                $sacramento->id_padrino2=$id_mad1;
+                $sacramento->id_iglesia=$id_iglesia;
+                $sacramento->fecha_realizacion=$fecha_realizacion;
+                //$sacramento->estado=1; QUITAR DE AQUÍ ESTO, Y PONERLO EN BOTÓN "MATRIMONIO REALIZADO"
+                $sacramento->save();
+                break;
+            }
+
+            case '4':
+            {
+                //Creamos mad1; recuperamos pad1
+                $persona_idMax = Persona::max('id');
+                $id_mad1=$persona_idMax+1;
+                $id_pad1=$request->id_padrino1;
+                $id_sacerdote=$request->id_sacerdote;
+                $id_iglesia=$request->id_iglesia;
+                $fecha_realizacion=$request->fecha_realizacion;
+                $monto_p= Efectivo::max('id');
+                $montos=$monto_p+1;
+
+                $efectivo = new Efectivo();
+                $efectivo->id=$montos;
+                $efectivo->descripcion_efectivo='Matrimonio';
+                $efectivo->idcare=$request->idcate;
+                $efectivo->tipo= 1;
+                $efectivo->monto=$request->monto;
+                $efectivo->fecha= new \DateTime();
+                $efectivo->save();
+
+                $pad2 = new Persona();
+                $pad2->id=$id_mad1;
+                $pad2->nombre_persona= $request->mad1Nom;
+                $pad2->apellido_persona=$request->mad1Ap;
+                $pad2->dui_pasaporte=$request->mad1D;
+                $pad2->sexo=$request->mad1Sexo;
+                $pad2->save();
+        
+                $sacramento = Sacramento::findOrFail($request->id);
+                $sacramento->id_sacerdote=$id_sacerdote;
+                $sacramento->id_padrino=$id_pad1;
+                $sacramento->id_padrino2=$id_mad1;
+                $sacramento->id_iglesia=$id_iglesia;
+                $sacramento->fecha_realizacion=$fecha_realizacion;
+                //$sacramento->estado=1; QUITAR DE AQUÍ ESTO, Y PONERLO EN BOTÓN "MATRIMONIO REALIZADO"
+                $sacramento->save();
+                break;
+            }
+
+            case '5':
+            {
+                //Creamos pad1; recuperamos mad1
+                $persona_idMax = Persona::max('id');
+                $id_pad1=$persona_idMax+1;
+                $id_mad1=$request->id_madrina1;
+                $id_sacerdote=$request->id_sacerdote;
+                $id_iglesia=$request->id_iglesia;
+                $fecha_realizacion=$request->fecha_realizacion;
+                $monto_p= Efectivo::max('id');
+                $montos=$monto_p+1;
+
+                $efectivo = new Efectivo();
+                $efectivo->id=$montos;
+                $efectivo->descripcion_efectivo='Matrimonio';
+                $efectivo->idcare=$request->idcate;
+                $efectivo->tipo= 1;
+                $efectivo->monto=$request->monto;
+                $efectivo->fecha= new \DateTime();
+                $efectivo->save();
+
+                $pad1 = new Persona();
+                $pad1->id=$id_pad1;
+                $pad1->nombre_persona= $request->pad1Nom;
+                $pad1->apellido_persona=$request->pad1Ap;
+                $pad1->dui_pasaporte=$request->pad1D;
+                $pad1->sexo=$request->pad1Sexo;
+                $pad1->save();
+
+                $sacramento = Sacramento::findOrFail($request->id);
+                $sacramento->id_sacerdote=$id_sacerdote;
+                $sacramento->id_padrino=$id_pad1;
+                $sacramento->id_padrino2=$id_mad1;
+                $sacramento->id_padrino3=$id_pad2;
+                $sacramento->id_padrino4=$id_mad2;
+                $sacramento->id_iglesia=$id_iglesia;
+                $sacramento->fecha_realizacion=$fecha_realizacion;
+                //$sacramento->estado=1; QUITAR DE AQUÍ ESTO, Y PONERLO EN BOTÓN "MATRIMONIO REALIZADO"
+                $sacramento->save();
+                break;
+            }
+
+            case '6':
+            {
+                //Recuperamos pad1 y mad1
+                $id_sacerdote=$request->id_sacerdote;
+                $id_iglesia=$request->id_iglesia;
+                $fecha_realizacion=$request->fecha_realizacion;
+                $id_pad1=$request->id_padrino1;
+                $id_mad1=$request->id_madrina1;
+
+                $monto_p= Efectivo::max('id');
+                $montos=$monto_p+1;
+
+                $efectivo = new Efectivo();
+                $efectivo->id=$montos;
+                $efectivo->descripcion_efectivo='Matrimonio';
+                $efectivo->idcare=$request->idcate;
+                $efectivo->tipo= 1;
+                $efectivo->monto=$request->monto;
+                $efectivo->fecha= new \DateTime();
+                $efectivo->save();
+
+                $sacramento = Sacramento::findOrFail($request->id);
+                $sacramento->id_sacerdote=$id_sacerdote;
+                $sacramento->id_padrino=$id_pad1;
+                $sacramento->id_padrino2=$id_mad1;
+                $sacramento->fecha_realizacion=$request->fecha_realizacion;
+                $sacramento->id_iglesia=$id_iglesia;
+                $sacramento->save();
+                break;
+            }
+
+            case '7':
+            {
+                //Creamos pad1, pad2 y mad1
+                $persona_idMax = Persona::max('id');
+                $id_pad1=$persona_idMax+1; //utilizo las variables $id_pad1 y etc, solo dentro de este método
+                $id_mad1=$id_pad1+1;
+                $id_pad2=$id_mad1+1;
+                $id_sacerdote=$request->id_sacerdote;
+                $id_iglesia=$request->id_iglesia;
+                $fecha_realizacion=$request->fecha_realizacion;
+                $monto_p= Efectivo::max('id');
+                $montos=$monto_p+1;
+
+                $efectivo = new Efectivo();
+                $efectivo->id=$montos;
+                $efectivo->descripcion_efectivo='Matrimonio';
+                $efectivo->idcare=$request->idcate;
+                $efectivo->tipo= 1;
+                $efectivo->monto=$request->monto;
+                $efectivo->fecha= new \DateTime();
+                $efectivo->save();
+        
+                $pad1 = new Persona();
+                $pad1->id=$id_pad1;
+                $pad1->nombre_persona= $request->pad1Nom;
+                $pad1->apellido_persona=$request->pad1Ap;
+                $pad1->dui_pasaporte=$request->pad1D;
+                $pad1->sexo=$request->pad1Sexo;
+                $pad1->save();
+
+                $pad2 = new Persona();
+                $pad2->id=$id_mad1;
+                $pad2->nombre_persona= $request->mad1Nom;
+                $pad2->apellido_persona=$request->mad1Ap;
+                $pad2->dui_pasaporte=$request->mad1D;
+                $pad2->sexo=$request->mad1Sexo;
+                $pad2->save();
+
+                $pad3 = new Persona();
+                $pad3->id=$id_pad2;
+                $pad3->nombre_persona= $request->pad2Nom;
+                $pad3->apellido_persona=$request->pad2Ap;
+                $pad3->dui_pasaporte=$request->pad2D;
+                $pad3->sexo=$request->pad2Sexo;
+                $pad3->save();
+        
+                $sacramento = Sacramento::findOrFail($request->id);
+                $sacramento->id_sacerdote=$id_sacerdote;
+                $sacramento->id_padrino=$id_pad1;
+                $sacramento->id_padrino2=$id_mad1;
+                $sacramento->id_padrino3=$id_pad2;
+                $sacramento->id_iglesia=$id_iglesia;
+                $sacramento->fecha_realizacion=$fecha_realizacion;
+                //$sacramento->estado=1; QUITAR DE AQUÍ ESTO, Y PONERLO EN BOTÓN "MATRIMONIO REALIZADO"
+                $sacramento->save();
+                break;
+            }
+
+            case '8':
+            {
+                //Creamos mad1 y pad2; recuperamos pad1
+                $persona_idMax = Persona::max('id');
+                $id_mad1=$persona_idMax+1;
+                $id_pad2=$id_mad1+1;
+                $id_pad1=$request->id_padrino1;
+                $id_sacerdote=$request->id_sacerdote;
+                $id_iglesia=$request->id_iglesia;
+                $fecha_realizacion=$request->fecha_realizacion;
+                $monto_p= Efectivo::max('id');
+                $montos=$monto_p+1;
+
+                $efectivo = new Efectivo();
+                $efectivo->id=$montos;
+                $efectivo->descripcion_efectivo='Matrimonio';
+                $efectivo->idcare=$request->idcate;
+                $efectivo->tipo= 1;
+                $efectivo->monto=$request->monto;
+                $efectivo->fecha= new \DateTime();
+                $efectivo->save();
+
+                $pad2 = new Persona();
+                $pad2->id=$id_mad1;
+                $pad2->nombre_persona= $request->mad1Nom;
+                $pad2->apellido_persona=$request->mad1Ap;
+                $pad2->dui_pasaporte=$request->mad1D;
+                $pad2->sexo=$request->mad1Sexo;
+                $pad2->save();
+
+                $pad3 = new Persona();
+                $pad3->id=$id_pad2;
+                $pad3->nombre_persona= $request->pad2Nom;
+                $pad3->apellido_persona=$request->pad2Ap;
+                $pad3->dui_pasaporte=$request->pad2D;
+                $pad3->sexo=$request->pad2Sexo;
+                $pad3->save();
+
+                $sacramento = Sacramento::findOrFail($request->id);
+                $sacramento->id_sacerdote=$id_sacerdote;
+                $sacramento->id_padrino=$id_pad1;
+                $sacramento->id_padrino2=$id_mad1;
+                $sacramento->id_padrino3=$id_pad2;
+                $sacramento->id_iglesia=$id_iglesia;
+                $sacramento->fecha_realizacion=$fecha_realizacion;
+                //$sacramento->estado=1; QUITAR DE AQUÍ ESTO, Y PONERLO EN BOTÓN "MATRIMONIO REALIZADO"
+                $sacramento->save();
+                break;
+            }
+
+            case '9':
+            {
+                //Creamos pad1 y pad2; recuperamos mad1
+                $persona_idMax = Persona::max('id');
+                $id_pad1=$persona_idMax+1;
+                $id_pad2=$id_pad1+1;
+                $id_mad1=$request->id_padrino1;
+                $id_sacerdote=$request->id_sacerdote;
+                $id_iglesia=$request->id_iglesia;
+                $fecha_realizacion=$request->fecha_realizacion;
+                $monto_p= Efectivo::max('id');
+                $montos=$monto_p+1;
+
+                $efectivo = new Efectivo();
+                $efectivo->id=$montos;
+                $efectivo->descripcion_efectivo='Matrimonio';
+                $efectivo->idcare=$request->idcate;
+                $efectivo->tipo= 1;
+                $efectivo->monto=$request->monto;
+                $efectivo->fecha= new \DateTime();
+                $efectivo->save();
+
+                $pad1 = new Persona();
+                $pad1->id=$id_pad1;
+                $pad1->nombre_persona= $request->pad1Nom;
+                $pad1->apellido_persona=$request->pad1Ap;
+                $pad1->dui_pasaporte=$request->pad1D;
+                $pad1->sexo=$request->pad1Sexo;
+                $pad1->save();
+
+                $pad3 = new Persona();
+                $pad3->id=$id_pad2;
+                $pad3->nombre_persona= $request->pad2Nom;
+                $pad3->apellido_persona=$request->pad2Ap;
+                $pad3->dui_pasaporte=$request->pad2D;
+                $pad3->sexo=$request->pad2Sexo;
+                $pad3->save();
+
+                $sacramento = Sacramento::findOrFail($request->id);
+                $sacramento->id_sacerdote=$id_sacerdote;
+                $sacramento->id_padrino=$id_pad1;
+                $sacramento->id_padrino2=$id_mad1;
+                $sacramento->id_padrino3=$id_pad2;
+                $sacramento->id_iglesia=$id_iglesia;
+                $sacramento->fecha_realizacion=$fecha_realizacion;
+                //$sacramento->estado=1; QUITAR DE AQUÍ ESTO, Y PONERLO EN BOTÓN "MATRIMONIO REALIZADO"
+                $sacramento->save();
+                break;
+            }
+
+            case '10':
+            {
+                //Creamos pad2; Recuperamos pad1 y mad1
+                $persona_idMax = Persona::max('id');
+                $id_pad2=$persona_idMax+1;
+                $id_pad1=$request->id_padrino1;
+                $id_mad1=$request->id_madrina1;
+                $id_sacerdote=$request->id_sacerdote;
+                $id_iglesia=$request->id_iglesia;
+                $fecha_realizacion=$request->fecha_realizacion;
+                $monto_p= Efectivo::max('id');
+                $montos=$monto_p+1;
+
+                $efectivo = new Efectivo();
+                $efectivo->id=$montos;
+                $efectivo->descripcion_efectivo='Matrimonio';
+                $efectivo->idcare=$request->idcate;
+                $efectivo->tipo= 1;
+                $efectivo->monto=$request->monto;
+                $efectivo->fecha= new \DateTime();
+                $efectivo->save();
+
+                $pad3 = new Persona();
+                $pad3->id=$id_pad2;
+                $pad3->nombre_persona= $request->pad2Nom;
+                $pad3->apellido_persona=$request->pad2Ap;
+                $pad3->dui_pasaporte=$request->pad2D;
+                $pad3->sexo=$request->pad2Sexo;
+                $pad3->save();
+
+                $sacramento = Sacramento::findOrFail($request->id);
+                $sacramento->id_sacerdote=$id_sacerdote;
+                $sacramento->id_padrino=$id_pad1;
+                $sacramento->id_padrino2=$id_mad1;
+                $sacramento->id_padrino3=$id_pad2;
+                $sacramento->id_iglesia=$id_iglesia;
+                $sacramento->fecha_realizacion=$fecha_realizacion;
+                //$sacramento->estado=1; QUITAR DE AQUÍ ESTO, Y PONERLO EN BOTÓN "MATRIMONIO REALIZADO"
+                $sacramento->save();
+                break;
+            }
+
+            case '11':
+            {
+                //Creamos pad1 y mad1; Recuperamos pad2
+                $persona_idMax = Persona::max('id');
+                $id_pad1=$persona_idMax+1;
+                $id_mad1=$id_pad1+1;
+                $id_pad2=$request->id_padrino2;
+                $id_sacerdote=$request->id_sacerdote;
+                $id_iglesia=$request->id_iglesia;
+                $fecha_realizacion=$request->fecha_realizacion;
+                $monto_p= Efectivo::max('id');
+                $montos=$monto_p+1;
+
+                $efectivo = new Efectivo();
+                $efectivo->id=$montos;
+                $efectivo->descripcion_efectivo='Matrimonio';
+                $efectivo->idcare=$request->idcate;
+                $efectivo->tipo= 1;
+                $efectivo->monto=$request->monto;
+                $efectivo->fecha= new \DateTime();
+                $efectivo->save();
+
+                $pad1 = new Persona();
+                $pad1->id=$id_pad1;
+                $pad1->nombre_persona= $request->pad1Nom;
+                $pad1->apellido_persona=$request->pad1Ap;
+                $pad1->dui_pasaporte=$request->pad1D;
+                $pad1->sexo=$request->pad1Sexo;
+                $pad1->save();
+
+                $pad2 = new Persona();
+                $pad2->id=$id_mad1;
+                $pad2->nombre_persona= $request->mad1Nom;
+                $pad2->apellido_persona=$request->mad1Ap;
+                $pad2->dui_pasaporte=$request->mad1D;
+                $pad2->sexo=$request->mad1Sexo;
+                $pad2->save();
+
+                $sacramento = Sacramento::findOrFail($request->id);
+                $sacramento->id_sacerdote=$id_sacerdote;
+                $sacramento->id_padrino=$id_pad1;
+                $sacramento->id_padrino2=$id_mad1;
+                $sacramento->id_padrino3=$id_pad2;
+                $sacramento->id_iglesia=$id_iglesia;
+                $sacramento->fecha_realizacion=$fecha_realizacion;
+                //$sacramento->estado=1; QUITAR DE AQUÍ ESTO, Y PONERLO EN BOTÓN "MATRIMONIO REALIZADO"
+                $sacramento->save();
+                break;
+            }
+
+            case '12':
+            {
+                //Creamos mad1; recuperamos pad1 y pad2
+                $persona_idMax = Persona::max('id');
+                $id_mad1=$persona_idMax+1;
+                $id_pad1=$request->id_padrino1;
+                $id_pad2=$request->id_padrino2;
+                $id_sacerdote=$request->id_sacerdote;
+                $id_iglesia=$request->id_iglesia;
+                $fecha_realizacion=$request->fecha_realizacion;
+                $monto_p= Efectivo::max('id');
+                $montos=$monto_p+1;
+
+                $efectivo = new Efectivo();
+                $efectivo->id=$montos;
+                $efectivo->descripcion_efectivo='Matrimonio';
+                $efectivo->idcare=$request->idcate;
+                $efectivo->tipo= 1;
+                $efectivo->monto=$request->monto;
+                $efectivo->fecha= new \DateTime();
+                $efectivo->save();
+
+                $pad2 = new Persona();
+                $pad2->id=$id_mad1;
+                $pad2->nombre_persona= $request->mad1Nom;
+                $pad2->apellido_persona=$request->mad1Ap;
+                $pad2->dui_pasaporte=$request->mad1D;
+                $pad2->sexo=$request->mad1Sexo;
+                $pad2->save();
+
+                $sacramento = Sacramento::findOrFail($request->id);
+                $sacramento->id_sacerdote=$id_sacerdote;
+                $sacramento->id_padrino=$id_pad1;
+                $sacramento->id_padrino2=$id_mad1;
+                $sacramento->id_padrino3=$id_pad2;
+                $sacramento->id_iglesia=$id_iglesia;
+                $sacramento->fecha_realizacion=$fecha_realizacion;
+                //$sacramento->estado=1; QUITAR DE AQUÍ ESTO, Y PONERLO EN BOTÓN "MATRIMONIO REALIZADO"
+                $sacramento->save();
+                break;
+            }
+
+            case '13':
+            {
+                //Creamos pad1; recuperamos mad1 y pad2
+                $persona_idMax = Persona::max('id');
+                $id_pad1=$persona_idMax+1;
+                $id_mad1=$request->id_padrino1;
+                $id_pad2=$request->id_padrino2;
+                $id_sacerdote=$request->id_sacerdote;
+                $id_iglesia=$request->id_iglesia;
+                $fecha_realizacion=$request->fecha_realizacion;
+                $monto_p= Efectivo::max('id');
+                $montos=$monto_p+1;
+
+                $efectivo = new Efectivo();
+                $efectivo->id=$montos;
+                $efectivo->descripcion_efectivo='Matrimonio';
+                $efectivo->idcare=$request->idcate;
+                $efectivo->tipo= 1;
+                $efectivo->monto=$request->monto;
+                $efectivo->fecha= new \DateTime();
+                $efectivo->save();
+
+                $pad1 = new Persona();
+                $pad1->id=$id_pad1;
+                $pad1->nombre_persona= $request->pad1Nom;
+                $pad1->apellido_persona=$request->pad1Ap;
+                $pad1->dui_pasaporte=$request->pad1D;
+                $pad1->sexo=$request->pad1Sexo;
+                $pad1->save();
+
+                $sacramento = Sacramento::findOrFail($request->id);
+                $sacramento->id_sacerdote=$id_sacerdote;
+                $sacramento->id_padrino=$id_pad1;
+                $sacramento->id_padrino2=$id_mad1;
+                $sacramento->id_padrino3=$id_pad2;
+                $sacramento->id_iglesia=$id_iglesia;
+                $sacramento->fecha_realizacion=$fecha_realizacion;
+                //$sacramento->estado=1; QUITAR DE AQUÍ ESTO, Y PONERLO EN BOTÓN "MATRIMONIO REALIZADO"
+                $sacramento->save();
+                break;
+            }
+
+            case '14':
+            {
+                //Recuperamos pad1, pad2 y mad1
+                $id_sacerdote=$request->id_sacerdote;
+                $id_iglesia=$request->id_iglesia;
+                $fecha_realizacion=$request->fecha_realizacion;
+                $id_pad1=$request->id_padrino1;
+                $id_mad1=$request->id_madrina1;
+                $id_pad2=$request->id_padrino2;
+
+                $monto_p= Efectivo::max('id');
+                $montos=$monto_p+1;
+
+                $efectivo = new Efectivo();
+                $efectivo->id=$montos;
+                $efectivo->descripcion_efectivo='Matrimonio';
+                $efectivo->idcare=$request->idcate;
+                $efectivo->tipo= 1;
+                $efectivo->monto=$request->monto;
+                $efectivo->fecha= new \DateTime();
+                $efectivo->save();
+
+                $sacramento = Sacramento::findOrFail($request->id);
+                $sacramento->id_sacerdote=$id_sacerdote;
+                $sacramento->id_padrino=$id_pad1;
+                $sacramento->id_padrino2=$id_mad1;
+                $sacramento->id_padrino3=$id_pad2;
+                $sacramento->fecha_realizacion=$request->fecha_realizacion;
+                $sacramento->id_iglesia=$id_iglesia;
+                $sacramento->save();
+                break;
+            }
+
+            case '15': //Ingresamos todos los datos por primera vez
             {
                 //Este es para ingresar todos los datos por primera vez
                 $persona_idMax = Persona::max('id');
@@ -171,6 +770,8 @@ class SacramentoController extends Controller
                 $id_pad2=$id_mad1+1;
                 $id_mad2=$id_pad2+1;
                 $id_sacerdote=$request->id_sacerdote;
+                $id_iglesia=$request->id_iglesia;
+                $fecha_realizacion=$request->fecha_realizacion;
                 $monto_p= Efectivo::max('id');
                 $montos=$monto_p+1;
 
@@ -222,14 +823,14 @@ class SacramentoController extends Controller
                 $sacramento->id_padrino2=$id_mad1;
                 $sacramento->id_padrino3=$id_pad2;
                 $sacramento->id_padrino4=$id_mad2;
-                //$sacramento->id_iglesia=$id_iglesia;
-                //$sacramento->fecha_realizacion=$fecha_realizacion;
+                $sacramento->id_iglesia=$id_iglesia;
+                $sacramento->fecha_realizacion=$fecha_realizacion;
                 //$sacramento->estado=1; QUITAR DE AQUÍ ESTO, Y PONERLO EN BOTÓN "MATRIMONIO REALIZADO"
                 $sacramento->save();
                 break;
             }
 
-            case '2':
+            case '16':
             {
                 // Recuperamos pad1, creamos los otros 3
                 $persona_idMax = Persona::max('id');
@@ -238,6 +839,8 @@ class SacramentoController extends Controller
                 $id_mad2=$id_pad2+1;
                 $id_pad1=$request->id_padrino1;
                 $id_sacerdote=$request->id_sacerdote;
+                $id_iglesia=$request->id_iglesia;
+                $fecha_realizacion=$request->fecha_realizacion;
                 $monto_p= Efectivo::max('id');
                 $montos=$monto_p+1;
 
@@ -281,15 +884,15 @@ class SacramentoController extends Controller
                 $sacramento->id_padrino2=$id_mad1;
                 $sacramento->id_padrino3=$id_pad2;
                 $sacramento->id_padrino4=$id_mad2;
-                //$sacramento->id_iglesia=$id_iglesia;
-                //$sacramento->fecha_realizacion=$fecha_realizacion;
+                $sacramento->id_iglesia=$id_iglesia;
+                $sacramento->fecha_realizacion=$fecha_realizacion;
                 //$sacramento->estado=1; QUITAR DE AQUÍ ESTO, Y PONERLO EN BOTÓN "MATRIMONIO REALIZADO"
                 $sacramento->save();
                 break;
 
             }
 
-            case '3':
+            case '17':
             {
                 //Recuperaremos madrina1; crearemos los otros 3
                 $persona_idMax = Persona::max('id');
@@ -298,6 +901,8 @@ class SacramentoController extends Controller
                 $id_mad2=$id_pad2+1;
                 $id_mad1=$request->id_madrina1;
                 $id_sacerdote=$request->id_sacerdote;
+                $id_iglesia=$request->id_iglesia;
+                $fecha_realizacion=$request->fecha_realizacion;
                 $monto_p= Efectivo::max('id');
                 $montos=$monto_p+1;
 
@@ -341,14 +946,14 @@ class SacramentoController extends Controller
                 $sacramento->id_padrino2=$id_mad1;
                 $sacramento->id_padrino3=$id_pad2;
                 $sacramento->id_padrino4=$id_mad2;
-                //$sacramento->id_iglesia=$id_iglesia;
-                //$sacramento->fecha_realizacion=$fecha_realizacion;
+                $sacramento->id_iglesia=$id_iglesia;
+                $sacramento->fecha_realizacion=$fecha_realizacion;
                 //$sacramento->estado=1; QUITAR DE AQUÍ ESTO, Y PONERLO EN BOTÓN "MATRIMONIO REALIZADO"
                 $sacramento->save();
                 break;
             }
 
-            case '4':
+            case '18':
             {
                 //recuperaremos madrina 1 y padrino 1; Y creamos los otros 2
                 $persona_idMax = Persona::max('id');
@@ -357,6 +962,8 @@ class SacramentoController extends Controller
                 $id_pad1=$request->id_padrino1;
                 $id_mad1=$request->id_madrina1;
                 $id_sacerdote=$request->id_sacerdote;
+                $id_iglesia=$request->id_iglesia;
+                $fecha_realizacion=$request->fecha_realizacion;
                 $monto_p= Efectivo::max('id');
                 $montos=$monto_p+1;
 
@@ -392,14 +999,14 @@ class SacramentoController extends Controller
                 $sacramento->id_padrino2=$id_mad1;
                 $sacramento->id_padrino3=$id_pad2;
                 $sacramento->id_padrino4=$id_mad2;
-                //$sacramento->id_iglesia=$id_iglesia;
-                //$sacramento->fecha_realizacion=$fecha_realizacion;
+                $sacramento->id_iglesia=$id_iglesia;
+                $sacramento->fecha_realizacion=$fecha_realizacion;
                 //$sacramento->estado=1; QUITAR DE AQUÍ ESTO, Y PONERLO EN BOTÓN "MATRIMONIO REALIZADO"
                 $sacramento->save();
                 break;
             }
 
-            case '5':
+            case '19':
             {
                 //traemos padrino2 y creamos los otros 3
                 $persona_idMax = Persona::max('id');
@@ -408,6 +1015,8 @@ class SacramentoController extends Controller
                 $id_mad2=$id_mad1+1;
                 $id_pad2=$request->id_padrino2;
                 $id_sacerdote=$request->id_sacerdote;
+                $id_iglesia=$request->id_iglesia;
+                $fecha_realizacion=$request->fecha_realizacion;
                 $monto_p= Efectivo::max('id');
                 $montos=$monto_p+1;
 
@@ -451,14 +1060,14 @@ class SacramentoController extends Controller
                 $sacramento->id_padrino2=$id_mad1;
                 $sacramento->id_padrino3=$id_pad2;
                 $sacramento->id_padrino4=$id_mad2;
-                //$sacramento->id_iglesia=$id_iglesia;
-                //$sacramento->fecha_realizacion=$fecha_realizacion;
+                $sacramento->id_iglesia=$id_iglesia;
+                $sacramento->fecha_realizacion=$fecha_realizacion;
                 //$sacramento->estado=1; QUITAR DE AQUÍ ESTO, Y PONERLO EN BOTÓN "MATRIMONIO REALIZADO"
                 $sacramento->save();
                 break;
             }
 
-            case '6':
+            case '20':
             {
                 //recuperamos padrino1 y padrino2; creamos los otros 2
                 $persona_idMax = Persona::max('id');
@@ -467,6 +1076,8 @@ class SacramentoController extends Controller
                 $id_pad1=$request->id_padrino1;
                 $id_pad2=$request->id_padrino2;
                 $id_sacerdote=$request->id_sacerdote;
+                $id_iglesia=$request->id_iglesia;
+                $fecha_realizacion=$request->fecha_realizacion;
                 $monto_p= Efectivo::max('id');
                 $montos=$monto_p+1;
 
@@ -502,14 +1113,14 @@ class SacramentoController extends Controller
                 $sacramento->id_padrino2=$id_mad1;
                 $sacramento->id_padrino3=$id_pad2;
                 $sacramento->id_padrino4=$id_mad2;
-                //$sacramento->id_iglesia=$id_iglesia;
-                //$sacramento->fecha_realizacion=$fecha_realizacion;
+                $sacramento->id_iglesia=$id_iglesia;
+                $sacramento->fecha_realizacion=$fecha_realizacion;
                 //$sacramento->estado=1; QUITAR DE AQUÍ ESTO, Y PONERLO EN BOTÓN "MATRIMONIO REALIZADO"
                 $sacramento->save();
                 break;
             }
 
-            case '7':
+            case '21':
             {
                 //Recuperamos madrina1 y padrino2; creamos los otros 2
                 $persona_idMax = Persona::max('id');
@@ -518,6 +1129,8 @@ class SacramentoController extends Controller
                 $id_mad1=$request->id_madrina1;
                 $id_pad2=$request->id_padrino2;
                 $id_sacerdote=$request->id_sacerdote;
+                $id_iglesia=$request->id_iglesia;
+                $fecha_realizacion=$request->fecha_realizacion;
                 $monto_p= Efectivo::max('id');
                 $montos=$monto_p+1;
 
@@ -553,14 +1166,14 @@ class SacramentoController extends Controller
                 $sacramento->id_padrino2=$id_mad1;
                 $sacramento->id_padrino3=$id_pad2;
                 $sacramento->id_padrino4=$id_mad2;
-                //$sacramento->id_iglesia=$id_iglesia;
-                //$sacramento->fecha_realizacion=$fecha_realizacion;
+                $sacramento->id_iglesia=$id_iglesia;
+                $sacramento->fecha_realizacion=$fecha_realizacion;
                 //$sacramento->estado=1; QUITAR DE AQUÍ ESTO, Y PONERLO EN BOTÓN "MATRIMONIO REALIZADO"
                 $sacramento->save();
                 break;
             }
 
-            case '8':
+            case '22':
             {
                 //recuperaremos pad1, pad2 y mad1; creamos el otro
                 $persona_idMax = Persona::max('id');
@@ -569,6 +1182,8 @@ class SacramentoController extends Controller
                 $id_mad1=$request->id_madrina1;
                 $id_pad2=$request->id_padrino2;
                 $id_sacerdote=$request->id_sacerdote;
+                $id_iglesia=$request->id_iglesia;
+                $fecha_realizacion=$request->fecha_realizacion;
                 $monto_p= Efectivo::max('id');
                 $montos=$monto_p+1;
 
@@ -596,14 +1211,14 @@ class SacramentoController extends Controller
                 $sacramento->id_padrino2=$id_mad1;
                 $sacramento->id_padrino3=$id_pad2;
                 $sacramento->id_padrino4=$id_mad2;
-                //$sacramento->id_iglesia=$id_iglesia;
-                //$sacramento->fecha_realizacion=$fecha_realizacion;
+                $sacramento->id_iglesia=$id_iglesia;
+                $sacramento->fecha_realizacion=$fecha_realizacion;
                 //$sacramento->estado=1; QUITAR DE AQUÍ ESTO, Y PONERLO EN BOTÓN "MATRIMONIO REALIZADO"
                 $sacramento->save();
                 break;
             }
 
-            case '9':
+            case '23':
             {
                 //Recuperamos madrina2; Creamos los otros 3
                 $persona_idMax = Persona::max('id');
@@ -612,6 +1227,8 @@ class SacramentoController extends Controller
                 $id_pad2=$id_mad1+1;
                 $id_mad2=$request->id_madrina2;
                 $id_sacerdote=$request->id_sacerdote;
+                $id_iglesia=$request->id_iglesia;
+                $fecha_realizacion=$request->fecha_realizacion;
                 $monto_p= Efectivo::max('id');
                 $montos=$monto_p+1;
 
@@ -655,14 +1272,14 @@ class SacramentoController extends Controller
                 $sacramento->id_padrino2=$id_mad1;
                 $sacramento->id_padrino3=$id_pad2;
                 $sacramento->id_padrino4=$id_mad2;
-                //$sacramento->id_iglesia=$id_iglesia;
-                //$sacramento->fecha_realizacion=$fecha_realizacion;
+                $sacramento->id_iglesia=$id_iglesia;
+                $sacramento->fecha_realizacion=$fecha_realizacion;
                 //$sacramento->estado=1; QUITAR DE AQUÍ ESTO, Y PONERLO EN BOTÓN "MATRIMONIO REALIZADO"
                 $sacramento->save();
                 break;                
             }
 
-            case '10':
+            case '24':
             {
                 //Recuperamos padrino1 y madrina2; Creamos los otros 2
                 $persona_idMax = Persona::max('id');
@@ -671,6 +1288,8 @@ class SacramentoController extends Controller
                 $id_mad2=$request->id_madrina2;
                 $id_pad1=$request->id_padrino1;
                 $id_sacerdote=$request->id_sacerdote;
+                $id_iglesia=$request->id_iglesia;
+                $fecha_realizacion=$request->fecha_realizacion;
                 $monto_p= Efectivo::max('id');
                 $montos=$monto_p+1;
 
@@ -706,14 +1325,14 @@ class SacramentoController extends Controller
                 $sacramento->id_padrino2=$id_mad1;
                 $sacramento->id_padrino3=$id_pad2;
                 $sacramento->id_padrino4=$id_mad2;
-                //$sacramento->id_iglesia=$id_iglesia;
-                //$sacramento->fecha_realizacion=$fecha_realizacion;
+                $sacramento->id_iglesia=$id_iglesia;
+                $sacramento->fecha_realizacion=$fecha_realizacion;
                 //$sacramento->estado=1; QUITAR DE AQUÍ ESTO, Y PONERLO EN BOTÓN "MATRIMONIO REALIZADO"
                 $sacramento->save();
                 break;
             }
 
-            case '11':
+            case '25':
             {
                 //Recuperamos madrina1 y madrina2; creamos los otros 2
                 $persona_idMax = Persona::max('id');
@@ -722,6 +1341,8 @@ class SacramentoController extends Controller
                 $id_mad2=$request->id_madrina2;
                 $id_mad1=$request->id_madrina1;
                 $id_sacerdote=$request->id_sacerdote;
+                $id_iglesia=$request->id_iglesia;
+                $fecha_realizacion=$request->fecha_realizacion;
                 $monto_p= Efectivo::max('id');
                 $montos=$monto_p+1;
 
@@ -757,14 +1378,14 @@ class SacramentoController extends Controller
                 $sacramento->id_padrino2=$id_mad1;
                 $sacramento->id_padrino3=$id_pad2;
                 $sacramento->id_padrino4=$id_mad2;
-                //$sacramento->id_iglesia=$id_iglesia;
-                //$sacramento->fecha_realizacion=$fecha_realizacion;
+                $sacramento->id_iglesia=$id_iglesia;
+                $sacramento->fecha_realizacion=$fecha_realizacion;
                 //$sacramento->estado=1; QUITAR DE AQUÍ ESTO, Y PONERLO EN BOTÓN "MATRIMONIO REALIZADO"
                 $sacramento->save();
                 break;
             }
 
-            case '12':
+            case '26':
             {
                 //recuperaremos mad1, mad2 y pad1; creamos el otro
                 $persona_idMax = Persona::max('id');
@@ -773,6 +1394,8 @@ class SacramentoController extends Controller
                 $id_mad1=$request->id_madrina1;
                 $id_mad2=$request->id_madrina2;
                 $id_sacerdote=$request->id_sacerdote;
+                $id_iglesia=$request->id_iglesia;
+                $fecha_realizacion=$request->fecha_realizacion;
                 $monto_p= Efectivo::max('id');
                 $montos=$monto_p+1;
 
@@ -800,14 +1423,14 @@ class SacramentoController extends Controller
                 $sacramento->id_padrino2=$id_mad1;
                 $sacramento->id_padrino3=$id_pad2;
                 $sacramento->id_padrino4=$id_mad2;
-                //$sacramento->id_iglesia=$id_iglesia;
-                //$sacramento->fecha_realizacion=$fecha_realizacion;
+                $sacramento->id_iglesia=$id_iglesia;
+                $sacramento->fecha_realizacion=$fecha_realizacion;
                 //$sacramento->estado=1; QUITAR DE AQUÍ ESTO, Y PONERLO EN BOTÓN "MATRIMONIO REALIZADO"
                 $sacramento->save();
                 break;
             }
 
-            case '13':
+            case '27':
             {
                 //Recuperar madrina2 y padrino2; creamos los otros2
                 $persona_idMax = Persona::max('id');
@@ -816,6 +1439,8 @@ class SacramentoController extends Controller
                 $id_mad2=$request->id_madrina2;
                 $id_pad2=$request->id_padrino2;
                 $id_sacerdote=$request->id_sacerdote;
+                $id_iglesia=$request->id_iglesia;
+                $fecha_realizacion=$request->fecha_realizacion;
                 $monto_p= Efectivo::max('id');
                 $montos=$monto_p+1;
 
@@ -851,14 +1476,14 @@ class SacramentoController extends Controller
                 $sacramento->id_padrino2=$id_mad1;
                 $sacramento->id_padrino3=$id_pad2;
                 $sacramento->id_padrino4=$id_mad2;
-                //$sacramento->id_iglesia=$id_iglesia;
-                //$sacramento->fecha_realizacion=$fecha_realizacion;
+                $sacramento->id_iglesia=$id_iglesia;
+                $sacramento->fecha_realizacion=$fecha_realizacion;
                 //$sacramento->estado=1; QUITAR DE AQUÍ ESTO, Y PONERLO EN BOTÓN "MATRIMONIO REALIZADO"
                 $sacramento->save();
                 break;
             }
 
-            case '14':
+            case '28':
             {
                 //Recuperamos madrina2, padrino1 y padrino2; creamos el otro
                 $persona_idMax = Persona::max('id');
@@ -867,6 +1492,8 @@ class SacramentoController extends Controller
                 $id_mad2=$request->id_madrina2;
                 $id_pad2=$request->id_padrino2;
                 $id_sacerdote=$request->id_sacerdote;
+                $id_iglesia=$request->id_iglesia;
+                $fecha_realizacion=$request->fecha_realizacion;
                 $monto_p= Efectivo::max('id');
                 $montos=$monto_p+1;
 
@@ -894,14 +1521,14 @@ class SacramentoController extends Controller
                 $sacramento->id_padrino2=$id_mad1;
                 $sacramento->id_padrino3=$id_pad2;
                 $sacramento->id_padrino4=$id_mad2;
-                //$sacramento->id_iglesia=$id_iglesia;
-                //$sacramento->fecha_realizacion=$fecha_realizacion;
+                $sacramento->id_iglesia=$id_iglesia;
+                $sacramento->fecha_realizacion=$fecha_realizacion;
                 //$sacramento->estado=1; QUITAR DE AQUÍ ESTO, Y PONERLO EN BOTÓN "MATRIMONIO REALIZADO"
                 $sacramento->save();
                 break;
             }
 
-            case '15':
+            case '29':
             {
                 //Recuperamos madrina1, madrina2 y padrino2; creamos el otro
                 $persona_idMax = Persona::max('id');
@@ -910,6 +1537,8 @@ class SacramentoController extends Controller
                 $id_mad1=$request->id_madrina1;
                 $id_pad2=$request->id_padrino2;
                 $id_sacerdote=$request->id_sacerdote;
+                $id_iglesia=$request->id_iglesia;
+                $fecha_realizacion=$request->fecha_realizacion;
                 $monto_p= Efectivo::max('id');
                 $montos=$monto_p+1;
 
@@ -937,16 +1566,18 @@ class SacramentoController extends Controller
                 $sacramento->id_padrino2=$id_mad1;
                 $sacramento->id_padrino3=$id_pad2;
                 $sacramento->id_padrino4=$id_mad2;
-                //$sacramento->id_iglesia=$id_iglesia;
-                //$sacramento->fecha_realizacion=$fecha_realizacion;
+                $sacramento->id_iglesia=$id_iglesia;
+                $sacramento->fecha_realizacion=$fecha_realizacion;
                 //$sacramento->estado=1; QUITAR DE AQUÍ ESTO, Y PONERLO EN BOTÓN "MATRIMONIO REALIZADO"
                 $sacramento->save();
                 break;
             }
             
-            case '16': //Todos Existen en la base de datos con anterioridad
+            case '30': //Todos Existen en la base de datos con anterioridad
             {
                 $id_sacerdote=$request->id_sacerdote;
+                $id_iglesia=$request->id_iglesia;
+                $fecha_realizacion=$request->fecha_realizacion;
                 $id_pad1=$request->id_padrino1;
                 $id_mad1=$request->id_madrina1;//SI NO FUNCIONA CAMBIAR id_padrino2 POR id_madrina1
                 $id_pad2=$request->id_padrino2;
@@ -971,8 +1602,8 @@ class SacramentoController extends Controller
                 $sacramento->id_padrino2=$id_mad1;//SI NO FUNCIONA, CAMBIAR id_padrino2 por id_madrina1
                 $sacramento->id_padrino3=$id_pad2;
                 $sacramento->id_padrino4=$id_mad2;
-                //$sacramento->fecha_realizacion=$request->fecha_realizacion;
-                //$sacramento->id_iglesia=$id_iglesia;
+                $sacramento->fecha_realizacion=$request->fecha_realizacion;
+                $sacramento->id_iglesia=$id_iglesia;
                 $sacramento->save();
                 break;
             }

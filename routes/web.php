@@ -90,6 +90,7 @@ Route::group(['middleware'=>['auth']],function(){
                             Route::get('/persona/duimujer','PersonaController2@buscarduimujer');//este se utiliza para novia y madrinas
                             Route::put('/persona/registrar2','PersonaController2@store');//Modificado para poder registrar nuevo expediente matrimonial
                             Route::put('/persona/actualizar2','PersonaController2@update');
+                            Route::get('persona/buscariglesia','PersonaController2@buscariglesia');
 
                                            //MANTENIMIENTO PERSONAS RELIGIOSAS
                                            Route::get('/religioso/index','PersonaController@indexRel');

@@ -87,6 +87,16 @@ class PersonaController2 extends Controller
         return $persona;
     }
 
+    public function buscariglesia(Request $request)
+    {
+        $envio=array();
+
+        if(!$request->ajax()) return redirect('/');
+        $iglesia = DB::table('iglesias')->get();
+
+        return $iglesia;
+    }
+
     public function store(Request $request)
     {
         if(!$request->ajax()) return redirect('/');

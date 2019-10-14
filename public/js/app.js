@@ -5468,6 +5468,18 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     //Dave: En esta función declaramos las variables que utilizaremos
@@ -5484,7 +5496,7 @@ __webpack_require__.r(__webpack_exports__);
       noviaD: '',
       noviaNom: '',
       noviaAp: '',
-      id_sacerdote: '',
+      //id_sacerdote : '',
       sacerdoteD: '',
       sacerdoteNom: '',
       sacerdoteAp: '',
@@ -5509,6 +5521,7 @@ __webpack_require__.r(__webpack_exports__);
       mad2Ap: '',
       mad2Sexo: '',
       id_iglesia: '',
+      arrayiglesia: [],
       iglesiaNom: '',
       tipo: 0,
       estado: 0,
@@ -5533,6 +5546,10 @@ __webpack_require__.r(__webpack_exports__);
       //variable para validación
       errorMostrarMsjMatrimonio1: [],
       //variable para validación
+      errorModal2: 0,
+      errorMostrarMsjModal2: [],
+      errorModal3: 0,
+      errorMostrarMsjModal3: [],
       pagination: {
         'total': 0,
         'current_page': 0,
@@ -5628,6 +5645,8 @@ __webpack_require__.r(__webpack_exports__);
       var d = this.novioD;
 
       if (d != '') {
+        /* vm.novioNom === 'ocultar';
+        vm.novioAp === 'ocultar'; */
         var url = '/persona/duihombre?dui=' + d;
         axios.get(url).then(function (response) {
           var respuesta = response.data.solo;
@@ -5640,6 +5659,9 @@ __webpack_require__.r(__webpack_exports__);
           console.log(error);
         });
       }
+      /* vm.novioNom === 'mostrar';
+      vm.novioAp === 'mostrar'; */
+
     },
     //Esto se usa para el autollenado con el num de dui
     llenarCamposNovia: function llenarCamposNovia() {
@@ -5801,6 +5823,34 @@ __webpack_require__.r(__webpack_exports__);
         });
       }
     },
+    //Este método sirve para buscar si algun realizante quiere volverse a casar
+    encuentraNovio: function encuentraNovio(id) {
+      var sw = 0;
+
+      for (var i = 0; i < this.arrayMatrimonio1.length; i++) {
+        if (this.arrayMatrimonio1[i].id_realizante1 == id) {
+          sw = true;
+        }
+      }
+      /* for(var i=0;i<this.arrayMatrimonio1.length;i++){
+          if(this.arrayMatrimonio1[i].id_realizante2==id){
+              sw=true;
+          }
+      } */
+
+
+      return sw;
+    },
+
+    /* encuentraNovia(id){
+        var sw=0;
+        for(var i=0;i<this.arrayMatrimonio1.length;i++){
+            if(this.arrayMatrimonio1[i].id_realizante2==id){
+                sw=true;
+            }
+        }
+        return sw;
+    }, */
     //No se borra este wey!!! Este si sirve :v
     registrar: function registrar() {
       if (this.validarMatrimonio1()) {
@@ -5813,79 +5863,87 @@ __webpack_require__.r(__webpack_exports__);
       var idNovio = this.id_realizante1;
       var idNovia = this.id_realizante2;
 
-      if (idNovio == '') {
-        //Cuando No exista el id el novio
-        if (idNovia == '') {
-          //Cuando no exista el id de la novia
-          axios.put('/persona/registrar2', {
-            'tipo': '4.1',
-            'libro': this.libro,
-            'num_expediente': this.num_expediente,
-            'novioNom': this.novioNom.toUpperCase(),
-            'novioAp': this.novioAp.toUpperCase(),
-            'novioD': this.novioD,
-            'noviaNom': this.noviaNom.toUpperCase(),
-            'noviaAp': this.noviaAp.toUpperCase(),
-            'noviaD': this.noviaD
-          }).then(function (response) {
-            //si todo funciona:
-            me.listarMatrimonio1();
-            me.cerrarModal();
-          })["catch"](function (error) {
-            console.log(error);
-          });
-        } else {
-          //Cuando si exista el id de la novia, pero No del novio
-          axios.put('/persona/registrar2', {
-            'tipo': '4.2',
-            'libro': this.libro,
-            'num_expediente': this.num_expediente,
-            'novioNom': this.novioNom.toUpperCase(),
-            'novioAp': this.novioAp.toUpperCase(),
-            'novioD': this.novioD,
-            'id_realizante2': this.id_realizante2
-          }).then(function (response) {
-            //si todo funciona:
-            me.listarMatrimonio1();
-            me.cerrarModal();
-          })["catch"](function (error) {
-            console.log(error);
-          });
-        }
+      if (me.encuentraNovio(me.id_realizante1)) {
+        swal({
+          type: 'error',
+          title: 'Error...',
+          text: 'Uno de los dos novios ya tiene un expediente activo!'
+        });
       } else {
-        //Sí existe el id del novio y...
-        if (idNovia == '') {
-          //Cuando no exista el id de la novia
-          axios.put('/persona/registrar2', {
-            'tipo': '4.3',
-            'libro': this.libro,
-            'num_expediente': this.num_expediente,
-            'noviaNom': this.noviaNom.toUpperCase(),
-            'noviaAp': this.noviaAp.toUpperCase(),
-            'noviaD': this.noviaD,
-            'id_realizante1': this.id_realizante1
-          }).then(function (response) {
-            //si todo funciona:
-            me.listarMatrimonio1();
-            me.cerrarModal();
-          })["catch"](function (error) {
-            console.log(error);
-          });
+        if (idNovio == '') {
+          //Cuando No exista el id el novio
+          if (idNovia == '') {
+            //Cuando no exista el id de la novia
+            axios.put('/persona/registrar2', {
+              'tipo': '4.1',
+              'libro': this.libro,
+              'num_expediente': this.num_expediente,
+              'novioNom': this.novioNom.toUpperCase(),
+              'novioAp': this.novioAp.toUpperCase(),
+              'novioD': this.novioD,
+              'noviaNom': this.noviaNom.toUpperCase(),
+              'noviaAp': this.noviaAp.toUpperCase(),
+              'noviaD': this.noviaD
+            }).then(function (response) {
+              //si todo funciona:
+              me.listarMatrimonio1();
+              me.cerrarModal();
+            })["catch"](function (error) {
+              console.log(error);
+            });
+          } else {
+            //Cuando si exista el id de la novia, pero No del novio
+            axios.put('/persona/registrar2', {
+              'tipo': '4.2',
+              'libro': this.libro,
+              'num_expediente': this.num_expediente,
+              'novioNom': this.novioNom.toUpperCase(),
+              'novioAp': this.novioAp.toUpperCase(),
+              'novioD': this.novioD,
+              'id_realizante2': this.id_realizante2
+            }).then(function (response) {
+              //si todo funciona:
+              me.listarMatrimonio1();
+              me.cerrarModal();
+            })["catch"](function (error) {
+              console.log(error);
+            });
+          }
         } else {
-          //Cuando existen ambos novios
-          axios.put('/persona/registrar2', {
-            'tipo': '4.4',
-            'libro': this.libro,
-            'num_expediente': this.num_expediente,
-            'id_realizante1': this.id_realizante1,
-            'id_realizante2': this.id_realizante2
-          }).then(function (response) {
-            //si todo funciona:
-            me.listarMatrimonio1();
-            me.cerrarModal();
-          })["catch"](function (error) {
-            console.log(error);
-          });
+          //Sí existe el id del novio y...
+          if (idNovia == '') {
+            //Cuando no exista el id de la novia
+            axios.put('/persona/registrar2', {
+              'tipo': '4.3',
+              'libro': this.libro,
+              'num_expediente': this.num_expediente,
+              'noviaNom': this.noviaNom.toUpperCase(),
+              'noviaAp': this.noviaAp.toUpperCase(),
+              'noviaD': this.noviaD,
+              'id_realizante1': this.id_realizante1
+            }).then(function (response) {
+              //si todo funciona:
+              me.listarMatrimonio1();
+              me.cerrarModal();
+            })["catch"](function (error) {
+              console.log(error);
+            });
+          } else {
+            //Cuando existen ambos novios
+            axios.put('/persona/registrar2', {
+              'tipo': '4.4',
+              'libro': this.libro,
+              'num_expediente': this.num_expediente,
+              'id_realizante1': this.id_realizante1,
+              'id_realizante2': this.id_realizante2
+            }).then(function (response) {
+              //si todo funciona:
+              me.listarMatrimonio1();
+              me.cerrarModal();
+            })["catch"](function (error) {
+              console.log(error);
+            });
+          }
         }
       }
       /* }else{ //ESTO NO SE AUN PARA QUE SIRVE, por eso lo quité
@@ -5940,58 +5998,11 @@ __webpack_require__.r(__webpack_exports__);
         console.log(error);
       });
     },
-    //ESTOS METODOS (RegistrarBoda y validarBoda) SON PARA REGISTRAR PASO 2 Y PASO 3 //incompletos
-
-    /* registrarBoda(){
-        if(this.validarMatrimonio1()){
-            return;
-        }
-        
-        let me = this;
-        var id_sacerdote=this.id_sacerdote;
-        var id_padrino=this.id_padrino;
-        var id_madrina1=this.id_madrina1;
-        var id_padrino2=this.id_padrino2;
-        var id_madrina2=this.id_madrina2;
-         axios.put('/sacramento/registrarboda',{
-            
-            'fecha_realizacion': this.fecha_realizacion,
-            'id_iglesia':this.id_iglesia,
-            //'iglesiaNom':this.iglesiaNom,
-            'sacerdoteNom':this.sacerdoteNom.toUpperCase(),
-            'sacerdoteAp':this.sacerdoteAp.toUpperCase(),
-            'sacerdoteD':this.sacerdoteD,
-            'id_sacerdote':this.id_sacerdote,
-             'pad1Nom':this.pad1Nom.toUpperCase(),
-            'pad1Ap':this.pad1Ap.toUpperCase(),
-            'pad1D': this.pad1D,
-            'id_padrino':this.id_padrino,
-             'mad1Nom':this.mad1Nom.toUpperCase(),
-            'mad1Ap':this.mad1Ap.toUpperCase(),
-            'mad1D': this.mad1D,
-            'id_madrina1':this.id_madrina1,
-             'pad2Nom':this.pad2Nom.toUpperCase(),
-            'pad2Ap':this.pad2Ap.toUpperCase(),
-            'pad2D': this.pad2D,
-            'id_padrino2':this.id_padrino2,
-             'mad2Nom':this.mad2Nom.toUpperCase(),
-            'mad2Ap':this.mad2Ap.toUpperCase(),
-            'mad2D': this.mad2D,
-            'id_madrina2':this.id_madrina2,
-             'id':this.sacramento_id,
-            'id_realizante1':this.id_realizante1,
-            'id_realizante2':this.id_realizante2
-        }) .then(function (response) { //si todo funciona:
-            me.listarMatrimonio1();
-            me.cerrarModal2();
-        }) .catch(function (error) {
-            console.log(error);
-        });
-    }, */
     registrarBoda: function registrarBoda() {
-      /* if(this.validarBoda()){
-          return;
-      } */
+      if (this.validarModal3()) {
+        return;
+      }
+
       var me = this;
       var sacerdoteD = this.sacerdoteD;
       var pad1D = this.pad1D;
@@ -6003,140 +6014,354 @@ __webpack_require__.r(__webpack_exports__);
       var id_madrina1 = this.id_madrina1;
       var id_padrino2 = this.id_padrino2;
       var id_madrina2 = this.id_madrina2;
-      /* var novioD=this.novioD;
-      var noviaD=this.noviaD;
-      var idNovio=this.id_realizante1;
-      var idNovia=this.id_realizante2; */
+      var fecha_realizacion = this.fecha_realizacion;
+      var id_iglesia = this.id_iglesia;
 
-      if (id_madrina2 == '') {
-        if (id_padrino2 == '') {
-          if (id_madrina1 == '') {
+      if (mad2D == '') {
+        if (pad2D == '') {
+          if (mad1D == '') {
+            //guardar 1 padrino
             if (id_padrino1 == '') {
-              //creamos los 4
+              //creamos el pad1
               this.tipo = 1;
             } else {
-              // Recuperamos pad1, creamos los otros 3
+              //recuperamos el pad1
               this.tipo = 2;
-            }
+            } //GUARDAR EN BASE SOLO 1 PADRINO
+
+
+            axios.put('/sacramento/registrarboda', {
+              'tipo': this.tipo,
+              'id': this.sacramento_id,
+              'fecha_realizacion': this.fecha_realizacion,
+              'id_iglesia': this.id_iglesia,
+              'pad1Nom': this.pad1Nom.toUpperCase(),
+              'pad1Ap': this.pad1Ap.toUpperCase(),
+              'pad1D': this.pad1D,
+              'pad1Sexo': this.pad1Sexo,
+              'id_sacerdote': this.idsacerdote,
+              'id_padrino1': this.id_padrino1,
+              'monto': this.monto,
+              'idcate': this.idcare
+            }).then(function (response) {
+              //si todo funciona:
+              me.listarMatrimonio1();
+              me.cerrarModal3();
+            })["catch"](function (error) {
+              console.log(error);
+            });
           } else {
-            if (id_padrino1 == '') {
-              //Recuperaremos madrina1; crearemos los otros 3
-              this.tipo = 3;
+            //guardar 2 padrinos
+            if (id_madrina1 == '') {
+              if (id_padrino1 == '') {
+                //creamos mad1 y pad1
+                this.tipo = 3;
+              } else {
+                //creamos mad1 y recuperamos pad1
+                this.tipo = 4;
+              }
             } else {
-              //recuperaremos madrina 1 y padrino 1; Y creamos los otros 2
-              this.tipo = 4;
-            }
+              if (id_padrino1 == '') {
+                //creamos pad1 y recuperamos mad1
+                this.tipo = 5;
+              } else {
+                //recuperamos pad1 y mad1
+                this.tipo = 6;
+              }
+            } //GUARDAR EN BASE SOLO 2 PADRINOS
+
+
+            axios.put('/sacramento/registrarboda', {
+              'tipo': this.tipo,
+              'id': this.sacramento_id,
+              'fecha_realizacion': this.fecha_realizacion,
+              'id_iglesia': this.id_iglesia,
+              'pad1Nom': this.pad1Nom.toUpperCase(),
+              'pad1Ap': this.pad1Ap.toUpperCase(),
+              'pad1D': this.pad1D,
+              'pad1Sexo': this.pad1Sexo,
+              'mad1Nom': this.mad1Nom.toUpperCase(),
+              'mad1Ap': this.mad1Ap.toUpperCase(),
+              'mad1D': this.mad1D,
+              'mad1Sexo': this.mad1Sexo,
+              'id_sacerdote': this.idsacerdote,
+              'id_padrino1': this.id_padrino1,
+              'id_madrina1': this.id_madrina1,
+              'monto': this.monto,
+              'idcate': this.idcare
+            }).then(function (response) {
+              //si todo funciona:
+              me.listarMatrimonio1();
+              me.cerrarModal3();
+            })["catch"](function (error) {
+              console.log(error);
+            });
           }
         } else {
-          if (id_madrina1 == '') {
-            if (id_padrino1 == '') {
-              //Solo , padrino2 y creamos los otros 3
-              this.tipo = 5;
+          //guardar 3 padrinos
+          if (id_padrino2 == '') {
+            if (id_madrina1 == '') {
+              if (id_padrino1 == '') {
+                //creamos mad1, pad1 y pad2
+                this.tipo = 7;
+              } else {
+                //creamos mad1 y pad2; recuperamos pad1
+                this.tipo = 8;
+              }
             } else {
-              //, padrino1 y padrino2; creamos los otros 2
-              this.tipo = 6;
+              if (id_padrino1 == '') {
+                //creamos pad1 y pad2; recuperamos mad1
+                this.tipo = 9;
+              } else {
+                //creamos pad2; recuperamos pad1 y mad1
+                this.tipo = 10;
+              }
             }
           } else {
-            if (id_padrino1 == '') {
-              //, madrina1 y padrino2; creamos los otros 2
-              this.tipo = 7;
+            if (id_madrina1 == '') {
+              if (id_padrino1 == '') {
+                //creamos mad1 y pad1; recuperamos pad2
+                this.tipo = 11;
+              } else {
+                //creamos mad1; recuperamos pad1 y pad2
+                this.tipo = 12;
+              }
             } else {
-              //recuperaremos id del sacerdote, pad1, pad2 y mad1; creamos el otro
-              this.tipo = 8;
+              if (id_padrino1 == '') {
+                //creamos pad1; recuperamos mad1 y pad2
+                this.tipo = 13;
+              } else {
+                //recuperamos pad1, pad2 y mad1
+                this.tipo = 14;
+              }
             }
-          }
+          } //GUARDAR EN BASE SOLO 3 PADRINOS
+
+
+          axios.put('/sacramento/registrarboda', {
+            'tipo': this.tipo,
+            'id': this.sacramento_id,
+            'fecha_realizacion': this.fecha_realizacion,
+            'id_iglesia': this.id_iglesia,
+            'pad1Nom': this.pad1Nom.toUpperCase(),
+            'pad1Ap': this.pad1Ap.toUpperCase(),
+            'pad1D': this.pad1D,
+            'pad1Sexo': this.pad1Sexo,
+            'mad1Nom': this.mad1Nom.toUpperCase(),
+            'mad1Ap': this.mad1Ap.toUpperCase(),
+            'mad1D': this.mad1D,
+            'mad1Sexo': this.mad1Sexo,
+            'pad2Nom': this.pad2Nom.toUpperCase(),
+            'pad2Ap': this.pad2Ap.toUpperCase(),
+            'pad2D': this.pad2D,
+            'pad2Sexo': this.pad2Sexo,
+            'id_sacerdote': this.idsacerdote,
+            'id_padrino1': this.id_padrino1,
+            'id_madrina1': this.id_madrina1,
+            'id_padrino2': this.id_padrino2,
+            'monto': this.monto,
+            'idcate': this.idcare
+          }).then(function (response) {
+            //si todo funciona:
+            me.listarMatrimonio1();
+            me.cerrarModal3();
+          })["catch"](function (error) {
+            console.log(error);
+          });
         }
       } else {
-        if (id_padrino2 == '') {
-          if (id_madrina1 == '') {
-            if (id_padrino1 == '') {
-              //Recuperamos id sacerdote y madrina2; Creamos los otros 3
-              this.tipo = 9;
+        //guardar 4 padrinos
+        if (id_madrina2 == '') {
+          if (id_padrino2 == '') {
+            if (id_madrina1 == '') {
+              if (id_padrino1 == '') {
+                //creamos los 4
+                this.tipo = 15;
+              } else {
+                // Recuperamos pad1, creamos los otros 3
+                this.tipo = 16;
+              }
             } else {
-              //, padrino1 y madrina2; Creamos los otros 2
-              this.tipo = 10;
+              if (id_padrino1 == '') {
+                //Recuperaremos madrina1; crearemos los otros 3
+                this.tipo = 17;
+              } else {
+                //recuperaremos madrina 1 y padrino 1; Y creamos los otros 2
+                this.tipo = 18;
+              }
             }
           } else {
-            if (id_padrino1 == '') {
-              //Recuperamos id sacerdote, madrina1 y madrina2; creamos los otros 2
-              this.tipo = 11;
+            if (id_madrina1 == '') {
+              if (id_padrino1 == '') {
+                //Solo , padrino2 y creamos los otros 3
+                this.tipo = 19;
+              } else {
+                //, padrino1 y padrino2; creamos los otros 2
+                this.tipo = 20;
+              }
             } else {
-              //recuperaremos mad1, mad2 y pad1; creamos el otro
-              this.tipo = 12;
+              if (id_padrino1 == '') {
+                //, madrina1 y padrino2; creamos los otros 2
+                this.tipo = 21;
+              } else {
+                //recuperaremos id del sacerdote, pad1, pad2 y mad1; creamos el otro
+                this.tipo = 22;
+              }
             }
           }
         } else {
-          if (id_madrina1 == '') {
-            if (id_padrino1 == '') {
-              //, madrina2 y padrino2; creamos los otros2
-              this.tipo = 13;
+          if (id_padrino2 == '') {
+            if (id_madrina1 == '') {
+              if (id_padrino1 == '') {
+                //Recuperamos id sacerdote y madrina2; Creamos los otros 3
+                this.tipo = 23;
+              } else {
+                //, padrino1 y madrina2; Creamos los otros 2
+                this.tipo = 24;
+              }
             } else {
-              //, madrina2, padrino1 y padrino2; creamos el otro
-              this.tipo = 14;
+              if (id_padrino1 == '') {
+                //Recuperamos id sacerdote, madrina1 y madrina2; creamos los otros 2
+                this.tipo = 25;
+              } else {
+                //recuperaremos mad1, mad2 y pad1; creamos el otro
+                this.tipo = 26;
+              }
             }
           } else {
-            if (id_padrino1 == '') {
-              //, madrina1, madrina2 y padrino2; creamos el otro
-              this.tipo = 15;
+            if (id_madrina1 == '') {
+              if (id_padrino1 == '') {
+                //, madrina2 y padrino2; creamos los otros2
+                this.tipo = 27;
+              } else {
+                //, madrina2, padrino1 y padrino2; creamos el otro
+                this.tipo = 28;
+              }
             } else {
-              //recuperaremos TODOS PORQUE YA EXISTEN
-              this.tipo = 16;
+              if (id_padrino1 == '') {
+                //, madrina1, madrina2 y padrino2; creamos el otro
+                this.tipo = 29;
+              } else {
+                //recuperaremos TODOS PORQUE YA EXISTEN
+                this.tipo = 30;
+              }
+            }
+          }
+        } //GUARDAR EN BASE LOS 4 PADRINOS
+
+
+        axios.put('/sacramento/registrarboda', {
+          'tipo': this.tipo,
+          'id': this.sacramento_id,
+          'fecha_realizacion': this.fecha_realizacion,
+          'id_iglesia': this.id_iglesia,
+          'pad1Nom': this.pad1Nom.toUpperCase(),
+          'pad1Ap': this.pad1Ap.toUpperCase(),
+          'pad1D': this.pad1D,
+          'pad1Sexo': this.pad1Sexo,
+          'mad1Nom': this.mad1Nom.toUpperCase(),
+          'mad1Ap': this.mad1Ap.toUpperCase(),
+          'mad1D': this.mad1D,
+          'mad1Sexo': this.mad1Sexo,
+          'pad2Nom': this.pad2Nom.toUpperCase(),
+          'pad2Ap': this.pad2Ap.toUpperCase(),
+          'pad2D': this.pad2D,
+          'pad2Sexo': this.pad2Sexo,
+          'mad2Nom': this.mad2Nom.toUpperCase(),
+          'mad2Ap': this.mad2Ap.toUpperCase(),
+          'mad2D': this.mad2D,
+          'mad2Sexo': this.mad2Sexo,
+          'id_sacerdote': this.idsacerdote,
+          'id_padrino1': this.id_padrino1,
+          'id_madrina1': this.id_madrina1,
+          'id_padrino2': this.id_padrino2,
+          'id_madrina2': this.id_madrina2,
+          'monto': this.monto,
+          'idcate': this.idcare
+        }).then(function (response) {
+          //si todo funciona:
+          me.listarMatrimonio1();
+          me.cerrarModal3();
+        })["catch"](function (error) {
+          console.log(error);
+        });
+      } //fin del else (caso que están todos los padrinos)
+
+
+      me.cerrarModal3();
+    },
+    //este lo ocupa el método Registrar
+    validarMatrimonio1: function validarMatrimonio1() {
+      this.errorMatrimonio1 = 0;
+      this.errorMostrarMsjMatrimonio1 = [];
+      var patron = /^[a-zA-ZÑñÁáÉéÍíÓóÚúÜü\s]+$/; //Comprueba que la celda no esté vacía -- AGREGAR DESPUÉS LOS DEMÁS THIS EN EL IF
+
+      if (this.libro == '' || this.num_expediente == '' || this.novioD == '' || this.novioNom == '' || this.novioAp == '' || this.noviaD == '' || this.noviaNom == '' || this.noviaAp == '') this.errorMostrarMsjMatrimonio1.push("Todos los datos son obligatorios");
+      if (!patron.test(this.novioNom) || !patron.test(this.novioAp)) this.errorMostrarMsjMatrimonio1.push("Los datos del novio solo deben tener letras");
+      if (!patron.test(this.noviaNom) || !patron.test(this.noviaAp)) this.errorMostrarMsjMatrimonio1.push("Los datos de la novia debe contener letras solamente");
+      if (this.errorMostrarMsjMatrimonio1.length) this.errorMatrimonio1 = 1;
+      return this.errorMatrimonio1;
+    },
+    //este es para el modal 2 (fecha de realización y lugar)
+    validarModal2: function validarModal2() {
+      this.errorModal2 = 0;
+      this.errorMostrarMsjModal2 = [];
+      if (!this.fecha_realizacion) this.errorMostrarMsjModal2.push("Seleccione la fecha de realización");
+      if (this.id_iglesia == 0) this.errorMostrarMsjModal2.push("Seleccione una iglesia");
+      if (this.idsacerdote == 0) this.errorMostrarMsjModal2.push("Seleccione el encargado de la ceremonia");
+      if (this.cargosacerdote == 0) this.errorMostrarMsjModal2.push("Seleccione el cargo del encargado");
+      if (this.errorMostrarMsjModal2.length) this.errorModal2 = 1;
+      return this.errorModal2;
+    },
+    //este es para el modal 3 (datos de los padrinos y cobro)
+    validarModal3: function validarModal3() {
+      this.errorModal3 = 0;
+      this.errorMostrarMsjModal3 = [];
+      var patron = /^[a-zA-ZÑñÁáÉéÍíÓóÚúÜü\s]+$/; //Esta súpervalidación ayuda a que sea imposible para el usuario dejar "padrinos en blanco"... así solo podrá ingresarlos en orden
+
+      if (!this.pad1D || !this.pad1Nom || !this.pad1Ap || this.pad1Sexo == 0) {
+        this.errorMostrarMsjModal3.push("Complete los datos de la persona 1");
+      } else {
+        if (!patron.test(this.pad1Nom) || !patron.test(this.pad1Ap)) this.errorMostrarMsjModal3.push("Los datos de la persona 1 debe contener letras solamente");
+
+        if (!(!this.mad1D && !this.mad1Nom && !this.mad1Ap && this.mad1Sexo == 0 && !this.pad2D && !this.pad2Nom && !this.pad2Ap && this.pad2Sexo == 0 && !this.mad2D && !this.mad2Nom && !this.mad2Ap && this.mad2Sexo == 0)) {
+          if (!this.mad1D || !this.mad1Nom || !this.mad1Ap || this.mad1Sexo == 0) {
+            this.errorMostrarMsjModal3.push("Complete los datos de la persona 2");
+          } else {
+            if (!patron.test(this.mad1Nom) || !patron.test(this.mad1Ap)) this.errorMostrarMsjModal3.push("Los datos de la persona 2 debe contener letras solamente");
+
+            if (!(!this.pad2D && !this.pad2Nom && !this.pad2Ap && this.pad2Sexo == 0 && !this.mad2D && !this.mad2Nom && !this.mad2Ap && this.mad2Sexo == 0)) {
+              if (!this.pad2D || !this.pad2Nom || !this.pad2Ap || this.pad2Sexo == 0) {
+                this.errorMostrarMsjModal3.push("Complete los datos de la persona 3");
+              } else {
+                if (!patron.test(this.pad2Nom) || !patron.test(this.pad2Ap)) this.errorMostrarMsjModal3.push("Los datos de la persona 3 debe contener letras solamente");
+
+                if (!(!this.mad2D && !this.mad2Nom && !this.mad2Ap && this.mad2Sexo == 0)) {
+                  if (!this.mad2D || !this.mad2Nom || !this.mad2Ap || this.mad2Sexo == 0) {
+                    this.errorMostrarMsjModal3.push("Complete los datos de la persona 4");
+                  } else {
+                    if (!patron.test(this.mad2Nom) || !patron.test(this.mad2Ap)) this.errorMostrarMsjModal3.push("Los datos de la persona 4 debe contener letras solamente");
+                  }
+                }
+              }
             }
           }
         }
       }
 
-      axios.put('/sacramento/registrarboda', {
-        'tipo': this.tipo,
-        'id': this.sacramento_id,
-        //'fecha_realizacion':this.fecha_realizacion,
-        //'id_iglesia':this.id_iglesia,
-        'pad1Nom': this.pad1Nom.toUpperCase(),
-        'pad1Ap': this.pad1Ap.toUpperCase(),
-        'pad1D': this.pad1D,
-        'pad1Sexo': this.pad1Sexo,
-        'mad1Nom': this.mad1Nom.toUpperCase(),
-        'mad1Ap': this.mad1Ap.toUpperCase(),
-        'mad1D': this.mad1D,
-        'mad1Sexo': this.mad1Sexo,
-        'pad2Nom': this.pad2Nom.toUpperCase(),
-        'pad2Ap': this.pad2Ap.toUpperCase(),
-        'pad2D': this.pad2D,
-        'pad2Sexo': this.pad2Sexo,
-        'mad2Nom': this.mad2Nom.toUpperCase(),
-        'mad2Ap': this.mad2Ap.toUpperCase(),
-        'mad2D': this.mad2D,
-        'mad2Sexo': this.mad2Sexo,
-        'id_sacerdote': this.idsacerdote,
-        'id_padrino1': this.id_padrino1,
-        'id_madrina1': this.id_madrina1,
-        'id_padrino2': this.id_padrino2,
-        'id_madrina2': this.id_madrina2,
-        'monto': this.monto,
-        'idcate': this.idcare
-      }).then(function (response) {
-        //si todo funciona:
-        me.listarMatrimonio1();
-        me.cerrarModal3();
-      })["catch"](function (error) {
-        console.log(error);
-      });
-    },
-    validarBoda: function validarBoda() {},
-    //este lo ocupa el método Registrar
-    validarMatrimonio1: function validarMatrimonio1() {
-      this.errorMatrimonio1 = 0;
-      this.errorMostrarMsjMatrimonio1 = []; //Comprueba que la celda no esté vacía -- AGREGAR DESPUÉS LOS DEMÁS THIS EN EL IF
+      if (this.idcare == 0) this.errorMostrarMsjModal3.push("Seleccione una Categoría"); //falta validar para que solo sean números
 
-      if (this.libro == '' || this.num_expediente == '' || this.novioD == '' || this.novioNom == '' || this.novioAp == '' || this.noviaD == '' || this.noviaNom == '' || this.noviaAp == '') this.errorMostrarMsjMatrimonio1.push("Todos los datos son obligatorios");
-      if (this.errorMostrarMsjMatrimonio1.length) this.errorMatrimonio1 = 1;
-      return this.errorMatrimonio1;
+      if (this.errorMostrarMsjModal3.length) this.errorModal3 = 1;
+      return this.errorModal3;
     },
     //Este cambia de un modal a otro (adelante y atras)
     siguiente: function siguiente(d) {
       switch (d) {
         case '1':
           {
+            /* if(this.validarModal2()){
+                return;
+            } */
             this.modal3 = 1;
             this.modal2 = 0;
             break;
@@ -6166,23 +6391,19 @@ __webpack_require__.r(__webpack_exports__);
       this.noviaD = '';
       this.noviaNom = '';
       this.noviaAp = '';
+      this.errorMatrimonio1 = 0;
+      this.errorMostrarMsjMatrimonio1 = [];
     },
     //estos dos, cierran los modales de paso 2 y paso3
     cerrarModal2: function cerrarModal2() {
       this.modal2 = 0;
       this.modal3 = 0;
       this.tituloModal = '';
+      this.sacramento_id = '';
       this.fecha_realizacion = '';
-      this.id_iglesia = '';
-      this.id_sacerdote = '';
-    },
-    cerrarModal3: function cerrarModal3() {
-      this.modal2 = 0;
-      this.modal3 = 0;
-      this.tituloModal = '';
-      this.fecha_realizacion = '';
-      this.id_iglesia = '';
-      this.id_sacerdote = '';
+      this.id_iglesia = 0;
+      this.idsacerdote = 0;
+      this.cargosacerdote = 0;
       this.id_padrino1 = '';
       this.id_madrina1 = '';
       this.id_padrino2 = '';
@@ -6204,6 +6425,41 @@ __webpack_require__.r(__webpack_exports__);
       this.mad2Ap = '';
       this.mad2Sexo = 0;
       this.tipo = 0;
+      this.errorModal2 = 0;
+      this.errorMostrarMsjModal2 = [];
+    },
+    cerrarModal3: function cerrarModal3() {
+      this.modal2 = 0;
+      this.modal3 = 0;
+      this.tituloModal = '';
+      this.sacramento_id = '';
+      this.fecha_realizacion = '';
+      this.id_iglesia = 0;
+      this.idsacerdote = 0;
+      this.cargosacerdote = 0;
+      this.id_padrino1 = '';
+      this.id_madrina1 = '';
+      this.id_padrino2 = '';
+      this.id_madrina2 = '';
+      this.pad1D = '';
+      this.pad1Nom = '';
+      this.pad1Ap = '';
+      this.pad1Sexo = 0;
+      this.mad1D = '';
+      this.mad1Nom = '';
+      this.mad1Ap = '';
+      this.mad1Sexo = 0;
+      this.pad2D = '';
+      this.pad2Nom = '';
+      this.pad2Ap = '';
+      this.pad2Sexo = 0;
+      this.mad2D = '';
+      this.mad2Nom = '';
+      this.mad2Ap = '';
+      this.mad2Sexo = 0;
+      this.tipo = 0;
+      this.errorModal3 = 0;
+      this.errorMostrarMsjModal3 = [];
     },
     //En "modelo" va el nombre de la tabla guardada aquí, que por convencion de laravel es plural: "modelos"
     abrirModal: function abrirModal(modelo, accion) {
@@ -6263,6 +6519,16 @@ __webpack_require__.r(__webpack_exports__);
         console.log(error);
       });
     },
+    //autocompletar iglesias
+    llenadolistaiglesia: function llenadolistaiglesia(buscar, criterio) {
+      var me = this;
+      var url = '/persona/buscariglesia';
+      axios.get(url).then(function (response) {
+        me.arrayiglesia = response.data;
+      })["catch"](function (error) {
+        console.log(error);
+      });
+    },
     //autocompletar sacerdotes
     llenadolista: function llenadolista(buscar, criterio) {
       var me = this;
@@ -6291,12 +6557,12 @@ __webpack_require__.r(__webpack_exports__);
                 this.sacramento_id = data['id'];
                 this.fecha_realizacion = '';
                 this.iglesiaNom = ''; //Conviene más poner un combobox
-                //this.id_sacerdote ='';
 
+                this.id_sacerdote = '';
                 this.sacerdoteD = '';
                 this.sacerdoteNom = '';
-                this.sacerdoteAp = ''; //this.id_iglesia ='';
-                //botones matrimonio realizado / Cancelado
+                this.sacerdoteAp = '';
+                this.id_iglesia = ''; //botones matrimonio realizado / Cancelado
 
                 this.tipoAccion = 3;
                 break;
@@ -6306,20 +6572,20 @@ __webpack_require__.r(__webpack_exports__);
               {
                 this.modal3 = 1;
                 this.tituloModal = 'Datos de los padrinos';
-                this.sacramento_id = data['id']; //this.id_padrino ='';
-
+                this.sacramento_id = data['id'];
+                this.id_padrino = '';
                 this.pad1D = '';
                 this.pad1Nom = '';
-                this.pad1Ap = ''; //this.id_madrina1 ='';
-
+                this.pad1Ap = '';
+                this.id_madrina1 = '';
                 this.mad1D = '';
                 this.mad1Nom = '';
-                this.mad1Ap = ''; //this.id_padrino2 ='';
-
+                this.mad1Ap = '';
+                this.id_padrino2 = '';
                 this.pad2D = '';
                 this.pad2Nom = '';
-                this.pad2Ap = ''; //this.id_madrina2 ='';
-
+                this.pad2Ap = '';
+                this.id_madrina2 = '';
                 this.mad2D = '';
                 this.mad2Nom = '';
                 this.mad2Ap = ''; //botones matrimonio realizado / Cancelado
@@ -6400,6 +6666,7 @@ __webpack_require__.r(__webpack_exports__);
     this.llenadoarray();
     this.selectCategoria();
     this.llenadolista('', '');
+    this.llenadolistaiglesia('', '');
   }
 });
 
@@ -12129,7 +12396,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n/*Aquí ya comienza el CSS, ke kreisi */\n.modal-content{\n       width: 100% !important;\n       position: absolute !important\n}\n.mostrar{\n       display: list-item !important;\n       opacity: 1 !important;\n       position: absolute !important;\n       background-color: #3c29297a !important;\n}\n.div-error{ /* estos dos estilos son para validación */\n       display: flex;\n       justify-content: center;\n}\n.text-error{\n       color: red !important;\n       font-weight: bold;\n}\n.margen{\n       margin-bottom: 10px;\n}\n   \n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n/*Aquí ya comienza el CSS, ke kreisi */\n.modal-content{\n       width: 100% !important;\n       position: absolute !important\n}\n.mostrar{\n       display: list-item !important;\n       opacity: 1 !important;\n       position: absolute !important;\n       background-color: #3c29297a !important;\n}\n.div-error{ /* estos dos estilos son para validación */\n       display: flex;\n       justify-content: center;\n}\n.text-error{\n       color: red !important;\n       font-weight: bold;\n}\n.margen{\n       margin-bottom: 10px;\n}\n   \n", ""]);
 
 // exports
 
@@ -57115,7 +57382,7 @@ var render = function() {
                             }
                           ],
                           staticClass: "form-control",
-                          attrs: { type: "number", placeholder: "00000000-0" },
+                          attrs: { type: "text", placeholder: "00000000-0" },
                           domProps: { value: _vm.novioD },
                           on: {
                             keydown: function($event) {
@@ -57165,7 +57432,12 @@ var render = function() {
                             }
                           ],
                           staticClass: "form-control",
-                          attrs: { type: "text", placeholder: "Nombres" },
+                          attrs: {
+                            type: "text",
+                            "true-value": "mostrar",
+                            "false-value": "ocultar",
+                            placeholder: "Nombres"
+                          },
                           domProps: { value: _vm.novioNom },
                           on: {
                             input: function($event) {
@@ -57189,7 +57461,12 @@ var render = function() {
                             }
                           ],
                           staticClass: "form-control",
-                          attrs: { type: "text", placeholder: "Apellidos" },
+                          attrs: {
+                            type: "text",
+                            "true-value": "mostrar",
+                            "false-value": "ocultar",
+                            placeholder: "Apellidos"
+                          },
                           domProps: { value: _vm.novioAp },
                           on: {
                             input: function($event) {
@@ -57224,7 +57501,7 @@ var render = function() {
                             }
                           ],
                           staticClass: "form-control",
-                          attrs: { type: "number", placeholder: "00000000-0" },
+                          attrs: { type: "text", placeholder: "00000000-0" },
                           domProps: { value: _vm.noviaD },
                           on: {
                             keydown: function($event) {
@@ -57487,30 +57764,54 @@ var render = function() {
                       _vm._m(4),
                       _vm._v(" "),
                       _c("div", { staticClass: "col-md-5" }, [
-                        _c("input", {
-                          directives: [
-                            {
-                              name: "model",
-                              rawName: "v-model",
-                              value: _vm.id_iglesia,
-                              expression: "id_iglesia"
-                            }
-                          ],
-                          staticClass: "form-control",
-                          attrs: {
-                            type: "text",
-                            placeholder: "Nombre de la Iglesia"
-                          },
-                          domProps: { value: _vm.id_iglesia },
-                          on: {
-                            input: function($event) {
-                              if ($event.target.composing) {
-                                return
+                        _c(
+                          "select",
+                          {
+                            directives: [
+                              {
+                                name: "model",
+                                rawName: "v-model",
+                                value: _vm.id_iglesia,
+                                expression: "id_iglesia"
                               }
-                              _vm.id_iglesia = $event.target.value
+                            ],
+                            staticClass: "form-control",
+                            on: {
+                              change: function($event) {
+                                var $$selectedVal = Array.prototype.filter
+                                  .call($event.target.options, function(o) {
+                                    return o.selected
+                                  })
+                                  .map(function(o) {
+                                    var val = "_value" in o ? o._value : o.value
+                                    return val
+                                  })
+                                _vm.id_iglesia = $event.target.multiple
+                                  ? $$selectedVal
+                                  : $$selectedVal[0]
+                              }
                             }
-                          }
-                        })
+                          },
+                          [
+                            _c(
+                              "option",
+                              { attrs: { value: "0", disabled: "" } },
+                              [_vm._v("Seleccione")]
+                            ),
+                            _vm._v(" "),
+                            _vm._l(_vm.arrayiglesia, function(iglesiaNom) {
+                              return _c(
+                                "option",
+                                {
+                                  key: iglesiaNom.id,
+                                  domProps: { value: iglesiaNom.id }
+                                },
+                                [_vm._v(_vm._s(iglesiaNom.nombre_iglesia))]
+                              )
+                            })
+                          ],
+                          2
+                        )
                       ])
                     ]),
                     _c("tr"),
@@ -57628,7 +57929,35 @@ var render = function() {
                           2
                         )
                       ])
-                    ])
+                    ]),
+                    _vm._v(" "),
+                    _c(
+                      "div",
+                      {
+                        directives: [
+                          {
+                            name: "show",
+                            rawName: "v-show",
+                            value: _vm.errorModal2,
+                            expression: "errorModal2"
+                          }
+                        ],
+                        staticClass: "form-group row div-error"
+                      },
+                      [
+                        _c(
+                          "div",
+                          { staticClass: "text-center text-error" },
+                          _vm._l(_vm.errorMostrarMsjModal2, function(error) {
+                            return _c("div", {
+                              key: error,
+                              domProps: { textContent: _vm._s(error) }
+                            })
+                          }),
+                          0
+                        )
+                      ]
+                    )
                   ]
                 )
               ]),
@@ -58504,8 +58833,8 @@ var render = function() {
                           {
                             name: "show",
                             rawName: "v-show",
-                            value: _vm.errorMatrimonio1,
-                            expression: "errorMatrimonio1"
+                            value: _vm.errorModal3,
+                            expression: "errorModal3"
                           }
                         ],
                         staticClass: "form-group row div-error"
@@ -58514,9 +58843,7 @@ var render = function() {
                         _c(
                           "div",
                           { staticClass: "text-center text-error" },
-                          _vm._l(_vm.errorMostrarMsjMatrimonio1, function(
-                            error
-                          ) {
+                          _vm._l(_vm.errorMostrarMsjModal3, function(error) {
                             return _c("div", {
                               key: error,
                               domProps: { textContent: _vm._s(error) }
@@ -58567,7 +58894,7 @@ var render = function() {
                         attrs: { type: "button" },
                         on: {
                           click: function($event) {
-                            _vm.registrarBoda(), _vm.cerrarModal3()
+                            return _vm.registrarBoda()
                           }
                         }
                       },

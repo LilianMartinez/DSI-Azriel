@@ -15,7 +15,7 @@
                                 <a class="nav-link" href="#"><i class="icon-bag"></i> Calendario de Avisos</a>
                             </li>
                         </ul>
-                    </li>-->
+                    </li>
                     <li class="nav-item nav-dropdown">
                         <a class="nav-link nav-dropdown-toggle" href="#"><i class="icon-bag"></i>Sacramentos</a>
                         <ul class="nav-dropdown-items">
