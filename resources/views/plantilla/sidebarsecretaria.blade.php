@@ -55,7 +55,7 @@
                                 <a class="nav-link" href="#"><i class="icon-wallet"></i> Historial de registros</a>
                             </li>
                             <li @click="menu=8" class="nav-item">
-                                <a class="nav-link" href="#"><i class="icon-notebook"></i> Informe</a>
+                                <a class="nav-link" href="#"><i class="icon-notebook"></i> Resúmen de ingresos y egresos</a>
                             </li>
                         </ul>
                     </li>

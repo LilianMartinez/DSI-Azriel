@@ -137,4 +137,27 @@ class ResumenEconomicoController extends Controller
         return $pdf->download('ControlEconomicoMensual.pdf');
     }*/
    
+    public function listarPdfResumido(){
+
+        $fechaActual=new \DateTime();
+        $anio=$fechaActual->format('Y');
+        $mes=$fechaActual->format('m');
+        $envio=array();  
+        $total1=0;
+        $total1nulos=0;
+        $total2=0;
+        $total2nulos=0;
+    
+                $categorias = CategoriaResumen::join('efectivos','categorias_resumenes.id','=','efectivos.idcare')
+                                ->select(DB::raw('ROW_NUMBER() OVER() as id_temp'),'efectivos.tipo','categorias_resumenes.nombre_categoria as nombres',DB::raw('sum(monto) as montos'))
+                                ->whereYear('efectivos.fecha', $anio)->whereMonth('efectivos.fecha', $mes)
+                                ->groupby('efectivos.tipo','categorias_resumenes.nombre_categoria')->get();
+                $nullos = DB::table('efectivos')->select(DB::raw('ROW_NUMBER() OVER() as id_tempnul'),'tipo', 'descripcion_efectivo', 'monto')
+                            ->whereNull('idcare')->whereYear('fecha', $anio)->whereMonth('fecha', $mes)->get();
+                           
+                            $envio['categoria']=$categorias;
+                            $envio['nullo']=$nullos; 
+    $pdf= \PDF::loadView('pdf.efectivosCEMRpdf',['categorias'=>$envio['categoria'], 'efectivos'=>$envio['nullo']]);
+    return $pdf->download('ControlEconomicoMensualResumido.pdf');
+}
 }
