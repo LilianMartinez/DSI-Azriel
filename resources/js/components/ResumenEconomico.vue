@@ -71,6 +71,11 @@
                                 </tr>
                             </tbody>
                         </table>
+                        <div class="input-group margen">
+                            <button type="button" @click="cargarPDF()" class="btn btn-info">
+                                    <i class="icon-doc"></i>&nbsp;Generar Reporte Resumido
+                            </button>
+                        </div>
                      <!--   <nav>
                             <ul class="pagination">
                                 <li class="page-item" v-if="pagination.current_page > 1">
@@ -194,6 +199,9 @@
                 });
             
             },
+              cargarPDF(){
+            window.open('http:///127.0.0.1:8000/efectivo/listarPdfResumido','_blank');
+        },
         cambiarPagina(page,buscar,criterio){
             let me = this;
             //Actualiza la pagina actualizar

@@ -49,6 +49,7 @@ Route::group(['middleware'=>['auth']],function(){
                             Route::get('/efectivo/suma','EfectivoController@buscar');
                             Route::get('/efectivo/sumaM','EfectivoController@buscarM');
                             Route::get('/efectivo/listarPdfGeneral','EfectivoController@listarPdfGeneral')->name('efectivos_pdf');
+                            Route::get('/efectivo/listarPdfResumido','ResumenEconomicoController@listarPdfResumido')->name('efectivos_pdfR');
                             Route::get('/efectivo/buscarResumen','EfectivoController@buscarResumen');
                             
                             

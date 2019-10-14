@@ -108,7 +108,7 @@
                         <template v-if="menu==17">
                         <montofijom></montofijom>
                         </template>
-                        <template v-if="menu==18">
+                        <template v-if="menu==23">
                         <categoriaresumen></categoriaresumen>
                         </template>
                         <template v-if="menu==19">

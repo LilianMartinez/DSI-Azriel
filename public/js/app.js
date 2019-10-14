@@ -9095,6 +9095,9 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
 var moment = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js");
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -9198,6 +9201,9 @@ var moment = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js"
         // handle error
         console.log(error);
       });
+    },
+    cargarPDF: function cargarPDF() {
+      window.open('http:///127.0.0.1:8000/efectivo/listarPdfResumido', '_blank');
     },
     cambiarPagina: function cambiarPagina(page, buscar, criterio) {
       var me = this; //Actualiza la pagina actualizar
@@ -65008,7 +65014,26 @@ var render = function() {
                 2
               )
             ]
-          )
+          ),
+          _vm._v(" "),
+          _c("div", { staticClass: "input-group margen" }, [
+            _c(
+              "button",
+              {
+                staticClass: "btn btn-info",
+                attrs: { type: "button" },
+                on: {
+                  click: function($event) {
+                    return _vm.cargarPDF()
+                  }
+                }
+              },
+              [
+                _c("i", { staticClass: "icon-doc" }),
+                _vm._v(" Generar Reporte Resumido\n                         ")
+              ]
+            )
+          ])
         ])
       ])
     ])
