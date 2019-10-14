@@ -4,7 +4,7 @@
             <div class="container-fluid">
                 <!-- Tabla Primera comunion -->
                 <div class="card">
-                    <div class="card-header"><label class="titulo-encabezados">Historial de primeras Comuniónes</label>
+                    <div class="card-header"><label class="titulo-encabezados">Historial de primeras comuniones</label>
                     </div>
                     <div class="card-body">
                         <div class="form-group row">
@@ -20,8 +20,8 @@
                             <thead>
                                 <tr>
                                     <th>Nombres</th>
-                                    <th>Nombre Padre</th>
-                                    <th>Nombre Madre</th>
+                                    <th>Nombre padre</th>
+                                    <th>Nombre madre</th>
                                 </tr>
                             </thead>
                             <tbody>

@@ -4,7 +4,7 @@
                     <li @click="menu=0" class="nav-item">
                         <a class="nav-link active" href="#"><i class="icon-speedometer"></i> Escritorio</a>
                     </li>
-            <!--
+            
                     <li class="nav-item nav-dropdown">
                         <a class="nav-link nav-dropdown-toggle" href="#"><i class="icon-bag"></i> Calendario Parroquial</a>
                         <ul class="nav-dropdown-items">
@@ -25,6 +25,14 @@
                             <li class="nav-item nav-dropdown">
                             <a class="nav-link nav-dropdown-toggle" href="#"><i class="icon-bag"></i>Primera Comunion</a>
                             <ul class="nav-dropdown-items">
+                            <ul class="nav-dropdown-items">
+                                <li @click="menu=3" class="nav-item">
+                                    <a class="nav-link" href="#"><i class="icon-bag"></i> Bautizo</a>
+                                </li>
+                                <li @click="menu=18" class="nav-item">
+                                    <a class="nav-link" href="#"><i class="icon-bag"></i> Registro Bautizo</a>
+                                </li>
+                        </ul>
                             <li @click="menu=4" class="nav-item">
                                 <a class="nav-link" href="#"><i class="icon-bag"></i>Hacer registro</a>
                             </li>
@@ -46,7 +54,7 @@
                     </li>
         
                     <li class="nav-item nav-dropdown">
-                        <a class="nav-link nav-dropdown-toggle" href="#"><i class="icon-wallet"></i> Caja Chica</a>
+                        <a class="nav-link nav-dropdown-toggle" href="#"><i class="icon-wallet"></i> Caja chica</a>
                         <ul class="nav-dropdown-items">
                             <li @click="menu=16" class="nav-item">
                                 <a class="nav-link" href="#"><i class="icon-wallet"></i>Caja chica diaria</a>
@@ -89,7 +97,7 @@
                         <a class="nav-link nav-dropdown-toggle" href="#"><i class="icon-pie-chart"></i> Mantenimientos</a>
                         <ul class="nav-dropdown-items">
                             <li @click="menu=17" class="nav-item">
-                                <a class="nav-link" href="#"><i class="icon-chart"></i> Precios Fijos</a>
+                                <a class="nav-link" href="#"><i class="icon-chart"></i> Precios fijos</a>
                             </li>
                             <li @click="menu=18" class="nav-item">
                                 <a class="nav-link" href="#"><i class="icon-wallet"></i>Categorias para resumenes</a>

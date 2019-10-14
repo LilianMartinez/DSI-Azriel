@@ -28,12 +28,13 @@ class Sacramentos3Controller extends Controller
         $sacramento->fecha_realizacion=$request->fecha;
         $sacramento->id_realizante1=$request->realizante;
         $sacramento->id_sacerdote=$request->sacerdote;
+        $sacramento->titulo=$request->titulo;
         $sacramento->save();
 
         $efectivo = new Efectivo();
         $efectivo->id=$montos;
-        $efectivo->num_recibo= $request->num_recibo;
-        $efectivo->descripcion_efectivo=$request->descripcion_efectivo;
+        $efectivo->descripcion_efectivo='PRIMERA COMUNION';
+        $efectivo->idcare=$request->idcate;
         $efectivo->tipo= 1;
         $efectivo->monto=$request->monto;
         $efectivo->fecha= new \DateTime();

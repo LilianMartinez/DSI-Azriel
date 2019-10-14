@@ -7,7 +7,7 @@
             <div class="container-fluid">
                 <!-- Ejemplo de tabla Listado -->
                 <div class="card">
-                    <div class="card-header"><label class="titulo-encabezados">Historial de Registros</label>
+                    <div class="card-header"><label class="titulo-encabezados">Historial de registros</label>
                         
                     </div>
                     <div class="card-body">
@@ -62,12 +62,12 @@
                             <label v-text="totalAcumEgre" ></label> 
                         </div>
                           <div class="totales">
-                            <label>Total Acumulado en el mes: $</label>                              
+                            <label>Total acumulado en el mes: $</label>                              
                             <label v-text="totalAcum" ></label> 
                         </div>
                          <div class="input-group margen">
                             <button type="button" @click="cargarPDF()" class="btn btn-info">
-                                    <i class="icon-doc"></i>&nbsp;Reporte Mensual
+                                    <i class="icon-doc"></i>&nbsp;Reporte mensual
                             </button>
                         </div>
                         <nav>

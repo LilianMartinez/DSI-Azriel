@@ -11,8 +11,6 @@ class Persona extends Model
     protected $fillable=['nombre_persona','apellido_persona','fecha_nacimiento','dui_pasaporte','sexo','id_padre','id_madre','tipo_persona','estado'];
 
 
-    
-
     public function user()
     {
         return $this->hasOne('App\User');

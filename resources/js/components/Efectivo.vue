@@ -5,7 +5,7 @@
                 <!-- caja chica -->
                 <div class="card">
                     <div class="card-header">
-                       <label class="titulo-encabezados">Caja Chica</label>
+                       <label class="titulo-encabezados">Caja chica</label>
                     </div>
                     <div class="card-body">
                          <div class="input-group margen">
@@ -27,7 +27,7 @@
                             </div>
                         </div>
                         <div class="totales">
-                            <label>Total Acumulado: $</label>                              
+                            <label>Total acumulado: $</label>                              
                             <label v-text="totalAcum" ></label> 
                         </div>
                         <div class="totales2">
@@ -174,7 +174,7 @@
                 <div class="modal-dialog modal-danger" role="document">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h4 class="modal-title">Eliminar Movimiento</h4>
+                            <h4 class="modal-title">Eliminar movimiento</h4>
                             <button type="button" class="close" @click="cerrarModalE()" aria-label="Close">
                               <span aria-hidden="true">×</span>
                             </button>
@@ -349,7 +349,7 @@
                 var url='/efectivo?page='+ page + '&buscar=' + buscar2 + '&criterio=' + criterio + '&componente=' + tipocomponente;
                 axios.get(url) .then(function (response) {
                     // handle success
-                    console.log(response);
+                    //console.log(response);
                     var respuesta= response.data;
                     me.arrayEfectivo=respuesta.efectivos.data;
                     me.pagination= respuesta.pagination;
@@ -441,7 +441,7 @@
 
             },
             autollenado(montoFijo){
-               console.log(this.montoFijo)
+               
                 let me=this;
                 var arrayMontoFijo= [];
              axios.post('/montofijo/buscarmf',{
@@ -507,7 +507,7 @@
                             case 'registrar':
                             {
                                 this.modal=1;
-                                this.tituloModal='Nuevo Movimiento'
+                                this.tituloModal='Nuevo movimiento'
                                 this.tipoAccion=1;
                                 this.num_recibo='';
                                 this.descripcion_efectivo='';
@@ -521,7 +521,7 @@
                              case 'actualizar':
                             {
                                 this.modal=1;
-                                this.tituloModal='Modificar Movimiento',
+                                this.tituloModal='Modificar movimiento',
                                 this.tipoAccion=2;
                                 this.efectivo_id=data['id'];
                                 this.num_recibo=data['num_recibo'];
@@ -534,7 +534,7 @@
                             case 'eliminar':
                             {
                                 this.modalE=1;
-                                this.tituloModal='Eliminar Movimiento',
+                                this.tituloModal='Eliminar movimiento',
                                
                                 this.efectivo_id=data['id'];
                                 this.num_recibo=data['num_recibo'];

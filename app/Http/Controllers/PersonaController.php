@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Persona;
 use App\Sacramentos3;
 use App\PartidaNacimiento;
+use App\Efectivo;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 
@@ -42,7 +43,7 @@ class PersonaController extends Controller
         $envio=array();
 
         if(!$request->ajax()) return redirect('/');
-        $persona = DB::table('personas')->where('tipo_persona',1 )->get();
+        $persona = DB::table('personas')->where('tipo_persona',1)->get();
 
         return $persona;
     }
@@ -302,6 +303,17 @@ class PersonaController extends Controller
                 $s=2;
                 $idpartida_p= PartidaNacimiento::max('id');
                 $idpartida=$idpartida_p+1;
+                $monto_p= Efectivo::max('id');
+                $montos=$monto_p+1;
+
+                $efectivo = new Efectivo();
+                $efectivo->id=$montos;
+                $efectivo->descripcion_efectivo='Primera comunión';
+                $efectivo->idcare=$request->idcate;
+                $efectivo->tipo= 1;
+                $efectivo->monto=$request->monto;
+                $efectivo->fecha= new \DateTime();
+                $efectivo->save();
         
         
                 $personareali = new Persona();
@@ -331,6 +343,7 @@ class PersonaController extends Controller
                 $sacramento->fecha_realizacion=$request->fecha;
                 $sacramento->id_realizante1=$idreali;
                 $sacramento->id_sacerdote=$request->sacerdote;
+                $sacramento->titulo=$request->titulo;
                 $sacramento->save();
                 break;
             }
@@ -344,6 +357,17 @@ class PersonaController extends Controller
                         $s=2;
                         $idpartida_p= PartidaNacimiento::max('id');
                         $idpartida=$idpartida_p+1;
+                        $monto_p= Efectivo::max('id');
+                        $montos=$monto_p+1;
+
+                        $efectivo = new Efectivo();
+                        $efectivo->id=$montos;
+                        $efectivo->descripcion_efectivo='PRIMERA COMUNION';
+                        $efectivo->idcare=$request->idcate;
+                        $efectivo->tipo= 1;
+                        $efectivo->monto=$request->monto;
+                        $efectivo->fecha= new \DateTime();
+                        $efectivo->save();
         
 
                         $personap = new Persona();
@@ -380,6 +404,7 @@ class PersonaController extends Controller
                         $sacramento->fecha_realizacion=$request->fecha;
                         $sacramento->id_realizante1=$idreali;
                         $sacramento->id_sacerdote=$request->sacerdote;
+                        $sacramento->titulo=$request->titulo;
                         $sacramento->save();
                 break;
             }
@@ -393,6 +418,17 @@ class PersonaController extends Controller
                         $s=2;
                         $idpartida_p= PartidaNacimiento::max('id');
                         $idpartida=$idpartida_p+1;
+                        $monto_p= Efectivo::max('id');
+                        $montos=$monto_p+1;
+
+                        $efectivo = new Efectivo();
+                        $efectivo->id=$montos;
+                        $efectivo->descripcion_efectivo='PRIMERA COMUNION';
+                        $efectivo->idcare=$request->idcate;
+                        $efectivo->tipo= 1;
+                        $efectivo->monto=$request->monto;
+                        $efectivo->fecha= new \DateTime();
+                        $efectivo->save();
         
 
                         $personap = new Persona();
@@ -429,6 +465,7 @@ class PersonaController extends Controller
                         $sacramento->fecha_realizacion=$request->fecha;
                         $sacramento->id_realizante1=$idreali;
                         $sacramento->id_sacerdote=$request->sacerdote;
+                        $sacramento->titulo=$request->titulo;
                         $sacramento->save();
                 break;
             }
@@ -443,6 +480,17 @@ class PersonaController extends Controller
                         $s=2;
                         $idpartida_p= PartidaNacimiento::max('id');
                         $idpartida=$idpartida_p+1;
+                        $monto_p= Efectivo::max('id');
+                        $montos=$monto_p+1;
+
+                        $efectivo = new Efectivo();
+                        $efectivo->id=$montos;
+                        $efectivo->descripcion_efectivo='PRIMERA COMUNION';
+                        $efectivo->idcare=$request->idcate;
+                        $efectivo->tipo= 1;
+                        $efectivo->monto=$request->monto;
+                        $efectivo->fecha= new \DateTime();
+                        $efectivo->save();
         
 
                         $personap = new Persona();
@@ -486,6 +534,7 @@ class PersonaController extends Controller
                         $sacramento->fecha_realizacion=$request->fecha;
                         $sacramento->id_realizante1=$idreali;
                         $sacramento->id_sacerdote=$request->sacerdote;
+                        $sacramento->titulo=$request->titulo;
                         $sacramento->save();
                 break;
             }
@@ -498,6 +547,17 @@ class PersonaController extends Controller
                         $s=2;
                         $idpartida_p= PartidaNacimiento::max('id');
                         $idpartida=$idpartida_p+1;
+                        $monto_p= Efectivo::max('id');
+                        $montos=$monto_p+1;
+
+                        $efectivo = new Efectivo();
+                        $efectivo->id=$montos;
+                        $efectivo->descripcion_efectivo='PRIMERA COMUNION';
+                        $efectivo->idcare=$request->idcate;
+                        $efectivo->tipo= 1;
+                        $efectivo->monto=$request->monto;
+                        $efectivo->fecha= new \DateTime();
+                        $efectivo->save();
         
         
                         $personareali = new Persona();
@@ -526,6 +586,7 @@ class PersonaController extends Controller
                         $sacramento->fecha_realizacion=$request->fecha;
                         $sacramento->id_realizante1=$idreali;
                         $sacramento->id_sacerdote=$request->sacerdote;
+                        $sacramento->titulo=$request->titulo;
                         $sacramento->save();
                 break;
             }
@@ -537,6 +598,17 @@ class PersonaController extends Controller
                         $s=2;
                         $idpartida_p= PartidaNacimiento::max('id');
                         $idpartida=$idpartida_p+1;
+                        $monto_p= Efectivo::max('id');
+                        $montos=$monto_p+1;
+
+                        $efectivo = new Efectivo();
+                        $efectivo->id=$montos;
+                        $efectivo->descripcion_efectivo='PRIMERA COMUNION';
+                        $efectivo->idcare=$request->idcate;
+                        $efectivo->tipo= 1;
+                        $efectivo->monto=$request->monto;
+                        $efectivo->fecha= new \DateTime();
+                        $efectivo->save();
 
         
                         $personareali = new Persona();
@@ -565,6 +637,7 @@ class PersonaController extends Controller
                         $sacramento->fecha_realizacion=$request->fecha;
                         $sacramento->id_realizante1=$idreali;
                         $sacramento->id_sacerdote=$request->sacerdote;
+                        $sacramento->titulo=$request->titulo;
                         $sacramento->save();
                 break;
             }
@@ -576,6 +649,17 @@ class PersonaController extends Controller
                         $s=2;
                         $idpartida_p= PartidaNacimiento::max('id');
                         $idpartida=$idpartida_p+1;
+                        $monto_p= Efectivo::max('id');
+                        $montos=$monto_p+1;
+
+                        $efectivo = new Efectivo();
+                        $efectivo->id=$montos;
+                        $efectivo->descripcion_efectivo='PRIMERA COMUNION';
+                        $efectivo->idcare=$request->idcate;
+                        $efectivo->tipo= 1;
+                        $efectivo->monto=$request->monto;
+                        $efectivo->fecha= new \DateTime();
+                        $efectivo->save();
 
         
                         $personareali = new Persona();
@@ -603,6 +687,7 @@ class PersonaController extends Controller
                         $sacramento->fecha_realizacion=$request->fecha;
                         $sacramento->id_realizante1=$idreali;
                         $sacramento->id_sacerdote=$request->sacerdote;
+                        $sacramento->titulo=$request->titulo;
                         $sacramento->save();
                 break;
                 
@@ -616,6 +701,17 @@ class PersonaController extends Controller
                 $s=2;
                 $idpartida_p= PartidaNacimiento::max('id');
                 $idpartida=$idpartida_p+1;
+                $monto_p= Efectivo::max('id');
+                $montos=$monto_p+1;
+
+                $efectivo = new Efectivo();
+                $efectivo->id=$montos;
+                $efectivo->descripcion_efectivo='PRIMERA COMUNION';
+                        $efectivo->idcare=$request->idcate;
+                $efectivo->tipo= 1;
+                $efectivo->monto=$request->monto;
+                $efectivo->fecha= new \DateTime();
+                $efectivo->save();
 
                 $personap = new Persona();
                 $personap->id= $idm;
@@ -650,7 +746,10 @@ class PersonaController extends Controller
                 $sacramento->fecha_realizacion=$request->fecha;
                 $sacramento->id_realizante1=$idreali;
                 $sacramento->id_sacerdote=$request->sacerdote;
+                $sacramento->titulo=$request->titulo;
                 $sacramento->save();
+
+                
                   break;
             }
             case '9':{
@@ -662,6 +761,17 @@ class PersonaController extends Controller
                 $s=2;
                 $idpartida_p= PartidaNacimiento::max('id');
                 $idpartida=$idpartida_p+1;
+                $monto_p= Efectivo::max('id');
+                $montos=$monto_p+1;
+
+                $efectivo = new Efectivo();
+                $efectivo->id=$montos;
+                $efectivo->descripcion_efectivo='PRIMERA COMUNION';
+                $efectivo->idcare=$request->idcate;
+                $efectivo->tipo= 1;
+                $efectivo->monto=$request->monto;
+                $efectivo->fecha= new \DateTime();
+                $efectivo->save();
 
                 $personap = new Persona();
                 $personap->id= $idp;
@@ -696,7 +806,10 @@ class PersonaController extends Controller
                 $sacramento->fecha_realizacion=$request->fecha;
                 $sacramento->id_realizante1=$idreali;
                 $sacramento->id_sacerdote=$request->sacerdote;
+                $sacramento->titulo=$request->titulo;
                 $sacramento->save();
+
+                
                 break;
                 
             }

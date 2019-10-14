@@ -60,6 +60,23 @@ Route::group(['middleware'=>['auth']],function(){
                             Route::put('/montofijo/actualizar','MontoFijoController@update');
                             Route::put('/montofijo/eliminar','MontoFijoController@eliminar');
 
+                            //TABLA BAUTIZO
+                            Route::get('/bautizo','BautizoController@index');
+                            Route::put('/bautizo/registrar','BautizoController@store');
+                            Route::put('/bautizo/marginaracta','BautizoController@marginacionacta');
+
+
+                            //TABLA PERSONA
+                            Route::get('/persona/obtener','PersonaController3@realizante');
+                            Route::get('/persona/duis','PersonaController3@buscarduis');
+                            Route::get('/persona/pan','PersonaController3@show');
+                            Route::put('/persona/registrar','PersonaController3@store');
+                            Route::get('/persona/listar','PersonaController3@lista');
+                            
+
+                            //TABLA PARTIDA NACIMIENTO
+                            Route::get('/partida/busqueda','PartidaNacimientoController2@realizante');
+
                             //TABLA PERSONA
                             Route::get('/persona/obtener','PersonaController@realizante');
                             Route::get('/persona/buscarsacerdote','PersonaController@buscarsacerdote');
@@ -69,6 +86,11 @@ Route::group(['middleware'=>['auth']],function(){
                             Route::get('/persona/listarcomuniones','PersonaController@listaPC');//para el realizante
                             Route::get('/persona/listarconfirmaciones','PersonaController@listaC');//para el realizante
                             Route::get('/persona/listarsupletorias','PersonaController@listaS');//para el realizante
+
+                            Route::get('/persona/duihombre','PersonaController2@buscarduihombre');//este se utiliza para novio, padrinos y sacerdote
+                            Route::get('/persona/duimujer','PersonaController2@buscarduimujer');//este se utiliza para novia y madrinas
+                            Route::put('/persona/registrar2','PersonaController2@store');//Modificado para poder registrar nuevo expediente matrimonial
+                            Route::put('/persona/actualizar2','PersonaController2@update');
 
                                            //MANTENIMIENTO PERSONAS RELIGIOSAS
                                            Route::get('/religioso/index','PersonaController@indexRel');
@@ -101,6 +123,17 @@ Route::group(['middleware'=>['auth']],function(){
                             Route::post('/iglesia/buscarIgle','IglesiaController@buscar');
                             Route::put('/iglesia/actualizar','IglesiaController@update');
                             Route::put('/iglesia/eliminar','IglesiaController@eliminar');
+                            
+                            //Tabla Sacramento
+                            Route::get('/sacramento','SacramentoController@index');
+                            Route::get('/sacramentoplus','SacramentoController@index'); //POR SI ACASO... LUEGO DEBEMOS CAMBIAR LA "BUSQUEDA" AL INDEX DE PERSONA
+                            Route::get('/sacramento/storematrimonio1','SacramentoController@storeMatrimonio1');// Metodo para guardar matrimonio paso1
+                            Route::post('/sacramento/registrar','SacramentoController@store');
+                            Route::put('/sacramento/registrarboda','SacramentoController@registrarboda');
+                            Route::put('/sacramento/actualizar','SacramentoController@update');
+                            Route::put('/sacramento/activarexpediente','SacramentoController@activarexpediente');
+                            Route::put('/sacramento/desactivarexpediente','SacramentoController@desactivarexpediente');
+                            //Route::put('/sacramento/finalizarexpediente','SacramentoController@finalizarexpediente');
                             
             });
 
