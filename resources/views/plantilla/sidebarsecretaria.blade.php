@@ -99,7 +99,7 @@
                             <li @click="menu=17" class="nav-item">
                                 <a class="nav-link" href="#"><i class="icon-chart"></i> Precios fijos</a>
                             </li>
-                            <li @click="menu=18" class="nav-item">
+                            <li @click="menu=23" class="nav-item">
                                 <a class="nav-link" href="#"><i class="icon-wallet"></i>Categorias para resumenes</a>
                             </li>
                             <li @click="menu=19" class="nav-item">

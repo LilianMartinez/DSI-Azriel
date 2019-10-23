@@ -5480,6 +5480,108 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     //Dave: En esta función declaramos las variables que utilizaremos
@@ -5525,8 +5627,15 @@ __webpack_require__.r(__webpack_exports__);
       iglesiaNom: '',
       tipo: 0,
       estado: 0,
-      monto: 30,
-      ofrendaExp: 20,
+      monto: '',
+      //Este es el monto de la boda realizada
+      ofrendaExp: '',
+      //este es para el botón de crear expediente
+      montoConstancia: '',
+      //este es para el botón de solicitar constancia
+      cobrado: false,
+      enConcepto: '',
+      //el por qué se imprimirá la Constancia
       idcare: '',
       cargosacerdote: '',
       idsacerdote: '',
@@ -5539,6 +5648,8 @@ __webpack_require__.r(__webpack_exports__);
       //Nos sirve para poder activar o desactivar el modal
       modal2: 0,
       modal3: 0,
+      modal4: 0,
+      //Modal imprimir
       tituloModal: '',
       //solo para registrar el título que queremos que aparezca en el modal
       tipoAccion: 0,
@@ -5550,6 +5661,8 @@ __webpack_require__.r(__webpack_exports__);
       errorMostrarMsjModal2: [],
       errorModal3: 0,
       errorMostrarMsjModal3: [],
+      errorModal4: 0,
+      errorMostrarMsjModal4: [],
       pagination: {
         'total': 0,
         'current_page': 0,
@@ -5597,6 +5710,9 @@ __webpack_require__.r(__webpack_exports__);
     }
   },
   methods: {
+    cobrar: function cobrar() {
+      this.cobrado = true; //AQUÍ AGREGAR EL DESABILITAR COBRAR1
+    },
     listarMatrimonio1: function listarMatrimonio1(page, buscar, criterio) {
       var me = this;
       var lengthbuscar = this.buscar.length;
@@ -5883,7 +5999,9 @@ __webpack_require__.r(__webpack_exports__);
               'novioD': this.novioD,
               'noviaNom': this.noviaNom.toUpperCase(),
               'noviaAp': this.noviaAp.toUpperCase(),
-              'noviaD': this.noviaD
+              'noviaD': this.noviaD,
+              'monto': this.ofrendaExp,
+              'idcate': this.idcare
             }).then(function (response) {
               //si todo funciona:
               me.listarMatrimonio1();
@@ -5900,7 +6018,9 @@ __webpack_require__.r(__webpack_exports__);
               'novioNom': this.novioNom.toUpperCase(),
               'novioAp': this.novioAp.toUpperCase(),
               'novioD': this.novioD,
-              'id_realizante2': this.id_realizante2
+              'id_realizante2': this.id_realizante2,
+              'monto': this.ofrendaExp,
+              'idcate': this.idcare
             }).then(function (response) {
               //si todo funciona:
               me.listarMatrimonio1();
@@ -5920,7 +6040,9 @@ __webpack_require__.r(__webpack_exports__);
               'noviaNom': this.noviaNom.toUpperCase(),
               'noviaAp': this.noviaAp.toUpperCase(),
               'noviaD': this.noviaD,
-              'id_realizante1': this.id_realizante1
+              'id_realizante1': this.id_realizante1,
+              'monto': this.ofrendaExp,
+              'idcate': this.idcare
             }).then(function (response) {
               //si todo funciona:
               me.listarMatrimonio1();
@@ -5935,7 +6057,9 @@ __webpack_require__.r(__webpack_exports__);
               'libro': this.libro,
               'num_expediente': this.num_expediente,
               'id_realizante1': this.id_realizante1,
-              'id_realizante2': this.id_realizante2
+              'id_realizante2': this.id_realizante2,
+              'monto': this.ofrendaExp,
+              'idcate': this.idcare
             }).then(function (response) {
               //si todo funciona:
               me.listarMatrimonio1();
@@ -5970,6 +6094,7 @@ __webpack_require__.r(__webpack_exports__);
     },
     //ESTE ES PARA ACTUALIZAR.... ESTA ES LA BASURA QUE NO SERVIA
     actualizarMatrimonio1: function actualizarMatrimonio1() {
+      //QUITAR ESTE BOTOOOOOOOOON
       if (this.validarMatrimonio1()) {
         return;
       }
@@ -6010,6 +6135,7 @@ __webpack_require__.r(__webpack_exports__);
       var pad2D = this.pad2D;
       var mad2D = this.mad2D;
       var id_sacerdote = this.id_sacerdote;
+      var cargosacerdote = this.cargosacerdote;
       var id_padrino1 = this.id_padrino1;
       var id_madrina1 = this.id_madrina1;
       var id_padrino2 = this.id_padrino2;
@@ -6040,6 +6166,7 @@ __webpack_require__.r(__webpack_exports__);
               'pad1D': this.pad1D,
               'pad1Sexo': this.pad1Sexo,
               'id_sacerdote': this.idsacerdote,
+              'titulo': this.cargosacerdote,
               'id_padrino1': this.id_padrino1,
               'monto': this.monto,
               'idcate': this.idcare
@@ -6085,6 +6212,7 @@ __webpack_require__.r(__webpack_exports__);
               'mad1D': this.mad1D,
               'mad1Sexo': this.mad1Sexo,
               'id_sacerdote': this.idsacerdote,
+              'titulo': this.cargosacerdote,
               'id_padrino1': this.id_padrino1,
               'id_madrina1': this.id_madrina1,
               'monto': this.monto,
@@ -6156,6 +6284,7 @@ __webpack_require__.r(__webpack_exports__);
             'pad2D': this.pad2D,
             'pad2Sexo': this.pad2Sexo,
             'id_sacerdote': this.idsacerdote,
+            'titulo': this.cargosacerdote,
             'id_padrino1': this.id_padrino1,
             'id_madrina1': this.id_madrina1,
             'id_padrino2': this.id_padrino2,
@@ -6272,6 +6401,7 @@ __webpack_require__.r(__webpack_exports__);
           'mad2D': this.mad2D,
           'mad2Sexo': this.mad2Sexo,
           'id_sacerdote': this.idsacerdote,
+          'titulo': this.cargosacerdote,
           'id_padrino1': this.id_padrino1,
           'id_madrina1': this.id_madrina1,
           'id_padrino2': this.id_padrino2,
@@ -6290,15 +6420,32 @@ __webpack_require__.r(__webpack_exports__);
 
       me.cerrarModal3();
     },
+    imprimirConstancia: function imprimirConstancia() {
+      if (this.validarModal4()) {
+        return;
+      }
+    },
     //este lo ocupa el método Registrar
     validarMatrimonio1: function validarMatrimonio1() {
       this.errorMatrimonio1 = 0;
       this.errorMostrarMsjMatrimonio1 = [];
-      var patron = /^[a-zA-ZÑñÁáÉéÍíÓóÚúÜü\s]+$/; //Comprueba que la celda no esté vacía -- AGREGAR DESPUÉS LOS DEMÁS THIS EN EL IF
+      var patron = /^[a-zA-ZÑñÁáÉéÍíÓóÚúÜü\s]+$/;
+      var patrondui = /^\d{9}$/;
+      var soloIntPositivo = /^\d*$/;
+      var decimales = /^\d+(\.\d{0,2})?$/; //Comprueba que las celdas no estén vacías
 
-      if (this.libro == '' || this.num_expediente == '' || this.novioD == '' || this.novioNom == '' || this.novioAp == '' || this.noviaD == '' || this.noviaNom == '' || this.noviaAp == '') this.errorMostrarMsjMatrimonio1.push("Todos los datos son obligatorios");
-      if (!patron.test(this.novioNom) || !patron.test(this.novioAp)) this.errorMostrarMsjMatrimonio1.push("Los datos del novio solo deben tener letras");
-      if (!patron.test(this.noviaNom) || !patron.test(this.noviaAp)) this.errorMostrarMsjMatrimonio1.push("Los datos de la novia debe contener letras solamente");
+      if (this.libro == '' || this.num_expediente == '' || this.novioD == '' || this.novioNom == '' || this.novioAp == '' || this.noviaD == '' || this.noviaNom == '' || this.noviaAp == '' || this.ofrendaExp == '') {
+        this.errorMostrarMsjMatrimonio1.push("Todos los datos son obligatorios");
+      } else {
+        if (!soloIntPositivo.test(this.libro) || !soloIntPositivo.test(this.num_expediente)) this.errorMostrarMsjMatrimonio1.push("En libro y número de expediente solo se permiten números enteros positivos");
+        if (!patrondui.test(this.novioD) || !patrondui.test(this.noviaD)) this.errorMostrarMsjMatrimonio1.push("Error, El dui debe contener 9 números");
+        if (!patron.test(this.novioNom) || !patron.test(this.novioAp)) this.errorMostrarMsjMatrimonio1.push("Los datos del novio deben contener letras solamente");
+        if (!patron.test(this.noviaNom) || !patron.test(this.noviaAp)) this.errorMostrarMsjMatrimonio1.push("Los datos de la novia debe contener letras solamente");
+        if (!decimales.test(this.ofrendaExp)) this.errorMostrarMsjMatrimonio1.push("La ofrenda debe de ser un número positivo");
+        if (this.idcare == 0) this.errorMostrarMsjMatrimonio1.push("Debe elegir una categoría");
+        if (this.cobrado != true) this.errorMostrarMsjMatrimonio1.push("Debe cobrar la apertura del expediente de matrimonio");
+      }
+
       if (this.errorMostrarMsjMatrimonio1.length) this.errorMatrimonio1 = 1;
       return this.errorMatrimonio1;
     },
@@ -6306,7 +6453,19 @@ __webpack_require__.r(__webpack_exports__);
     validarModal2: function validarModal2() {
       this.errorModal2 = 0;
       this.errorMostrarMsjModal2 = [];
-      if (!this.fecha_realizacion) this.errorMostrarMsjModal2.push("Seleccione la fecha de realización");
+      var fecha = new Date();
+      var actualYear = fecha.getFullYear();
+      var actualMes = fecha.getMonth();
+      var values = this.fecha_realizacion.split("-");
+      var anio = values[0];
+
+      if (!this.fecha_realizacion) {
+        this.errorMostrarMsjModal2.push("Seleccione la fecha de realización");
+      } else {
+        if (anio < 1989) this.errorMostrarMsjModal2.push("El año debe de ser mayor a 1989");
+        if (actualYear + 1 < anio) this.errorMostrarMsjModal2.push("El año debe ser menor o igual al " + (actualYear + 1));
+      }
+
       if (this.id_iglesia == 0) this.errorMostrarMsjModal2.push("Seleccione una iglesia");
       if (this.idsacerdote == 0) this.errorMostrarMsjModal2.push("Seleccione el encargado de la ceremonia");
       if (this.cargosacerdote == 0) this.errorMostrarMsjModal2.push("Seleccione el cargo del encargado");
@@ -6317,30 +6476,37 @@ __webpack_require__.r(__webpack_exports__);
     validarModal3: function validarModal3() {
       this.errorModal3 = 0;
       this.errorMostrarMsjModal3 = [];
-      var patron = /^[a-zA-ZÑñÁáÉéÍíÓóÚúÜü\s]+$/; //Esta súpervalidación ayuda a que sea imposible para el usuario dejar "padrinos en blanco"... así solo podrá ingresarlos en orden
+      var patron = /^[a-zA-ZÑñÁáÉéÍíÓóÚúÜü\s]+$/;
+      var patrondui = /^\d{9}$/; //var soloIntPositivo= /^\d*$/;
+
+      var decimales = /^\d+(\.\d{0,2})?$/; //Esta súpervalidación ayuda a que sea imposible para el usuario dejar "padrinos en blanco"... así solo podrá ingresarlos en orden
 
       if (!this.pad1D || !this.pad1Nom || !this.pad1Ap || this.pad1Sexo == 0) {
         this.errorMostrarMsjModal3.push("Complete los datos de la persona 1");
       } else {
         if (!patron.test(this.pad1Nom) || !patron.test(this.pad1Ap)) this.errorMostrarMsjModal3.push("Los datos de la persona 1 debe contener letras solamente");
+        if (!patrondui.test(this.pad1D)) this.errorMostrarMsjModal3.push("Error, El dui de la persona 1 debe contener 9 números");
 
         if (!(!this.mad1D && !this.mad1Nom && !this.mad1Ap && this.mad1Sexo == 0 && !this.pad2D && !this.pad2Nom && !this.pad2Ap && this.pad2Sexo == 0 && !this.mad2D && !this.mad2Nom && !this.mad2Ap && this.mad2Sexo == 0)) {
           if (!this.mad1D || !this.mad1Nom || !this.mad1Ap || this.mad1Sexo == 0) {
             this.errorMostrarMsjModal3.push("Complete los datos de la persona 2");
           } else {
             if (!patron.test(this.mad1Nom) || !patron.test(this.mad1Ap)) this.errorMostrarMsjModal3.push("Los datos de la persona 2 debe contener letras solamente");
+            if (!patrondui.test(this.mad1D)) this.errorMostrarMsjModal3.push("Error, El dui de la persona 2 debe contener 9 números");
 
             if (!(!this.pad2D && !this.pad2Nom && !this.pad2Ap && this.pad2Sexo == 0 && !this.mad2D && !this.mad2Nom && !this.mad2Ap && this.mad2Sexo == 0)) {
               if (!this.pad2D || !this.pad2Nom || !this.pad2Ap || this.pad2Sexo == 0) {
                 this.errorMostrarMsjModal3.push("Complete los datos de la persona 3");
               } else {
                 if (!patron.test(this.pad2Nom) || !patron.test(this.pad2Ap)) this.errorMostrarMsjModal3.push("Los datos de la persona 3 debe contener letras solamente");
+                if (!patrondui.test(this.pad2D)) this.errorMostrarMsjModal3.push("Error, El dui de la persona 3 debe contener 9 números");
 
                 if (!(!this.mad2D && !this.mad2Nom && !this.mad2Ap && this.mad2Sexo == 0)) {
                   if (!this.mad2D || !this.mad2Nom || !this.mad2Ap || this.mad2Sexo == 0) {
                     this.errorMostrarMsjModal3.push("Complete los datos de la persona 4");
                   } else {
                     if (!patron.test(this.mad2Nom) || !patron.test(this.mad2Ap)) this.errorMostrarMsjModal3.push("Los datos de la persona 4 debe contener letras solamente");
+                    if (!patrondui.test(this.mad2D)) this.errorMostrarMsjModal3.push("Error, El dui de la persona 4 debe contener 9 números");
                   }
                 }
               }
@@ -6349,19 +6515,38 @@ __webpack_require__.r(__webpack_exports__);
         }
       }
 
-      if (this.idcare == 0) this.errorMostrarMsjModal3.push("Seleccione una Categoría"); //falta validar para que solo sean números
+      if (this.monto == "") {
+        this.errorMostrarMsjModal3.push("Por favor ingrese la ofrenda por realización del matrimonio");
+      } else {
+        if (!decimales.test(this.monto)) {
+          this.errorMostrarMsjModal3.push("La ofrenda debe de ser un número positivo");
+        } else {
+          if (this.cobrado != true) this.errorMostrarMsjModal3.push("Debe cobrar la ofrenda por la realización del matrimonio");
+        }
+
+        if (this.idcare == 0) this.errorMostrarMsjModal3.push("Seleccione una Categoría");
+      } //falta validar para que solo sean números
+
 
       if (this.errorMostrarMsjModal3.length) this.errorModal3 = 1;
       return this.errorModal3;
+    },
+    validarModal4: function validarModal4() {
+      this.errorModal4 = 0;
+      this.errorMostrarMsjModal4 = [];
+      if (this.cobrado != true) this.errorMostrarMsjModal4.push("Debe cobrar la solicitud de la constancia matrimonial");
+      if (this.errorMostrarMsjModal4.length) this.errorModal4 = 1;
+      return this.errorModal4;
     },
     //Este cambia de un modal a otro (adelante y atras)
     siguiente: function siguiente(d) {
       switch (d) {
         case '1':
           {
-            /* if(this.validarModal2()){
-                return;
-            } */
+            if (this.validarModal2()) {
+              return;
+            }
+
             this.modal3 = 1;
             this.modal2 = 0;
             break;
@@ -6391,8 +6576,11 @@ __webpack_require__.r(__webpack_exports__);
       this.noviaD = '';
       this.noviaNom = '';
       this.noviaAp = '';
+      this.ofrendaExp = '';
+      this.idcare = 0;
       this.errorMatrimonio1 = 0;
       this.errorMostrarMsjMatrimonio1 = [];
+      this.cobrado = false;
     },
     //estos dos, cierran los modales de paso 2 y paso3
     cerrarModal2: function cerrarModal2() {
@@ -6425,8 +6613,10 @@ __webpack_require__.r(__webpack_exports__);
       this.mad2Ap = '';
       this.mad2Sexo = 0;
       this.tipo = 0;
+      this.idcare = 0;
       this.errorModal2 = 0;
       this.errorMostrarMsjModal2 = [];
+      this.cobrado = false;
     },
     cerrarModal3: function cerrarModal3() {
       this.modal2 = 0;
@@ -6457,9 +6647,23 @@ __webpack_require__.r(__webpack_exports__);
       this.mad2Nom = '';
       this.mad2Ap = '';
       this.mad2Sexo = 0;
+      this.monto = 0;
       this.tipo = 0;
+      this.idcare = 0;
       this.errorModal3 = 0;
       this.errorMostrarMsjModal3 = [];
+      this.cobrado = false;
+    },
+    cerrarModal4: function cerrarModal4() {
+      this.modal4 = 0;
+      this.tituloModal = '';
+      this.sacramento_id = '';
+      this.enConcepto = '';
+      this.idcare = '', this.cargosacerdote = 0, this.idsacerdote = 0, this.montoConstancia = '';
+      this.idcare = 0;
+      this.errorModal4 = 0;
+      this.errorMostrarMsjModal4 = [];
+      this.cobrado = false;
     },
     //En "modelo" va el nombre de la tabla guardada aquí, que por convencion de laravel es plural: "modelos"
     abrirModal: function abrirModal(modelo, accion) {
@@ -6553,16 +6757,45 @@ __webpack_require__.r(__webpack_exports__);
             case 'paso2':
               {
                 this.modal2 = 1;
-                this.tituloModal = 'Datos de la Ceremonia';
+                var apellidoNovioArray = apellidoNovioArray = data['novioAp'].split(' '); //la función split crea un array donde separa la cadena por ' '
+
+                var apellidoNoviaArray = apellidoNoviaArray = data['noviaAp'].split(' '); //Luego tomamos del array el primer apellido que está en la posición 0
+
+                var apellidoNovioMostrar = '';
+                var apellidoNoviaMostrar = ''; //Este IF valida los casos de los apellidos con "de, la, del"
+
+                if (apellidoNovioArray[0] == 'DE' || apellidoNovioArray[0] == 'LA' || apellidoNovioArray[0] == 'DEL') {
+                  if (apellidoNovioArray[1] == 'LA' || apellidoNovioArray[1] == 'LOS') {
+                    apellidoNovioMostrar = apellidoNovioArray[0] + ' ' + apellidoNovioArray[1] + ' ' + apellidoNovioArray[2];
+                  } else {
+                    apellidoNovioMostrar = apellidoNovioArray[0] + ' ' + apellidoNovioArray[1];
+                  }
+                } else {
+                  apellidoNovioMostrar = apellidoNovioArray[0];
+                } //el mismo caso anterior, para la novia
+
+
+                if (apellidoNoviaArray[0] == 'DE' || apellidoNoviaArray[0] == 'LA' || apellidoNoviaArray[0] == 'DEL') {
+                  if (apellidoNoviaArray[1] == 'LA' || apellidoNoviaArray[1] == 'LOS') {
+                    apellidoNoviaMostrar = apellidoNoviaArray[0] + ' ' + apellidoNoviaArray[1] + ' ' + apellidoNoviaArray[2];
+                  } else {
+                    apellidoNoviaMostrar = apellidoNoviaArray[0] + ' ' + apellidoNoviaArray[1];
+                  }
+                } else {
+                  apellidoNoviaMostrar = apellidoNoviaArray[0];
+                }
+
+                this.tituloModal = 'Datos de boda: ' + apellidoNovioMostrar + ' - ' + apellidoNoviaMostrar;
                 this.sacramento_id = data['id'];
                 this.fecha_realizacion = '';
                 this.iglesiaNom = ''; //Conviene más poner un combobox
 
-                this.id_sacerdote = '';
+                this.idsacerdote = 0;
+                this.cargosacerdote = 0;
                 this.sacerdoteD = '';
                 this.sacerdoteNom = '';
                 this.sacerdoteAp = '';
-                this.id_iglesia = ''; //botones matrimonio realizado / Cancelado
+                this.id_iglesia = 0; //botones matrimonio realizado / Cancelado
 
                 this.tipoAccion = 3;
                 break;
@@ -6591,6 +6824,43 @@ __webpack_require__.r(__webpack_exports__);
                 this.mad2Ap = ''; //botones matrimonio realizado / Cancelado
 
                 this.tipoAccion = 3;
+                break;
+              }
+
+            case 'paso4':
+              {
+                this.modal4 = 1;
+                var apellidoNovioArray = apellidoNovioArray = data['novioAp'].split(' '); //la función split crea un array donde separa la cadena por ' '
+
+                var apellidoNoviaArray = apellidoNoviaArray = data['noviaAp'].split(' '); //Luego tomamos del array el primer apellido que está en la posición 0
+
+                var apellidoNovioMostrar = '';
+                var apellidoNoviaMostrar = ''; //Este IF valida los casos de los apellidos con "de, la, del"
+
+                if (apellidoNovioArray[0] == 'DE' || apellidoNovioArray[0] == 'LA' || apellidoNovioArray[0] == 'DEL') {
+                  if (apellidoNovioArray[1] == 'LA' || apellidoNovioArray[1] == 'LOS') {
+                    apellidoNovioMostrar = apellidoNovioArray[0] + ' ' + apellidoNovioArray[1] + ' ' + apellidoNovioArray[2];
+                  } else {
+                    apellidoNovioMostrar = apellidoNovioArray[0] + ' ' + apellidoNovioArray[1];
+                  }
+                } else {
+                  apellidoNovioMostrar = apellidoNovioArray[0];
+                } //el mismo caso anterior, para la novia
+
+
+                if (apellidoNoviaArray[0] == 'DE' || apellidoNoviaArray[0] == 'LA' || apellidoNoviaArray[0] == 'DEL') {
+                  if (apellidoNoviaArray[1] == 'LA' || apellidoNoviaArray[1] == 'LOS') {
+                    apellidoNoviaMostrar = apellidoNoviaArray[0] + ' ' + apellidoNoviaArray[1] + ' ' + apellidoNoviaArray[2];
+                  } else {
+                    apellidoNoviaMostrar = apellidoNoviaArray[0] + ' ' + apellidoNoviaArray[1];
+                  }
+                } else {
+                  apellidoNoviaMostrar = apellidoNoviaArray[0];
+                }
+
+                this.tituloModal = 'Imprimir constancia de boda: ' + apellidoNovioMostrar + ' - ' + apellidoNoviaMostrar;
+                this.sacramento_id = data['id'];
+                this.enConcepto = '';
                 break;
               }
           }
@@ -9001,6 +9271,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+//
+//
 //
 //
 //
@@ -12402,7 +12674,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n/*Aquí ya comienza el CSS, ke kreisi */\n.modal-content{\n       width: 100% !important;\n       position: absolute !important\n}\n.mostrar{\n       display: list-item !important;\n       opacity: 1 !important;\n       position: absolute !important;\n       background-color: #3c29297a !important;\n}\n.div-error{ /* estos dos estilos son para validación */\n       display: flex;\n       justify-content: center;\n}\n.text-error{\n       color: red !important;\n       font-weight: bold;\n}\n.margen{\n       margin-bottom: 10px;\n}\n   \n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n/*Aquí ya comienza el CSS, ke kreisi */\n.modal-content{\n       width: 100% !important;\n       position: absolute !important\n}\n.mostrar{\n       display: list-item !important;\n       opacity: 1 !important;\n       position: absolute !important;\n       background-color: #3c29297a !important;\n}\n.div-error{ /* estos dos estilos son para validación */\n       display: flex;\n       justify-content: center;\n}\n.text-error{\n       color: red !important;\n       font-weight: bold;\n}\n.margen{\n       margin-bottom: 10px;\n}\n   \n", ""]);
 
 // exports
 
@@ -57137,7 +57409,30 @@ var render = function() {
                                 "  \n                                     "
                               )
                             ]
-                          : [_vm._m(2, true)]
+                          : [
+                              _c(
+                                "button",
+                                {
+                                  staticClass: "btn btn-success btn-sm",
+                                  attrs: { type: "button" },
+                                  on: {
+                                    click: function($event) {
+                                      return _vm.abrirModal2(
+                                        "sacramento",
+                                        "paso4",
+                                        sacramento
+                                      )
+                                    }
+                                  }
+                                },
+                                [
+                                  _c("i", { staticClass: "icon-plus" }),
+                                  _vm._v(
+                                    " Imprimir\n                                         "
+                                  )
+                                ]
+                              )
+                            ]
                       ],
                       2
                     )
@@ -57367,6 +57662,8 @@ var render = function() {
                       ])
                     ]),
                     _vm._v(" "),
+                    _vm._m(2),
+                    _vm._v(" "),
                     _c("div", { staticClass: "form-group row" }, [
                       _c(
                         "label",
@@ -57438,12 +57735,7 @@ var render = function() {
                             }
                           ],
                           staticClass: "form-control",
-                          attrs: {
-                            type: "text",
-                            "true-value": "mostrar",
-                            "false-value": "ocultar",
-                            placeholder: "Nombres"
-                          },
+                          attrs: { type: "text", placeholder: "Nombres" },
                           domProps: { value: _vm.novioNom },
                           on: {
                             input: function($event) {
@@ -57485,6 +57777,8 @@ var render = function() {
                         })
                       ])
                     ]),
+                    _vm._v(" "),
+                    _vm._m(3),
                     _vm._v(" "),
                     _c("div", { staticClass: "form-group row" }, [
                       _c(
@@ -57592,6 +57886,103 @@ var render = function() {
                             }
                           }
                         })
+                      ])
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "form-group row" }, [
+                      _c("div", { staticClass: "col-md-2" }),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "col-md-2" }, [
+                        _c(
+                          "button",
+                          {
+                            staticClass: "btn btn-secondary btn-block",
+                            attrs: { type: "button", value: "cobrar1" },
+                            on: { click: _vm.cobrar }
+                          },
+                          [_vm._v("Cobrar")]
+                        ),
+                        _vm._v("   ")
+                      ]),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "col-md-3" }, [
+                        _c("input", {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: _vm.ofrendaExp,
+                              expression: "ofrendaExp"
+                            }
+                          ],
+                          staticClass: "form-control",
+                          attrs: { type: "number", placeholder: "Ofrenda" },
+                          domProps: { value: _vm.ofrendaExp },
+                          on: {
+                            input: function($event) {
+                              if ($event.target.composing) {
+                                return
+                              }
+                              _vm.ofrendaExp = $event.target.value
+                            }
+                          }
+                        })
+                      ]),
+                      _vm._v(" "),
+                      _c("label", { staticClass: "col-md-1" }, [
+                        _vm._v("Categoria")
+                      ]),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "col-md-4" }, [
+                        _c(
+                          "select",
+                          {
+                            directives: [
+                              {
+                                name: "model",
+                                rawName: "v-model",
+                                value: _vm.idcare,
+                                expression: "idcare"
+                              }
+                            ],
+                            staticClass: "form-control",
+                            on: {
+                              change: function($event) {
+                                var $$selectedVal = Array.prototype.filter
+                                  .call($event.target.options, function(o) {
+                                    return o.selected
+                                  })
+                                  .map(function(o) {
+                                    var val = "_value" in o ? o._value : o.value
+                                    return val
+                                  })
+                                _vm.idcare = $event.target.multiple
+                                  ? $$selectedVal
+                                  : $$selectedVal[0]
+                              }
+                            }
+                          },
+                          [
+                            _c(
+                              "option",
+                              { attrs: { value: "0", disabled: "" } },
+                              [_vm._v("Seleccione")]
+                            ),
+                            _vm._v(" "),
+                            _vm._l(_vm.arraycategorias, function(categorias) {
+                              return _c("option", {
+                                key: categorias.id,
+                                domProps: {
+                                  value: categorias.id,
+                                  textContent: _vm._s(
+                                    categorias.nombre_categoria
+                                  )
+                                }
+                              })
+                            })
+                          ],
+                          2
+                        )
                       ])
                     ]),
                     _vm._v(" "),
@@ -57741,7 +58132,7 @@ var render = function() {
                   },
                   [
                     _c("div", { staticClass: "form-group row" }, [
-                      _vm._m(3),
+                      _vm._m(4),
                       _vm._v(" "),
                       _c("div", { staticClass: "col-md-4" }, [
                         _c("input", {
@@ -57767,7 +58158,7 @@ var render = function() {
                         })
                       ]),
                       _vm._v(" "),
-                      _vm._m(4),
+                      _vm._m(5),
                       _vm._v(" "),
                       _c("div", { staticClass: "col-md-5" }, [
                         _c(
@@ -57823,7 +58214,7 @@ var render = function() {
                     _c("tr"),
                     _vm._v(" "),
                     _c("div", { staticClass: "form-group row" }, [
-                      _vm._m(5),
+                      _vm._m(6),
                       _vm._v(" "),
                       _c("div", { staticClass: "col-md-5" }, [
                         _c(
@@ -57884,7 +58275,7 @@ var render = function() {
                     ]),
                     _vm._v(" "),
                     _c("div", { staticClass: "form-group row" }, [
-                      _vm._m(6),
+                      _vm._m(7),
                       _vm._v(" "),
                       _c("div", { staticClass: "col-md-5" }, [
                         _c(
@@ -58008,7 +58399,7 @@ var render = function() {
       {
         staticClass: "modal fade",
         class: { mostrar: _vm.modal3 },
-        staticStyle: { display: "none" },
+        staticStyle: { display: "none", "overflow-y": "auto" },
         attrs: {
           tabindex: "-1",
           role: "dialog",
@@ -58062,7 +58453,7 @@ var render = function() {
                     }
                   },
                   [
-                    _vm._m(7),
+                    _vm._m(8),
                     _vm._v(" "),
                     _c("div", { staticClass: "form-group row" }, [
                       _c(
@@ -58168,7 +58559,7 @@ var render = function() {
                     ]),
                     _vm._v(" "),
                     _c("div", { staticClass: "form-group row" }, [
-                      _vm._m(8),
+                      _vm._m(9),
                       _vm._v(" "),
                       _c("div", { staticClass: "col-md-5" }, [
                         _c("input", {
@@ -58225,7 +58616,7 @@ var render = function() {
                       ])
                     ]),
                     _vm._v(" "),
-                    _vm._m(9),
+                    _vm._m(10),
                     _vm._v(" "),
                     _c("div", { staticClass: "form-group row" }, [
                       _c(
@@ -58331,7 +58722,7 @@ var render = function() {
                     ]),
                     _vm._v(" "),
                     _c("div", { staticClass: "form-group row" }, [
-                      _vm._m(10),
+                      _vm._m(11),
                       _vm._v(" "),
                       _c("div", { staticClass: "col-md-5" }, [
                         _c("input", {
@@ -58388,7 +58779,7 @@ var render = function() {
                       ])
                     ]),
                     _vm._v(" "),
-                    _vm._m(11),
+                    _vm._m(12),
                     _vm._v(" "),
                     _c("div", { staticClass: "form-group row" }, [
                       _c(
@@ -58558,7 +58949,7 @@ var render = function() {
                       ])
                     ]),
                     _vm._v(" "),
-                    _vm._m(12),
+                    _vm._m(13),
                     _vm._v(" "),
                     _c("div", { staticClass: "form-group row" }, [
                       _c(
@@ -58729,22 +59120,22 @@ var render = function() {
                     ]),
                     _vm._v(" "),
                     _c("div", { staticClass: "form-group row" }, [
-                      _c("label", {
-                        staticClass: "col-md-3 form-control-label",
-                        attrs: { for: "text-input" }
-                      }),
+                      _c("div", { staticClass: "col-md-2" }),
                       _vm._v(" "),
-                      _c(
-                        "button",
-                        {
-                          staticClass: "btn btn-secondary",
-                          attrs: { type: "button" }
-                        },
-                        [_vm._v("Cobrar")]
-                      ),
-                      _vm._v("   "),
+                      _c("div", { staticClass: "col-md-2" }, [
+                        _c(
+                          "button",
+                          {
+                            staticClass: "btn btn-secondary btn-block",
+                            attrs: { type: "button" },
+                            on: { click: _vm.cobrar }
+                          },
+                          [_vm._v("Cobrar")]
+                        ),
+                        _vm._v("   ")
+                      ]),
                       _vm._v(" "),
-                      _c("div", { staticClass: "col-md-4.3" }, [
+                      _c("div", { staticClass: "col-md-3" }, [
                         _c("input", {
                           directives: [
                             {
@@ -58768,68 +59159,61 @@ var render = function() {
                         })
                       ]),
                       _vm._v(" "),
-                      _c("div", { staticClass: "form-group row" }, [
-                        _c(
-                          "label",
-                          { staticClass: "col-md-3 form-control-label" },
-                          [_vm._v("Categoria")]
-                        ),
-                        _vm._v(" "),
-                        _c("div", { staticClass: "col-md-5" }, [
-                          _c(
-                            "select",
-                            {
-                              directives: [
-                                {
-                                  name: "model",
-                                  rawName: "v-model",
-                                  value: _vm.idcare,
-                                  expression: "idcare"
-                                }
-                              ],
-                              staticClass: "form-control",
-                              on: {
-                                change: function($event) {
-                                  var $$selectedVal = Array.prototype.filter
-                                    .call($event.target.options, function(o) {
-                                      return o.selected
-                                    })
-                                    .map(function(o) {
-                                      var val =
-                                        "_value" in o ? o._value : o.value
-                                      return val
-                                    })
-                                  _vm.idcare = $event.target.multiple
-                                    ? $$selectedVal
-                                    : $$selectedVal[0]
-                                }
-                              }
-                            },
-                            [
-                              _c(
-                                "option",
-                                { attrs: { value: "0", disabled: "" } },
-                                [_vm._v("Seleccione")]
-                              ),
-                              _vm._v(" "),
-                              _vm._l(_vm.arraycategorias, function(categorias) {
-                                return _c("option", {
-                                  key: categorias.id,
-                                  domProps: {
-                                    value: categorias.id,
-                                    textContent: _vm._s(
-                                      categorias.nombre_categoria
-                                    )
-                                  }
-                                })
-                              })
-                            ],
-                            2
-                          )
-                        ])
+                      _c("label", { staticClass: "col-md-1" }, [
+                        _vm._v("Categoria")
                       ]),
                       _vm._v(" "),
-                      _vm._m(13)
+                      _c("div", { staticClass: "col-md-4" }, [
+                        _c(
+                          "select",
+                          {
+                            directives: [
+                              {
+                                name: "model",
+                                rawName: "v-model",
+                                value: _vm.idcare,
+                                expression: "idcare"
+                              }
+                            ],
+                            staticClass: "form-control",
+                            on: {
+                              change: function($event) {
+                                var $$selectedVal = Array.prototype.filter
+                                  .call($event.target.options, function(o) {
+                                    return o.selected
+                                  })
+                                  .map(function(o) {
+                                    var val = "_value" in o ? o._value : o.value
+                                    return val
+                                  })
+                                _vm.idcare = $event.target.multiple
+                                  ? $$selectedVal
+                                  : $$selectedVal[0]
+                              }
+                            }
+                          },
+                          [
+                            _c(
+                              "option",
+                              { attrs: { value: "0", disabled: "" } },
+                              [_vm._v("Seleccione")]
+                            ),
+                            _vm._v(" "),
+                            _vm._l(_vm.arraycategorias, function(categorias) {
+                              return _c("option", {
+                                key: categorias.id,
+                                domProps: {
+                                  value: categorias.id,
+                                  textContent: _vm._s(
+                                    categorias.nombre_categoria
+                                  )
+                                }
+                              })
+                            })
+                          ],
+                          2
+                        )
+                      ])
                     ]),
                     _vm._v(" "),
                     _c(
@@ -58904,7 +59288,7 @@ var render = function() {
                           }
                         }
                       },
-                      [_vm._v("Guardar")]
+                      [_vm._v("Matrimonio Realizado")]
                     )
                   : _vm._e()
               ])
@@ -58914,7 +59298,379 @@ var render = function() {
       ]
     ),
     _vm._v(" "),
-    _vm._m(14)
+    _c(
+      "div",
+      {
+        staticClass: "modal fade",
+        class: { mostrar: _vm.modal4 },
+        staticStyle: { display: "none" },
+        attrs: {
+          tabindex: "-1",
+          role: "dialog",
+          "aria-labelledby": "myModalLabel",
+          "aria-hidden": "true"
+        }
+      },
+      [
+        _c(
+          "div",
+          {
+            staticClass: "modal-dialog modal-primary modal-lg",
+            attrs: { role: "document" }
+          },
+          [
+            _c("div", { staticClass: "modal-content" }, [
+              _c("div", { staticClass: "modal-header" }, [
+                _c("h4", {
+                  staticClass: "modal-title",
+                  domProps: { textContent: _vm._s(_vm.tituloModal) }
+                }),
+                _vm._v(" "),
+                _c(
+                  "button",
+                  {
+                    staticClass: "close",
+                    attrs: { type: "button", "aria-label": "Close" },
+                    on: {
+                      click: function($event) {
+                        return _vm.cerrarModal4()
+                      }
+                    }
+                  },
+                  [
+                    _c("span", { attrs: { "aria-hidden": "true" } }, [
+                      _vm._v("×")
+                    ])
+                  ]
+                )
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "modal-body" }, [
+                _c(
+                  "form",
+                  {
+                    staticClass: "form-horizontal",
+                    attrs: {
+                      action: "",
+                      method: "post",
+                      enctype: "multipart/form-data"
+                    }
+                  },
+                  [
+                    _c("div", { staticClass: "form-group row" }, [
+                      _vm._m(14),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "col-md-5" }, [
+                        _c("input", {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: _vm.enConcepto,
+                              expression: "enConcepto"
+                            }
+                          ],
+                          staticClass: "form-control",
+                          attrs: {
+                            type: "text",
+                            placeholder: "ej: Padrinos de bautismo"
+                          },
+                          domProps: { value: _vm.enConcepto },
+                          on: {
+                            input: function($event) {
+                              if ($event.target.composing) {
+                                return
+                              }
+                              _vm.enConcepto = $event.target.value
+                            }
+                          }
+                        })
+                      ])
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "form-group row" }, [
+                      _vm._m(15),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "col-md-5" }, [
+                        _c(
+                          "select",
+                          {
+                            directives: [
+                              {
+                                name: "model",
+                                rawName: "v-model",
+                                value: _vm.idsacerdote,
+                                expression: "idsacerdote"
+                              }
+                            ],
+                            staticClass: "form-control",
+                            on: {
+                              change: function($event) {
+                                var $$selectedVal = Array.prototype.filter
+                                  .call($event.target.options, function(o) {
+                                    return o.selected
+                                  })
+                                  .map(function(o) {
+                                    var val = "_value" in o ? o._value : o.value
+                                    return val
+                                  })
+                                _vm.idsacerdote = $event.target.multiple
+                                  ? $$selectedVal
+                                  : $$selectedVal[0]
+                              }
+                            }
+                          },
+                          [
+                            _c(
+                              "option",
+                              { attrs: { value: "0", disabled: "" } },
+                              [_vm._v("Seleccione")]
+                            ),
+                            _vm._v(" "),
+                            _vm._l(_vm.arraysacerdote, function(sacerdote) {
+                              return _c(
+                                "option",
+                                {
+                                  key: sacerdote.id,
+                                  domProps: { value: sacerdote.id }
+                                },
+                                [
+                                  _vm._v(
+                                    _vm._s(sacerdote.nombre_persona) +
+                                      ", " +
+                                      _vm._s(sacerdote.apellido_persona)
+                                  )
+                                ]
+                              )
+                            })
+                          ],
+                          2
+                        )
+                      ])
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "form-group row" }, [
+                      _vm._m(16),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "col-md-5" }, [
+                        _c(
+                          "select",
+                          {
+                            directives: [
+                              {
+                                name: "model",
+                                rawName: "v-model",
+                                value: _vm.cargosacerdote,
+                                expression: "cargosacerdote"
+                              }
+                            ],
+                            staticClass: "form-control",
+                            on: {
+                              change: function($event) {
+                                var $$selectedVal = Array.prototype.filter
+                                  .call($event.target.options, function(o) {
+                                    return o.selected
+                                  })
+                                  .map(function(o) {
+                                    var val = "_value" in o ? o._value : o.value
+                                    return val
+                                  })
+                                _vm.cargosacerdote = $event.target.multiple
+                                  ? $$selectedVal
+                                  : $$selectedVal[0]
+                              }
+                            }
+                          },
+                          [
+                            _c(
+                              "option",
+                              { attrs: { value: "0", disabled: "" } },
+                              [_vm._v("Cargo")]
+                            ),
+                            _vm._v(" "),
+                            _vm._l(_vm.arraycargo, function(sacerdote) {
+                              return _c("option", {
+                                key: sacerdote.id,
+                                domProps: {
+                                  value: sacerdote,
+                                  textContent: _vm._s(sacerdote)
+                                }
+                              })
+                            })
+                          ],
+                          2
+                        )
+                      ])
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "form-group row" }, [
+                      _vm._m(17),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "col-md-5" }, [
+                        _c("input", {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: _vm.montoConstancia,
+                              expression: "montoConstancia"
+                            }
+                          ],
+                          staticClass: "form-control",
+                          attrs: { type: "number", placeholder: "20.00" },
+                          domProps: { value: _vm.montoConstancia },
+                          on: {
+                            input: function($event) {
+                              if ($event.target.composing) {
+                                return
+                              }
+                              _vm.montoConstancia = $event.target.value
+                            }
+                          }
+                        })
+                      ])
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "form-group row" }, [
+                      _c("label", { staticClass: "col-md-3" }, [
+                        _vm._v("Categoría")
+                      ]),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "col-md-5" }, [
+                        _c(
+                          "select",
+                          {
+                            directives: [
+                              {
+                                name: "model",
+                                rawName: "v-model",
+                                value: _vm.idcare,
+                                expression: "idcare"
+                              }
+                            ],
+                            staticClass: "form-control",
+                            on: {
+                              change: function($event) {
+                                var $$selectedVal = Array.prototype.filter
+                                  .call($event.target.options, function(o) {
+                                    return o.selected
+                                  })
+                                  .map(function(o) {
+                                    var val = "_value" in o ? o._value : o.value
+                                    return val
+                                  })
+                                _vm.idcare = $event.target.multiple
+                                  ? $$selectedVal
+                                  : $$selectedVal[0]
+                              }
+                            }
+                          },
+                          [
+                            _c(
+                              "option",
+                              { attrs: { value: "0", disabled: "" } },
+                              [_vm._v("Seleccione")]
+                            ),
+                            _vm._v(" "),
+                            _vm._l(_vm.arraycategorias, function(categorias) {
+                              return _c("option", {
+                                key: categorias.id,
+                                domProps: {
+                                  value: categorias.id,
+                                  textContent: _vm._s(
+                                    categorias.nombre_categoria
+                                  )
+                                }
+                              })
+                            })
+                          ],
+                          2
+                        )
+                      ])
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "form-group row" }, [
+                      _c("div", { staticClass: "col-md-3" }),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "col-md-2" }, [
+                        _c(
+                          "button",
+                          {
+                            staticClass: "btn btn-secondary btn-block",
+                            attrs: { type: "button" },
+                            on: { click: _vm.cobrar }
+                          },
+                          [_vm._v("Cobrar")]
+                        ),
+                        _vm._v(" \n                                 ")
+                      ])
+                    ]),
+                    _vm._v(" "),
+                    _c(
+                      "div",
+                      {
+                        directives: [
+                          {
+                            name: "show",
+                            rawName: "v-show",
+                            value: _vm.errorModal4,
+                            expression: "errorModal4"
+                          }
+                        ],
+                        staticClass: "form-group row div-error"
+                      },
+                      [
+                        _c(
+                          "div",
+                          { staticClass: "text-center text-error" },
+                          _vm._l(_vm.errorMostrarMsjModal4, function(error) {
+                            return _c("div", {
+                              key: error,
+                              domProps: { textContent: _vm._s(error) }
+                            })
+                          }),
+                          0
+                        )
+                      ]
+                    )
+                  ]
+                )
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "modal-footer" }, [
+                _c(
+                  "button",
+                  {
+                    staticClass: "btn btn-secondary",
+                    attrs: { type: "button" },
+                    on: {
+                      click: function($event) {
+                        return _vm.cerrarModal4()
+                      }
+                    }
+                  },
+                  [_vm._v("Cerrar")]
+                ),
+                _vm._v(" "),
+                _c(
+                  "button",
+                  {
+                    staticClass: "btn btn-primary",
+                    attrs: { type: "button" },
+                    on: {
+                      click: function($event) {
+                        return _vm.imprimirConstancia()
+                      }
+                    }
+                  },
+                  [_vm._v("Imprimir Constancia")]
+                )
+              ])
+            ])
+          ]
+        )
+      ]
+    )
   ])
 }
 var staticRenderFns = [
@@ -58952,14 +59708,31 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c(
-      "button",
-      { staticClass: "btn btn-success btn-sm", attrs: { type: "button" } },
-      [
-        _c("i", { staticClass: "icon-plus" }),
-        _vm._v(" Imprimir\n                                         ")
-      ]
-    )
+    return _c("div", { staticClass: "form-group row" }, [
+      _c(
+        "label",
+        {
+          staticClass: "col-md-5 form-control-label",
+          attrs: { for: "text-input" }
+        },
+        [_c("b", [_vm._v("Datos del novio")])]
+      )
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "form-group row" }, [
+      _c(
+        "label",
+        {
+          staticClass: "col-md-5 form-control-label",
+          attrs: { for: "text-input" }
+        },
+        [_c("b", [_vm._v("Datos de la novia")])]
+      )
+    ])
   },
   function() {
     var _vm = this
@@ -59112,86 +59885,60 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "col-md-3" }, [
-      _c(
-        "button",
-        { staticClass: "btn btn-success", attrs: { type: "button" } },
-        [_vm._v("Matrimonio Realizado")]
-      )
-    ])
+    return _c(
+      "label",
+      {
+        staticClass: "col-md-3 form-control-label",
+        attrs: { for: "text-input" }
+      },
+      [
+        _vm._v("Motivo de la constancia:"),
+        _c("b", { staticClass: "alerta" }, [_vm._v("*")])
+      ]
+    )
   },
   function() {
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c(
-      "div",
+      "label",
       {
-        staticClass: "modal fade",
-        staticStyle: { display: "none" },
-        attrs: {
-          id: "modalEliminar",
-          tabindex: "-1",
-          role: "dialog",
-          "aria-labelledby": "myModalLabel",
-          "aria-hidden": "true"
-        }
+        staticClass: "col-md-3 form-control-label",
+        attrs: { for: "text-input" }
       },
       [
-        _c(
-          "div",
-          {
-            staticClass: "modal-dialog modal-danger",
-            attrs: { role: "document" }
-          },
-          [
-            _c("div", { staticClass: "modal-content" }, [
-              _c("div", { staticClass: "modal-header" }, [
-                _c("h4", { staticClass: "modal-title" }, [
-                  _vm._v("Desactivar Expediente")
-                ]),
-                _vm._v(" "),
-                _c(
-                  "button",
-                  {
-                    staticClass: "close",
-                    attrs: {
-                      type: "button",
-                      "data-dismiss": "modal",
-                      "aria-label": "Close"
-                    }
-                  },
-                  [
-                    _c("span", { attrs: { "aria-hidden": "true" } }, [
-                      _vm._v("×")
-                    ])
-                  ]
-                )
-              ]),
-              _vm._v(" "),
-              _c("div", { staticClass: "modal-body" }, [
-                _c("p", [_vm._v("Estas seguro de desactivar el expediente")])
-              ]),
-              _vm._v(" "),
-              _c("div", { staticClass: "modal-footer" }, [
-                _c(
-                  "button",
-                  {
-                    staticClass: "btn btn-secondary",
-                    attrs: { type: "button", "data-dismiss": "modal" }
-                  },
-                  [_vm._v("Cerrar")]
-                ),
-                _vm._v(" "),
-                _c(
-                  "button",
-                  { staticClass: "btn btn-danger", attrs: { type: "button" } },
-                  [_vm._v("Eliminar")]
-                )
-              ])
-            ])
-          ]
-        )
+        _vm._v("Nombre del sacerdote"),
+        _c("b", { staticClass: "alerta" }, [_vm._v("*")])
+      ]
+    )
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "label",
+      {
+        staticClass: "col-md-3 form-control-label",
+        attrs: { for: "text-input" }
+      },
+      [_vm._v("Cargo"), _c("b", { staticClass: "alerta" }, [_vm._v("*")])]
+    )
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "label",
+      {
+        staticClass: "col-md-3 form-control-label",
+        attrs: { for: "text-input" }
+      },
+      [
+        _vm._v("Ofrenda por constancia"),
+        _c("b", { staticClass: "alerta" }, [_vm._v("*")])
       ]
     )
   }

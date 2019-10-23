@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Persona;
 use App\Sacramento;
+use App\Efectivo;
 //use App\Sacramentos3;
 //use App\PartidaNacimiento;
 use Illuminate\Support\Facades\DB;
@@ -111,6 +112,17 @@ class PersonaController2 extends Controller
                 $sacramento_idMax= Sacramento::max('id');
                 $idsacramento=$sacramento_idMax+1;
                 $tiposacra=4;
+                $monto_p= Efectivo::max('id');
+                $montos=$monto_p+1;
+
+                $efectivo = new Efectivo();
+                $efectivo->id=$montos;
+                $efectivo->descripcion_efectivo='APERTURA EXPEDIENTE MATRIMONIO';
+                $efectivo->idcare=$request->idcate;
+                $efectivo->tipo= 1;
+                $efectivo->monto=$request->monto;
+                $efectivo->fecha= new \DateTime();
+                $efectivo->save();
         
                 $novio = new Persona();
                 $novio->id=$idNovio;
@@ -148,6 +160,17 @@ class PersonaController2 extends Controller
                 $sacramento_idMax= Sacramento::max('id');
                 $idsacramento=$sacramento_idMax+1;
                 $tiposacra=4;
+                $monto_p= Efectivo::max('id');
+                $montos=$monto_p+1;
+
+                $efectivo = new Efectivo();
+                $efectivo->id=$montos;
+                $efectivo->descripcion_efectivo='APERTURA EXPEDIENTE MATRIMONIO';
+                $efectivo->idcare=$request->idcate;
+                $efectivo->tipo= 1;
+                $efectivo->monto=$request->monto;
+                $efectivo->fecha= new \DateTime();
+                $efectivo->save();
         
                 $novio = new Persona();
                 $novio->id=$idNovio;
@@ -178,6 +201,17 @@ class PersonaController2 extends Controller
                 $sacramento_idMax= Sacramento::max('id');
                 $idsacramento=$sacramento_idMax+1;
                 $tiposacra=4;
+                $monto_p= Efectivo::max('id');
+                $montos=$monto_p+1;
+
+                $efectivo = new Efectivo();
+                $efectivo->id=$montos;
+                $efectivo->descripcion_efectivo='APERTURA EXPEDIENTE MATRIMONIO';
+                $efectivo->idcare=$request->idcate;
+                $efectivo->tipo= 1;
+                $efectivo->monto=$request->monto;
+                $efectivo->fecha= new \DateTime();
+                $efectivo->save();
 
                 $novia = new Persona();
                 $novia->id=$idNovia;
@@ -208,6 +242,17 @@ class PersonaController2 extends Controller
                 $sacramento_idMax= Sacramento::max('id');
                 $idsacramento=$sacramento_idMax+1;
                 $tiposacra=4;
+                $monto_p= Efectivo::max('id');
+                $montos=$monto_p+1;
+
+                $efectivo = new Efectivo();
+                $efectivo->id=$montos;
+                $efectivo->descripcion_efectivo='APERTURA EXPEDIENTE MATRIMONIO';
+                $efectivo->idcare=$request->idcate;
+                $efectivo->tipo= 1;
+                $efectivo->monto=$request->monto;
+                $efectivo->fecha= new \DateTime();
+                $efectivo->save();
         
                 //En esta etapa, solo se almacenan los datos para abrir un nuevo expediente (no hay datos de padrino y boda hasta la siguiente etapa en "actualizar")
                 $sacramento = new Sacramento();

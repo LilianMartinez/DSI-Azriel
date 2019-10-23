@@ -18,6 +18,7 @@ class SacramentoController extends Controller
     //Aquí listamos todos los registros de la tabla Sacramento
     public function index(Request $request)
     {
+        if (!$request->ajax()) return redirect('/');
         $buscar = $request->buscar;
         $criterio = $request->criterio;  
 
@@ -179,7 +180,7 @@ class SacramentoController extends Controller
 
                 $efectivo = new Efectivo();
                 $efectivo->id=$montos;
-                $efectivo->descripcion_efectivo='Matrimonio';
+                $efectivo->descripcion_efectivo='MATRIMONIO';
                 $efectivo->idcare=$request->idcate;
                 $efectivo->tipo= 1;
                 $efectivo->monto=$request->monto;
@@ -199,7 +200,8 @@ class SacramentoController extends Controller
                 $sacramento->id_padrino=$id_pad1;
                 $sacramento->id_iglesia=$id_iglesia;
                 $sacramento->fecha_realizacion=$fecha_realizacion;
-                //$sacramento->estado=1; QUITAR DE AQUÍ ESTO, Y PONERLO EN BOTÓN "MATRIMONIO REALIZADO"
+                $sacramento->titulo=$request->titulo;
+                $sacramento->estado=2; //QUITAR DE AQUÍ ESTO, Y PONERLO EN BOTÓN "MATRIMONIO REALIZADO"
                 $sacramento->save();
                 break;
             }
@@ -217,7 +219,7 @@ class SacramentoController extends Controller
 
                 $efectivo = new Efectivo();
                 $efectivo->id=$montos;
-                $efectivo->descripcion_efectivo='Matrimonio';
+                $efectivo->descripcion_efectivo='MATRIMONIO';
                 $efectivo->idcare=$request->idcate;
                 $efectivo->tipo= 1;
                 $efectivo->monto=$request->monto;
@@ -226,9 +228,11 @@ class SacramentoController extends Controller
 
                 $sacramento = Sacramento::findOrFail($request->id);
                 $sacramento->id_sacerdote=$id_sacerdote;
+                $sacramento->titulo=$request->titulo;
                 $sacramento->id_padrino=$id_pad1;
                 $sacramento->fecha_realizacion=$request->fecha_realizacion;
                 $sacramento->id_iglesia=$id_iglesia;
+                $sacramento->estado=2;
                 $sacramento->save();
                 break;
             }
@@ -247,7 +251,7 @@ class SacramentoController extends Controller
 
                 $efectivo = new Efectivo();
                 $efectivo->id=$montos;
-                $efectivo->descripcion_efectivo='Matrimonio';
+                $efectivo->descripcion_efectivo='MATRIMONIO';
                 $efectivo->idcare=$request->idcate;
                 $efectivo->tipo= 1;
                 $efectivo->monto=$request->monto;
@@ -276,7 +280,8 @@ class SacramentoController extends Controller
                 $sacramento->id_padrino2=$id_mad1;
                 $sacramento->id_iglesia=$id_iglesia;
                 $sacramento->fecha_realizacion=$fecha_realizacion;
-                //$sacramento->estado=1; QUITAR DE AQUÍ ESTO, Y PONERLO EN BOTÓN "MATRIMONIO REALIZADO"
+                $sacramento->titulo=$request->titulo;
+                $sacramento->estado=2;
                 $sacramento->save();
                 break;
             }
@@ -295,7 +300,7 @@ class SacramentoController extends Controller
 
                 $efectivo = new Efectivo();
                 $efectivo->id=$montos;
-                $efectivo->descripcion_efectivo='Matrimonio';
+                $efectivo->descripcion_efectivo='MATRIMONIO';
                 $efectivo->idcare=$request->idcate;
                 $efectivo->tipo= 1;
                 $efectivo->monto=$request->monto;
@@ -316,7 +321,8 @@ class SacramentoController extends Controller
                 $sacramento->id_padrino2=$id_mad1;
                 $sacramento->id_iglesia=$id_iglesia;
                 $sacramento->fecha_realizacion=$fecha_realizacion;
-                //$sacramento->estado=1; QUITAR DE AQUÍ ESTO, Y PONERLO EN BOTÓN "MATRIMONIO REALIZADO"
+                $sacramento->titulo=$request->titulo;
+                $sacramento->estado=2;
                 $sacramento->save();
                 break;
             }
@@ -335,7 +341,7 @@ class SacramentoController extends Controller
 
                 $efectivo = new Efectivo();
                 $efectivo->id=$montos;
-                $efectivo->descripcion_efectivo='Matrimonio';
+                $efectivo->descripcion_efectivo='MATRIMONIO';
                 $efectivo->idcare=$request->idcate;
                 $efectivo->tipo= 1;
                 $efectivo->monto=$request->monto;
@@ -358,7 +364,8 @@ class SacramentoController extends Controller
                 $sacramento->id_padrino4=$id_mad2;
                 $sacramento->id_iglesia=$id_iglesia;
                 $sacramento->fecha_realizacion=$fecha_realizacion;
-                //$sacramento->estado=1; QUITAR DE AQUÍ ESTO, Y PONERLO EN BOTÓN "MATRIMONIO REALIZADO"
+                $sacramento->titulo=$request->titulo;
+                $sacramento->estado=2;
                 $sacramento->save();
                 break;
             }
@@ -377,7 +384,7 @@ class SacramentoController extends Controller
 
                 $efectivo = new Efectivo();
                 $efectivo->id=$montos;
-                $efectivo->descripcion_efectivo='Matrimonio';
+                $efectivo->descripcion_efectivo='MATRIMONIO';
                 $efectivo->idcare=$request->idcate;
                 $efectivo->tipo= 1;
                 $efectivo->monto=$request->monto;
@@ -390,6 +397,8 @@ class SacramentoController extends Controller
                 $sacramento->id_padrino2=$id_mad1;
                 $sacramento->fecha_realizacion=$request->fecha_realizacion;
                 $sacramento->id_iglesia=$id_iglesia;
+                $sacramento->titulo=$request->titulo;
+                $sacramento->estado=2;
                 $sacramento->save();
                 break;
             }
@@ -409,7 +418,7 @@ class SacramentoController extends Controller
 
                 $efectivo = new Efectivo();
                 $efectivo->id=$montos;
-                $efectivo->descripcion_efectivo='Matrimonio';
+                $efectivo->descripcion_efectivo='MATRIMONIO';
                 $efectivo->idcare=$request->idcate;
                 $efectivo->tipo= 1;
                 $efectivo->monto=$request->monto;
@@ -447,7 +456,8 @@ class SacramentoController extends Controller
                 $sacramento->id_padrino3=$id_pad2;
                 $sacramento->id_iglesia=$id_iglesia;
                 $sacramento->fecha_realizacion=$fecha_realizacion;
-                //$sacramento->estado=1; QUITAR DE AQUÍ ESTO, Y PONERLO EN BOTÓN "MATRIMONIO REALIZADO"
+                $sacramento->titulo=$request->titulo;
+                $sacramento->estado=2;
                 $sacramento->save();
                 break;
             }
@@ -467,7 +477,7 @@ class SacramentoController extends Controller
 
                 $efectivo = new Efectivo();
                 $efectivo->id=$montos;
-                $efectivo->descripcion_efectivo='Matrimonio';
+                $efectivo->descripcion_efectivo='MATRIMONIO';
                 $efectivo->idcare=$request->idcate;
                 $efectivo->tipo= 1;
                 $efectivo->monto=$request->monto;
@@ -497,7 +507,8 @@ class SacramentoController extends Controller
                 $sacramento->id_padrino3=$id_pad2;
                 $sacramento->id_iglesia=$id_iglesia;
                 $sacramento->fecha_realizacion=$fecha_realizacion;
-                //$sacramento->estado=1; QUITAR DE AQUÍ ESTO, Y PONERLO EN BOTÓN "MATRIMONIO REALIZADO"
+                $sacramento->titulo=$request->titulo;
+                $sacramento->estado=2;
                 $sacramento->save();
                 break;
             }
@@ -517,7 +528,7 @@ class SacramentoController extends Controller
 
                 $efectivo = new Efectivo();
                 $efectivo->id=$montos;
-                $efectivo->descripcion_efectivo='Matrimonio';
+                $efectivo->descripcion_efectivo='MATRIMONIO';
                 $efectivo->idcare=$request->idcate;
                 $efectivo->tipo= 1;
                 $efectivo->monto=$request->monto;
@@ -547,7 +558,8 @@ class SacramentoController extends Controller
                 $sacramento->id_padrino3=$id_pad2;
                 $sacramento->id_iglesia=$id_iglesia;
                 $sacramento->fecha_realizacion=$fecha_realizacion;
-                //$sacramento->estado=1; QUITAR DE AQUÍ ESTO, Y PONERLO EN BOTÓN "MATRIMONIO REALIZADO"
+                $sacramento->titulo=$request->titulo;
+                $sacramento->estado=2;
                 $sacramento->save();
                 break;
             }
@@ -567,7 +579,7 @@ class SacramentoController extends Controller
 
                 $efectivo = new Efectivo();
                 $efectivo->id=$montos;
-                $efectivo->descripcion_efectivo='Matrimonio';
+                $efectivo->descripcion_efectivo='MATRIMONIO';
                 $efectivo->idcare=$request->idcate;
                 $efectivo->tipo= 1;
                 $efectivo->monto=$request->monto;
@@ -589,7 +601,8 @@ class SacramentoController extends Controller
                 $sacramento->id_padrino3=$id_pad2;
                 $sacramento->id_iglesia=$id_iglesia;
                 $sacramento->fecha_realizacion=$fecha_realizacion;
-                //$sacramento->estado=1; QUITAR DE AQUÍ ESTO, Y PONERLO EN BOTÓN "MATRIMONIO REALIZADO"
+                $sacramento->titulo=$request->titulo;
+                $sacramento->estado=2;
                 $sacramento->save();
                 break;
             }
@@ -609,7 +622,7 @@ class SacramentoController extends Controller
 
                 $efectivo = new Efectivo();
                 $efectivo->id=$montos;
-                $efectivo->descripcion_efectivo='Matrimonio';
+                $efectivo->descripcion_efectivo='MATRIMONIO';
                 $efectivo->idcare=$request->idcate;
                 $efectivo->tipo= 1;
                 $efectivo->monto=$request->monto;
@@ -639,7 +652,8 @@ class SacramentoController extends Controller
                 $sacramento->id_padrino3=$id_pad2;
                 $sacramento->id_iglesia=$id_iglesia;
                 $sacramento->fecha_realizacion=$fecha_realizacion;
-                //$sacramento->estado=1; QUITAR DE AQUÍ ESTO, Y PONERLO EN BOTÓN "MATRIMONIO REALIZADO"
+                $sacramento->titulo=$request->titulo;
+                $sacramento->estado=2;
                 $sacramento->save();
                 break;
             }
@@ -659,7 +673,7 @@ class SacramentoController extends Controller
 
                 $efectivo = new Efectivo();
                 $efectivo->id=$montos;
-                $efectivo->descripcion_efectivo='Matrimonio';
+                $efectivo->descripcion_efectivo='MATRIMONIO';
                 $efectivo->idcare=$request->idcate;
                 $efectivo->tipo= 1;
                 $efectivo->monto=$request->monto;
@@ -681,7 +695,8 @@ class SacramentoController extends Controller
                 $sacramento->id_padrino3=$id_pad2;
                 $sacramento->id_iglesia=$id_iglesia;
                 $sacramento->fecha_realizacion=$fecha_realizacion;
-                //$sacramento->estado=1; QUITAR DE AQUÍ ESTO, Y PONERLO EN BOTÓN "MATRIMONIO REALIZADO"
+                $sacramento->titulo=$request->titulo;
+                $sacramento->estado=2;
                 $sacramento->save();
                 break;
             }
@@ -701,7 +716,7 @@ class SacramentoController extends Controller
 
                 $efectivo = new Efectivo();
                 $efectivo->id=$montos;
-                $efectivo->descripcion_efectivo='Matrimonio';
+                $efectivo->descripcion_efectivo='MATRIMONIO';
                 $efectivo->idcare=$request->idcate;
                 $efectivo->tipo= 1;
                 $efectivo->monto=$request->monto;
@@ -723,7 +738,8 @@ class SacramentoController extends Controller
                 $sacramento->id_padrino3=$id_pad2;
                 $sacramento->id_iglesia=$id_iglesia;
                 $sacramento->fecha_realizacion=$fecha_realizacion;
-                //$sacramento->estado=1; QUITAR DE AQUÍ ESTO, Y PONERLO EN BOTÓN "MATRIMONIO REALIZADO"
+                $sacramento->titulo=$request->titulo;
+                $sacramento->estado=2;
                 $sacramento->save();
                 break;
             }
@@ -743,7 +759,7 @@ class SacramentoController extends Controller
 
                 $efectivo = new Efectivo();
                 $efectivo->id=$montos;
-                $efectivo->descripcion_efectivo='Matrimonio';
+                $efectivo->descripcion_efectivo='MATRIMONIO';
                 $efectivo->idcare=$request->idcate;
                 $efectivo->tipo= 1;
                 $efectivo->monto=$request->monto;
@@ -757,6 +773,8 @@ class SacramentoController extends Controller
                 $sacramento->id_padrino3=$id_pad2;
                 $sacramento->fecha_realizacion=$request->fecha_realizacion;
                 $sacramento->id_iglesia=$id_iglesia;
+                $sacramento->titulo=$request->titulo;
+                $sacramento->estado=2;
                 $sacramento->save();
                 break;
             }
@@ -777,7 +795,7 @@ class SacramentoController extends Controller
 
                 $efectivo = new Efectivo();
                 $efectivo->id=$montos;
-                $efectivo->descripcion_efectivo='Matrimonio';
+                $efectivo->descripcion_efectivo='MATRIMONIO';
                 $efectivo->idcare=$request->idcate;
                 $efectivo->tipo= 1;
                 $efectivo->monto=$request->monto;
@@ -825,7 +843,8 @@ class SacramentoController extends Controller
                 $sacramento->id_padrino4=$id_mad2;
                 $sacramento->id_iglesia=$id_iglesia;
                 $sacramento->fecha_realizacion=$fecha_realizacion;
-                //$sacramento->estado=1; QUITAR DE AQUÍ ESTO, Y PONERLO EN BOTÓN "MATRIMONIO REALIZADO"
+                $sacramento->titulo=$request->titulo;
+                $sacramento->estado=2;
                 $sacramento->save();
                 break;
             }
@@ -846,7 +865,7 @@ class SacramentoController extends Controller
 
                 $efectivo = new Efectivo();
                 $efectivo->id=$montos;
-                $efectivo->descripcion_efectivo='Matrimonio';
+                $efectivo->descripcion_efectivo='MATRIMONIO';
                 $efectivo->idcare=$request->idcate;
                 $efectivo->tipo= 1;
                 $efectivo->monto=$request->monto;
@@ -886,7 +905,8 @@ class SacramentoController extends Controller
                 $sacramento->id_padrino4=$id_mad2;
                 $sacramento->id_iglesia=$id_iglesia;
                 $sacramento->fecha_realizacion=$fecha_realizacion;
-                //$sacramento->estado=1; QUITAR DE AQUÍ ESTO, Y PONERLO EN BOTÓN "MATRIMONIO REALIZADO"
+                $sacramento->titulo=$request->titulo;
+                $sacramento->estado=2;
                 $sacramento->save();
                 break;
 
@@ -908,7 +928,7 @@ class SacramentoController extends Controller
 
                 $efectivo = new Efectivo();
                 $efectivo->id=$montos;
-                $efectivo->descripcion_efectivo='Matrimonio';
+                $efectivo->descripcion_efectivo='MATRIMONIO';
                 $efectivo->idcare=$request->idcate;
                 $efectivo->tipo= 1;
                 $efectivo->monto=$request->monto;
@@ -948,7 +968,8 @@ class SacramentoController extends Controller
                 $sacramento->id_padrino4=$id_mad2;
                 $sacramento->id_iglesia=$id_iglesia;
                 $sacramento->fecha_realizacion=$fecha_realizacion;
-                //$sacramento->estado=1; QUITAR DE AQUÍ ESTO, Y PONERLO EN BOTÓN "MATRIMONIO REALIZADO"
+                $sacramento->titulo=$request->titulo;
+                $sacramento->estado=2;
                 $sacramento->save();
                 break;
             }
@@ -969,7 +990,7 @@ class SacramentoController extends Controller
 
                 $efectivo = new Efectivo();
                 $efectivo->id=$montos;
-                $efectivo->descripcion_efectivo='Matrimonio';
+                $efectivo->descripcion_efectivo='MATRIMONIO';
                 $efectivo->idcare=$request->idcate;
                 $efectivo->tipo= 1;
                 $efectivo->monto=$request->monto;
@@ -1001,7 +1022,8 @@ class SacramentoController extends Controller
                 $sacramento->id_padrino4=$id_mad2;
                 $sacramento->id_iglesia=$id_iglesia;
                 $sacramento->fecha_realizacion=$fecha_realizacion;
-                //$sacramento->estado=1; QUITAR DE AQUÍ ESTO, Y PONERLO EN BOTÓN "MATRIMONIO REALIZADO"
+                $sacramento->titulo=$request->titulo;
+                $sacramento->estado=2;
                 $sacramento->save();
                 break;
             }
@@ -1022,7 +1044,7 @@ class SacramentoController extends Controller
 
                 $efectivo = new Efectivo();
                 $efectivo->id=$montos;
-                $efectivo->descripcion_efectivo='Matrimonio';
+                $efectivo->descripcion_efectivo='MATRIMONIO';
                 $efectivo->idcare=$request->idcate;
                 $efectivo->tipo= 1;
                 $efectivo->monto=$request->monto;
@@ -1062,7 +1084,8 @@ class SacramentoController extends Controller
                 $sacramento->id_padrino4=$id_mad2;
                 $sacramento->id_iglesia=$id_iglesia;
                 $sacramento->fecha_realizacion=$fecha_realizacion;
-                //$sacramento->estado=1; QUITAR DE AQUÍ ESTO, Y PONERLO EN BOTÓN "MATRIMONIO REALIZADO"
+                $sacramento->titulo=$request->titulo;
+                $sacramento->estado=2;
                 $sacramento->save();
                 break;
             }
@@ -1083,7 +1106,7 @@ class SacramentoController extends Controller
 
                 $efectivo = new Efectivo();
                 $efectivo->id=$montos;
-                $efectivo->descripcion_efectivo='Matrimonio';
+                $efectivo->descripcion_efectivo='MATRIMONIO';
                 $efectivo->idcare=$request->idcate;
                 $efectivo->tipo= 1;
                 $efectivo->monto=$request->monto;
@@ -1115,7 +1138,8 @@ class SacramentoController extends Controller
                 $sacramento->id_padrino4=$id_mad2;
                 $sacramento->id_iglesia=$id_iglesia;
                 $sacramento->fecha_realizacion=$fecha_realizacion;
-                //$sacramento->estado=1; QUITAR DE AQUÍ ESTO, Y PONERLO EN BOTÓN "MATRIMONIO REALIZADO"
+                $sacramento->titulo=$request->titulo;
+                $sacramento->estado=2;
                 $sacramento->save();
                 break;
             }
@@ -1136,7 +1160,7 @@ class SacramentoController extends Controller
 
                 $efectivo = new Efectivo();
                 $efectivo->id=$montos;
-                $efectivo->descripcion_efectivo='Matrimonio';
+                $efectivo->descripcion_efectivo='MATRIMONIO';
                 $efectivo->idcare=$request->idcate;
                 $efectivo->tipo= 1;
                 $efectivo->monto=$request->monto;
@@ -1168,7 +1192,8 @@ class SacramentoController extends Controller
                 $sacramento->id_padrino4=$id_mad2;
                 $sacramento->id_iglesia=$id_iglesia;
                 $sacramento->fecha_realizacion=$fecha_realizacion;
-                //$sacramento->estado=1; QUITAR DE AQUÍ ESTO, Y PONERLO EN BOTÓN "MATRIMONIO REALIZADO"
+                $sacramento->titulo=$request->titulo;
+                $sacramento->estado=2;
                 $sacramento->save();
                 break;
             }
@@ -1189,7 +1214,7 @@ class SacramentoController extends Controller
 
                 $efectivo = new Efectivo();
                 $efectivo->id=$montos;
-                $efectivo->descripcion_efectivo='Matrimonio';
+                $efectivo->descripcion_efectivo='MATRIMONIO';
                 $efectivo->idcare=$request->idcate;
                 $efectivo->tipo= 1;
                 $efectivo->monto=$request->monto;
@@ -1213,7 +1238,8 @@ class SacramentoController extends Controller
                 $sacramento->id_padrino4=$id_mad2;
                 $sacramento->id_iglesia=$id_iglesia;
                 $sacramento->fecha_realizacion=$fecha_realizacion;
-                //$sacramento->estado=1; QUITAR DE AQUÍ ESTO, Y PONERLO EN BOTÓN "MATRIMONIO REALIZADO"
+                $sacramento->titulo=$request->titulo;
+                $sacramento->estado=2;
                 $sacramento->save();
                 break;
             }
@@ -1234,7 +1260,7 @@ class SacramentoController extends Controller
 
                 $efectivo = new Efectivo();
                 $efectivo->id=$montos;
-                $efectivo->descripcion_efectivo='Matrimonio';
+                $efectivo->descripcion_efectivo='MATRIMONIO';
                 $efectivo->idcare=$request->idcate;
                 $efectivo->tipo= 1;
                 $efectivo->monto=$request->monto;
@@ -1274,7 +1300,8 @@ class SacramentoController extends Controller
                 $sacramento->id_padrino4=$id_mad2;
                 $sacramento->id_iglesia=$id_iglesia;
                 $sacramento->fecha_realizacion=$fecha_realizacion;
-                //$sacramento->estado=1; QUITAR DE AQUÍ ESTO, Y PONERLO EN BOTÓN "MATRIMONIO REALIZADO"
+                $sacramento->titulo=$request->titulo;
+                $sacramento->estado=2;
                 $sacramento->save();
                 break;                
             }
@@ -1295,7 +1322,7 @@ class SacramentoController extends Controller
 
                 $efectivo = new Efectivo();
                 $efectivo->id=$montos;
-                $efectivo->descripcion_efectivo='Matrimonio';
+                $efectivo->descripcion_efectivo='MATRIMONIO';
                 $efectivo->idcare=$request->idcate;
                 $efectivo->tipo= 1;
                 $efectivo->monto=$request->monto;
@@ -1327,7 +1354,8 @@ class SacramentoController extends Controller
                 $sacramento->id_padrino4=$id_mad2;
                 $sacramento->id_iglesia=$id_iglesia;
                 $sacramento->fecha_realizacion=$fecha_realizacion;
-                //$sacramento->estado=1; QUITAR DE AQUÍ ESTO, Y PONERLO EN BOTÓN "MATRIMONIO REALIZADO"
+                $sacramento->titulo=$request->titulo;
+                $sacramento->estado=2;
                 $sacramento->save();
                 break;
             }
@@ -1348,7 +1376,7 @@ class SacramentoController extends Controller
 
                 $efectivo = new Efectivo();
                 $efectivo->id=$montos;
-                $efectivo->descripcion_efectivo='Matrimonio';
+                $efectivo->descripcion_efectivo='MATRIMONIO';
                 $efectivo->idcare=$request->idcate;
                 $efectivo->tipo= 1;
                 $efectivo->monto=$request->monto;
@@ -1380,7 +1408,8 @@ class SacramentoController extends Controller
                 $sacramento->id_padrino4=$id_mad2;
                 $sacramento->id_iglesia=$id_iglesia;
                 $sacramento->fecha_realizacion=$fecha_realizacion;
-                //$sacramento->estado=1; QUITAR DE AQUÍ ESTO, Y PONERLO EN BOTÓN "MATRIMONIO REALIZADO"
+                $sacramento->titulo=$request->titulo;
+                $sacramento->estado=2;
                 $sacramento->save();
                 break;
             }
@@ -1401,7 +1430,7 @@ class SacramentoController extends Controller
 
                 $efectivo = new Efectivo();
                 $efectivo->id=$montos;
-                $efectivo->descripcion_efectivo='Matrimonio';
+                $efectivo->descripcion_efectivo='MATRIMONIO';
                 $efectivo->idcare=$request->idcate;
                 $efectivo->tipo= 1;
                 $efectivo->monto=$request->monto;
@@ -1425,7 +1454,8 @@ class SacramentoController extends Controller
                 $sacramento->id_padrino4=$id_mad2;
                 $sacramento->id_iglesia=$id_iglesia;
                 $sacramento->fecha_realizacion=$fecha_realizacion;
-                //$sacramento->estado=1; QUITAR DE AQUÍ ESTO, Y PONERLO EN BOTÓN "MATRIMONIO REALIZADO"
+                $sacramento->titulo=$request->titulo;
+                $sacramento->estado=2;
                 $sacramento->save();
                 break;
             }
@@ -1446,7 +1476,7 @@ class SacramentoController extends Controller
 
                 $efectivo = new Efectivo();
                 $efectivo->id=$montos;
-                $efectivo->descripcion_efectivo='Matrimonio';
+                $efectivo->descripcion_efectivo='MATRIMONIO';
                 $efectivo->idcare=$request->idcate;
                 $efectivo->tipo= 1;
                 $efectivo->monto=$request->monto;
@@ -1478,7 +1508,8 @@ class SacramentoController extends Controller
                 $sacramento->id_padrino4=$id_mad2;
                 $sacramento->id_iglesia=$id_iglesia;
                 $sacramento->fecha_realizacion=$fecha_realizacion;
-                //$sacramento->estado=1; QUITAR DE AQUÍ ESTO, Y PONERLO EN BOTÓN "MATRIMONIO REALIZADO"
+                $sacramento->titulo=$request->titulo;
+                $sacramento->estado=2;
                 $sacramento->save();
                 break;
             }
@@ -1499,7 +1530,7 @@ class SacramentoController extends Controller
 
                 $efectivo = new Efectivo();
                 $efectivo->id=$montos;
-                $efectivo->descripcion_efectivo='Matrimonio';
+                $efectivo->descripcion_efectivo='MATRIMONIO';
                 $efectivo->idcare=$request->idcate;
                 $efectivo->tipo= 1;
                 $efectivo->monto=$request->monto;
@@ -1523,7 +1554,8 @@ class SacramentoController extends Controller
                 $sacramento->id_padrino4=$id_mad2;
                 $sacramento->id_iglesia=$id_iglesia;
                 $sacramento->fecha_realizacion=$fecha_realizacion;
-                //$sacramento->estado=1; QUITAR DE AQUÍ ESTO, Y PONERLO EN BOTÓN "MATRIMONIO REALIZADO"
+                $sacramento->titulo=$request->titulo;
+                $sacramento->estado=2;
                 $sacramento->save();
                 break;
             }
@@ -1544,7 +1576,7 @@ class SacramentoController extends Controller
 
                 $efectivo = new Efectivo();
                 $efectivo->id=$montos;
-                $efectivo->descripcion_efectivo='Matrimonio';
+                $efectivo->descripcion_efectivo='MATRIMONIO';
                 $efectivo->idcare=$request->idcate;
                 $efectivo->tipo= 1;
                 $efectivo->monto=$request->monto;
@@ -1568,7 +1600,8 @@ class SacramentoController extends Controller
                 $sacramento->id_padrino4=$id_mad2;
                 $sacramento->id_iglesia=$id_iglesia;
                 $sacramento->fecha_realizacion=$fecha_realizacion;
-                //$sacramento->estado=1; QUITAR DE AQUÍ ESTO, Y PONERLO EN BOTÓN "MATRIMONIO REALIZADO"
+                $sacramento->titulo=$request->titulo;
+                $sacramento->estado=2;
                 $sacramento->save();
                 break;
             }
@@ -1588,7 +1621,7 @@ class SacramentoController extends Controller
 
                 $efectivo = new Efectivo();
                 $efectivo->id=$montos;
-                $efectivo->descripcion_efectivo='Matrimonio';
+                $efectivo->descripcion_efectivo='MATRIMONIO';
                 $efectivo->idcare=$request->idcate;
                 $efectivo->tipo= 1;
                 $efectivo->monto=$request->monto;
@@ -1604,6 +1637,8 @@ class SacramentoController extends Controller
                 $sacramento->id_padrino4=$id_mad2;
                 $sacramento->fecha_realizacion=$request->fecha_realizacion;
                 $sacramento->id_iglesia=$id_iglesia;
+                $sacramento->titulo=$request->titulo;
+                $sacramento->estado=2;
                 $sacramento->save();
                 break;
             }
@@ -1613,7 +1648,7 @@ class SacramentoController extends Controller
     //NO TOCAR QUE SÍ SIRVE!!!
     public function desactivarexpediente(Request $request)
     {
-      //  if (!$request->ajax()) return redirect('/');
+        if (!$request->ajax()) return redirect('/');
         $sacramento = Sacramento::findOrFail($request->id);
         $sacramento->estado = '0';
         $sacramento->save();
@@ -1622,7 +1657,7 @@ class SacramentoController extends Controller
     //NO TOCAR QUE SÍ SIRVE!!!
     public function activarexpediente(Request $request)
     {
-      //  if (!$request->ajax()) return redirect('/');
+        if (!$request->ajax()) return redirect('/');
         $sacramento = Sacramento::findOrFail($request->id);
         $sacramento->estado = '1';
         $sacramento->save();
@@ -1630,7 +1665,7 @@ class SacramentoController extends Controller
 
     /* public function finalizarexpediente(Request $request)
     {
-      //  if (!$request->ajax()) return redirect('/');
+        if (!$request->ajax()) return redirect('/');
         $sacramento = Sacramento::findOrFail($request->id);
         $sacramento->estado = '2';
         $sacramento->save();

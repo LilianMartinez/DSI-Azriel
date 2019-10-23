@@ -76,7 +76,7 @@
                                             </button> &nbsp;
                                         </template>
                                         <template v-else> <!-- Cuando el matrimonio ya se realizo y se puede imprimir la constancia -->
-                                            <button type="button" class="btn btn-success btn-sm"> <!-- @click="Imprimir este volado" -->
+                                            <button type="button" class="btn btn-success btn-sm" @click="abrirModal2('sacramento','paso4',sacramento)">
                                               <i class="icon-plus"></i>&nbsp;Imprimir
                                             </button>
                                         </template>
@@ -131,6 +131,9 @@
 
                                 <!-- Datos del Realizante1 -->
                                 <div class="form-group row">
+                                  <label class="col-md-5 form-control-label" for="text-input"><b>Datos del novio</b></label>
+                                </div>
+                                <div class="form-group row">
                                     <label class="col-md-2 form-control-label" for="text-input">DUI</label>
                                     <div class="col-md-5">
                                         <input type="text" v-model="novioD" class="form-control" placeholder="00000000-0" @keydown.tab="novioDui()">
@@ -140,7 +143,7 @@
                                     <label class="col-md-2 form-control-label" for="text-input">Nombre del Novio</label>
                                     <div class="col-md-5">
                                         <!-- El true-value="mostrar" y "ocultar" servirán para inhabilitar los inputText... falta arreglarlo en el método -->
-                                        <input type="text" v-model="novioNom" true-value="mostrar" false-value="ocultar" class="form-control" placeholder="Nombres">
+                                        <input type="text" v-model="novioNom" class="form-control" placeholder="Nombres">
                                     </div>
                                     <div class="col-md-5">
                                         <input type="text" v-model="novioAp" true-value="mostrar" false-value="ocultar" class="form-control" placeholder="Apellidos">
@@ -148,6 +151,9 @@
                                 </div>
                                 
                                 <!-- Datos del Realizante2 -->
+                                <div class="form-group row">
+                                  <label class="col-md-5 form-control-label" for="text-input"><b>Datos de la novia</b></label>
+                                </div>
                                 <div class="form-group row">
                                     <label class="col-md-2 form-control-label" for="text-input">DUI</label>
                                     <div class="col-md-5">
@@ -161,6 +167,24 @@
                                     </div>
                                     <div class="col-md-5">
                                         <input type="text" v-model="noviaAp" class="form-control" placeholder="Apellidos">
+                                    </div>
+                                </div>
+
+                                <!-- BOTON COBRAR-->
+                                <div class="form-group row">
+                                    <div class="col-md-2"></div>
+                                    <div class="col-md-2">
+                                        <button type="button" value="cobrar1" class="btn btn-secondary btn-block" v-on:click="cobrar">Cobrar</button>&nbsp;  <!-- @click="enviarCajaChica()" -->
+                                    </div>
+                                    <div class="col-md-3">
+                                        <input type="number" v-model="ofrendaExp" class="form-control" placeholder="Ofrenda">
+                                    </div>
+                                    <label class="col-md-1">Categoria</label>
+                                    <div class="col-md-4">
+                                        <select class="form-control" v-model="idcare"> 
+                                        <option value="0" disabled>Seleccione</option>
+                                        <option v-for="categorias in arraycategorias" :key="categorias.id"  v-bind:value="categorias.id" v-text="categorias.nombre_categoria"></option>
+                                        </select>
                                     </div>
                                 </div>
                                 
@@ -254,7 +278,7 @@
             </div>
             <!--Fin del modal 2 -->
             <!--Inicio del modal 3 -->
-            <div class="modal fade" tabindex="-1" :class="{'mostrar' : modal3}" role="dialog" aria-labelledby="myModalLabel" style="display: none;" aria-hidden="true">
+            <div class="modal fade" tabindex="-1" :class="{'mostrar' : modal3}" role="dialog" aria-labelledby="myModalLabel" style="display: none; overflow-y:auto;" aria-hidden="true">
                 <div class="modal-dialog modal-primary modal-lg" role="document">
                     <div class="modal-content">
                         <div class="modal-header">
@@ -376,29 +400,24 @@
                                     </div>
                                 </div>
 
-                                    <!-- BOTON COBRAR Y MATRIMONIO REALIZADO--> 
-
+                                    <!-- BOTON COBRAR-->
                                 <div class="form-group row">
-                                    <label class="col-md-3 form-control-label" for="text-input"></label>
-                                     <button type="button" class="btn btn-secondary">Cobrar</button>&nbsp;  <!-- @click="enviarCajaChica()" -->
-                                <div class="col-md-4.3">
-                                <input type="number" v-model="monto" class="form-control" placeholder="Ofrenda">
-                                </div>
-                                <div class="form-group row">
-                                    <label class="col-md-3 form-control-label">Categoria</label>
-                                  <div class="col-md-5">
+                                    <div class="col-md-2"></div>
+                                    <div class="col-md-2">
+                                        <button type="button" class="btn btn-secondary btn-block" v-on:click="cobrar">Cobrar</button>&nbsp;  <!-- @click="enviarCajaChica()" -->
+                                    </div>
+                                    <div class="col-md-3">
+                                        <input type="number" v-model="monto" class="form-control" placeholder="Ofrenda">
+                                    </div>
+                                    <label class="col-md-1">Categoria</label>
+                                    <div class="col-md-4">
                                         <select class="form-control" v-model="idcare"> 
                                         <option value="0" disabled>Seleccione</option>
                                         <option v-for="categorias in arraycategorias" :key="categorias.id"  v-bind:value="categorias.id" v-text="categorias.nombre_categoria"></option>
                                         </select>
                                     </div>
                                 </div>
-                                <div class="col-md-3">
-                                <button type="button" class="btn btn-success">Matrimonio Realizado</button> <!-- @click="finalizarExpediente(sacramento.id)" -->
-                                </div>
-                                </div>
-
-                                <!-- Fin de datos de lo padrinos -->
+                                
                                 
                                 <!-- Este div se utiliza para la validación -->
                                 <div v-show="errorModal3" class="form-group row div-error">
@@ -413,7 +432,7 @@
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" @click="cerrarModal3()">Cerrar</button>
                             <button type="button" class="btn btn-secondary" @click="siguiente('2')">Anterior</button>
-                            <button type="button" v-if="tipoAccion==3" class="btn btn-primary" @click="registrarBoda()" >Guardar</button>
+                            <button type="button" v-if="tipoAccion==3" class="btn btn-primary" @click="registrarBoda()" >Matrimonio Realizado</button>
                         </div>
                     </div>
                     <!-- /.modal-content -->
@@ -422,8 +441,91 @@
             </div>
             <!--Fin del modal 3 -->
 
+            <!-- Inicio del modal 4 Imprimir constancia -->
+            <div class="modal fade" tabindex="-1" :class="{'mostrar' : modal4}" role="dialog" aria-labelledby="myModalLabel" style="display: none;" aria-hidden="true">
+                <div class="modal-dialog modal-primary modal-lg" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <!--el v-text="tituloModal" muestra el titulo segun el metodo mostrarModal -->
+                            <h4 class="modal-title" v-text="tituloModal"></h4>
+                            <button type="button" class="close" @click="cerrarModal4()" aria-label="Close">
+                              <span aria-hidden="true">×</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <form action="" method="post" enctype="multipart/form-data" class="form-horizontal">
+                                
+                                <div class="form-group row">
+                                    <label class="col-md-3 form-control-label" for="text-input">Motivo de la constancia:<b class="alerta">*</b></label>
+                                    <div class="col-md-5">
+                                        <input type="text" v-model="enConcepto" class="form-control" placeholder="ej: Padrinos de bautismo">
+                                    </div>
+                                </div>    
+                                <div class="form-group row">
+                                <label class="col-md-3 form-control-label" for="text-input">Nombre del sacerdote<b class="alerta">*</b></label>
+                                    <div class="col-md-5">
+                                        <select class="form-control" v-model="idsacerdote"> 
+                                        <option value="0" disabled>Seleccione</option>
+                                        <option v-for="sacerdote in arraysacerdote" :key="sacerdote.id" v-bind:value="sacerdote.id" >{{sacerdote.nombre_persona}}, {{sacerdote.apellido_persona}}</option>
+                                        </select >
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-md-3 form-control-label" for="text-input">Cargo<b class="alerta">*</b></label>
+                                    <div class="col-md-5">
+                                            <select class="form-control" v-model="cargosacerdote"> 
+                                            <option value="0" disabled>Cargo</option>
+                                            <option v-for="sacerdote in arraycargo" :key="sacerdote.id" v-bind:value="sacerdote" v-text="sacerdote"></option>
+                                            </select>
+                                        </div>
+                                </div>
+
+                                <div class="form-group row">
+                                    <label class="col-md-3 form-control-label" for="text-input">Ofrenda por constancia<b class="alerta">*</b></label>
+                                    <div class="col-md-5">
+                                        <input type="number" v-model="montoConstancia" class="form-control" placeholder="20.00">
+                                    </div>
+                                </div>
+
+                                <div class="form-group row">
+                                    <label class="col-md-3">Categoría</label>
+                                    <div class="col-md-5">
+                                        <select class="form-control" v-model="idcare">
+                                            <option value="0" disabled>Seleccione</option>
+                                            <option v-for="categorias in arraycategorias" :key="categorias.id"  v-bind:value="categorias.id" v-text="categorias.nombre_categoria"></option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="form-group row">
+                                    <div class="col-md-3"></div>
+                                    <div class="col-md-2">
+                                        <button type="button" class="btn btn-secondary btn-block" v-on:click="cobrar">Cobrar</button>&nbsp;
+                                    </div>
+                                </div>
+                            <!-- Este div se utiliza para la validación -->
+                            <div v-show="errorModal4" class="form-group row div-error">
+                                <div class="text-center text-error">
+                                    <div v-for="error in errorMostrarMsjModal4" :key="error" v-text="error">
+                                    </div>
+                                </div>
+                            </div>
+
+                            </form>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" @click="cerrarModal4()">Cerrar</button>
+                            <button type="button" class="btn btn-primary" @click="imprimirConstancia()">Imprimir Constancia</button>
+                        </div>
+                    </div>
+                    <!-- /.modal-content -->
+                </div>
+                <!-- /.modal-dialog -->
+            </div>
+            <!--Fin del modal Imprimir Constancia -->
+
             <!-- Inicio del modal Eliminar -->
-            <div class="modal fade" id="modalEliminar" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" style="display: none;" aria-hidden="true">
+            <!-- <div class="modal fade" id="modalEliminar" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" style="display: none;" aria-hidden="true">
                 <div class="modal-dialog modal-danger" role="document">
                     <div class="modal-content">
                         <div class="modal-header">
@@ -440,10 +542,10 @@
                             <button type="button" class="btn btn-danger">Eliminar</button>
                         </div>
                     </div>
-                    <!-- /.modal-content -->
+                    <!- /.modal-content ->
                 </div>
-                <!-- /.modal-dialog -->
-            </div>
+                <!- /.modal-dialog ->
+            </div> -->
             <!-- Fin del modal Eliminar -->
            
         </main>
@@ -495,8 +597,11 @@
                 iglesiaNom: '',
                 tipo:0,
                 estado :0,
-                monto:30,
-                ofrendaExp:20,
+                monto:'',//Este es el monto de la boda realizada
+                ofrendaExp:'',//este es para el botón de crear expediente
+                montoConstancia:'',//este es para el botón de solicitar constancia
+                cobrado:false,
+                enConcepto:'',//el por qué se imprimirá la Constancia
 
                 idcare:'',
                 cargosacerdote:'',
@@ -509,6 +614,7 @@
                 modal:0, //Nos sirve para poder activar o desactivar el modal
                 modal2:0,
                 modal3:0,
+                modal4:0,//Modal imprimir
                 tituloModal : '', //solo para registrar el título que queremos que aparezca en el modal
                 tipoAccion :0,
                 errorMatrimonio1 :0,//variable para validación
@@ -517,6 +623,8 @@
                 errorMostrarMsjModal2 : [],
                 errorModal3 : 0,
                 errorMostrarMsjModal3 : [],
+                errorModal4 : 0,
+                errorMostrarMsjModal4 : [],
                 pagination:{
                     'total' :0,
                     'current_page' :0,
@@ -560,6 +668,12 @@
             }
         },
     methods:{
+
+        cobrar: function (){
+            this.cobrado=true;
+            //AQUÍ AGREGAR EL DESABILITAR COBRAR1
+
+        },
 
         listarMatrimonio1(page, buscar, criterio){
             let me=this;
@@ -847,7 +961,9 @@
                     'novioD':this.novioD,
                     'noviaNom': this.noviaNom.toUpperCase(),
                     'noviaAp': this.noviaAp.toUpperCase(),
-                    'noviaD':this.noviaD
+                    'noviaD':this.noviaD,
+                    'monto': this.ofrendaExp,
+                    'idcate':this.idcare
                     }).then(function (response) { //si todo funciona:
                         me.listarMatrimonio1();
                         me.cerrarModal();
@@ -862,7 +978,9 @@
                     'novioNom': this.novioNom.toUpperCase(),
                     'novioAp': this.novioAp.toUpperCase(),
                     'novioD':this.novioD,
-                    'id_realizante2':this.id_realizante2
+                    'id_realizante2':this.id_realizante2,
+                    'monto': this.ofrendaExp,
+                    'idcate':this.idcare
                     }).then(function (response) { //si todo funciona:
                         me.listarMatrimonio1();
                         me.cerrarModal();
@@ -879,7 +997,9 @@
                     'noviaNom': this.noviaNom.toUpperCase(),
                     'noviaAp': this.noviaAp.toUpperCase(),
                     'noviaD':this.noviaD,
-                    'id_realizante1':this.id_realizante1
+                    'id_realizante1':this.id_realizante1,
+                    'monto': this.ofrendaExp,
+                    'idcate':this.idcare
                     }).then(function (response) { //si todo funciona:
                         me.listarMatrimonio1();
                         me.cerrarModal();
@@ -892,7 +1012,9 @@
                     'libro':this.libro,
                     'num_expediente':this.num_expediente,
                     'id_realizante1':this.id_realizante1,
-                    'id_realizante2':this.id_realizante2
+                    'id_realizante2':this.id_realizante2,
+                    'monto': this.ofrendaExp,
+                    'idcate':this.idcare
                     }).then(function (response) { //si todo funciona:
                         me.listarMatrimonio1();
                         me.cerrarModal();
@@ -924,7 +1046,7 @@
         },
         
         //ESTE ES PARA ACTUALIZAR.... ESTA ES LA BASURA QUE NO SERVIA
-        actualizarMatrimonio1(){
+        actualizarMatrimonio1(){//QUITAR ESTE BOTOOOOOOOOON
             if(this.validarMatrimonio1()){
                 return;
             }
@@ -966,12 +1088,13 @@
             var pad2D=this.pad2D;
             var mad2D=this.mad2D;
             var id_sacerdote=this.id_sacerdote;
+            var cargosacerdote=this.cargosacerdote;
             var id_padrino1=this.id_padrino1;
             var id_madrina1=this.id_madrina1;
             var id_padrino2=this.id_padrino2;
             var id_madrina2=this.id_madrina2;
             var fecha_realizacion=this.fecha_realizacion;
-            var id_iglesia=this.id_iglesia
+            var id_iglesia=this.id_iglesia;
 
             if(mad2D==''){
                 if(pad2D==''){
@@ -995,6 +1118,7 @@
                             'pad1D':this.pad1D,
                             'pad1Sexo':this.pad1Sexo,
                             'id_sacerdote':this.idsacerdote,
+                            'titulo':this.cargosacerdote,
                             'id_padrino1':this.id_padrino1,
                             'monto': this.monto,
                             'idcate':this.idcare
@@ -1039,6 +1163,7 @@
                             'mad1D':this.mad1D,
                             'mad1Sexo':this.mad1Sexo,
                             'id_sacerdote':this.idsacerdote,
+                            'titulo':this.cargosacerdote,
                             'id_padrino1':this.id_padrino1,
                             'id_madrina1':this.id_madrina1,
                             'monto': this.monto,
@@ -1109,6 +1234,7 @@
                         'pad2D':this.pad2D,
                         'pad2Sexo':this.pad2Sexo,
                         'id_sacerdote':this.idsacerdote,
+                        'titulo':this.cargosacerdote,
                         'id_padrino1':this.id_padrino1,
                         'id_madrina1':this.id_madrina1,
                         'id_padrino2':this.id_padrino2,
@@ -1224,6 +1350,7 @@
                     'mad2D':this.mad2D,
                     'mad2Sexo':this.mad2Sexo,
                     'id_sacerdote':this.idsacerdote,
+                    'titulo':this.cargosacerdote,
                     'id_padrino1':this.id_padrino1,
                     'id_madrina1':this.id_madrina1,
                     'id_padrino2':this.id_padrino2,
@@ -1240,17 +1367,34 @@
             me.cerrarModal3();
         },
 
+        imprimirConstancia(){
+            if(this.validarModal4()){
+                return;
+            }
+
+        },
+
         //este lo ocupa el método Registrar
         validarMatrimonio1(){
             this.errorMatrimonio1=0;
             this.errorMostrarMsjMatrimonio1=[];
             var patron =/^[a-zA-ZÑñÁáÉéÍíÓóÚúÜü\s]+$/;
+            var patrondui= /^\d{9}$/;
+            var soloIntPositivo= /^\d*$/;
+            var decimales= /^\d+(\.\d{0,2})?$/;
+            //Comprueba que las celdas no estén vacías
 
-            //Comprueba que la celda no esté vacía -- AGREGAR DESPUÉS LOS DEMÁS THIS EN EL IF
-            if (this.libro =='' || this.num_expediente =='' || this.novioD =='' || this.novioNom=='' || this.novioAp=='' || this.noviaD =='' || this.noviaNom=='' || this.noviaAp=='')
+            if (this.libro =='' || this.num_expediente =='' || this.novioD =='' || this.novioNom=='' || this.novioAp=='' || this.noviaD =='' || this.noviaNom=='' || this.noviaAp=='' || this.ofrendaExp==''){
                 this.errorMostrarMsjMatrimonio1.push("Todos los datos son obligatorios");
-                if(!patron.test(this.novioNom) || !patron.test(this.novioAp))this.errorMostrarMsjMatrimonio1.push("Los datos del novio solo deben tener letras");
+            }else{
+                if(!soloIntPositivo.test(this.libro) || !soloIntPositivo.test(this.num_expediente))this.errorMostrarMsjMatrimonio1.push("En libro y número de expediente solo se permiten números enteros positivos");
+                if(!patrondui.test(this.novioD) || !patrondui.test(this.noviaD))this.errorMostrarMsjMatrimonio1.push("Error, El dui debe contener 9 números");
+                if(!patron.test(this.novioNom) || !patron.test(this.novioAp))this.errorMostrarMsjMatrimonio1.push("Los datos del novio deben contener letras solamente");
                 if(!patron.test(this.noviaNom) || !patron.test(this.noviaAp))this.errorMostrarMsjMatrimonio1.push("Los datos de la novia debe contener letras solamente");
+                if(!decimales.test(this.ofrendaExp))this.errorMostrarMsjMatrimonio1.push("La ofrenda debe de ser un número positivo");
+                if(this.idcare==0)this.errorMostrarMsjMatrimonio1.push("Debe elegir una categoría");
+                if(this.cobrado!=true)this.errorMostrarMsjMatrimonio1.push("Debe cobrar la apertura del expediente de matrimonio");
+            }
 
             if (this.errorMostrarMsjMatrimonio1.length) this.errorMatrimonio1 = 1;
 
@@ -1262,7 +1406,18 @@
             this.errorModal2=0;
             this.errorMostrarMsjModal2=[];
 
-            if(!this.fecha_realizacion) this.errorMostrarMsjModal2.push("Seleccione la fecha de realización");
+            var fecha = new Date();
+            var actualYear = fecha.getFullYear();
+            var actualMes = fecha.getMonth();
+            var values = this.fecha_realizacion.split("-");
+            var anio = values[0];
+
+            if(!this.fecha_realizacion){
+                this.errorMostrarMsjModal2.push("Seleccione la fecha de realización");
+            }else{
+                if(anio < 1989)this.errorMostrarMsjModal2.push("El año debe de ser mayor a 1989");
+                if((actualYear+1)<anio)this.errorMostrarMsjModal2.push("El año debe ser menor o igual al " + (actualYear+1));
+            }
             if(this.id_iglesia==0) this.errorMostrarMsjModal2.push("Seleccione una iglesia");
             if(this.idsacerdote==0) this.errorMostrarMsjModal2.push("Seleccione el encargado de la ceremonia");
             if(this.cargosacerdote==0) this.errorMostrarMsjModal2.push("Seleccione el cargo del encargado");
@@ -1277,12 +1432,16 @@
             this.errorModal3=0;
             this.errorMostrarMsjModal3=[];
             var patron =/^[a-zA-ZÑñÁáÉéÍíÓóÚúÜü\s]+$/;
+            var patrondui= /^\d{9}$/;
+            //var soloIntPositivo= /^\d*$/;
+            var decimales= /^\d+(\.\d{0,2})?$/;
 
             //Esta súpervalidación ayuda a que sea imposible para el usuario dejar "padrinos en blanco"... así solo podrá ingresarlos en orden
             if(!this.pad1D || !this.pad1Nom || !this.pad1Ap || this.pad1Sexo==0){
                 this.errorMostrarMsjModal3.push("Complete los datos de la persona 1");
             }else{
                 if(!patron.test(this.pad1Nom) || !patron.test(this.pad1Ap)) this.errorMostrarMsjModal3.push("Los datos de la persona 1 debe contener letras solamente");
+                if(!patrondui.test(this.pad1D))this.errorMostrarMsjModal3.push("Error, El dui de la persona 1 debe contener 9 números");
 
                 if(!(!this.mad1D && !this.mad1Nom && !this.mad1Ap && this.mad1Sexo==0 &&
                    !this.pad2D && !this.pad2Nom && !this.pad2Ap && this.pad2Sexo==0 &&
@@ -1292,6 +1451,7 @@
                         this.errorMostrarMsjModal3.push("Complete los datos de la persona 2");
                     }else{
                         if(!patron.test(this.mad1Nom) || !patron.test(this.mad1Ap)) this.errorMostrarMsjModal3.push("Los datos de la persona 2 debe contener letras solamente");
+                        if(!patrondui.test(this.mad1D))this.errorMostrarMsjModal3.push("Error, El dui de la persona 2 debe contener 9 números");
 
                         if(!(!this.pad2D && !this.pad2Nom && !this.pad2Ap && this.pad2Sexo==0 &&
                         !this.mad2D && !this.mad2Nom && !this.mad2Ap && this.mad2Sexo==0)){
@@ -1300,12 +1460,14 @@
                                 this.errorMostrarMsjModal3.push("Complete los datos de la persona 3");
                             }else{
                                 if(!patron.test(this.pad2Nom) || !patron.test(this.pad2Ap)) this.errorMostrarMsjModal3.push("Los datos de la persona 3 debe contener letras solamente");
+                                if(!patrondui.test(this.pad2D))this.errorMostrarMsjModal3.push("Error, El dui de la persona 3 debe contener 9 números");
 
                                 if(!(!this.mad2D && !this.mad2Nom && !this.mad2Ap && this.mad2Sexo==0)){
                                     if(!this.mad2D || !this.mad2Nom || !this.mad2Ap || this.mad2Sexo==0){
                                         this.errorMostrarMsjModal3.push("Complete los datos de la persona 4");
                                     }else{
                                         if(!patron.test(this.mad2Nom) || !patron.test(this.mad2Ap)) this.errorMostrarMsjModal3.push("Los datos de la persona 4 debe contener letras solamente");
+                                        if(!patrondui.test(this.mad2D))this.errorMostrarMsjModal3.push("Error, El dui de la persona 4 debe contener 9 números");
                                     }
                                 }
                             }
@@ -1314,11 +1476,31 @@
                 }
             }
             
-            if(this.idcare==0) this.errorMostrarMsjModal3.push("Seleccione una Categoría");
+            if(this.monto==""){
+                this.errorMostrarMsjModal3.push("Por favor ingrese la ofrenda por realización del matrimonio");
+            }else{
+                if(!decimales.test(this.monto)){
+                    this.errorMostrarMsjModal3.push("La ofrenda debe de ser un número positivo");
+                }else{
+                    if(this.cobrado!=true)this.errorMostrarMsjModal3.push("Debe cobrar la ofrenda por la realización del matrimonio");
+                }
+                if(this.idcare==0) this.errorMostrarMsjModal3.push("Seleccione una Categoría");
+            }
             //falta validar para que solo sean números
             if (this.errorMostrarMsjModal3.length) this.errorModal3 = 1;
 
             return this.errorModal3;
+        },
+
+        validarModal4(){
+            this.errorModal4=0;
+            this.errorMostrarMsjModal4=[];
+
+            if(this.cobrado!=true)this.errorMostrarMsjModal4.push("Debe cobrar la solicitud de la constancia matrimonial");
+
+            if (this.errorMostrarMsjModal4.length) this.errorModal4 = 1;
+
+            return this.errorModal4;
         },
 
         //Este cambia de un modal a otro (adelante y atras)
@@ -1326,9 +1508,9 @@
                 switch(d){
                     case '1':
                         {
-                            /* if(this.validarModal2()){
+                            if(this.validarModal2()){
                                 return;
-                            } */
+                            }
 
                             this.modal3=1;
                             this.modal2=0;
@@ -1358,8 +1540,11 @@
             this.noviaD='';
             this.noviaNom='';
             this.noviaAp='';
+            this.ofrendaExp='';
+            this.idcare=0;
             this.errorMatrimonio1=0;
             this.errorMostrarMsjMatrimonio1=[];
+            this.cobrado=false;
 
         },
         //estos dos, cierran los modales de paso 2 y paso3
@@ -1369,8 +1554,8 @@
             this.tituloModal='';
             this.sacramento_id='';
             this.fecha_realizacion ='';
-            this.id_iglesia =0;
-            this.idsacerdote =0;
+            this.id_iglesia=0;
+            this.idsacerdote=0;
             this.cargosacerdote=0;
             this.id_padrino1 ='';
             this.id_madrina1 ='';
@@ -1393,8 +1578,10 @@
             this.mad2Ap='';
             this.mad2Sexo=0;
             this.tipo=0;
+            this.idcare=0;
             this.errorModal2=0;
             this.errorMostrarMsjModal2=[];
+            this.cobrado=false;
         },
         cerrarModal3(){
             this.modal2=0;
@@ -1402,8 +1589,8 @@
             this.tituloModal='';
             this.sacramento_id='';
             this.fecha_realizacion ='';
-            this.id_iglesia =0;
-            this.idsacerdote =0;
+            this.id_iglesia=0;
+            this.idsacerdote=0;
             this.cargosacerdote=0;
             this.id_padrino1 ='';
             this.id_madrina1 ='';
@@ -1425,10 +1612,28 @@
             this.mad2Nom='';
             this.mad2Ap='';
             this.mad2Sexo=0;
+            this.monto=0;
             this.tipo=0;
+            this.idcare=0;
             this.errorModal3=0;
             this.errorMostrarMsjModal3=[];
+            this.cobrado=false;
 
+        },
+
+        cerrarModal4(){
+            this.modal4=0;
+            this.tituloModal='';
+            this.sacramento_id='';
+            this.enConcepto='';
+            this.idcare='',
+            this.cargosacerdote=0,
+            this.idsacerdote=0,
+            this.montoConstancia='';
+            this.idcare=0;
+            this.errorModal4=0;
+            this.errorMostrarMsjModal4=[];
+            this.cobrado=false;
         },
 
         //En "modelo" va el nombre de la tabla guardada aquí, que por convencion de laravel es plural: "modelos"
@@ -1524,43 +1729,106 @@
                         case 'paso2':
                             {
                                 this.modal2 = 1;
-                                this.tituloModal = 'Datos de la Ceremonia';
+                                var apellidoNovioArray=apellidoNovioArray=data['novioAp'].split(' ');//la función split crea un array donde separa la cadena por ' '
+                                var apellidoNoviaArray=apellidoNoviaArray=data['noviaAp'].split(' ');//Luego tomamos del array el primer apellido que está en la posición 0
+                                var apellidoNovioMostrar='';
+                                var apellidoNoviaMostrar='';
+                                //Este IF valida los casos de los apellidos con "de, la, del"
+                                if (apellidoNovioArray[0]=='DE' || apellidoNovioArray[0]=='LA' || apellidoNovioArray[0]=='DEL'){
+                                    if (apellidoNovioArray[1]=='LA' || apellidoNovioArray[1]=='LOS'){
+                                        apellidoNovioMostrar=apellidoNovioArray[0] + ' ' + apellidoNovioArray[1] + ' ' + apellidoNovioArray[2];
+                                    }
+                                    else{
+                                        apellidoNovioMostrar=apellidoNovioArray[0] + ' ' + apellidoNovioArray[1];
+                                    }
+                                }else{
+                                    apellidoNovioMostrar=apellidoNovioArray[0];
+                                }
+                                //el mismo caso anterior, para la novia
+                                if (apellidoNoviaArray[0]=='DE' || apellidoNoviaArray[0]=='LA' || apellidoNoviaArray[0]=='DEL'){
+                                    if (apellidoNoviaArray[1]=='LA' || apellidoNoviaArray[1]=='LOS'){
+                                        apellidoNoviaMostrar=apellidoNoviaArray[0] + ' ' + apellidoNoviaArray[1] + ' ' + apellidoNoviaArray[2];
+                                    }
+                                    else{
+                                        apellidoNoviaMostrar=apellidoNoviaArray[0] + ' ' + apellidoNoviaArray[1];
+                                    }
+                                }else{
+                                    apellidoNoviaMostrar=apellidoNoviaArray[0];
+                                }
+                                this.tituloModal ='Datos de boda: ' + apellidoNovioMostrar + ' - ' + apellidoNoviaMostrar;
                                 this.sacramento_id=data['id'];
                                 this.fecha_realizacion ='';
                                 this.iglesiaNom =''; //Conviene más poner un combobox
-                                this.id_sacerdote ='';
+                                this.idsacerdote =0;
+                                this.cargosacerdote=0;
                                 this.sacerdoteD='';
                                 this.sacerdoteNom='';
                                 this.sacerdoteAp='';
-                                this.id_iglesia ='';
+                                this.id_iglesia =0;
                                 //botones matrimonio realizado / Cancelado
                                 this.tipoAccion = 3;
                                 break;
                             }
-                        case 'paso3':{
-                            this.modal3 = 1;
-                            this.tituloModal = 'Datos de los padrinos';
-                            this.sacramento_id=data['id'];
-                            this.id_padrino ='';
-                            this.pad1D='';
-                            this.pad1Nom='';
-                            this.pad1Ap='';
-                            this.id_madrina1 ='';
-                            this.mad1D='';
-                            this.mad1Nom='';
-                            this.mad1Ap='';
-                            this.id_padrino2 ='';
-                            this.pad2D='';
-                            this.pad2Nom='';
-                            this.pad2Ap='';
-                            this.id_madrina2 ='';
-                            this.mad2D='';
-                            this.mad2Nom='';
-                            this.mad2Ap='';
-                    //botones matrimonio realizado / Cancelado
-                            this.tipoAccion = 3;
-                            break;
-                        }
+                        case 'paso3':
+                            {
+                                this.modal3 = 1;
+                                this.tituloModal = 'Datos de los padrinos';
+                                this.sacramento_id=data['id'];
+                                this.id_padrino ='';
+                                this.pad1D='';
+                                this.pad1Nom='';
+                                this.pad1Ap='';
+                                this.id_madrina1 ='';
+                                this.mad1D='';
+                                this.mad1Nom='';
+                                this.mad1Ap='';
+                                this.id_padrino2 ='';
+                                this.pad2D='';
+                                this.pad2Nom='';
+                                this.pad2Ap='';
+                                this.id_madrina2 ='';
+                                this.mad2D='';
+                                this.mad2Nom='';
+                                this.mad2Ap='';
+                        //botones matrimonio realizado / Cancelado
+                                this.tipoAccion = 3;
+                                break;
+                            }
+                        case 'paso4':
+                            {
+                                this.modal4 = 1;
+                                var apellidoNovioArray=apellidoNovioArray=data['novioAp'].split(' ');//la función split crea un array donde separa la cadena por ' '
+                                var apellidoNoviaArray=apellidoNoviaArray=data['noviaAp'].split(' ');//Luego tomamos del array el primer apellido que está en la posición 0
+                                var apellidoNovioMostrar='';
+                                var apellidoNoviaMostrar='';
+                                //Este IF valida los casos de los apellidos con "de, la, del"
+                                if (apellidoNovioArray[0]=='DE' || apellidoNovioArray[0]=='LA' || apellidoNovioArray[0]=='DEL'){
+                                    if (apellidoNovioArray[1]=='LA' || apellidoNovioArray[1]=='LOS'){
+                                        apellidoNovioMostrar=apellidoNovioArray[0] + ' ' + apellidoNovioArray[1] + ' ' + apellidoNovioArray[2];
+                                    }
+                                    else{
+                                        apellidoNovioMostrar=apellidoNovioArray[0] + ' ' + apellidoNovioArray[1];
+                                    }
+                                }else{
+                                    apellidoNovioMostrar=apellidoNovioArray[0];
+                                }
+                                //el mismo caso anterior, para la novia
+                                if (apellidoNoviaArray[0]=='DE' || apellidoNoviaArray[0]=='LA' || apellidoNoviaArray[0]=='DEL'){
+                                    if (apellidoNoviaArray[1]=='LA' || apellidoNoviaArray[1]=='LOS'){
+                                        apellidoNoviaMostrar=apellidoNoviaArray[0] + ' ' + apellidoNoviaArray[1] + ' ' + apellidoNoviaArray[2];
+                                    }
+                                    else{
+                                        apellidoNoviaMostrar=apellidoNoviaArray[0] + ' ' + apellidoNoviaArray[1];
+                                    }
+                                }else{
+                                    apellidoNoviaMostrar=apellidoNoviaArray[0];
+                                }
+                                this.tituloModal ='Imprimir constancia de boda: ' + apellidoNovioMostrar + ' - ' + apellidoNoviaMostrar;
+                                this.sacramento_id=data['id'];
+                                this.enConcepto='';
+
+                                break;
+                            }
                     }
             }
         },
@@ -1668,8 +1936,8 @@
                     }).then(function (response) {
                         me.listarMatrimonio1(1,'','libro');
                         swal(
-                        'Activado!',
-                        'El registro ha sido activado con éxito.',
+                        'Finalizado!',
+                        'El expediente ya está completo.',
                         'success'
                         )
                     }).catch(function (error) {
