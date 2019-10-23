@@ -97,8 +97,6 @@ class BautizoController extends Controller
                 $partida->partida = $request->partida;
                 $partida->folio = $request->folio;
                 $partida->ano = $request->ano;
-                $partida->libro = $request->libro;
-                $partida->partida = $request->partida;
                 $partida->idpersona = $idreali;
                 $partida->save();
 
@@ -115,6 +113,7 @@ class BautizoController extends Controller
                 $bautizo->id_padrino2 = $request->id_pd2;
                 $bautizo->id_padrino3 = $request->id_pd3;
                 $bautizo->id_padrino4 = $request->id_pd4;
+                $bautizo->titulo = $request->titulo;
                 $bautizo->save();
                 break;
             }
@@ -174,8 +173,6 @@ class BautizoController extends Controller
                 $partida->partida = $request->partida;
                 $partida->folio = $request->folio;
                 $partida->ano = $request->ano;
-                $partida->libro = $request->libro;
-                $partida->partida = $request->partida;
                 $partida->idpersona = $idreali;
                 $partida->save();
 
@@ -192,6 +189,7 @@ class BautizoController extends Controller
                 $bautizo->id_padrino2 = $request->id_pd2;
                 $bautizo->id_padrino3=$idpa3;
                 $bautizo->id_padrino4=$idpa4;
+                $bautizo->titulo = $request->titulo;
                 $bautizo->save();
                 break;
             }
@@ -214,7 +212,6 @@ class BautizoController extends Controller
                 $efectivo->monto=$request->monto;
                 $efectivo->fecha= new \DateTime();
                 $efectivo->save();
-
 
                 $personapd4=new Persona();
                 $personapd4->id=$idpa4;
@@ -242,8 +239,6 @@ class BautizoController extends Controller
                 $partida->partida = $request->partida;
                 $partida->folio = $request->folio;
                 $partida->ano = $request->ano;
-                $partida->libro = $request->libro;
-                $partida->partida = $request->partida;
                 $partida->idpersona = $idreali;
                 $partida->save();
 
@@ -260,6 +255,7 @@ class BautizoController extends Controller
                 $bautizo->id_padrino2 = $request->id_pd2;
                 $bautizo->id_padrino3 = $request->id_pd3;
                 $bautizo->id_padrino4 = $idpa4;
+                $bautizo->titulo = $request->titulo;
                 $bautizo->save();
                 break;
             }
@@ -328,8 +324,6 @@ class BautizoController extends Controller
                 $partida->partida = $request->partida;
                 $partida->folio = $request->folio;
                 $partida->ano = $request->ano;
-                $partida->libro = $request->libro;
-                $partida->partida = $request->partida;
                 $partida->idpersona = $idreali;
                 $partida->save();
 
@@ -346,6 +340,7 @@ class BautizoController extends Controller
                 $bautizo->id_padrino2 = $idpa2;
                 $bautizo->id_padrino3 = $idpa3;
                 $bautizo->id_padrino4 = $idpa4;
+                $bautizo->titulo = $request->titulo;
                 $bautizo->save();
                 break;
             }
@@ -412,8 +407,6 @@ class BautizoController extends Controller
                 $partida->partida = $request->partida;
                 $partida->folio = $request->folio;
                 $partida->ano = $request->ano;
-                $partida->libro = $request->libro;
-                $partida->partida = $request->partida;
                 $partida->idpersona = $idreali;
                 $partida->save();
 
@@ -430,6 +423,7 @@ class BautizoController extends Controller
                 $bautizo->id_padrino2 = $request->id_pd2;
                 $bautizo->id_padrino3 = $idpa3;
                 $bautizo->id_padrino4 = $idpa4;
+                $bautizo->titulo = $request->titulo;
                 $bautizo->save();
                 break;
             }
@@ -488,8 +482,6 @@ class BautizoController extends Controller
                 $partida->partida = $request->partida;
                 $partida->folio = $request->folio;
                 $partida->ano = $request->ano;
-                $partida->libro = $request->libro;
-                $partida->partida = $request->partida;
                 $partida->idpersona = $idreali;
                 $partida->save();
 
@@ -506,6 +498,7 @@ class BautizoController extends Controller
                 $bautizo->id_padrino2 = $request->id_pd2;
                 $bautizo->id_padrino3 = $request->id_pd3;
                 $bautizo->id_padrino4 = $idpa4;
+                $bautizo->titulo = $request->titulo;
                 $bautizo->save();
                 break;
             }
@@ -581,8 +574,6 @@ class BautizoController extends Controller
                 $partida->partida = $request->partida;
                 $partida->folio = $request->folio;
                 $partida->ano = $request->ano;
-                $partida->libro = $request->libro;
-                $partida->partida = $request->partida;
                 $partida->idpersona = $idreali;
                 $partida->save();
 
@@ -599,6 +590,7 @@ class BautizoController extends Controller
                 $bautizo->id_padrino2 = $idpa2;
                 $bautizo->id_padrino3 = $idpa3;
                 $bautizo->id_padrino4 = $idpa4;
+                $bautizo->titulo = $request->titulo;
                 $bautizo->save();
                 break;
             }
@@ -647,8 +639,6 @@ class BautizoController extends Controller
                 $partida->partida = $request->partida;
                 $partida->folio = $request->folio;
                 $partida->ano = $request->ano;
-                $partida->libro = $request->libro;
-                $partida->partida = $request->partida;
                 $partida->idpersona = $idreali;
                 $partida->save();
 
@@ -665,6 +655,7 @@ class BautizoController extends Controller
                 $bautizo->id_padrino2 = $request->id_pd2;
                 $bautizo->id_padrino3 = $request->id_pd3;
                 $bautizo->id_padrino4 = $request->id_pd4;
+                $bautizo->titulo = $request->titulo;
                 $bautizo->save();
                 break;
             }
@@ -713,8 +704,6 @@ class BautizoController extends Controller
                 $partida->partida = $request->partida;
                 $partida->folio = $request->folio;
                 $partida->ano = $request->ano;
-                $partida->libro = $request->libro;
-                $partida->partida = $request->partida;
                 $partida->idpersona = $idreali;
                 $partida->save();
 
@@ -731,6 +720,7 @@ class BautizoController extends Controller
                 $bautizo->id_padrino2 = $request->id_pd2;
                 $bautizo->id_padrino3 = $request->id_pd3;
                 $bautizo->id_padrino4 = $request->id_pd4;
+                $bautizo->titulo = $request->titulo;
                 $bautizo->save();
                 break;
             }
@@ -788,8 +778,6 @@ class BautizoController extends Controller
                 $partida->partida = $request->partida;
                 $partida->folio = $request->folio;
                 $partida->ano = $request->ano;
-                $partida->libro = $request->libro;
-                $partida->partida = $request->partida;
                 $partida->idpersona = $idreali;
                 $partida->save();
 
@@ -806,6 +794,7 @@ class BautizoController extends Controller
                 $bautizo->id_padrino2 = $request->id_pd2;
                 $bautizo->id_padrino3 = $request->id_pd3;
                 $bautizo->id_padrino4 = $idpa4;
+                $bautizo->titulo = $request->titulo;
                 $bautizo->save();
                 break;
             }
@@ -872,8 +861,6 @@ class BautizoController extends Controller
                 $partida->partida = $request->partida;
                 $partida->folio = $request->folio;
                 $partida->ano = $request->ano;
-                $partida->libro = $request->libro;
-                $partida->partida = $request->partida;
                 $partida->idpersona = $idreali;
                 $partida->save();
 
@@ -890,6 +877,7 @@ class BautizoController extends Controller
                 $bautizo->id_padrino2 = $request->id_pd2;
                 $bautizo->id_padrino3 = $idpa3;
                 $bautizo->id_padrino4 = $idpa4;
+                $bautizo->titulo = $request->titulo;
                 $bautizo->save();
                 break;
             }
@@ -965,8 +953,6 @@ class BautizoController extends Controller
                 $partida->partida = $request->partida;
                 $partida->folio = $request->folio;
                 $partida->ano = $request->ano;
-                $partida->libro = $request->libro;
-                $partida->partida = $request->partida;
                 $partida->idpersona = $idreali;
                 $partida->save();
 
@@ -983,6 +969,7 @@ class BautizoController extends Controller
                 $bautizo->id_padrino2 = $idpa2;
                 $bautizo->id_padrino3 = $idpa3;
                 $bautizo->id_padrino4 = $idpa4;
+                $bautizo->titulo = $request->titulo;
                 $bautizo->save();
                 break;
             }
@@ -1075,8 +1062,6 @@ class BautizoController extends Controller
                 $partida->partida = $request->partida;
                 $partida->folio = $request->folio;
                 $partida->ano = $request->ano;
-                $partida->libro = $request->libro;
-                $partida->partida = $request->partida;
                 $partida->idpersona = $idreali;
                 $partida->save();
 
@@ -1093,6 +1078,7 @@ class BautizoController extends Controller
                 $bautizo->id_padrino2 = $idpa2;
                 $bautizo->id_padrino3 = $idpa3;
                 $bautizo->id_padrino4 = $idpa4;
+                $bautizo->titulo = $request->titulo;
                 $bautizo->save();
                 break;
             }
@@ -1149,8 +1135,6 @@ class BautizoController extends Controller
                 $partida->partida = $request->partida;
                 $partida->folio = $request->folio;
                 $partida->ano = $request->ano;
-                $partida->libro = $request->libro;
-                $partida->partida = $request->partida;
                 $partida->idpersona = $idreali;
                 $partida->save();
 
@@ -1167,6 +1151,7 @@ class BautizoController extends Controller
                 $bautizo->id_padrino2 = $request->id_pd2;
                 $bautizo->id_padrino3 = $request->id_pd3;
                 $bautizo->id_padrino4 = $request->id_pd4;
+                $bautizo->titulo = $request->titulo;
                 $bautizo->save();
                 break;
             }
@@ -1232,8 +1217,6 @@ class BautizoController extends Controller
                 $partida->partida = $request->partida;
                 $partida->folio = $request->folio;
                 $partida->ano = $request->ano;
-                $partida->libro = $request->libro;
-                $partida->partida = $request->partida;
                 $partida->idpersona = $idreali;
                 $partida->save();
 
@@ -1250,6 +1233,7 @@ class BautizoController extends Controller
                 $bautizo->id_padrino2 = $request->id_pd2;
                 $bautizo->id_padrino3 = $request->id_pd3;
                 $bautizo->id_padrino4 = $idpa4;
+                $bautizo->titulo = $request->titulo;
                 $bautizo->save();
                 break;
             }
@@ -1324,8 +1308,6 @@ class BautizoController extends Controller
                 $partida->partida = $request->partida;
                 $partida->folio = $request->folio;
                 $partida->ano = $request->ano;
-                $partida->libro = $request->libro;
-                $partida->partida = $request->partida;
                 $partida->idpersona = $idreali;
                 $partida->save();
 
@@ -1342,6 +1324,7 @@ class BautizoController extends Controller
                 $bautizo->id_padrino2 = $request->id_pd2;
                 $bautizo->id_padrino3 = $idpa3;
                 $bautizo->id_padrino4 = $idpa4;
+                $bautizo->titulo = $request->titulo;
                 $bautizo->save();
                 break;
             }
@@ -1425,8 +1408,6 @@ class BautizoController extends Controller
                 $partida->partida = $request->partida;
                 $partida->folio = $request->folio;
                 $partida->ano = $request->ano;
-                $partida->libro = $request->libro;
-                $partida->partida = $request->partida;
                 $partida->idpersona = $idreali;
                 $partida->save();
 
@@ -1443,6 +1424,7 @@ class BautizoController extends Controller
                 $bautizo->id_padrino2 = $idpa2;
                 $bautizo->id_padrino3 = $idpa3;
                 $bautizo->id_padrino4 = $idpa4;
+                $bautizo->titulo = $request->titulo;
                 $bautizo->save();
                 break;
             }
@@ -1483,8 +1465,6 @@ class BautizoController extends Controller
                 $partida->partida = $request->partida;
                 $partida->folio = $request->folio;
                 $partida->ano = $request->ano;
-                $partida->libro = $request->libro;
-                $partida->partida = $request->partida;
                 $partida->idpersona = $idreali;
                 $partida->save();
 
@@ -1500,6 +1480,7 @@ class BautizoController extends Controller
                 $bautizo->id_padrino = $request->id_pd1;
                 $bautizo->id_padrino2 = $request->id_pd2;
                 $bautizo->id_padrino3 = $request->id_pd3;
+                $bautizo->titulo = $request->titulo;
                 $bautizo->save();
                 break;
             }
@@ -1540,8 +1521,6 @@ class BautizoController extends Controller
                 $partida->partida = $request->partida;
                 $partida->folio = $request->folio;
                 $partida->ano = $request->ano;
-                $partida->libro = $request->libro;
-                $partida->partida = $request->partida;
                 $partida->idpersona = $idreali;
                 $partida->save();
 
@@ -1556,6 +1535,7 @@ class BautizoController extends Controller
                 $bautizo->id_sacerdote = $request->sacerdote;
                 $bautizo->id_padrino = $request->id_pd1;
                 $bautizo->id_padrino2 = $request->id_pd2;
+                $bautizo->titulo = $request->titulo;
                 $bautizo->save();
                 break;
             }
@@ -1596,8 +1576,6 @@ class BautizoController extends Controller
                 $partida->partida = $request->partida;
                 $partida->folio = $request->folio;
                 $partida->ano = $request->ano;
-                $partida->libro = $request->libro;
-                $partida->partida = $request->partida;
                 $partida->idpersona = $idreali;
                 $partida->save();
 
@@ -1611,6 +1589,7 @@ class BautizoController extends Controller
                 $bautizo->id_realizante1 = $idreali;
                 $bautizo->id_sacerdote = $request->sacerdote;
                 $bautizo->id_padrino = $request->id_pd1;
+                $bautizo->titulo = $request->titulo;
                 $bautizo->save();
                 break;
             }
@@ -1651,8 +1630,6 @@ class BautizoController extends Controller
                 $partida->partida = $request->partida;
                 $partida->folio = $request->folio;
                 $partida->ano = $request->ano;
-                $partida->libro = $request->libro;
-                $partida->partida = $request->partida;
                 $partida->idpersona = $idreali;
                 $partida->save();
 
@@ -1665,6 +1642,7 @@ class BautizoController extends Controller
                 $bautizo->fecha_realizacion = $request->fecha;
                 $bautizo->id_realizante1 = $idreali;
                 $bautizo->id_sacerdote = $request->sacerdote;
+                $bautizo->titulo = $request->titulo;
                 $bautizo->save();
                 break;
             }
@@ -1704,8 +1682,6 @@ class BautizoController extends Controller
                 $partida->partida = $request->partida;
                 $partida->folio = $request->folio;
                 $partida->ano = $request->ano;
-                $partida->libro = $request->libro;
-                $partida->partida = $request->partida;
                 $partida->idpersona = $idreali;
                 $partida->save();
 
@@ -1722,6 +1698,7 @@ class BautizoController extends Controller
                 $bautizo->id_padrino2 = $request->id_pd2;
                 $bautizo->id_padrino3 = $request->id_pd3;
                 $bautizo->id_padrino4 = $request->id_pd4;
+                $bautizo->titulo = $request->titulo;
                 $bautizo->save();
                 break;
             }
@@ -1761,8 +1738,6 @@ class BautizoController extends Controller
                 $partida->partida = $request->partida;
                 $partida->folio = $request->folio;
                 $partida->ano = $request->ano;
-                $partida->libro = $request->libro;
-                $partida->partida = $request->partida;
                 $partida->idpersona = $idreali;
                 $partida->save();
 
@@ -1778,6 +1753,7 @@ class BautizoController extends Controller
                 $bautizo->id_padrino = $request->id_pd1;
                 $bautizo->id_padrino2 = $request->id_pd2;
                 $bautizo->id_padrino3 = $request->id_pd3;
+                $bautizo->titulo = $request->titulo;
                 $bautizo->save();
                 break;
             }
@@ -1817,8 +1793,6 @@ class BautizoController extends Controller
                 $partida->partida = $request->partida;
                 $partida->folio = $request->folio;
                 $partida->ano = $request->ano;
-                $partida->libro = $request->libro;
-                $partida->partida = $request->partida;
                 $partida->idpersona = $idreali;
                 $partida->save();
 
@@ -1833,6 +1807,7 @@ class BautizoController extends Controller
                 $bautizo->id_sacerdote = $request->sacerdote;
                 $bautizo->id_padrino = $request->id_pd1;
                 $bautizo->id_padrino2 = $request->id_pd2;
+                $bautizo->titulo = $request->titulo;
                 $bautizo->save();
                 break;
             }
@@ -1872,8 +1847,6 @@ class BautizoController extends Controller
                 $partida->partida = $request->partida;
                 $partida->folio = $request->folio;
                 $partida->ano = $request->ano;
-                $partida->libro = $request->libro;
-                $partida->partida = $request->partida;
                 $partida->idpersona = $idreali;
                 $partida->save();
 
@@ -1887,6 +1860,7 @@ class BautizoController extends Controller
                 $bautizo->id_realizante1 = $idreali;
                 $bautizo->id_sacerdote = $request->sacerdote;
                 $bautizo->id_padrino = $request->id_pd1;
+                $bautizo->titulo = $request->titulo;
                 $bautizo->save();
                 break;
             }
@@ -1926,8 +1900,6 @@ class BautizoController extends Controller
                 $partida->partida = $request->partida;
                 $partida->folio = $request->folio;
                 $partida->ano = $request->ano;
-                $partida->libro = $request->libro;
-                $partida->partida = $request->partida;
                 $partida->idpersona = $idreali;
                 $partida->save();
 
@@ -1940,6 +1912,7 @@ class BautizoController extends Controller
                 $bautizo->fecha_realizacion = $request->fecha;
                 $bautizo->id_realizante1 = $idreali;
                 $bautizo->id_sacerdote = $request->sacerdote;
+                $bautizo->titulo = $request->titulo;
                 $bautizo->save();
                 break;
             }
@@ -1979,8 +1952,6 @@ class BautizoController extends Controller
                 $partida->partida = $request->partida;
                 $partida->folio = $request->folio;
                 $partida->ano = $request->ano;
-                $partida->libro = $request->libro;
-                $partida->partida = $request->partida;
                 $partida->idpersona = $idreali;
                 $partida->save();
 
@@ -1997,6 +1968,7 @@ class BautizoController extends Controller
                 $bautizo->id_padrino2 = $request->id_pd2;
                 $bautizo->id_padrino3 = $request->id_pd3;
                 $bautizo->id_padrino4 = $request->id_pd4;
+                $bautizo->titulo = $request->titulo;
                 $bautizo->save();
                 break;
             }
@@ -2036,8 +2008,6 @@ class BautizoController extends Controller
                 $partida->partida = $request->partida;
                 $partida->folio = $request->folio;
                 $partida->ano = $request->ano;
-                $partida->libro = $request->libro;
-                $partida->partida = $request->partida;
                 $partida->idpersona = $idreali;
                 $partida->save();
 
@@ -2053,6 +2023,7 @@ class BautizoController extends Controller
                 $bautizo->id_padrino = $request->id_pd1;
                 $bautizo->id_padrino2 = $request->id_pd2;
                 $bautizo->id_padrino3 = $request->id_pd3;
+                $bautizo->titulo = $request->titulo;
                 $bautizo->save();
                 break;
             }
@@ -2092,8 +2063,6 @@ class BautizoController extends Controller
                 $partida->partida = $request->partida;
                 $partida->folio = $request->folio;
                 $partida->ano = $request->ano;
-                $partida->libro = $request->libro;
-                $partida->partida = $request->partida;
                 $partida->idpersona = $idreali;
                 $partida->save();
 
@@ -2108,6 +2077,7 @@ class BautizoController extends Controller
                 $bautizo->id_sacerdote = $request->sacerdote;
                 $bautizo->id_padrino = $request->id_pd1;
                 $bautizo->id_padrino2 = $request->id_pd2;
+                $bautizo->titulo = $request->titulo;
                 $bautizo->save();
                 break;
             }
@@ -2147,8 +2117,6 @@ class BautizoController extends Controller
                 $partida->partida = $request->partida;
                 $partida->folio = $request->folio;
                 $partida->ano = $request->ano;
-                $partida->libro = $request->libro;
-                $partida->partida = $request->partida;
                 $partida->idpersona = $idreali;
                 $partida->save();
 
@@ -2162,6 +2130,7 @@ class BautizoController extends Controller
                 $bautizo->id_realizante1 = $idreali;
                 $bautizo->id_sacerdote = $request->sacerdote;
                 $bautizo->id_padrino = $request->id_pd1;
+                $bautizo->titulo = $request->titulo;
                 $bautizo->save();
                 break;
             }
@@ -2200,8 +2169,6 @@ class BautizoController extends Controller
                 $partida->partida = $request->partida;
                 $partida->folio = $request->folio;
                 $partida->ano = $request->ano;
-                $partida->libro = $request->libro;
-                $partida->partida = $request->partida;
                 $partida->idpersona = $idreali;
                 $partida->save();
 
@@ -2214,6 +2181,11 @@ class BautizoController extends Controller
                 $bautizo->fecha_realizacion = $request->fecha;
                 $bautizo->id_realizante1 = $idreali;
                 $bautizo->id_sacerdote = $request->sacerdote;
+                $bautizo->id_padrino = $request->id_pd1;
+                $bautizo->id_padrino2 = $request->id_pd2;
+                $bautizo->id_padrino3 = $request->id_pd3;
+                $bautizo->id_padrino4 = $request->id_pd4;
+                $bautizo->titulo = $request->titulo;
                 $bautizo->save();
                 break;
             }
@@ -2252,8 +2224,6 @@ class BautizoController extends Controller
                 $partida->partida = $request->partida;
                 $partida->folio = $request->folio;
                 $partida->ano = $request->ano;
-                $partida->libro = $request->libro;
-                $partida->partida = $request->partida;
                 $partida->idpersona = $idreali;
                 $partida->save();
 
@@ -2269,7 +2239,7 @@ class BautizoController extends Controller
                 $bautizo->id_padrino = $request->id_pd1;
                 $bautizo->id_padrino2 = $request->id_pd2;
                 $bautizo->id_padrino3 = $request->id_pd3;
-                $bautizo->id_padrino4 = $request->id_pd4;
+                $bautizo->titulo = $request->titulo;
                 $bautizo->save();
                 break;
             }
@@ -2308,8 +2278,6 @@ class BautizoController extends Controller
                 $partida->partida = $request->partida;
                 $partida->folio = $request->folio;
                 $partida->ano = $request->ano;
-                $partida->libro = $request->libro;
-                $partida->partida = $request->partida;
                 $partida->idpersona = $idreali;
                 $partida->save();
 
@@ -2324,7 +2292,7 @@ class BautizoController extends Controller
                 $bautizo->id_sacerdote = $request->sacerdote;
                 $bautizo->id_padrino = $request->id_pd1;
                 $bautizo->id_padrino2 = $request->id_pd2;
-                $bautizo->id_padrino3 = $request->id_pd3;
+                $bautizo->titulo = $request->titulo;
                 $bautizo->save();
                 break;
             }
@@ -2363,8 +2331,6 @@ class BautizoController extends Controller
                 $partida->partida = $request->partida;
                 $partida->folio = $request->folio;
                 $partida->ano = $request->ano;
-                $partida->libro = $request->libro;
-                $partida->partida = $request->partida;
                 $partida->idpersona = $idreali;
                 $partida->save();
 
@@ -2378,13 +2344,16 @@ class BautizoController extends Controller
                 $bautizo->id_realizante1 = $idreali;
                 $bautizo->id_sacerdote = $request->sacerdote;
                 $bautizo->id_padrino = $request->id_pd1;
-                $bautizo->id_padrino2 = $request->id_pd2;
+                $bautizo->titulo = $request->titulo;
                 $bautizo->save();
                 break;
             }
             case '35':{
-                $id_realizante=Persona::max('id');
-                $idreali = $id_realizante+1;
+                $id_persona=Persona::max('id');
+                $idma=$id_persona+1;
+                $idpa=$idma+1;
+                $idpa1=$idpa+1;
+                $idreali = $idpa1+1;
                 $idsacra = Sacramentos3::max('id');
                 $idsacramento = $idsacra+1;
                 $idpartida = PartidaNacimiento::max('id');
@@ -2400,6 +2369,320 @@ class BautizoController extends Controller
                 $efectivo->monto=$request->monto;
                 $efectivo->fecha= new \DateTime();
                 $efectivo->save();
+
+                $personam=new Persona();
+                $personam->id=$idma;
+                $personam->nombre_persona=$request->nombre_m;
+                $personam->apellido_persona=$request->apellido_m;
+                $personam->dui_pasaporte=$request->dui_m;
+                $personam->save();
+
+                $personap=new Persona();
+                $personap->id=$idpa;
+                $personap->nombre_persona=$request->nombre_p;
+                $personap->apellido_persona=$request->apellido_p;
+                $personap->dui_pasaporte=$request->dui_p;
+                $personap->save();
+
+                $personapd1=new Persona();
+                $personapd1->id=$idpa1;
+                $personapd1->nombre_persona=$request->nombre_pd1;
+                $personapd1->apellido_persona=$request->apellido_pd1;
+                $personapd1->dui_pasaporte=$request->dui_pd1;
+                $personapd1->sexo=$request->sexo_pd1;
+                $personapd1->save();
+
+                $persona_reali = new Persona();
+                $persona_reali->id = $idreali;
+                $persona_reali->nombre_persona = $request->nombre_reali;
+                $persona_reali->apellido_persona = $request->apellido_reali;
+                $persona_reali->fecha_nacimiento = $request->nacimiento;
+                $persona_reali->dui_pasaporte = $request->dui_reali;
+                $persona_reali->sexo = $request->sexo;
+                $persona_reali->id_madre = $idma;
+                $persona_reali->id_padre = $idpa;
+                $persona_reali->save();
+
+                $partida = new PartidaNacimiento();
+                $partida->id = $idp;
+                $partida->alcaldia = $request->alcaldia;
+                $partida->libro = $request->libro;
+                $partida->partida = $request->partida;
+                $partida->folio = $request->folio;
+                $partida->ano = $request->ano;
+                $partida->idpersona = $idreali;
+                $partida->save();
+
+                $bautizo = new Sacramentos3();
+                $bautizo->id = $idsacramento;
+                $bautizo->tipo_sacramento=$tiposacra;
+                $bautizo->libro = $request->librob;
+                $bautizo->folio = $request->foliob;
+                $bautizo->asiento = $request->asiento;
+                $bautizo->fecha_realizacion = $request->fecha;
+                $bautizo->id_realizante1 = $idreali;
+                $bautizo->id_sacerdote = $request->sacerdote;
+                $bautizo->id_padrino = $idpa1;
+                $bautizo->titulo = $request->titulo;
+                $bautizo->save();
+                break;
+            }
+            case '36':{
+                $id_persona=Persona::max('id');
+                $idma=$id_persona+1;
+                $idpa=$idma+1;
+                $idpa1=$idpa+1;
+                $idpa2=$idpa1+1;
+                $idreali = $idpa2+1;
+                $idsacra = Sacramentos3::max('id');
+                $idsacramento = $idsacra+1;
+                $idpartida = PartidaNacimiento::max('id');
+                $idp = $idpartida+1;
+                $monto_p= Efectivo::max('id');
+                $montos=$monto_p+1;
+
+                $efectivo = new Efectivo();
+                $efectivo->id=$montos;
+                $efectivo->descripcion_efectivo='BAUTISMO';
+                $efectivo->idcare=$request->idcate;
+                $efectivo->tipo= 1;
+                $efectivo->monto=$request->monto;
+                $efectivo->fecha= new \DateTime();
+                $efectivo->save();
+
+                $personam=new Persona();
+                $personam->id=$idma;
+                $personam->nombre_persona=$request->nombre_m;
+                $personam->apellido_persona=$request->apellido_m;
+                $personam->dui_pasaporte=$request->dui_m;
+                $personam->save();
+
+                $personap=new Persona();
+                $personap->id=$idpa;
+                $personap->nombre_persona=$request->nombre_p;
+                $personap->apellido_persona=$request->apellido_p;
+                $personap->dui_pasaporte=$request->dui_p;
+                $personap->save();
+
+                $personapd1=new Persona();
+                $personapd1->id=$idpa1;
+                $personapd1->nombre_persona=$request->nombre_pd1;
+                $personapd1->apellido_persona=$request->apellido_pd1;
+                $personapd1->dui_pasaporte=$request->dui_pd1;
+                $personapd1->sexo=$request->sexo_pd1;
+                $personapd1->save();
+
+                $personapd2=new Persona();
+                $personapd2->id=$idpa2;
+                $personapd2->nombre_persona=$request->nombre_pd2;
+                $personapd2->apellido_persona=$request->apellido_pd2;
+                $personapd2->dui_pasaporte=$request->dui_pd2;
+                $personapd2->sexo=$request->sexo_pd2;
+                $personapd2->save();
+
+                $persona_reali = new Persona();
+                $persona_reali->id = $idreali;
+                $persona_reali->nombre_persona = $request->nombre_reali;
+                $persona_reali->apellido_persona = $request->apellido_reali;
+                $persona_reali->fecha_nacimiento = $request->nacimiento;
+                $persona_reali->dui_pasaporte = $request->dui_reali;
+                $persona_reali->sexo = $request->sexo;
+                $persona_reali->id_madre = $idma;
+                $persona_reali->id_padre = $idpa;
+                $persona_reali->save();
+
+                $partida = new PartidaNacimiento();
+                $partida->id = $idp;
+                $partida->alcaldia = $request->alcaldia;
+                $partida->libro = $request->libro;
+                $partida->partida = $request->partida;
+                $partida->folio = $request->folio;
+                $partida->ano = $request->ano;
+                $partida->idpersona = $idreali;
+                $partida->save();
+
+                $bautizo = new Sacramentos3();
+                $bautizo->id = $idsacramento;
+                $bautizo->tipo_sacramento=$tiposacra;
+                $bautizo->libro = $request->librob;
+                $bautizo->folio = $request->foliob;
+                $bautizo->asiento = $request->asiento;
+                $bautizo->fecha_realizacion = $request->fecha;
+                $bautizo->id_realizante1 = $idreali;
+                $bautizo->id_sacerdote = $request->sacerdote;
+                $bautizo->id_padrino = $idpa1;
+                $bautizo->id_padrino2 = $idpa2;
+                $bautizo->titulo = $request->titulo;
+                $bautizo->save();
+                break;
+            }
+            case '37':{
+                $id_persona=Persona::max('id');
+                $idma=$id_persona+1;
+                $idpa1=$idma+1;
+                $idreali = $idpa1+1;
+                $idsacra = Sacramentos3::max('id');
+                $idsacramento = $idsacra+1;
+                $idpartida = PartidaNacimiento::max('id');
+                $idp = $idpartida+1;
+                $monto_p= Efectivo::max('id');
+                $montos=$monto_p+1;
+
+                $efectivo = new Efectivo();
+                $efectivo->id=$montos;
+                $efectivo->descripcion_efectivo='BAUTISMO';
+                $efectivo->idcare=$request->idcate;
+                $efectivo->tipo= 1;
+                $efectivo->monto=$request->monto;
+                $efectivo->fecha= new \DateTime();
+                $efectivo->save();
+
+                $personam=new Persona();
+                $personam->id=$idma;
+                $personam->nombre_persona=$request->nombre_m;
+                $personam->apellido_persona=$request->apellido_m;
+                $personam->dui_pasaporte=$request->dui_m;
+                $personam->save();
+
+                $personapd1=new Persona();
+                $personapd1->id=$idpa1;
+                $personapd1->nombre_persona=$request->nombre_pd1;
+                $personapd1->apellido_persona=$request->apellido_pd1;
+                $personapd1->dui_pasaporte=$request->dui_pd1;
+                $personapd1->sexo=$request->sexo_pd1;
+                $personapd1->save();
+
+                $persona_reali = new Persona();
+                $persona_reali->id = $idreali;
+                $persona_reali->nombre_persona = $request->nombre_reali;
+                $persona_reali->apellido_persona = $request->apellido_reali;
+                $persona_reali->fecha_nacimiento = $request->nacimiento;
+                $persona_reali->dui_pasaporte = $request->dui_reali;
+                $persona_reali->sexo = $request->sexo;
+                $persona_reali->id_madre = $idma;
+                $persona_reali->save();
+
+                $partida = new PartidaNacimiento();
+                $partida->id = $idp;
+                $partida->alcaldia = $request->alcaldia;
+                $partida->libro = $request->libro;
+                $partida->partida = $request->partida;
+                $partida->folio = $request->folio;
+                $partida->ano = $request->ano;
+                $partida->idpersona = $idreali;
+                $partida->save();
+
+                $bautizo = new Sacramentos3();
+                $bautizo->id = $idsacramento;
+                $bautizo->tipo_sacramento=$tiposacra;
+                $bautizo->libro = $request->librob;
+                $bautizo->folio = $request->foliob;
+                $bautizo->asiento = $request->asiento;
+                $bautizo->fecha_realizacion = $request->fecha;
+                $bautizo->id_realizante1 = $idreali;
+                $bautizo->id_sacerdote = $request->sacerdote;
+                $bautizo->id_padrino = $idpa1;
+                $bautizo->titulo = $request->titulo;
+                $bautizo->save();
+                break;
+            }
+            case '38':{
+                $id_persona=Persona::max('id');
+                $idpa=$id_persona+1;
+                $idpa1=$idpa+1;
+                $idreali = $idpa1+1;
+                $idsacra = Sacramentos3::max('id');
+                $idsacramento = $idsacra+1;
+                $idpartida = PartidaNacimiento::max('id');
+                $idp = $idpartida+1;
+                $monto_p= Efectivo::max('id');
+                $montos=$monto_p+1;
+
+                $efectivo = new Efectivo();
+                $efectivo->id=$montos;
+                $efectivo->descripcion_efectivo='BAUTISMO';
+                $efectivo->idcare=$request->idcate;
+                $efectivo->tipo= 1;
+                $efectivo->monto=$request->monto;
+                $efectivo->fecha= new \DateTime();
+                $efectivo->save();
+
+                $personap=new Persona();
+                $personap->id=$idpa;
+                $personap->nombre_persona=$request->nombre_p;
+                $personap->apellido_persona=$request->apellido_p;
+                $personap->dui_pasaporte=$request->dui_p;
+                $personap->save();
+
+                $personapd1=new Persona();
+                $personapd1->id=$idpa1;
+                $personapd1->nombre_persona=$request->nombre_pd1;
+                $personapd1->apellido_persona=$request->apellido_pd1;
+                $personapd1->dui_pasaporte=$request->dui_pd1;
+                $personapd1->sexo=$request->sexo_pd1;
+                $personapd1->save();
+
+                $persona_reali = new Persona();
+                $persona_reali->id = $idreali;
+                $persona_reali->nombre_persona = $request->nombre_reali;
+                $persona_reali->apellido_persona = $request->apellido_reali;
+                $persona_reali->fecha_nacimiento = $request->nacimiento;
+                $persona_reali->dui_pasaporte = $request->dui_reali;
+                $persona_reali->sexo = $request->sexo;
+                $persona_reali->id_padre = $idpa;
+                $persona_reali->save();
+
+                $partida = new PartidaNacimiento();
+                $partida->id = $idp;
+                $partida->alcaldia = $request->alcaldia;
+                $partida->libro = $request->libro;
+                $partida->partida = $request->partida;
+                $partida->folio = $request->folio;
+                $partida->ano = $request->ano;
+                $partida->idpersona = $idreali;
+                $partida->save();
+
+                $bautizo = new Sacramentos3();
+                $bautizo->id = $idsacramento;
+                $bautizo->tipo_sacramento=$tiposacra;
+                $bautizo->libro = $request->librob;
+                $bautizo->folio = $request->foliob;
+                $bautizo->asiento = $request->asiento;
+                $bautizo->fecha_realizacion = $request->fecha;
+                $bautizo->id_realizante1 = $idreali;
+                $bautizo->id_sacerdote = $request->sacerdote;
+                $bautizo->id_padrino = $idpa1;
+                $bautizo->titulo = $request->titulo;
+                $bautizo->save();
+                break;
+            }
+            case '39':{
+                $id_persona=Persona::max('id');
+                $idpa1=$id_persona+1;
+                $idreali = $idpa1+1;
+                $idsacra = Sacramentos3::max('id');
+                $idsacramento = $idsacra+1;
+                $idpartida = PartidaNacimiento::max('id');
+                $idp = $idpartida+1;
+                $monto_p= Efectivo::max('id');
+                $montos=$monto_p+1;
+
+                $efectivo = new Efectivo();
+                $efectivo->id=$montos;
+                $efectivo->descripcion_efectivo='BAUTISMO';
+                $efectivo->idcare=$request->idcate;
+                $efectivo->tipo= 1;
+                $efectivo->monto=$request->monto;
+                $efectivo->fecha= new \DateTime();
+                $efectivo->save();
+
+                $personapd1=new Persona();
+                $personapd1->id=$idpa1;
+                $personapd1->nombre_persona=$request->nombre_pd1;
+                $personapd1->apellido_persona=$request->apellido_pd1;
+                $personapd1->dui_pasaporte=$request->dui_pd1;
+                $personapd1->sexo=$request->sexo_pd1;
+                $personapd1->save();
 
                 $persona_reali = new Persona();
                 $persona_reali->id = $idreali;
@@ -2417,8 +2700,6 @@ class BautizoController extends Controller
                 $partida->partida = $request->partida;
                 $partida->folio = $request->folio;
                 $partida->ano = $request->ano;
-                $partida->libro = $request->libro;
-                $partida->partida = $request->partida;
                 $partida->idpersona = $idreali;
                 $partida->save();
 
@@ -2431,7 +2712,8 @@ class BautizoController extends Controller
                 $bautizo->fecha_realizacion = $request->fecha;
                 $bautizo->id_realizante1 = $idreali;
                 $bautizo->id_sacerdote = $request->sacerdote;
-                $bautizo->id_padrino = $request->id_pd1;
+                $bautizo->id_padrino = $idpa1;
+                $bautizo->titulo = $request->titulo;
                 $bautizo->save();
                 break;
             }
