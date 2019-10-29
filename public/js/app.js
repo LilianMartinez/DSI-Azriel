@@ -5570,18 +5570,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     //Dave: En esta función declaramos las variables que utilizaremos
@@ -5633,12 +5621,11 @@ __webpack_require__.r(__webpack_exports__);
       //este es para el botón de crear expediente
       montoConstancia: '',
       //este es para el botón de solicitar constancia
-      cobrado: false,
       enConcepto: '',
       //el por qué se imprimirá la Constancia
-      idcare: '',
-      cargosacerdote: '',
-      idsacerdote: '',
+      idcare: 0,
+      cargosacerdote: 0,
+      idsacerdote: 0,
       arraysacerdote: [],
       arraycargo: [],
       arraycategorias: [],
@@ -5710,9 +5697,6 @@ __webpack_require__.r(__webpack_exports__);
     }
   },
   methods: {
-    cobrar: function cobrar() {
-      this.cobrado = true; //AQUÍ AGREGAR EL DESABILITAR COBRAR1
-    },
     listarMatrimonio1: function listarMatrimonio1(page, buscar, criterio) {
       var me = this;
       var lengthbuscar = this.buscar.length;
@@ -6004,6 +5988,7 @@ __webpack_require__.r(__webpack_exports__);
               'idcate': this.idcare
             }).then(function (response) {
               //si todo funciona:
+              me.msjExito();
               me.listarMatrimonio1();
               me.cerrarModal();
             })["catch"](function (error) {
@@ -6025,6 +6010,7 @@ __webpack_require__.r(__webpack_exports__);
               //si todo funciona:
               me.listarMatrimonio1();
               me.cerrarModal();
+              me.msjExito();
             })["catch"](function (error) {
               console.log(error);
             });
@@ -6047,6 +6033,7 @@ __webpack_require__.r(__webpack_exports__);
               //si todo funciona:
               me.listarMatrimonio1();
               me.cerrarModal();
+              me.msjExito();
             })["catch"](function (error) {
               console.log(error);
             });
@@ -6064,6 +6051,7 @@ __webpack_require__.r(__webpack_exports__);
               //si todo funciona:
               me.listarMatrimonio1();
               me.cerrarModal();
+              me.msjExito();
             })["catch"](function (error) {
               console.log(error);
             });
@@ -6119,6 +6107,7 @@ __webpack_require__.r(__webpack_exports__);
         //si todo funciona:
         me.listarMatrimonio1();
         me.cerrarModal();
+        me.msjExito();
       })["catch"](function (error) {
         console.log(error);
       });
@@ -6174,6 +6163,7 @@ __webpack_require__.r(__webpack_exports__);
               //si todo funciona:
               me.listarMatrimonio1();
               me.cerrarModal3();
+              me.msjExito();
             })["catch"](function (error) {
               console.log(error);
             });
@@ -6221,6 +6211,7 @@ __webpack_require__.r(__webpack_exports__);
               //si todo funciona:
               me.listarMatrimonio1();
               me.cerrarModal3();
+              me.msjExito();
             })["catch"](function (error) {
               console.log(error);
             });
@@ -6294,6 +6285,7 @@ __webpack_require__.r(__webpack_exports__);
             //si todo funciona:
             me.listarMatrimonio1();
             me.cerrarModal3();
+            me.msjExito();
           })["catch"](function (error) {
             console.log(error);
           });
@@ -6412,6 +6404,7 @@ __webpack_require__.r(__webpack_exports__);
           //si todo funciona:
           me.listarMatrimonio1();
           me.cerrarModal3();
+          me.msjExito();
         })["catch"](function (error) {
           console.log(error);
         });
@@ -6443,7 +6436,6 @@ __webpack_require__.r(__webpack_exports__);
         if (!patron.test(this.noviaNom) || !patron.test(this.noviaAp)) this.errorMostrarMsjMatrimonio1.push("Los datos de la novia debe contener letras solamente");
         if (!decimales.test(this.ofrendaExp)) this.errorMostrarMsjMatrimonio1.push("La ofrenda debe de ser un número positivo");
         if (this.idcare == 0) this.errorMostrarMsjMatrimonio1.push("Debe elegir una categoría");
-        if (this.cobrado != true) this.errorMostrarMsjMatrimonio1.push("Debe cobrar la apertura del expediente de matrimonio");
       }
 
       if (this.errorMostrarMsjMatrimonio1.length) this.errorMatrimonio1 = 1;
@@ -6518,12 +6510,7 @@ __webpack_require__.r(__webpack_exports__);
       if (this.monto == "") {
         this.errorMostrarMsjModal3.push("Por favor ingrese la ofrenda por realización del matrimonio");
       } else {
-        if (!decimales.test(this.monto)) {
-          this.errorMostrarMsjModal3.push("La ofrenda debe de ser un número positivo");
-        } else {
-          if (this.cobrado != true) this.errorMostrarMsjModal3.push("Debe cobrar la ofrenda por la realización del matrimonio");
-        }
-
+        if (!decimales.test(this.monto)) this.errorMostrarMsjModal3.push("La ofrenda debe de ser un número positivo");
         if (this.idcare == 0) this.errorMostrarMsjModal3.push("Seleccione una Categoría");
       } //falta validar para que solo sean números
 
@@ -6534,7 +6521,6 @@ __webpack_require__.r(__webpack_exports__);
     validarModal4: function validarModal4() {
       this.errorModal4 = 0;
       this.errorMostrarMsjModal4 = [];
-      if (this.cobrado != true) this.errorMostrarMsjModal4.push("Debe cobrar la solicitud de la constancia matrimonial");
       if (this.errorMostrarMsjModal4.length) this.errorModal4 = 1;
       return this.errorModal4;
     },
@@ -6580,7 +6566,6 @@ __webpack_require__.r(__webpack_exports__);
       this.idcare = 0;
       this.errorMatrimonio1 = 0;
       this.errorMostrarMsjMatrimonio1 = [];
-      this.cobrado = false;
     },
     //estos dos, cierran los modales de paso 2 y paso3
     cerrarModal2: function cerrarModal2() {
@@ -6612,11 +6597,11 @@ __webpack_require__.r(__webpack_exports__);
       this.mad2Nom = '';
       this.mad2Ap = '';
       this.mad2Sexo = 0;
+      this.monto = '';
       this.tipo = 0;
       this.idcare = 0;
       this.errorModal2 = 0;
       this.errorMostrarMsjModal2 = [];
-      this.cobrado = false;
     },
     cerrarModal3: function cerrarModal3() {
       this.modal2 = 0;
@@ -6647,12 +6632,11 @@ __webpack_require__.r(__webpack_exports__);
       this.mad2Nom = '';
       this.mad2Ap = '';
       this.mad2Sexo = 0;
-      this.monto = 0;
+      this.monto = '';
       this.tipo = 0;
       this.idcare = 0;
       this.errorModal3 = 0;
       this.errorMostrarMsjModal3 = [];
-      this.cobrado = false;
     },
     cerrarModal4: function cerrarModal4() {
       this.modal4 = 0;
@@ -6663,7 +6647,6 @@ __webpack_require__.r(__webpack_exports__);
       this.idcare = 0;
       this.errorModal4 = 0;
       this.errorMostrarMsjModal4 = [];
-      this.cobrado = false;
     },
     //En "modelo" va el nombre de la tabla guardada aquí, que por convencion de laravel es plural: "modelos"
     abrirModal: function abrirModal(modelo, accion) {
@@ -6866,6 +6849,14 @@ __webpack_require__.r(__webpack_exports__);
           }
 
       }
+    },
+    msjExito: function msjExito() {
+      swal({
+        type: 'success',
+        title: 'Datos guardados con éxito',
+        showConfirmButton: false,
+        timer: 1500
+      });
     },
     //el metodo del botón del basurero
     desactivarExpediente: function desactivarExpediente(id) {
@@ -12674,7 +12665,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n/*Aquí ya comienza el CSS, ke kreisi */\n.modal-content{\n       width: 100% !important;\n       position: absolute !important\n}\n.mostrar{\n       display: list-item !important;\n       opacity: 1 !important;\n       position: absolute !important;\n       background-color: #3c29297a !important;\n}\n.div-error{ /* estos dos estilos son para validación */\n       display: flex;\n       justify-content: center;\n}\n.text-error{\n       color: red !important;\n       font-weight: bold;\n}\n.margen{\n       margin-bottom: 10px;\n}\n   \n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n/*Aquí ya comienza el CSS, ke kreisi */\n.modal-content{\n       width: 100% !important;\n       position: absolute !important\n}\n.mostrar{\n       display: list-item !important;\n       opacity: 1 !important;\n       position: absolute !important;\n       background-color: #3c29297a !important;\n}\n.div-error{ /* estos dos estilos son para validación */\n       display: flex;\n       justify-content: center;\n}\n.text-error{\n       color: red !important;\n       font-weight: bold;\n}\n.margen{\n       margin-bottom: 10px;\n}\n   \n", ""]);
 
 // exports
 
@@ -57671,7 +57662,7 @@ var render = function() {
                           staticClass: "col-md-2 form-control-label",
                           attrs: { for: "text-input" }
                         },
-                        [_vm._v("DUI")]
+                        [_vm._v("Documento de Identidad")]
                       ),
                       _vm._v(" "),
                       _c("div", { staticClass: "col-md-5" }, [
@@ -57685,7 +57676,7 @@ var render = function() {
                             }
                           ],
                           staticClass: "form-control",
-                          attrs: { type: "text", placeholder: "00000000-0" },
+                          attrs: { type: "text", placeholder: " " },
                           domProps: { value: _vm.novioD },
                           on: {
                             keydown: function($event) {
@@ -57787,7 +57778,7 @@ var render = function() {
                           staticClass: "col-md-2 form-control-label",
                           attrs: { for: "text-input" }
                         },
-                        [_vm._v("DUI")]
+                        [_vm._v("Documento de Identidad")]
                       ),
                       _vm._v(" "),
                       _c("div", { staticClass: "col-md-5" }, [
@@ -57801,7 +57792,7 @@ var render = function() {
                             }
                           ],
                           staticClass: "form-control",
-                          attrs: { type: "text", placeholder: "00000000-0" },
+                          attrs: { type: "text", placeholder: " " },
                           domProps: { value: _vm.noviaD },
                           on: {
                             keydown: function($event) {
@@ -57890,22 +57881,9 @@ var render = function() {
                     ]),
                     _vm._v(" "),
                     _c("div", { staticClass: "form-group row" }, [
-                      _c("div", { staticClass: "col-md-2" }),
+                      _vm._m(4),
                       _vm._v(" "),
-                      _c("div", { staticClass: "col-md-2" }, [
-                        _c(
-                          "button",
-                          {
-                            staticClass: "btn btn-secondary btn-block",
-                            attrs: { type: "button", value: "cobrar1" },
-                            on: { click: _vm.cobrar }
-                          },
-                          [_vm._v("Cobrar")]
-                        ),
-                        _vm._v("   ")
-                      ]),
-                      _vm._v(" "),
-                      _c("div", { staticClass: "col-md-3" }, [
+                      _c("div", { staticClass: "col-md-4" }, [
                         _c("input", {
                           directives: [
                             {
@@ -58132,7 +58110,7 @@ var render = function() {
                   },
                   [
                     _c("div", { staticClass: "form-group row" }, [
-                      _vm._m(4),
+                      _vm._m(5),
                       _vm._v(" "),
                       _c("div", { staticClass: "col-md-4" }, [
                         _c("input", {
@@ -58158,7 +58136,7 @@ var render = function() {
                         })
                       ]),
                       _vm._v(" "),
-                      _vm._m(5),
+                      _vm._m(6),
                       _vm._v(" "),
                       _c("div", { staticClass: "col-md-5" }, [
                         _c(
@@ -58214,7 +58192,7 @@ var render = function() {
                     _c("tr"),
                     _vm._v(" "),
                     _c("div", { staticClass: "form-group row" }, [
-                      _vm._m(6),
+                      _vm._m(7),
                       _vm._v(" "),
                       _c("div", { staticClass: "col-md-5" }, [
                         _c(
@@ -58275,7 +58253,7 @@ var render = function() {
                     ]),
                     _vm._v(" "),
                     _c("div", { staticClass: "form-group row" }, [
-                      _vm._m(7),
+                      _vm._m(8),
                       _vm._v(" "),
                       _c("div", { staticClass: "col-md-5" }, [
                         _c(
@@ -58453,7 +58431,7 @@ var render = function() {
                     }
                   },
                   [
-                    _vm._m(8),
+                    _vm._m(9),
                     _vm._v(" "),
                     _c("div", { staticClass: "form-group row" }, [
                       _c(
@@ -58462,7 +58440,7 @@ var render = function() {
                           staticClass: "col-md-2 form-control-label",
                           attrs: { for: "text-input" }
                         },
-                        [_vm._v("DUI")]
+                        [_vm._v("Documento de Identidad")]
                       ),
                       _vm._v(" "),
                       _c("div", { staticClass: "col-md-5" }, [
@@ -58476,7 +58454,7 @@ var render = function() {
                             }
                           ],
                           staticClass: "form-control",
-                          attrs: { type: "text", placeholder: "00000000-0" },
+                          attrs: { type: "text", placeholder: " " },
                           domProps: { value: _vm.pad1D },
                           on: {
                             keydown: function($event) {
@@ -58559,7 +58537,7 @@ var render = function() {
                     ]),
                     _vm._v(" "),
                     _c("div", { staticClass: "form-group row" }, [
-                      _vm._m(9),
+                      _vm._m(10),
                       _vm._v(" "),
                       _c("div", { staticClass: "col-md-5" }, [
                         _c("input", {
@@ -58616,7 +58594,7 @@ var render = function() {
                       ])
                     ]),
                     _vm._v(" "),
-                    _vm._m(10),
+                    _vm._m(11),
                     _vm._v(" "),
                     _c("div", { staticClass: "form-group row" }, [
                       _c(
@@ -58625,7 +58603,7 @@ var render = function() {
                           staticClass: "col-md-2 form-control-label",
                           attrs: { for: "text-input" }
                         },
-                        [_vm._v("DUI")]
+                        [_vm._v("Documento de Identidad")]
                       ),
                       _vm._v(" "),
                       _c("div", { staticClass: "col-md-5" }, [
@@ -58639,7 +58617,7 @@ var render = function() {
                             }
                           ],
                           staticClass: "form-control",
-                          attrs: { type: "text", placeholder: "00000000-0" },
+                          attrs: { type: "text", placeholder: " " },
                           domProps: { value: _vm.mad1D },
                           on: {
                             keydown: function($event) {
@@ -58722,7 +58700,7 @@ var render = function() {
                     ]),
                     _vm._v(" "),
                     _c("div", { staticClass: "form-group row" }, [
-                      _vm._m(11),
+                      _vm._m(12),
                       _vm._v(" "),
                       _c("div", { staticClass: "col-md-5" }, [
                         _c("input", {
@@ -58779,7 +58757,7 @@ var render = function() {
                       ])
                     ]),
                     _vm._v(" "),
-                    _vm._m(12),
+                    _vm._m(13),
                     _vm._v(" "),
                     _c("div", { staticClass: "form-group row" }, [
                       _c(
@@ -58788,7 +58766,7 @@ var render = function() {
                           staticClass: "col-md-2 form-control-label",
                           attrs: { for: "text-input" }
                         },
-                        [_vm._v("DUI")]
+                        [_vm._v("Documento de Identidad")]
                       ),
                       _vm._v(" "),
                       _c("div", { staticClass: "col-md-5" }, [
@@ -58802,7 +58780,7 @@ var render = function() {
                             }
                           ],
                           staticClass: "form-control",
-                          attrs: { type: "text", placeholder: "00000000-0" },
+                          attrs: { type: "text", placeholder: " " },
                           domProps: { value: _vm.pad2D },
                           on: {
                             keydown: function($event) {
@@ -58949,7 +58927,7 @@ var render = function() {
                       ])
                     ]),
                     _vm._v(" "),
-                    _vm._m(13),
+                    _vm._m(14),
                     _vm._v(" "),
                     _c("div", { staticClass: "form-group row" }, [
                       _c(
@@ -58958,7 +58936,7 @@ var render = function() {
                           staticClass: "col-md-2 form-control-label",
                           attrs: { for: "text-input" }
                         },
-                        [_vm._v("DUI")]
+                        [_vm._v("Documento de Identidad")]
                       ),
                       _vm._v(" "),
                       _c("div", { staticClass: "col-md-5" }, [
@@ -58972,7 +58950,7 @@ var render = function() {
                             }
                           ],
                           staticClass: "form-control",
-                          attrs: { type: "text", placeholder: "00000000-0" },
+                          attrs: { type: "text", placeholder: " " },
                           domProps: { value: _vm.mad2D },
                           on: {
                             keydown: function($event) {
@@ -59120,22 +59098,9 @@ var render = function() {
                     ]),
                     _vm._v(" "),
                     _c("div", { staticClass: "form-group row" }, [
-                      _c("div", { staticClass: "col-md-2" }),
+                      _vm._m(15),
                       _vm._v(" "),
-                      _c("div", { staticClass: "col-md-2" }, [
-                        _c(
-                          "button",
-                          {
-                            staticClass: "btn btn-secondary btn-block",
-                            attrs: { type: "button" },
-                            on: { click: _vm.cobrar }
-                          },
-                          [_vm._v("Cobrar")]
-                        ),
-                        _vm._v("   ")
-                      ]),
-                      _vm._v(" "),
-                      _c("div", { staticClass: "col-md-3" }, [
+                      _c("div", { staticClass: "col-md-4" }, [
                         _c("input", {
                           directives: [
                             {
@@ -59358,7 +59323,7 @@ var render = function() {
                   },
                   [
                     _c("div", { staticClass: "form-group row" }, [
-                      _vm._m(14),
+                      _vm._m(16),
                       _vm._v(" "),
                       _c("div", { staticClass: "col-md-5" }, [
                         _c("input", {
@@ -59389,7 +59354,7 @@ var render = function() {
                     ]),
                     _vm._v(" "),
                     _c("div", { staticClass: "form-group row" }, [
-                      _vm._m(15),
+                      _vm._m(17),
                       _vm._v(" "),
                       _c("div", { staticClass: "col-md-5" }, [
                         _c(
@@ -59450,7 +59415,7 @@ var render = function() {
                     ]),
                     _vm._v(" "),
                     _c("div", { staticClass: "form-group row" }, [
-                      _vm._m(16),
+                      _vm._m(18),
                       _vm._v(" "),
                       _c("div", { staticClass: "col-md-5" }, [
                         _c(
@@ -59504,7 +59469,7 @@ var render = function() {
                     ]),
                     _vm._v(" "),
                     _c("div", { staticClass: "form-group row" }, [
-                      _vm._m(17),
+                      _vm._m(19),
                       _vm._v(" "),
                       _c("div", { staticClass: "col-md-5" }, [
                         _c("input", {
@@ -59517,7 +59482,7 @@ var render = function() {
                             }
                           ],
                           staticClass: "form-control",
-                          attrs: { type: "number", placeholder: "20.00" },
+                          attrs: { type: "number", placeholder: "Ofrenda" },
                           domProps: { value: _vm.montoConstancia },
                           on: {
                             input: function($event) {
@@ -59586,23 +59551,6 @@ var render = function() {
                           ],
                           2
                         )
-                      ])
-                    ]),
-                    _vm._v(" "),
-                    _c("div", { staticClass: "form-group row" }, [
-                      _c("div", { staticClass: "col-md-3" }),
-                      _vm._v(" "),
-                      _c("div", { staticClass: "col-md-2" }, [
-                        _c(
-                          "button",
-                          {
-                            staticClass: "btn btn-secondary btn-block",
-                            attrs: { type: "button" },
-                            on: { click: _vm.cobrar }
-                          },
-                          [_vm._v("Cobrar")]
-                        ),
-                        _vm._v(" \n                                 ")
                       ])
                     ]),
                     _vm._v(" "),
@@ -59733,6 +59681,19 @@ var staticRenderFns = [
         [_c("b", [_vm._v("Datos de la novia")])]
       )
     ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "label",
+      {
+        staticClass: "col-md-3 form-control-label",
+        attrs: { for: "text-input" }
+      },
+      [_c("b", [_vm._v("Ofrenda por Apertura del Expediente ($)")])]
+    )
   },
   function() {
     var _vm = this
@@ -59891,6 +59852,19 @@ var staticRenderFns = [
         staticClass: "col-md-3 form-control-label",
         attrs: { for: "text-input" }
       },
+      [_c("b", [_vm._v("Ofrenda por boda ($)")])]
+    )
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "label",
+      {
+        staticClass: "col-md-3 form-control-label",
+        attrs: { for: "text-input" }
+      },
       [
         _vm._v("Motivo de la constancia:"),
         _c("b", { staticClass: "alerta" }, [_vm._v("*")])
@@ -59937,7 +59911,7 @@ var staticRenderFns = [
         attrs: { for: "text-input" }
       },
       [
-        _vm._v("Ofrenda por constancia"),
+        _vm._v("Ofrenda por constancia ($)"),
         _c("b", { staticClass: "alerta" }, [_vm._v("*")])
       ]
     )

@@ -134,9 +134,9 @@
                                   <label class="col-md-5 form-control-label" for="text-input"><b>Datos del novio</b></label>
                                 </div>
                                 <div class="form-group row">
-                                    <label class="col-md-2 form-control-label" for="text-input">DUI</label>
+                                    <label class="col-md-2 form-control-label" for="text-input">Documento de Identidad</label>
                                     <div class="col-md-5">
-                                        <input type="text" v-model="novioD" class="form-control" placeholder="00000000-0" @keydown.tab="novioDui()">
+                                        <input type="text" v-model="novioD" class="form-control" placeholder=" " @keydown.tab="novioDui()">
                                     </div>
                                 </div>
                                 <div class="form-group row">
@@ -155,9 +155,9 @@
                                   <label class="col-md-5 form-control-label" for="text-input"><b>Datos de la novia</b></label>
                                 </div>
                                 <div class="form-group row">
-                                    <label class="col-md-2 form-control-label" for="text-input">DUI</label>
+                                    <label class="col-md-2 form-control-label" for="text-input">Documento de Identidad</label>
                                     <div class="col-md-5">
-                                        <input type="text" v-model="noviaD" class="form-control" placeholder="00000000-0" @keydown.tab="noviaDui()">
+                                        <input type="text" v-model="noviaD" class="form-control" placeholder=" " @keydown.tab="noviaDui()">
                                     </div>
                                 </div>
                                 <div class="form-group row">
@@ -172,11 +172,8 @@
 
                                 <!-- BOTON COBRAR-->
                                 <div class="form-group row">
-                                    <div class="col-md-2"></div>
-                                    <div class="col-md-2">
-                                        <button type="button" value="cobrar1" class="btn btn-secondary btn-block" v-on:click="cobrar">Cobrar</button>&nbsp;  <!-- @click="enviarCajaChica()" -->
-                                    </div>
-                                    <div class="col-md-3">
+                                    <label class="col-md-3 form-control-label" for="text-input"><b>Ofrenda por Apertura del Expediente ($)</b></label>
+                                    <div class="col-md-4">
                                         <input type="number" v-model="ofrendaExp" class="form-control" placeholder="Ofrenda">
                                     </div>
                                     <label class="col-md-1">Categoria</label>
@@ -296,9 +293,9 @@
                                   <label class="col-md-5 form-control-label" for="text-input"><b>Datos Persona 1</b></label>
                                 </div>
                                 <div class="form-group row">
-                                    <label class="col-md-2 form-control-label" for="text-input">DUI</label>
+                                    <label class="col-md-2 form-control-label" for="text-input">Documento de Identidad</label>
                                     <div class="col-md-5">
-                                        <input type="text" v-model="pad1D" class="form-control" placeholder="00000000-0" @keydown.tab="pad1Dui()">
+                                        <input type="text" v-model="pad1D" class="form-control" placeholder=" " @keydown.tab="pad1Dui()">
                                     </div>
                                      <label class="col-md-1 form-control-label">Sexo</label>
                                     <div class="col-md-4">
@@ -323,9 +320,9 @@
                                   <label class="col-md-5 form-control-label" for="text-input"><b>Datos Persona 2</b></label>
                                 </div>
                                 <div class="form-group row">
-                                    <label class="col-md-2 form-control-label" for="text-input">DUI</label>
+                                    <label class="col-md-2 form-control-label" for="text-input">Documento de Identidad</label>
                                     <div class="col-md-5">
-                                        <input type="text" v-model="mad1D" class="form-control" placeholder="00000000-0" @keydown.tab="mad1Dui()">
+                                        <input type="text" v-model="mad1D" class="form-control" placeholder=" " @keydown.tab="mad1Dui()">
                                     </div>
                                      <label class="col-md-1 form-control-label">Sexo</label>
                                     <div class="col-md-4">
@@ -350,9 +347,9 @@
                                   <label class="col-md-5 form-control-label" for="text-input"><b>Datos Persona 3</b></label>
                                 </div>
                                 <div class="form-group row">
-                                    <label class="col-md-2 form-control-label" for="text-input">DUI</label>
+                                    <label class="col-md-2 form-control-label" for="text-input">Documento de Identidad</label>
                                     <div class="col-md-5">
-                                        <input type="text" v-model="pad2D" class="form-control" placeholder="00000000-0" @keydown.tab="pad2Dui()">
+                                        <input type="text" v-model="pad2D" class="form-control" placeholder=" " @keydown.tab="pad2Dui()">
                                     </div>
                                      <label class="col-md-1 form-control-label">Sexo</label>
                                     <div class="col-md-4">
@@ -377,9 +374,9 @@
                                   <label class="col-md-5 form-control-label" for="text-input"><b>Datos Persona 4</b></label>
                                 </div>
                                 <div class="form-group row">
-                                    <label class="col-md-2 form-control-label" for="text-input">DUI</label>
+                                    <label class="col-md-2 form-control-label" for="text-input">Documento de Identidad</label>
                                     <div class="col-md-5">
-                                        <input type="text" v-model="mad2D" class="form-control" placeholder="00000000-0" @keydown.tab="mad2Dui()">
+                                        <input type="text" v-model="mad2D" class="form-control" placeholder=" " @keydown.tab="mad2Dui()">
                                     </div>
                                      <label class="col-md-1 form-control-label">Sexo</label>
                                     <div class="col-md-4">
@@ -402,11 +399,8 @@
 
                                     <!-- BOTON COBRAR-->
                                 <div class="form-group row">
-                                    <div class="col-md-2"></div>
-                                    <div class="col-md-2">
-                                        <button type="button" class="btn btn-secondary btn-block" v-on:click="cobrar">Cobrar</button>&nbsp;  <!-- @click="enviarCajaChica()" -->
-                                    </div>
-                                    <div class="col-md-3">
+                                    <label class="col-md-3 form-control-label" for="text-input"><b>Ofrenda por boda ($)</b></label>
+                                    <div class="col-md-4">
                                         <input type="number" v-model="monto" class="form-control" placeholder="Ofrenda">
                                     </div>
                                     <label class="col-md-1">Categoria</label>
@@ -481,9 +475,9 @@
                                 </div>
 
                                 <div class="form-group row">
-                                    <label class="col-md-3 form-control-label" for="text-input">Ofrenda por constancia<b class="alerta">*</b></label>
+                                    <label class="col-md-3 form-control-label" for="text-input">Ofrenda por constancia ($)<b class="alerta">*</b></label>
                                     <div class="col-md-5">
-                                        <input type="number" v-model="montoConstancia" class="form-control" placeholder="20.00">
+                                        <input type="number" v-model="montoConstancia" class="form-control" placeholder="Ofrenda">
                                     </div>
                                 </div>
 
@@ -497,12 +491,6 @@
                                     </div>
                                 </div>
 
-                                <div class="form-group row">
-                                    <div class="col-md-3"></div>
-                                    <div class="col-md-2">
-                                        <button type="button" class="btn btn-secondary btn-block" v-on:click="cobrar">Cobrar</button>&nbsp;
-                                    </div>
-                                </div>
                             <!-- Este div se utiliza para la validación -->
                             <div v-show="errorModal4" class="form-group row div-error">
                                 <div class="text-center text-error">
@@ -600,12 +588,11 @@
                 monto:'',//Este es el monto de la boda realizada
                 ofrendaExp:'',//este es para el botón de crear expediente
                 montoConstancia:'',//este es para el botón de solicitar constancia
-                cobrado:false,
                 enConcepto:'',//el por qué se imprimirá la Constancia
 
-                idcare:'',
-                cargosacerdote:'',
-                idsacerdote:'',
+                idcare:0,
+                cargosacerdote:0,
+                idsacerdote:0,
                 arraysacerdote:[],
                 arraycargo:[],
                 arraycategorias:[],
@@ -668,12 +655,6 @@
             }
         },
     methods:{
-
-        cobrar: function (){
-            this.cobrado=true;
-            //AQUÍ AGREGAR EL DESABILITAR COBRAR1
-
-        },
 
         listarMatrimonio1(page, buscar, criterio){
             let me=this;
@@ -965,6 +946,7 @@
                     'monto': this.ofrendaExp,
                     'idcate':this.idcare
                     }).then(function (response) { //si todo funciona:
+                        me.msjExito();
                         me.listarMatrimonio1();
                         me.cerrarModal();
                     }) .catch(function (error) {
@@ -984,6 +966,7 @@
                     }).then(function (response) { //si todo funciona:
                         me.listarMatrimonio1();
                         me.cerrarModal();
+                        me.msjExito();
                     }) .catch(function (error) {
                         console.log(error);
                     });
@@ -1003,6 +986,7 @@
                     }).then(function (response) { //si todo funciona:
                         me.listarMatrimonio1();
                         me.cerrarModal();
+                        me.msjExito();
                     }) .catch(function (error) {
                         console.log(error);
                     });
@@ -1018,6 +1002,7 @@
                     }).then(function (response) { //si todo funciona:
                         me.listarMatrimonio1();
                         me.cerrarModal();
+                        me.msjExito();
                     }) .catch(function (error) {
                         console.log(error);
                     });
@@ -1071,6 +1056,7 @@
             }) .then(function (response) { //si todo funciona:
                 me.listarMatrimonio1();
                 me.cerrarModal();
+                me.msjExito();
             }) .catch(function (error) {
                 console.log(error);
             });
@@ -1125,6 +1111,7 @@
                         }).then(function (response) { //si todo funciona:
                             me.listarMatrimonio1();
                             me.cerrarModal3();
+                            me.msjExito();
                         }) .catch(function (error) {
                             console.log(error);
                         });
@@ -1171,6 +1158,7 @@
                         }).then(function (response) { //si todo funciona:
                             me.listarMatrimonio1();
                             me.cerrarModal3();
+                            me.msjExito();
                         }) .catch(function (error) {
                             console.log(error);
                         });
@@ -1243,6 +1231,7 @@
                     }).then(function (response) { //si todo funciona:
                         me.listarMatrimonio1();
                         me.cerrarModal3();
+                        me.msjExito();
                     }) .catch(function (error) {
                         console.log(error);
                     });
@@ -1360,6 +1349,7 @@
                 }).then(function (response) { //si todo funciona:
                     me.listarMatrimonio1();
                     me.cerrarModal3();
+                    me.msjExito();
                 }) .catch(function (error) {
                     console.log(error);
                 });
@@ -1393,7 +1383,6 @@
                 if(!patron.test(this.noviaNom) || !patron.test(this.noviaAp))this.errorMostrarMsjMatrimonio1.push("Los datos de la novia debe contener letras solamente");
                 if(!decimales.test(this.ofrendaExp))this.errorMostrarMsjMatrimonio1.push("La ofrenda debe de ser un número positivo");
                 if(this.idcare==0)this.errorMostrarMsjMatrimonio1.push("Debe elegir una categoría");
-                if(this.cobrado!=true)this.errorMostrarMsjMatrimonio1.push("Debe cobrar la apertura del expediente de matrimonio");
             }
 
             if (this.errorMostrarMsjMatrimonio1.length) this.errorMatrimonio1 = 1;
@@ -1479,11 +1468,8 @@
             if(this.monto==""){
                 this.errorMostrarMsjModal3.push("Por favor ingrese la ofrenda por realización del matrimonio");
             }else{
-                if(!decimales.test(this.monto)){
-                    this.errorMostrarMsjModal3.push("La ofrenda debe de ser un número positivo");
-                }else{
-                    if(this.cobrado!=true)this.errorMostrarMsjModal3.push("Debe cobrar la ofrenda por la realización del matrimonio");
-                }
+                if(!decimales.test(this.monto)) this.errorMostrarMsjModal3.push("La ofrenda debe de ser un número positivo");
+                
                 if(this.idcare==0) this.errorMostrarMsjModal3.push("Seleccione una Categoría");
             }
             //falta validar para que solo sean números
@@ -1495,8 +1481,6 @@
         validarModal4(){
             this.errorModal4=0;
             this.errorMostrarMsjModal4=[];
-
-            if(this.cobrado!=true)this.errorMostrarMsjModal4.push("Debe cobrar la solicitud de la constancia matrimonial");
 
             if (this.errorMostrarMsjModal4.length) this.errorModal4 = 1;
 
@@ -1544,7 +1528,6 @@
             this.idcare=0;
             this.errorMatrimonio1=0;
             this.errorMostrarMsjMatrimonio1=[];
-            this.cobrado=false;
 
         },
         //estos dos, cierran los modales de paso 2 y paso3
@@ -1577,11 +1560,11 @@
             this.mad2Nom='';
             this.mad2Ap='';
             this.mad2Sexo=0;
+            this.monto='';
             this.tipo=0;
             this.idcare=0;
             this.errorModal2=0;
             this.errorMostrarMsjModal2=[];
-            this.cobrado=false;
         },
         cerrarModal3(){
             this.modal2=0;
@@ -1612,13 +1595,11 @@
             this.mad2Nom='';
             this.mad2Ap='';
             this.mad2Sexo=0;
-            this.monto=0;
+            this.monto='';
             this.tipo=0;
             this.idcare=0;
             this.errorModal3=0;
             this.errorMostrarMsjModal3=[];
-            this.cobrado=false;
-
         },
 
         cerrarModal4(){
@@ -1633,7 +1614,6 @@
             this.idcare=0;
             this.errorModal4=0;
             this.errorMostrarMsjModal4=[];
-            this.cobrado=false;
         },
 
         //En "modelo" va el nombre de la tabla guardada aquí, que por convencion de laravel es plural: "modelos"
@@ -1833,126 +1813,135 @@
             }
         },
 
-            //el metodo del botón del basurero
-            desactivarExpediente(id){
-               swal({
-                title: '¿Esta seguro de desactivar este expediente?',
-                type: 'warning',
-                showCancelButton: true,
-                confirmButtonColor: '#3085d6',
-                cancelButtonColor: '#d33',
-                confirmButtonText: 'Aceptar!',
-                cancelButtonText: 'Cancelar',
-                confirmButtonClass: 'btn btn-success',
-                cancelButtonClass: 'btn btn-danger',
-                buttonsStyling: false,
-                reverseButtons: true
-                }).then((result) => {
-                if (result.value) {
-                    let me = this;
+        msjExito(){
+            swal({
+                type: 'success',
+                title: 'Datos guardados con éxito',
+                showConfirmButton: false,
+                timer: 1500
+            })
+        },
 
-                    axios.put('/sacramento/desactivarexpediente',{
-                        'id': id
-                    }).then(function (response) {
-                        me.listarMatrimonio1(1,'','libro');
-                        swal(
-                        'Desactivado!',
-                        'El registro ha sido desactivado con éxito.',
-                        'success'
-                        )
-                    }).catch(function (error) {
-                        console.log(error);
-                    });
-                    
-                    
-                } else if (
-                    // Read more about handling dismissals
-                    result.dismiss === swal.DismissReason.cancel
-                ) {
-                    
-                }
-                }) 
-            },
-            //activa el expediente :v
-            activarExpediente(id){
-               swal({
-                title: '¿Esta seguro de activar este expediente?',
-                type: 'warning',
-                showCancelButton: true,
-                confirmButtonColor: '#3085d6',
-                cancelButtonColor: '#d33',
-                confirmButtonText: 'Aceptar!',
-                cancelButtonText: 'Cancelar',
-                confirmButtonClass: 'btn btn-success',
-                cancelButtonClass: 'btn btn-danger',
-                buttonsStyling: false,
-                reverseButtons: true
-                }).then((result) => {
-                if (result.value) {
-                    let me = this;
+        //el metodo del botón del basurero
+        desactivarExpediente(id){
+            swal({
+            title: '¿Esta seguro de desactivar este expediente?',
+            type: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Aceptar!',
+            cancelButtonText: 'Cancelar',
+            confirmButtonClass: 'btn btn-success',
+            cancelButtonClass: 'btn btn-danger',
+            buttonsStyling: false,
+            reverseButtons: true
+            }).then((result) => {
+            if (result.value) {
+                let me = this;
 
-                    axios.put('/sacramento/activarexpediente',{
-                        'id': id
-                    }).then(function (response) {
-                        me.listarMatrimonio1(1,'','libro');
-                        swal(
-                        'Activado!',
-                        'El registro ha sido activado con éxito.',
-                        'success'
-                        )
-                    }).catch(function (error) {
-                        console.log(error);
-                    });
-                    
-                    
-                } else if (
-                    // Read more about handling dismissals
-                    result.dismiss === swal.DismissReason.cancel
-                ) {
-                    
-                }
-                }) 
-            },
+                axios.put('/sacramento/desactivarexpediente',{
+                    'id': id
+                }).then(function (response) {
+                    me.listarMatrimonio1(1,'','libro');
+                    swal(
+                    'Desactivado!',
+                    'El registro ha sido desactivado con éxito.',
+                    'success'
+                    )
+                }).catch(function (error) {
+                    console.log(error);
+                });
+                
+                
+            } else if (
+                // Read more about handling dismissals
+                result.dismiss === swal.DismissReason.cancel
+            ) {
+                
+            }
+            }) 
+        },
+        //activa el expediente :v
+        activarExpediente(id){
+            swal({
+            title: '¿Esta seguro de activar este expediente?',
+            type: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Aceptar!',
+            cancelButtonText: 'Cancelar',
+            confirmButtonClass: 'btn btn-success',
+            cancelButtonClass: 'btn btn-danger',
+            buttonsStyling: false,
+            reverseButtons: true
+            }).then((result) => {
+            if (result.value) {
+                let me = this;
 
-            /* finalizarExpediente(id){
-               swal({
-                title: '¿Esta seguro de finalizar el expediente?',
-                type: 'warning',
-                showCancelButton: true,
-                confirmButtonColor: '#3085d6',
-                cancelButtonColor: '#d33',
-                confirmButtonText: 'Aceptar!',
-                cancelButtonText: 'Cancelar',
-                confirmButtonClass: 'btn btn-success',
-                cancelButtonClass: 'btn btn-danger',
-                buttonsStyling: false,
-                reverseButtons: true
-                }).then((result) => {
-                if (result.value) {
-                    let me = this;
+                axios.put('/sacramento/activarexpediente',{
+                    'id': id
+                }).then(function (response) {
+                    me.listarMatrimonio1(1,'','libro');
+                    swal(
+                    'Activado!',
+                    'El registro ha sido activado con éxito.',
+                    'success'
+                    )
+                }).catch(function (error) {
+                    console.log(error);
+                });
+                
+                
+            } else if (
+                // Read more about handling dismissals
+                result.dismiss === swal.DismissReason.cancel
+            ) {
+                
+            }
+            }) 
+        },
 
-                    axios.put('/sacramento/finalizarexpediente',{
-                        'id': id
-                    }).then(function (response) {
-                        me.listarMatrimonio1(1,'','libro');
-                        swal(
-                        'Finalizado!',
-                        'El expediente ya está completo.',
-                        'success'
-                        )
-                    }).catch(function (error) {
-                        console.log(error);
-                    });
-                    
-                    
-                } else if (
-                    // Read more about handling dismissals
-                    result.dismiss === swal.DismissReason.cancel
-                ) {
-                    
-                }
-                }) 
-            } */
+        /* finalizarExpediente(id){
+            swal({
+            title: '¿Esta seguro de finalizar el expediente?',
+            type: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Aceptar!',
+            cancelButtonText: 'Cancelar',
+            confirmButtonClass: 'btn btn-success',
+            cancelButtonClass: 'btn btn-danger',
+            buttonsStyling: false,
+            reverseButtons: true
+            }).then((result) => {
+            if (result.value) {
+                let me = this;
+
+                axios.put('/sacramento/finalizarexpediente',{
+                    'id': id
+                }).then(function (response) {
+                    me.listarMatrimonio1(1,'','libro');
+                    swal(
+                    'Finalizado!',
+                    'El expediente ya está completo.',
+                    'success'
+                    )
+                }).catch(function (error) {
+                    console.log(error);
+                });
+                
+                
+            } else if (
+                // Read more about handling dismissals
+                result.dismiss === swal.DismissReason.cancel
+            ) {
+                
+            }
+            }) 
+        } */
         },// Fin de methods
         
         mounted() {
