@@ -138,6 +138,40 @@ Route::group(['middleware'=>['auth']],function(){
 
                             //Certificados
                             Route::get('/persona/certificadoMatri/{id}','PersonaController2@certificadoMatri')->name('matrimonio_pdf');
+                            Route::put('/persona/certificadoMatri','PersonaController2@certificadoMatri');
+
+                            //TABLA ZONAS
+                            Route::get('/zona','ZonaController@index');
+                            Route::put('/zona/registrar','ZonaController@store');
+                            Route::put('/zona/actualizar','ZonaController@update');
+                            Route::put('/zona/eliminar','ZonaController@eliminar');
+                            Route::get('/zona/buscarZona','ZonaController@buscarZona');
+
+                            //TABLA DE MANTENIMIENTO DE CATEGORIA DE INVENTARIOS PARA IGLESIAS
+                            Route::get('/categoriainventario','CategoriaInventarioController@index');
+                            Route::put('/categoriainventario/registrar','CategoriaInventarioController@store');
+                            Route::put('/categoriainventario/actualizar','CategoriaInventarioController@update');
+                            Route::put('/categoriainventario/eliminar','CategoriaInventarioController@eliminar');
+                            
+                            //FELIGRESES--De la tabla PERSONA
+                            Route::get('/feligreses','FeligresController@index');
+                            Route::put('/feligreses/registrar','FeligresController@store');
+                            Route::put('/feligreses/update','FeligresController@update');
+                            Route::post('/feligreses/buscarIglesia','FeligresController@buscarIglesia');
+                            Route::put('/feligreses/eliminar','FeligresController@eliminar');
+
+                            //TABLA DE INVENTARIO DE IGLESIAS
+                            Route::get('/productoinv','ProductoInventarioController@index');
+                            Route::put('/productoinv/registrar','ProductoInventarioController@store');
+                            Route::put('/productoinv/actualizar','ProductoInventarioController@actualizar');
+                            Route::post('/productoinv/buscarIglesia','FeligresController@buscarIglesia');
+                            Route::get('/categoriainventario/buscarCateInve','CategoriaInventarioController@buscar');
+
+                            //TABLA PARA CONTROL SECTORIAL
+                            Route::post('/sectorial/buscarIglesiaFeligreses','ControlSectorialController@buscarIglesiaFeligreses');
+                            Route::post('/sectorial/buscarIglesiaInventarios','ControlSectorialController@buscarIglesiaInventarios');
+
+
                             
             });
 

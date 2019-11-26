@@ -63,7 +63,7 @@
                                 <a class="nav-link" href="#"><i class="icon-wallet"></i> Historial de registros</a>
                             </li>
                             <li @click="menu=8" class="nav-item">
-                                <a class="nav-link" href="#"><i class="icon-notebook"></i> Informe</a>
+                                <a class="nav-link" href="#"><i class="icon-notebook"></i>Resumen Económico</a>
                             </li>
                         </ul>
                     </li>
@@ -74,20 +74,21 @@
                                 <a class="nav-link" href="#"><i class="icon-notebook"></i> Listado donaciones</a>
                             </li>
                         </ul>
-                    </li>
+                    </li>-->
                   
                     <li class="nav-item nav-dropdown">
                         <a class="nav-link nav-dropdown-toggle" href="#"><i class="icon-pie-chart"></i> Control Sectorial</a>
                         <ul class="nav-dropdown-items">
                             <li @click="menu=12" class="nav-item">
-                                <a class="nav-link" href="#"><i class="icon-chart"></i> Comunidad Parroquial</a>
+                                <a class="nav-link" href="#"><i class="icon-chart"></i>Comunidad Parroquial</a>
                             </li>
                             <li @click="menu=13" class="nav-item">
-                                <a class="nav-link" href="#"><i class="icon-chart"></i> Inventario de Iglesias</a>
+                                <a class="nav-link" href="#"><i class="icon-chart"></i>Inventarios de Iglesias</a>
                             </li>
+                            
                         </ul>
                     </li>
-                    <li @click="menu=14" class="nav-item">
+                   <!-- <li @click="menu=14" class="nav-item">
                         <a class="nav-link" href="#"><i class="icon-book-open"></i> Ayuda <span class="badge badge-danger">PDF</span></a>
                     </li>
                     <li @click="menu=15" class="nav-item">
@@ -107,6 +108,12 @@
                             </li>
                             <li @click="menu=22" class="nav-item">
                                 <a class="nav-link" href="#"><i class="icon-wallet"></i>Iglesias</a>
+                            </li>
+                            <li @click="menu=24" class="nav-item">
+                                <a class="nav-link" href="#"><i class="icon-wallet"></i>Zonas</a>
+                            </li>
+                            <li @click="menu=26" class="nav-item">
+                                <a class="nav-link" href="#"><i class="icon-wallet"></i>Categorias para inventario</a>
                             </li>
                         </ul>
                     </li>

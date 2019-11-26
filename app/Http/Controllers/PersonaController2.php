@@ -346,10 +346,13 @@ class PersonaController2 extends Controller
         //
     }
 
-    public function certificadoMatri(Request $request,$id){
-        $tipo=$request->tipo;
-        $id_realizante1 =$request->id_realizante1;
-        $id_realizante2 =$request->id_realizante2;
+
+    public function certificadoMatri(Request $request){
+        $idsacramento=$request->id;
+        $idSacer=$request->idsacerdote;
+        $cargoSa =$request->cargosacerdote;
+        $concepto=$request->enConcepto;
+        $holi=1;
 
            /* $matrimonio=Sacramento:://join('personas','personas.id','=','sacramentos.id_realizante1') //novio
                                  // ->join('personas as 1','1.id','=','sacramentos.id_realizante2') //novia
@@ -373,42 +376,45 @@ class PersonaController2 extends Controller
                 $sacraIgle=Sacramento::join('iglesias','iglesias.id','=','sacramentos.id_iglesia')
                                       ->select('sacramentos.id','sacramentos.tipo_sacramento','sacramentos.libro','sacramentos.num_expediente',
                                       'sacramentos.fecha_realizacion','iglesias.nombre_iglesia','sacramentos.titulo')
-                                      ->where('sacramentos.id','=',$id)
+                                      ->where('sacramentos.id','=',$idsacramento)
                                       ->orderby('sacramentos.id','desc')->get();
 
                 $novio=Sacramento::join('personas','personas.id','=','sacramentos.id_realizante1')
                                 ->select('personas.nombre_persona as nomnovio', 'personas.apellido_persona as apelnovio')
-                                 ->where('sacramentos.id','=',$id)->get(); //novio
+                                 ->where('sacramentos.id','=',$idsacramento)->get(); //novio
 
                 $novia=Sacramento::join('personas','personas.id','=','sacramentos.id_realizante2')
                                  ->select('personas.nombre_persona as nomnovia', 'personas.apellido_persona as apelnovia')
-                                  ->where('sacramentos.id','=',$id)->get(); //novia
+                                  ->where('sacramentos.id','=',$idsacramento)->get(); //novia
 
                 $padre=Sacramento::join('personas','personas.id','=','sacramentos.id_sacerdote')
                                   ->select('personas.nombre_persona as nompadre', 'personas.apellido_persona as apelpadre')
-                                   ->where('sacramentos.id','=',$id)->get(); //padre
+                                   ->where('sacramentos.id','=',$idsacramento)->get(); //padre
 
                 $p1=Sacramento::join('personas','personas.id','=','sacramentos.id_padrino')
                                    ->select('personas.nombre_persona as nompad1', 'personas.apellido_persona as apelpad1')
-                                    ->where('sacramentos.id','=',$id)->get(); //padrino1
+                                    ->where('sacramentos.id','=',$idsacramento)->get(); //padrino1
 
                 $p2=Sacramento::join('personas','personas.id','=','sacramentos.id_padrino2')
                                     ->select('personas.nombre_persona as nompad2', 'personas.apellido_persona as apelpad2')
-                                     ->where('sacramentos.id','=',$id)->get(); //padrino2
+                                     ->where('sacramentos.id','=',$idsacramento)->get(); //padrino2
 
                 $p3=Sacramento::join('personas','personas.id','=','sacramentos.id_padrino3')
                                 ->select('personas.nombre_persona as nompad3', 'personas.apellido_persona as apelpad3')
-                                 ->where('sacramentos.id','=',$id)->get(); //padrino3
+                                 ->where('sacramentos.id','=',$idsacramento)->get(); //padrino3
 
                 $p4=Sacramento::join('personas','personas.id','=','sacramentos.id_padrino4')
                                 ->select('personas.nombre_persona as nompad4', 'personas.apellido_persona as apelpad4')
-                                 ->where('sacramentos.id','=',$id)->get(); //padrino4
+                                 ->where('sacramentos.id','=',$idsacramento)->get(); //padrino4
+                            
+              /*  $ns=Persona::select('nombre_persona,apellido_persona')
+                            ->where('id','=',$idSacer)->get(); //nombre y apellido de padre a firmar la acta*/
 
- 
  
 
                 $pdf= \PDF::loadView('pdf.certiMatrimonio',['sacraIgle'=>$sacraIgle,'novio'=>$novio,'novia'=>$novia,
-                'padre'=>$padre,'p1'=>$p1,'p2'=>$p2,'p3'=>$p3,'p4'=>$p4,'prueba'=>$id_realizante1]);
+                'padre'=>$padre,'p1'=>$p1,'p2'=>$p2,'p3'=>$p3,'p4'=>$p4,'holi'=>$holi,'idsacramento'=>$idsacramento, 'cargoSa'=>$cargoSa,
+                'idSacer'=>$idSacer,'concepto'=>$concepto]);
                 return $pdf->download('CertificadoDeMatrimonio.pdf');
 
                 /*

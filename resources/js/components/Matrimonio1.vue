@@ -445,6 +445,7 @@
             <div class="modal fade" tabindex="-1" :class="{'mostrar' : modal4}" role="dialog" aria-labelledby="myModalLabel" style="display: none;" aria-hidden="true">
                 <div class="modal-dialog modal-primary modal-lg" role="document">
                     <div class="modal-content">
+                      <!-- <div v-for="sacramento in arrayMatrimonio1" :key="sacramento.id">  GLORIA-->
                         <div class="modal-header">
                             <!--el v-text="tituloModal" muestra el titulo segun el metodo mostrarModal -->
                             <h4 class="modal-title" v-text="tituloModal"></h4>
@@ -517,6 +518,7 @@
                             <button type="button" class="btn btn-secondary" @click="cerrarModal4()">Cerrar</button>
                             <button type="button" class="btn btn-primary" @click="imprimirConstancia()">Imprimir Constancia</button>
                         </div>
+                   <!-- </div> GLORIA-->
                     </div>
                     <!-- /.modal-content -->
                 </div>
@@ -556,6 +558,7 @@
       data(){
           //Dave: En esta función declaramos las variables que utilizaremos
             return{
+           //     id:'', //id del id_sacramento capturado <---es para certificados
                 sacramento_id:0,
                 libro : '',
                 num_expediente : '',
@@ -673,6 +676,32 @@
             this.cobrado=true;
             //AQUÍ AGREGAR EL DESABILITAR COBRAR1
 
+        },
+
+        imprimirConstancia(){
+            if(this.validarModal4()){
+                return;
+            }
+            
+            axios.put('/persona/certificadoMatri',{
+                    //'id':this.enConcepto,
+                    'id':this.sacramento_id,
+                    'idsacerdote':this.idsacerdote,
+                    'cargosacerdote':this.cargosacerdote,
+                    'enConcepto':this.enConcepto,
+                }).then(function (response) { 
+                    me.listarMatrimonio1();
+                    me.cerrarModal4();
+                    console.log(response);
+                }) .catch(function (error) {
+                    console.log(error);
+                });
+                 let me=this;
+                 this.pdfConstacia(me.sacramento_id);
+        },
+
+        pdfConstacia(sacramento_id){
+            window.open('http://127.0.0.1:8000/persona/certificadoMatri/'+ sacramento_id);
         },
 
         listarMatrimonio1(page, buscar, criterio){
@@ -1367,13 +1396,6 @@
             me.cerrarModal3();
         },
 
-        imprimirConstancia(){
-            if(this.validarModal4()){
-                return;
-            }
-
-        },
-
         //este lo ocupa el método Registrar
         validarMatrimonio1(){
             this.errorMatrimonio1=0;
@@ -1825,8 +1847,10 @@
                                 }
                                 this.tituloModal ='Imprimir constancia de boda: ' + apellidoNovioMostrar + ' - ' + apellidoNoviaMostrar;
                                 this.sacramento_id=data['id'];
+                                this.idsacerdote='';
+                                this.cargosacerdote='';
                                 this.enConcepto='';
-
+                                console.log(data);
                                 break;
                             }
                     }

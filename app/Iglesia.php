@@ -8,7 +8,6 @@ class Iglesia extends Model
 {
     protected $table = 'iglesias';
     protected $primaryKey = 'id';
-    protected $fillable=['nombre_iglesia'];
-
+    protected $fillable=['nombre_iglesia','idzona'];
 
 }

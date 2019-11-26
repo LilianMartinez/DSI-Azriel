@@ -184,7 +184,6 @@
                 var url='/resumeneconomico?page='+ page + '&buscar=' + buscar2 + '&criterio=' + criterio;
                 axios.get(url) .then(function (response) {
                     // handle success
-                    console.log(response);
                     var respuesta= response.data;
                     me.arrayResumenEco=respuesta.categoria;
                     me.arrayResumenEconull=respuesta.nullo;
@@ -200,7 +199,7 @@
             
             },
               cargarPDF(){
-            window.open('http:///127.0.0.1:8000/efectivo/listarPdfResumido','_blank');
+            window.open('http://127.0.0.1:8000/efectivo/listarPdfResumido','_blank');
         },
         cambiarPagina(page,buscar,criterio){
             let me = this;

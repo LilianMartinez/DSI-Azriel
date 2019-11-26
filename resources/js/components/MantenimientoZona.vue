@@ -6,11 +6,11 @@
                 <!-- Ejemplo de tabla Listado -->
                 <div class="card">
                     <div class="card-header">
-                        <label class="titulo-encabezados">Iglesias</label>
+                        <label class="titulo-encabezados">Zonas que conforman la iglesia</label>
                     </div>
                     <div class="card-body">
                     <div class="input-group margen">
-                            <button type="button" @click="abrirModal('iglesias','registrar')" class="btn btn-primary">
+                            <button type="button" @click="abrirModal('zonas','registrar')" class="btn btn-primary">
                                     <i class="icon-plus"></i>&nbsp;Nuevo
                             </button>
                         </div>
@@ -18,39 +18,27 @@
                             <div class="col-md-6">
                                 <div class="input-group">
                                     <select class="form-control col-md-3" v-model="criterio">
-                                      <option value="nombre_iglesia">Nombre iglesia</option>
+                                      <option value="nombre_zona">Nombre Zona</option>
                                     </select>
-                                    <input type="text"  v-model="buscar" @keyup.enter="listariglesias(buscar,criterio)" class="form-control" placeholder="Texto a buscar">
-                                    <button type="submit" @click="listariglesias(buscar,criterio) " class="btn btn-primary"><i class="fa fa-search"></i> Buscar</button>
+                                    <input type="text"  v-model="buscar" @keyup.enter="listarzonas(buscar,criterio)" class="form-control" placeholder="Texto a buscar">
+                                    <button type="submit" @click="listarzonas(buscar,criterio) " class="btn btn-primary"><i class="fa fa-search"></i> Buscar</button>
                                 </div>
                             </div>
                         </div>
                         <table class="table table-bordered table-striped table-sm">
                             <thead>
                                 <tr>
-                                    <th>Nombre Iglesia</th>
-                                    <th>Zona</th>
+                                    <th>Nombre Zona</th>
                                     <th>Opcion</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr v-for="iglesia in arrayiglesiasZ" :key="iglesia.id">                              
-                                    <td v-text="iglesia.nombre_iglesia"></td>
-                                    <td v-text="iglesia.nombre_zona"></td>
-                                        <button type="button" @click="abrirModal('iglesias','actualizar',iglesia)" >
+                                <tr v-for="zonas in arrayzonas" :key="zonas.id">                              
+                                    <td v-text="zonas.nombre_zona"></td>
+                                        <button type="button" @click="abrirModal('zonas','actualizar',zonas)" >
                                           <i class="icon-pencil"></i>
                                         </button> &nbsp;
-                                         <button  type="button" class="btn btn-danger btn-sm"  @click="abrirModal('iglesias','eliminar',iglesia)" >
-                                          <i class="icon-trash  enter"></i>
-                                        </button>
-                                </tr>
-                                 <tr v-for="iglesia in arrayiglesias" :key="iglesia.id">                              
-                                    <td v-text="iglesia.nombre_iglesia"></td>
-                                    <td v-text="iglesia.nombre_zona"></td>
-                                        <button type="button" @click="abrirModal('iglesias','actualizar',iglesia)" >
-                                          <i class="icon-pencil"></i>
-                                        </button> &nbsp;
-                                         <button  type="button" class="btn btn-danger btn-sm"  @click="abrirModal('iglesias','eliminar',iglesia)" >
+                                         <button  type="button" class="btn btn-danger btn-sm"  @click="abrirModal('zonas','eliminar',zonas)" >
                                           <i class="icon-trash  enter"></i>
                                         </button>
                                 </tr>
@@ -74,18 +62,9 @@
                         <div class="modal-body">
                             <form action="" method="post" enctype="multipart/form-data" class="form-horizontal">
                             <div class="form-group row">
-                                    <label class="col-md-3 form-control-label" for="text-input">Nombre de la iglesia<b class="alerta">*</b></label>
+                                    <label class="col-md-3 form-control-label" for="text-input">Nombre Zona<b class="alerta">*</b></label>
                                     <div class="col-md-5">
-                                        <input type="text" tabindexgt="0" v-model="nombre_iglesia" class="form-control" placeholder="Nombre Iglesia">
-                                    </div>
-                            </div>
-                            <div class="form-group row">
-                                    <label class="col-md-3 form-control-label" for="text-input">Zona</label> <!-- ZONAAAAAAAAAAA-->
-                                    <div class="col-md-5">
-                                        <select class="form-control" v-model="idzona"> 
-                                        <option value="0" disabled>Seleccione</option>
-                                        <option v-for="zona in arrayzona" :key="zona.id" v-bind:value="zona.id" v-text="zona.nombre_zona"></option>
-                                        </select >
+                                        <input type="text" tabindexgt="0" v-model="nombre_zona" class="form-control" placeholder="Nombre de la zona">
                                     </div>
                             </div>
                                 <div v-show="errorDatos" class="form-group row div-error">
@@ -98,8 +77,8 @@
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" @click="cerrarModal()">Cerrar</button>
-                            <button type="button" class="btn btn-primary" v-if="tipoAccion==1" @click="registrariglesias()">Guardar</button>
-                            <button type="button" class="btn btn-primary" v-if="tipoAccion==2" @click="actualizariglesias()">Actualizar</button>
+                            <button type="button" class="btn btn-primary" v-if="tipoAccion==1" @click="registrarzonas()">Guardar</button>
+                            <button type="button" class="btn btn-primary" v-if="tipoAccion==2" @click="actualizarzonas()">Actualizar</button>
                         </div>
                     </div>
                     <!-- /.modal-content -->
@@ -112,29 +91,22 @@
                 <div class="modal-dialog modal-danger" role="document">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h4 class="modal-title">¿Esta seguro de eliminar esta Iglesia?</h4>
+                            <h4 class="modal-title">¿Esta seguro de eliminar esta zona?</h4>
                             <button type="button" class="close" @click="cerrarModal()" aria-label="Close">
                               <span aria-hidden="true">×</span>
                             </button>
                         </div>
                         <div class="modal-body">
-                                <div class="form-group row">
-                                            <label class="col-md-3 form-control-label" for="text-input">Nombre de la iglesia</label>
-                                                <div class="col-md-9">
-                                                        <label class="col-md-3 form-control-label" v-text="nombre_iglesia" ></label>
-                                                </div>   
+                       <div class="form-group row">
+                                   <b class="alerta"> <label class="col-md-1 form-control-label" for="text-input">Nombre Zona</label></b>
+                                        <b class="alerta"><label class="col-md-3 form-control-label" for="text-input">{{nombre_zona}}</label></b>   
                                 </div>
-                                <div class="form-group row">
-                                            <label class="col-md-3 form-control-label" for="text-input">Zona</label>
-                                                <div class="col-md-9">
-                                                        <label class="col-md-3 form-control-label" v-text="nombre_zona"></label>
-                                                </div> 
-                                </div>
-                        </div>
+                                
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-dismiss="modal" @click="cerrarModal()">Cerrar</button>
                             <button type="button" class="btn btn-danger" @click="eliminar()">Eliminar</button>
                         </div>
+                    </div>
                     </div>
                     <!-- /.modal-content -->
                 </div>
@@ -148,19 +120,14 @@
     export default {
       data(){
             return{
-                iglesias_id:0,
-                idzona:'',
-                zona:'',
+                zonas_id:0,
                 nombre_zona:'',
-                nombre_iglesia:'',
-                arrayiglesias:[],
-                arrayiglesiasZ:[],
-                arrayzona:[],
+                arrayzonas:[],
                 modal : 0,
                 modal2: 0,
                 tituloModal : '',
                 tipoAccion:0,
-                criterio:'nombre_iglesia', 
+                criterio:'nombre_zona', 
                 buscar: '',
                 errorDatos:0,
                 errorMostrarMsj:[],
@@ -168,18 +135,7 @@
             }
         },
         methods:{
-
-            llenadolistazona(buscar,criterio){
-            let me=this;
-            var url='zona/buscarZona'; //////////////////////////
-            axios.get(url) .then(function (response) {
-                me.arrayzona=response.data;
-            })
-            .catch(function (error) {
-                console.log(error);
-            });
-        },
-            listariglesias(buscar,criterio,estado){
+            listarzonas(buscar,criterio,estado){
                 let me=this;
                 var lengthbuscar = this.buscar.length;
                  if(lengthbuscar >0)
@@ -187,12 +143,10 @@
                      var buscar2= this.buscar.toUpperCase();
                  }else
                  buscar2=this.buscar;
-                var url='/iglesia?buscar=' + buscar2 + '&criterio=' + criterio;
+                var url='/zona?buscar=' + buscar2 + '&criterio=' + criterio;
                 axios.get(url) .then(function (response) {
-                    var respuesta= response.data;
-                    me.arrayiglesiasZ=respuesta.iglesiasZ;
-                    me.arrayiglesias=respuesta.iglesias;
                     console.log(response);
+                    me.arrayzonas=response.data;
                 })
                 .catch(function (error) {
                     console.log(error);
@@ -204,53 +158,50 @@
                 this.errorDatos=0;
                 this.errorMostrarMsj=[];
                 var RE = /^\d*(\.\d{1})?\d{0,1}$/;
-               var Max_Length = 99;
+               var Max_Length = 100;
                var Min_Length = 3;
-               var lengthmax = this.nombre_iglesia.length;
-               var lengthmin = this.nombre_iglesia.length;
-               if (!lengthmax > Max_Length)this.errorMostrarMsj.push("El nombre de la iglesia debe tener menos de 99 caracteres");
-                if (lengthmin < Min_Length)this.errorMostrarMsj.push("El nombre de la iglesia debe tener más 3 letras");
+               var lengthmax = this.nombre_zona.length;
+               var lengthmin = this.nombre_zona.length;
+                if (!lengthmax > Max_Length)this.errorMostrarMsj.push("El nombre debe tener menos de 100 caracteres");
+                if (lengthmin < Min_Length)this.errorMostrarMsj.push("El nombre debe tener más 3 letras");
                 if(this.errorMostrarMsj.length) this.errorDatos=1;
-            
-
                 return this.errorDatos;
             },
              
-             registrariglesias(){
+             registrarzonas(){
                  if(this.validarvalores()){
                   return;   
                  }
     
              let me=this;
               var buscar='';
-                var criterio='nombre_iglesia';
-              axios.put('/iglesia/registrar',{
-                  'nombre_iglesia': this.nombre_iglesia.toUpperCase(),
-                  'idz':this.idzona,
+                var criterio='nombre_zona';
+              axios.put('/zona/registrar',{
+                  'nombre_zona': this.nombre_zona.toUpperCase(),
               }) .then(function (response) {
                     me.cerrarModal();
-                    me.listariglesias(buscar,criterio);
+                    me.listarzonas(buscar,criterio);
                 }) .catch(function (error) {
                  
                 });
 
             },
          
-            actualizariglesias(){
+
+            actualizarzonas(){
                 if(this.validarvalores()){
                   return;   
                  }
                
                 let me=this;
                 var buscar='';
-                var criterio='nombre_iglesia';
-                axios.put('/iglesia/actualizar',{
-                  'nombre_iglesia': this.nombre_iglesia.toUpperCase(),
-                  'idz':this.idzona,
-                  'id':this.iglesias_id,
+                var criterio='nombre_zona';
+                axios.put('/zona/actualizar',{
+                  'nombre_zona': this.nombre_zona.toUpperCase(),
+                  'id':this.zonas_id,
                     }) .then(function (response) {
                     me.cerrarModal();
-                    me.listariglesias(buscar,criterio);
+                    me.listarzonas(buscar,criterio);
                 })
                 .catch(function (error) {
                     // handle error
@@ -260,13 +211,12 @@
              eliminar(){
                 let me=this;
                 var buscar='';
-                var criterio='nombre_iglesia';
-                axios.put('/iglesia/eliminar',{
-                  'idz':this.idzona,
-                  'id':this.iglesias_id,
+                var criterio='nombre_zona';
+                axios.put('/zona/eliminar',{
+                  'id':this.zonas_id,
                     }) .then(function (response) {
                     me.cerrarModal();
-                    me.listariglesias(buscar,criterio);
+                    me.listarzonas(buscar,criterio);
                 })
                 .catch(function (error) {
                     // handle error
@@ -278,46 +228,41 @@
                 this.modal2=0;
                 this.tituloModal='';
                 this.tipoAccion=0;
-                this.nombre_iglesia='';
+                this.nombre_zona='';
                 this.buscar='';
-                this.criterio='nombre_iglesia';
-                this.idzona='';
+                this.criterio='nombre_zona';
             
             },
     
           abrirModal(modelo, accion, data=[]){
                 switch(modelo){
-                    case "iglesias":
+                    case "zonas":
                     {
                         switch(accion){
                             case 'registrar':
                             {
                                 this.modal=1;
-                                this.tituloModal='Nuevo Iglesia';
+                                this.tituloModal='Nueva Zona';
                                 this.tipoAccion=1;
-                                this.nombre_iglesia='';
-                                this.idzona='';
+                                this.nombre_zona='';
                                 break;
 
                             }
                              case 'actualizar':
                             {
                                  this.modal=1;
-                                this.tituloModal='Modificar Iglesia';
+                                this.tituloModal='Modificar Zona';
                                 this.tipoAccion=2;
-                                this.iglesias_id=data['id'];
-                                this.nombre_iglesia=data['nombre_iglesia'];
-                                this.idzona=data['idz'];
+                                this.zonas_id=data['id'];
+                                this.nombre_zona=data['nombre_zona'];
                                break;
                             }
                              case 'eliminar':
                             {
                                 this.modal2=1;
-                                this.tituloModal='Eliminar Iglesia';
-                                this.iglesias_id=data['id'];
-                                this.nombre_iglesia=data['nombre_iglesia'];
+                                this.tituloModal='Eliminar Zona';
+                                this.zonas_id=data['id'];
                                 this.nombre_zona=data['nombre_zona'];
-                                this.idzona=data['idz'];
                                break;
                             }
                         }
@@ -327,8 +272,7 @@
             }
         },
         mounted() {
-            this.listariglesias(this.buscar,this.criterio);
-            this.llenadolistazona('','');
+            this.listarzonas(this.buscar,this.criterio);
         }
     }
 </script>

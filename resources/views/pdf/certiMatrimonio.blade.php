@@ -549,12 +549,12 @@
                  <br>
                  <br>
                  <p id="parrafo2">
-                 @foreach ($id_realizante1 as $pru)
-                  <br>Pio -------------------------{{$pru}}
-                 @endforeach
-                    
-
-                    <br>parr-------------------------
+            
+                  <br>{{$holi}}
+                  <br>{{$idSacer}} falta idsacer
+                  <br>{{$concepto}} falta concepto
+                  <br>{{$cargoSa}} falta cargo sacer
+                  <br>{{$idsacramento}}
                  </p>
         </div>        
         </section>

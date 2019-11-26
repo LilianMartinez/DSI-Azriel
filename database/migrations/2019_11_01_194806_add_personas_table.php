@@ -14,7 +14,7 @@ class AddPersonasTable extends Migration
     public function up()
     {
         Schema::table('personas', function (Blueprint $table) {
-            $table->integer('estado')->nullable();
+            $table->integer('idiglesia')->nullable();
                 });
     }
 

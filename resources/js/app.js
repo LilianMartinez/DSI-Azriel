@@ -39,6 +39,14 @@ Vue.component('registrobautizo', require('./components/RegistroBautizo.vue').def
 Vue.component('categoriaresumen', require('./components/MantenimientoCategoriaResumen.vue').default);
 Vue.component('religiosos', require('./components/MantenimientoReligiosos.vue').default);
 Vue.component('iglesias', require('./components/MantenimientoIglesia.vue').default);
+Vue.component('zonas', require('./components/MantenimientoZona.vue').default);
+Vue.component('feligreses', require('./components/RegistrarFeligres.vue').default);
+Vue.component('inventarioiglesia', require('./components/RegistrarInventarioIglesia.vue').default);
+Vue.component('controlsectorialfeligreses', require('./components/ControlSectorialFeligreses.vue').default);
+Vue.component('controlsectorialinventarios', require('./components/ControlSectorialInventarios.vue').default);
+Vue.component('escritorio', require('./components/Escritorio.vue').default);
+Vue.component('categoriainventario', require('./components/MantenimientoCategoriaInventario.vue').default);
+
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application

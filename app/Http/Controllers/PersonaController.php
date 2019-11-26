@@ -883,10 +883,13 @@ class PersonaController extends Controller
         
         
         if ($buscar == ''){
-            $religiosos = Persona::where('estado','1')->orderBy('id')->get();
+            $religiosos = Persona::where('estado','1')
+                            ->where('tipo_persona','=',1)            
+            ->orderBy('id')->get();
         } else {
             $religiosos = Persona::where($criterio, 'like','%' . $buscar .'%')
             ->where('estado','1')
+            ->where('tipo_persona','=',1)
             ->orderBy('id')->get();
         }
         return $religiosos;
@@ -947,7 +950,9 @@ class PersonaController extends Controller
     public function buscarReli(Request $id)
     {
         if(!$id->ajax()) return redirect('/');
-       $religiosos = DB::table('personas')->where("id",$id->id)->first();
+       $religiosos = DB::table('personas')->where("id",$id->id)
+       ->where('tipo_persona','=',1)
+       ->first();
        return response()->json($religiosos);    
     }
 }

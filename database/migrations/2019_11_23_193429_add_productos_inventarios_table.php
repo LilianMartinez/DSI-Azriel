@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class AddIglesiasTable extends Migration
+class AddProductosInventariosTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,8 +13,8 @@ class AddIglesiasTable extends Migration
      */
     public function up()
     {
-        Schema::table('iglesias', function (Blueprint $table) {
-            $table->integer('estado')->nullable();
+        Schema::table('productos_inventarios', function (Blueprint $table) {
+            $table->integer('idzona')->nullable();
                 });
     }
 
