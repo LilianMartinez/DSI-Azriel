@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Sacramentos3;
 use App\Persona;
 use App\Efectivo;
+use App\NotaMarginal;
 use App\PartidaNacimiento;
 use Illuminate\Support\Facades\DB;
 
@@ -22,14 +23,16 @@ class BautizoController extends Controller
         if ($buscar==''){
             $bautizo = DB::table('sacramentos as s')
                         ->leftjoin('personas as p','s.id_realizante1','=','p.id')
+                        ->leftjoin('notas_marginales as n','s.id','=','n.id_sacramento')
                         ->where('s.tipo_sacramento',1)
-                        ->select('s.folio','s.libro','s.asiento','p.nombre_persona as nombreRea','p.apellido_persona as apellido_realizante')
+                        ->select('s.id','s.folio','s.libro','s.asiento','p.nombre_persona as nombreRea','p.apellido_persona as apellido_realizante','n.id_sacramento as chale','n.nota')
                         ->orderBy('s.id_realizante1','desc')->paginate(15);
         } 
         else{
             $bautizo = DB::table('sacramentos as s')
             ->leftjoin('personas as p','s.id_realizante1','=','p.id')
-            ->select('s.folio','s.libro','s.asiento','p.nombre_persona as nombreRea','p.apellido_persona as apellido_realizante')
+            ->leftjoin('notas_marginales as n','s.id','=','n.id_sacramento')
+            ->select('s.id','s.folio','s.libro','s.asiento','p.nombre_persona as nombreRea','p.apellido_persona as apellido_realizante','n.id_sacramento as chale','n.nota')
             ->where('s.' .$criterio, 'like', '%'. $buscar . '%')->orderBy('s.id','desc')->paginate(15);
         }
 
@@ -2718,11 +2721,8 @@ class BautizoController extends Controller
                 break;
             }
         }
-        
-       
     }
 
-    
     public function show($id)
     {
         //
@@ -2746,10 +2746,18 @@ class BautizoController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function marginar(Request $request)
     {
-        //
+        $idn = NotaMarginal::max('id');
+        $id_nota = $idn+1;
+
+        $nota = new NotaMarginal();
+        $nota->id=$id_nota;
+        $nota->nota=$request->notam;
+        $nota->id_sacramento=$request->idsacra;
+        $nota->save();
     }
+
 
     public function buscar(Request $id)
     {

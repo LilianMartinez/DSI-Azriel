@@ -1098,13 +1098,13 @@ export default {
                         if (lengthmin < Min_Length)this.errorMostrarMsj.push("La alcaldía debe tener más de 5 letras");
                         if(!patron.test(this.alcaldia))this.errorMostrarMsj.push("La alcaldia solo debe de tener letras");
                         if(!this.libro) this.errorMostrarMsj.push("El numero de libro no puede estar vacío");
-                        if(this.libro == 0) this.errorMostrarMsj.push("No puede tener el valor 0");
+                        if(this.libro == 0) this.errorMostrarMsj.push("El numero de libro no puede ser 0");
                         if (!RE.test(this.libro))  this.errorMostrarMsj.push("El numero de libro debe ser un numero entero");
                         if(!this.partida) this.errorMostrarMsj.push("El numero de la partida no puede estar vacío");
-                        if(this.partida == 0) this.errorMostrarMsj.push("No puede tener el valor 0");
+                        if(this.partida == 0) this.errorMostrarMsj.push("El numero de la partida no puede ser 0");
                         if (!RE.test(this.partida))  this.errorMostrarMsj.push("El numero de la partida debe ser un numero entero");
                         if(!this.folio) this.errorMostrarMsj.push("El numero de folio no puede estar vacío");
-                        if(this.folio == 0) this.errorMostrarMsj.push("No puede tener el valor 0");
+                        if(this.folio == 0) this.errorMostrarMsj.push("El numero de folio no puede ser 0");
                         if (!RE.test(this.folio))  this.errorMostrarMsj.push("El numero de folio debe ser un numero entero");
                         if(!this.anio) this.errorMostrarMsj.push("El año no puede estar vacío");
                         if (!anioc.test(this.anio))  this.errorMostrarMsj.push("El año debe tener 4 numeros enteros");
@@ -1212,7 +1212,7 @@ export default {
                         if(this.foliob == 0) this.errorMostrarMsj.push("No puede tener el valor 0");
                         if(!RE.test(this.foliob)) this.errorMostrarMsj.push("El numero de folio debe de tener numeros enteros");
                         if(!this.asiento) this.errorMostrarMsj.push("El numero de asiento no puede estar vacio");
-                        if(this.asiento == 0) this.errorMostrarMsj.push("No puede tener el valor 0");
+                        if(this.asiento == 0) this.errorMostrarMsj.push("El numero de asiento no debe ser 0");
                         if(!RE.test(this.asiento)) this.errorMostrarMsj.push("El numero de asiento debe de tener numeros enteros");
                         if(!this.monto) this.errorMostrarMsj.push("El numero de la ofrenda no puede estar vacio");
                         if(!RED.test(this.monto)) this.errorMostrarMsj.push("El monto debe de tener solo decimales");
