@@ -7373,7 +7373,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
             var Min_Length = 5;
             var lengthmin = this.alcaldia.length;
             if (lengthmin < Min_Length) this.errorMostrarMsj.push("La alcaldía debe tener más de 5 letras");
-            if (!patron.test(this.alcaldia)) this.errorMostrarMsj.push("La alcaldia solo debe de tener letras");
+            if (RE.test(this.alcaldia)) this.errorMostrarMsj.push("La alcaldia solo debe de tener letras");
             if (!this.libro) this.errorMostrarMsj.push("El numero de libro no puede estar vacío");
             if (this.libro == 0) this.errorMostrarMsj.push("El numero de libro no puede ser 0");
             if (!RE.test(this.libro)) this.errorMostrarMsj.push("El numero de libro debe ser un numero entero");
