@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Persona;
 use App\Sacramento;
 use App\Efectivo;
+use App\Impresion;
 //use App\Sacramentos3;
 //use App\PartidaNacimiento;
 use Illuminate\Support\Facades\DB;
@@ -345,18 +346,39 @@ class PersonaController2 extends Controller
     {
         //
     }
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+    public function registrarImpresion(Request $request){
+        if(!$request->ajax()) return redirect('/');
+                
+        $id_impresion = Impresion::max('id');
+        $id=$id_impresion+1;
+           
+
+        $impresion = new Impresion();
+        $impresion->id=$id;
+        $impresion->idsacra= $request->idsacra;
+        $impresion->idperso= $request->idperso; //id_padre supuestamente
+        $impresion->cargoim= $request->cargoim;
+        $impresion->conceptoim= $request->conceptoim;
+        $impresion->save();
+
+    }
+    public function eliminarDatosImpresion(Request $request)
+    {
+        $impresiones = DB::table('impresiones')->delete();
+        return;
+    }
+
+    //MATRIMONIO
 
     public function certificadoMatri(Request $request){
         $idsacramento=$request->id;
-        $idSacer=$request->idsacerdote;
-        $cargoSa =$request->cargosacerdote;
-        $concepto=$request->enConcepto;
         $holi=1;
 
            /* $matrimonio=Sacramento:://join('personas','personas.id','=','sacramentos.id_realizante1') //novio
                                  // ->join('personas as 1','1.id','=','sacramentos.id_realizante2') //novia
-                                //  ->join('iglesias','iglesias.id','=','sacramentos.id_iglesia')     //iglesis
+                                //  ->join('iglesias','iglesias.id','=','sacramentos.id_impresion$id_impresion')     //iglesis
                                 //  ->join('personas as 2','2.id','=','sacramentos.id_sacerdote')   //sacerdote
                                   ->join('personas as 3','3.id','=','sacramentos.id_padrino')  //padrino1
                                   ->join('personas as 4','4.id','=','sacramentos.id_padrino2')  //padrino2
@@ -388,7 +410,7 @@ class PersonaController2 extends Controller
                                   ->where('sacramentos.id','=',$idsacramento)->get(); //novia
 
                 $padre=Sacramento::join('personas','personas.id','=','sacramentos.id_sacerdote')
-                                  ->select('personas.nombre_persona as nompadre', 'personas.apellido_persona as apelpadre')
+                                  ->select('personas.nombre_persona as nompadre', 'personas.apellido_persona as apelpadre','sacramentos.titulo')
                                    ->where('sacramentos.id','=',$idsacramento)->get(); //padre
 
                 $p1=Sacramento::join('personas','personas.id','=','sacramentos.id_padrino')
@@ -406,22 +428,180 @@ class PersonaController2 extends Controller
                 $p4=Sacramento::join('personas','personas.id','=','sacramentos.id_padrino4')
                                 ->select('personas.nombre_persona as nompad4', 'personas.apellido_persona as apelpad4')
                                  ->where('sacramentos.id','=',$idsacramento)->get(); //padrino4
-                            
-              /*  $ns=Persona::select('nombre_persona,apellido_persona')
-                            ->where('id','=',$idSacer)->get(); //nombre y apellido de padre a firmar la acta*/
+
+                $sacerFirma=Impresion::join('personas','personas.id','=','impresiones.idperso')
+                                       ->select('personas.nombre_persona as sacerFirmN', 'personas.apellido_persona as sacerFirmA',
+                                                'impresiones.cargoim','impresiones.conceptoim')
+                                     ->where('impresiones.idsacra','=',$idsacramento)->get(); 
 
  
 
                 $pdf= \PDF::loadView('pdf.certiMatrimonio',['sacraIgle'=>$sacraIgle,'novio'=>$novio,'novia'=>$novia,
-                'padre'=>$padre,'p1'=>$p1,'p2'=>$p2,'p3'=>$p3,'p4'=>$p4,'holi'=>$holi,'idsacramento'=>$idsacramento, 'cargoSa'=>$cargoSa,
-                'idSacer'=>$idSacer,'concepto'=>$concepto]);
+                'padre'=>$padre,'p1'=>$p1,'p2'=>$p2,'p3'=>$p3,'p4'=>$p4,'holi'=>$holi,'idsacramento'=>$idsacramento, 'sacerFirma'=>$sacerFirma]);
                 return $pdf->download('CertificadoDeMatrimonio.pdf');
 
-                /*
-                llenadoarray(){            
-                this.arraycargo= new Array('DIACONO','PADRE','ARZOBISPO','CARDENAL','NUNCIO APOSTOLICO','MONSEÑOR');                
-                 },
-                */ 
+    }
 
+    //BAUTIZO
+
+    public function certificadoBautizo(Request $request){
+        $idsacramento=$request->id;
+        $idpapa=$request->id_padre;
+        $idmama=$request->id_madre;
+
+
+                $bautizado=Sacramento::join('personas','personas.id','=','sacramentos.id_realizante1')
+                                ->select('personas.nombre_persona as nomrea', 'personas.apellido_persona as apelrea',
+                                'personas.fecha_nacimiento','personas.sexo','sacramentos.fecha_realizacion','sacramentos.libro',
+                                'sacramentos.folio','sacramentos.asiento','sacramentos.titulo')
+                                 ->where('sacramentos.id','=',$idsacramento)->get(); //bautizado
+                
+                $papa=Persona::select('nombre_persona as nompapa', 'apellido_persona as apelpapa')
+                                ->where('personas.id','=',$idpapa)->get(); //papá
+
+                $mama=Persona::select('nombre_persona as nommama', 'apellido_persona as apelmama')
+                                ->where('personas.id','=',$idmama)->get(); //mamá
+
+                $padre=Sacramento::join('personas','personas.id','=','sacramentos.id_sacerdote')
+                                  ->select('personas.nombre_persona as nompadre', 'personas.apellido_persona as apelpadre','sacramentos.titulo')
+                                   ->where('sacramentos.id','=',$idsacramento)->get(); //padre
+
+                $p1=Sacramento::join('personas','personas.id','=','sacramentos.id_padrino')
+                                   ->select('personas.nombre_persona as nompad1', 'personas.apellido_persona as apelpad1',
+                                   'personas.sexo as sp1')
+                                    ->where('sacramentos.id','=',$idsacramento)->get(); //padrino1
+
+                $p2=Sacramento::join('personas','personas.id','=','sacramentos.id_padrino2')
+                                    ->select('personas.nombre_persona as nompad2', 'personas.apellido_persona as apelpad2',
+                                    'personas.sexo as sp2')
+                                     ->where('sacramentos.id','=',$idsacramento)->get(); //padrino2
+
+                $p3=Sacramento::join('personas','personas.id','=','sacramentos.id_padrino3')
+                                ->select('personas.nombre_persona as nompad3', 'personas.apellido_persona as apelpad3',
+                                'personas.sexo as sp3')
+                                 ->where('sacramentos.id','=',$idsacramento)->get(); //padrino3
+
+                $p4=Sacramento::join('personas','personas.id','=','sacramentos.id_padrino4')
+                                ->select('personas.nombre_persona as nompad4', 'personas.apellido_persona as apelpad4',
+                                'personas.sexo as sp4')
+                                 ->where('sacramentos.id','=',$idsacramento)->get(); //padrino4
+                
+                $sacerFirma=Impresion::join('personas','personas.id','=','impresiones.idperso')
+                                    ->join('sacramentos','impresiones.idsacra','=','sacramentos.id')
+                                   ->select('personas.nombre_persona as sacerFirmN', 'personas.apellido_persona as sacerFirmA',
+                                            'impresiones.cargoim','impresiones.conceptoim')
+                                 ->where('impresiones.idsacra','=',$idsacramento)->get(); //Para imprimir lo demás
+
+               
+
+                $pdf= \PDF::loadView('pdf.certiBautizo',['bautizado'=>$bautizado,'papa'=>$papa,'mama'=>$mama,
+                'padre'=>$padre,'p1'=>$p1,'p2'=>$p2,'p3'=>$p3,'p4'=>$p4,'idsacramento'=>$idsacramento, 'sacerFirma'=>$sacerFirma,
+                'idpapa'=>$idpapa,'idmama'=>$idmama]);
+                return $pdf->download('CertificadoDeBautizo.pdf');
+
+    }
+    
+    //PRIMERA COMUNION
+
+    public function certificadoPrimeraComunion(Request $request){
+        $idsacramento=$request->id;
+        $idpapa=$request->id_padre;
+        $idmama=$request->id_madre;
+
+
+                $primeraComun=Sacramento::join('personas','personas.id','=','sacramentos.id_realizante1')
+                                ->select('personas.nombre_persona as nomrea', 'personas.apellido_persona as apelrea',
+                                'personas.fecha_nacimiento','personas.sexo','sacramentos.fecha_realizacion')
+                                 ->where('sacramentos.id','=',$idsacramento)->get(); //primeraComun
+                
+                $papa=Persona::select('nombre_persona as nompapa', 'apellido_persona as apelpapa')
+                                ->where('personas.id','=',$idpapa)->get(); //papá
+
+                $mama=Persona::select('nombre_persona as nommama', 'apellido_persona as apelmama')
+                                ->where('personas.id','=',$idmama)->get(); //mamá
+
+                $padre=Sacramento::join('personas','personas.id','=','sacramentos.id_sacerdote')
+                                  ->select('personas.nombre_persona as nompadre', 'personas.apellido_persona as apelpadre','sacramentos.titulo')
+                                   ->where('sacramentos.id','=',$idsacramento)->get(); //padre
+                    
+                
+                $sacerFirma=Impresion::join('personas','personas.id','=','impresiones.idperso')
+                                    ->join('sacramentos','impresiones.idsacra','=','sacramentos.id')
+                                   ->select('personas.nombre_persona as sacerFirmN', 'personas.apellido_persona as sacerFirmA',
+                                            'impresiones.cargoim','impresiones.conceptoim')
+                                 ->where('impresiones.idsacra','=',$idsacramento)->get(); //Para imprimir lo demás
+
+               
+
+                $pdf= \PDF::loadView('pdf.certiPrimeraComunion',['primeraComun'=>$primeraComun,'papa'=>$papa,'mama'=>$mama,
+                'padre'=>$padre,'idsacramento'=>$idsacramento, 'sacerFirma'=>$sacerFirma,
+                'idpapa'=>$idpapa,'idmama'=>$idmama]);
+                return $pdf->download('CertificadoDePrimeraComunion.pdf');
+
+    }
+
+    //CONFIRMA
+
+    public function certificadoConfirma(Request $request){
+        $idsacramento=$request->id;
+        $idpapa=$request->id_padre;
+        $idmama=$request->id_madre;
+        $idrea=$request->id_realizante1;
+
+
+                $confirmando=Sacramento::join('personas','personas.id','=','sacramentos.id_realizante1')
+                                ->select('personas.nombre_persona as nomrea', 'personas.apellido_persona as apelrea',
+                                'personas.fecha_nacimiento','personas.sexo','sacramentos.fecha_realizacion','sacramentos.libro',
+                                'sacramentos.folio','sacramentos.asiento','sacramentos.titulo')
+                                 ->where('sacramentos.id','=',$idsacramento)->get(); //confirmando
+                
+                $papa=Persona::select('nombre_persona as nompapa', 'apellido_persona as apelpapa')
+                                ->where('personas.id','=',$idpapa)->get(); //papá
+
+                $mama=Persona::select('nombre_persona as nommama', 'apellido_persona as apelmama')
+                                ->where('personas.id','=',$idmama)->get(); //mamá
+
+                $padre=Sacramento::join('personas','personas.id','=','sacramentos.id_sacerdote')
+                                  ->select('personas.nombre_persona as nompadre', 'personas.apellido_persona as apelpadre','sacramentos.titulo')
+                                   ->where('sacramentos.id','=',$idsacramento)->get(); //padre
+                
+                $p1=Sacramento::join('personas','personas.id','=','sacramentos.id_padrino')
+                                   ->select('personas.nombre_persona as nompad1', 'personas.apellido_persona as apelpad1',
+                                   'personas.sexo as sp1')
+                                    ->where('sacramentos.id','=',$idsacramento)->get(); //padrino1
+
+                $p2=Sacramento::join('personas','personas.id','=','sacramentos.id_padrino2')
+                                    ->select('personas.nombre_persona as nompad2', 'personas.apellido_persona as apelpad2',
+                                    'personas.sexo as sp2')
+                                     ->where('sacramentos.id','=',$idsacramento)->get(); //padrino2
+
+                $p3=Sacramento::join('personas','personas.id','=','sacramentos.id_padrino3')
+                                ->select('personas.nombre_persona as nompad3', 'personas.apellido_persona as apelpad3',
+                                'personas.sexo as sp3')
+                                 ->where('sacramentos.id','=',$idsacramento)->get(); //padrino3
+
+                $p4=Sacramento::join('personas','personas.id','=','sacramentos.id_padrino4')
+                                ->select('personas.nombre_persona as nompad4', 'personas.apellido_persona as apelpad4',
+                                'personas.sexo as sp4')
+                                 ->where('sacramentos.id','=',$idsacramento)->get(); //padrino4
+                    
+                $iglesiaBa=Sacramento::join('iglesias','iglesias.id','=','sacramentos.id_iglesia')
+                                       ->select('iglesias.nombre_iglesia')
+                                       ->where('sacramentos.id_realizante1','=', $idrea)
+                                       ->where('sacramentos.tipo_sacramento','=',1)
+                                       ->get(); //iglesia de bautizo
+                
+                $sacerFirma=Impresion::join('personas','personas.id','=','impresiones.idperso')
+                                    ->join('sacramentos','impresiones.idsacra','=','sacramentos.id')
+                                   ->select('personas.nombre_persona as sacerFirmN', 'personas.apellido_persona as sacerFirmA',
+                                            'impresiones.cargoim','impresiones.conceptoim')
+                                 ->where('impresiones.idsacra','=',$idsacramento)->get(); //Para imprimir lo demás
+
+               
+
+                $pdf= \PDF::loadView('pdf.certiConfirma',['confirmando'=>$confirmando,'papa'=>$papa,'mama'=>$mama,
+                'padre'=>$padre,'p1'=>$p1,'p2'=>$p2,'p3'=>$p3,'p4'=>$p4,'idsacramento'=>$idsacramento,'iglesiaBa'=>$iglesiaBa,'sacerFirma'=>$sacerFirma,
+                'idpapa'=>$idpapa,'idmama'=>$idmama]);
+                return $pdf->download('CertificadoDeConfirma.pdf');
     }
 }

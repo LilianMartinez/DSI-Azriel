@@ -23,13 +23,16 @@ class BautizoController extends Controller
             $bautizo = DB::table('sacramentos as s')
                         ->leftjoin('personas as p','s.id_realizante1','=','p.id')
                         ->where('s.tipo_sacramento',1)
-                        ->select('s.folio','s.libro','s.asiento','p.nombre_persona as nombreRea','p.apellido_persona as apellido_realizante')
+                        ->select('s.id','s.folio','s.libro','s.asiento',
+                        'p.nombre_persona as nombreRea','p.apellido_persona as apellido_realizante',
+                        'p.id_padre','p.id_madre')
                         ->orderBy('s.id_realizante1','desc')->paginate(15);
         } 
         else{
             $bautizo = DB::table('sacramentos as s')
             ->leftjoin('personas as p','s.id_realizante1','=','p.id')
-            ->select('s.folio','s.libro','s.asiento','p.nombre_persona as nombreRea','p.apellido_persona as apellido_realizante')
+            ->select('s.id','s.folio','s.libro','s.asiento',
+            'p.nombre_persona as nombreRea','p.apellido_persona as apellido_realizante')
             ->where('s.' .$criterio, 'like', '%'. $buscar . '%')->orderBy('s.id','desc')->paginate(15);
         }
 

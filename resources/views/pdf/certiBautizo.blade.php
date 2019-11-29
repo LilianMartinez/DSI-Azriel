@@ -3,7 +3,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Certificado de Matrimonio</title>
+    <title>Certificado de Bautismo</title>
     <style>
         body {
         /*position: relative;*/
@@ -76,6 +76,11 @@
         margin-left: 10%;
         margin-right: 10%;
         }
+        #TituloCert{
+        font-family: Arial, sans-serif; 
+        font-size: 27px;
+        text-align: center;
+        }
         #parrafo{
         font-family: Arial, sans-serif; 
         font-size: 18px;
@@ -85,6 +90,12 @@
         font-family: Arial, sans-serif; 
         font-size: 18px;
         text-align: center;
+        }
+        #parrafo3{
+        font-family: Arial, sans-serif; 
+        font-size: 22px;
+        text-align: justify;
+        text-decoration: underline;
         }
         #fact{
         /*position: relative;*/
@@ -439,8 +450,8 @@
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     
             //FECHA DE REALIZACIÓN
-            foreach($sacraIgle as &$s){
-            $fecha= $s->fecha_realizacion;
+            foreach($bautizado as &$b){
+            $fecha= $b->fecha_realizacion;
             $dia=date("d", strtotime($fecha));
             $mes=date("m", strtotime($fecha));
             $anio=date("Y", strtotime($fecha));
@@ -472,7 +483,63 @@
                 case 12: $mes="diciembre";
                 break;
                 }
+                
+                if($b->sexo == 'F'){
+                    $sexoPersona1="Hija de";
+                    $sexoPersona2="Bautizada el";
+                    $sexoPersona3="Bautizada por";
+                }else{
+                    $sexoPersona1="Hijo de";
+                    $sexoPersona2="Bautizado el";
+                    $sexoPersona3="Bautizado por";
+                }
+
             }
+
+            foreach($bautizado as &$b){
+                $fecha= $b->fecha_nacimiento;
+                $diaN=date("d", strtotime($fecha));
+                $mesN=date("m", strtotime($fecha));
+                $anioN=date("Y", strtotime($fecha));
+                $anioL=valorEnLetras($anio);
+    
+                switch($mesN){
+                    case 01: $mesN="enero";
+                    break;
+                    case 02: $mesN="febrero";
+                    break;
+                    case 03: $mesN="marzo";
+                    break;
+                    case 04: $mesN="abril";
+                    break;
+                    case 05: $mesN="mayo";
+                    break;
+                    case 06: $mesN="junio";
+                    break;
+                    case 07: $mesN="julio";
+                    break;
+                    case 8: $mesN="agosto";
+                    break;
+                    case 9: $mesN="septiembre";
+                    break;
+                    case 10: $mesN="octubre";
+                    break;
+                    case 11: $mesN="noviembre";
+                    break;
+                    case 12: $mesN="diciembre";
+                    break;
+                    }
+                }
+
+        
+                    if($idpapa != 0 && $idmama == 0){
+                        $yde='';
+                    } elseif ($idpapa == 0 && $idmama != 0){
+                        $yde='';
+                    } else if ($idpapa != 0 && $idmama != 0){
+                        $yde='Y de:';
+                    }
+
             ?>
 
         <header>
@@ -497,32 +564,52 @@
         <br>
         <section>
         <div id="parrafoM">
-                 <br>
-                 <br>
-                 <br>
-                 <p id="parrafo">
-                 <br>El infrascrito Párroco de la Parroquia de San Luís Gonzaga en Mariona de ciudad Cuscatancingo, CERTIFICA QUE:
-                 @foreach ($sacraIgle as $s)
-                 <br><b>En el Libro No. {{$s->libro}} Expediente Matrimonial {{$s->num_expediente}}</b> 
-                 @endforeach
+                 <p id="TituloCert">
+                 CERTIFICADO DE BAUTISMO
                  </p>
                  <p id="parrafo">
-                 @foreach ($novio as $no)
-                 <br>El señor <b>{{$no->nomnovio}} {{$no->apelnovio}}</b> contrajo Matrimonio
+                 El infrascrito Párroco de la Parroquia de San Luís Gonzaga en Mariona de  la Ciudad Cuscatancingo, CERTIFICA QUE:
+                 @foreach ($bautizado as $b)
+                 <br><b>En el Libro No. {{$b->libro}}, Folio No. {{$b->folio}}, Asiento No. {{$b->asiento}}</b> 
+                 </p>
+                 <p id="parrafo3">
+                 <b>{{$b->nomrea}} {{$b->apelrea}}</b>
                  @endforeach
-                 @foreach ($novia as $na)
-                 Religioso con la señorita <b>{{$na->nomnovia}} {{$na->apelnovia}}</b> el dia {{$dia}} de {{$mes}} del año {{$anioL}},
-                 @endforeach 
-                 @foreach ($sacraIgle as $s)
-                 en la {{$s->nombre_iglesia}}. 
+                 </p>
+                <p id="parrafo">
+                <br>{{$sexoPersona1}}: 
+                @if($idpapa != 0 and $idmama == 0)
+                        @foreach ($papa as $p)
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{$p->nompapa}} {{$p->apelpapa}}
+                        @endforeach
+                    @elseif ($idpapa == 0 and $idmama != 0)
+                        @foreach ($mama as $m)
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{$m->nommama}} {{$m->apelmama}}
+                        @endforeach
+                    @elseif ($idpapa != 0 and $idmama != 0)
+                        @foreach ($papa as $p)
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{$p->nompapa}} {{$p->apelpapa}}
+                        @endforeach
+                        <br> {{$yde}}
+                        @foreach ($mama as $m)
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{$m->nommama}} {{$m->apelmama}}
+                        @endforeach
+                @endif
+
+                 @foreach ($bautizado as $b)
+                <br> Nació el:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{$diaN}} de {{$mesN}} de {{$anioN}}
+                <br>{{$sexoPersona2}}: 
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{$dia}} de {{$mes}} de {{$anio}}
                  @endforeach
-                 @foreach ($sacraIgle as $s)
-                 <br>Presidío {{$s->titulo}}
+                 <br>{{$sexoPersona3}}:
+                 @foreach ($padre as $padree)
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{$padree->titulo}} {{$padree->nompadre}} {{$padree->apelpadre}}
                  @endforeach
-                 @foreach ($padre as $p)
-                 {{$p->nompadre}} {{$p->apelpadre}}. 
-                 @endforeach
-                 <br>Fueron los padrinos: 
+                </p>
+
+                 <p id="parrafo">
+                 <!-- modificar -->
+                 <br>Siendo sus padrinos: 
                  @foreach ($p1 as $pa1)
                     <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{$pa1->nompad1}} {{$pa1->apelpad1}}
                  @endforeach
@@ -538,25 +625,22 @@
                  </p>
 
                  <p id="parrafo">  
-                 @foreach($sacerFirma as $ss)           
-                    <br>Es copia conforme al original y para efectos de <b>{{$ss->conceptoim}}</b> se exitende la presente certificación, en Cuscatancingo a los
-                     {{$diaA}} días del mes de {{$mesA}} del año {{$anioAL}}
-                 @endforeach  
-                 </p>
+                 @foreach($sacerFirma as $sf)           
+                    <br>Es copia conforme al original y para efectos de <b>{{$sf->conceptoim}}</b>
+                @endforeach   
+                     se exitende la presente certificación en San Luis Mariona
+                     Cuscatancingo el día {{$diaA}} de {{$mesA}} del año {{$anioAL}} 
 
-                 <br>
+                 </p>
                  <br>
                  <p id="parrafo">
-                    <br>En el corazón de Jesus,
+                    <br>Fraternalmente,
                  </p>
                  <br>
-                 <br>
-                 <br>
-                 <br>
-                 <p id="parrafo2">
-                 @foreach($sacerFirma as $sf)           
-                  <br>{{$sf->sacerFirmN}} {{$sf->sacerFirmA}}, MSC
-                  <br>{{$sf->cargoim}}
+                 <p id="parrafo2">  
+                 @foreach($sacerFirma as $ss)      
+                  <br>{{$ss->sacerFirmN}} {{$ss->sacerFirmA}}, MSC
+                  <br>{{$ss->cargoim}}
                   @endforeach
                  </p>
         </div>        

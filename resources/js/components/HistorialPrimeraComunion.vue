@@ -22,6 +22,7 @@
                                     <th>Nombres</th>
                                     <th>Nombre padre</th>
                                     <th>Nombre madre</th>
+                                    <th>Opciones</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -29,6 +30,10 @@
                                     <td>{{realizante.hnom}} {{realizante.hapellido}}</td>
                                     <td>{{realizante.pnom}} {{realizante.papellido}}</td>
                                     <td>{{realizante.mnom}} {{realizante.mapellido}}</td>
+                                    &nbsp;&nbsp;&nbsp;
+                                    <button type="button" class="btn btn-success btn-sm" @click="abrirModal2('primeracomunion','imprimir',realizante)">
+                                              <i class="icon-plus"></i>&nbsp;Imprimir
+                                    </button>
                                 </tr>
                             </tbody>
                         </table>
@@ -47,7 +52,90 @@
                         </nav>
                     </div>
                 </div>
-            </div>      
+            </div>    
+
+    <!-- Inicio del modal 4 Imprimir constancia -->
+            <div class="modal fade" tabindex="-1" :class="{'mostrar' : modal4}" role="dialog" aria-labelledby="myModalLabel" style="display: none;" aria-hidden="true">
+                <div class="modal-dialog modal-primary modal-lg" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <!--el v-text="tituloModal" muestra el titulo segun el metodo mostrarModal -->
+                            <h4 class="modal-title" v-text="tituloModal"></h4>
+                            <button type="button" class="close" @click="cerrarModal4()" aria-label="Close">
+                              <span aria-hidden="true">×</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <form action="" method="post" enctype="multipart/form-data" class="form-horizontal">
+                                
+                                <div class="form-group row">
+                                    <label class="col-md-3 form-control-label" for="text-input">Motivo de la constancia:<b class="alerta">*</b></label>
+                                    <div class="col-md-5">
+                                        <input type="text" v-model="conceptoim" class="form-control" placeholder="ej: Padrinos de bautismo">
+                                    </div>
+                                </div>    
+                                <div class="form-group row">
+                                <label class="col-md-3 form-control-label" for="text-input">Nombre del sacerdote<b class="alerta">*</b></label>
+                                    <div class="col-md-5">
+                                        <select class="form-control" v-model="idperso"> 
+                                        <option value="0" disabled>Seleccione</option>
+                                        <option v-for="sacerdote in arraysacerdote" :key="sacerdote.id" v-bind:value="sacerdote.id" >{{sacerdote.nombre_persona}}, {{sacerdote.apellido_persona}}</option>
+                                        </select >
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-md-3 form-control-label" for="text-input">Cargo<b class="alerta">*</b></label>
+                                    <div class="col-md-5">
+                                            <select class="form-control" v-model="cargoim"> 
+                                            <option value="0" disabled>Cargo</option>
+                                            <option v-for="sacerdote in arraycargo" :key="sacerdote.id" v-bind:value="sacerdote" v-text="sacerdote"></option>
+                                            </select>
+                                        </div>
+                                </div>
+
+                                <div class="form-group row">
+                                    <label class="col-md-3 form-control-label" for="text-input">Ofrenda por constancia<b class="alerta">*</b></label>
+                                    <div class="col-md-5">
+                                        <input type="number" v-model="montoConstancia" class="form-control" placeholder="20.00">
+                                    </div>
+                                </div>
+
+                                <div class="form-group row">
+                                    <label class="col-md-3">Categoría</label>
+                                    <div class="col-md-5">
+                                        <select class="form-control" v-model="idcare">
+                                            <option value="0" disabled>Seleccione</option>
+                                            <option v-for="categorias in arraycategorias" :key="categorias.id"  v-bind:value="categorias.id" v-text="categorias.nombre_categoria"></option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="form-group row">
+                                    <div class="col-md-3"></div>
+                                    <div class="col-md-2">
+                                        <button type="button" class="btn btn-secondary btn-block" v-on:click="cobrar">Cobrar</button>&nbsp;
+                                    </div>
+                                </div>
+                            <!-- Este div se utiliza para la validación -->
+                           <div v-show="errorModal4" class="form-group row div-error">
+                                <div class="text-center text-error">
+                                    <div v-for="error in errorMostrarMsjModal4" :key="error" v-text="error">
+                                    </div>
+                                </div>
+                            </div>
+
+                            </form>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" @click="cerrarModal4()">Cerrar</button>
+                            <button type="button" class="btn btn-primary" @click="imprimirConstancia()">Imprimir Constancia</button>
+                        </div>
+                    </div>
+                    <!-- /.modal-content -->
+                </div>
+                <!-- /.modal-dialog -->
+            </div>
+            <!--Fin del modal Imprimir Constancia -->  
         </main>
 </template>
 <script>
@@ -88,6 +176,25 @@
                 ano:'',
                 verificacion:0,
                 accionbotones:0,
+
+                /////////Impresion///////
+                //tituloModal:'',
+                modal4:0,
+                conceptoim:'',
+                idperso:'',
+                cargoim:'',
+                arraysacerdote:[],
+                arraycargo:[],
+                sacerdote:'',
+                montoConstancia:'',
+                idcare:0,
+                arraycategorias:[],
+                nombre_categoria:'',
+                id_madre:0,
+                id_padre:0,
+                id_sacramento:0,
+                errorModal4 : 0,
+                errorMostrarMsjModal4 : [],
                 
                 pagination:{
                     'total' :0,
@@ -236,15 +343,166 @@
                     });
 
             },
-           
 
-    
+             /////////////////////////// TODO LO RELACIONADO A IMPRESION DE CERTIFICADOS /////////////////////////////
+        cerrarModal4(){
+                this.modal4=0;
+                this.tituloModal='';
+                this.id_sacramento='';
+                this.enConcepto='';
+                this.idcare='',
+                this.cargosacerdote=0,
+                this.idsacerdote=0,
+                this.montoConstancia='';
+                this.idcare=0;
+                this.errorModal4=0;
+                this.errorMostrarMsjModal4=[];
+                this.idperso='';
+                this.cargoim='';
+                this.conceptoim='';
+                this.cobrado=false;
+            },
+            cobrar: function (){
+                        this.cobrado=true;
+                        //AQUÍ AGREGAR EL DESABILITAR COBRAR1
+
+                    },
+            
+             llenadolista(buscar,criterio){
+                let me=this;
+                var url='/persona/buscarsacerdote';
+                axios.get(url) .then(function (response) {
+                    me.arraysacerdote=response.data;
+                })
+                .catch(function (error) {
+                    console.log(error);
+                });
+            },
+            //autocompletar sacerdotes
+            llenadoarray(){            
+                    this.arraycargo= new Array('DIACONO','PARROCO', 'PADRE','ARZOBISPO','CARDENAL','NUNCIO APOSTOLICO','MONSEÑOR');                
+            },
+            selectCategoria(){
+                 let me=this;
+                var url='/categoriaresumen/selectCategoriaRe';
+                axios.get(url) .then(function (response) {
+                    // handle success
+                    var respuesta= response.data;
+                    me.arraycategorias=respuesta.categorias;
+                })
+                .catch(function (error) {
+                    // handle error
+                    console.log(error);
+                });
+            },
+            //////////Impresion
+            registrarImpresion(){  
+            let me=this;
+              axios.put('/persona/registrarImpresion',{
+                    'idsacra':this.id_sacramento,
+                    'idperso':this.idperso,
+                    'cargoim':this.cargoim,
+                    'conceptoim':this.conceptoim,
+              }) .then(function (response) {
+                    me.listarPersona();
+                    me.cerrarModal4();
+                }) .catch(function (error) {
+                 
+                });
+        },
+
+        imprimirConstancia(){
+           if(this.validarModal4()){
+                return;
+            }
+            
+            axios.put('/persona/certificadoPrimeraComunion',{
+                'id': this. id_sacramento,
+                'id_madre':this.id_madre,
+                'id_padre':this.id_padre,
+            }).then(function (response) { 
+                    me.listarPersona();
+                    me.cerrarModal4();
+                }) .catch(function (error) {
+                    console.log(error);
+                });
+                 let me=this;
+                 this.registrarImpresion();
+                 this.pdfConstacia(me.id_sacramento, me.id_padre,me.id_madre);
+                 this.eliminarImpresion();
+        },
+
+       validarModal4(){
+            this.errorModal4=0;
+            this.errorMostrarMsjModal4=[];
+            var RE = /^\d*(\.\d{1})?\d{0,1}$/;
+            this.conceptoim;
+            this.montoConstancia;
+
+            if(this.cobrado!=true)this.errorMostrarMsjModal4.push("Debe cobrar la solicitud de la constancia de confirma");
+            if(this.conceptoim=='')this.errorMostrarMsjModal4.push("El campo de motivo de la constancia no puede estar vacio");
+            if(this.idperso=='')this.errorMostrarMsjModal4.push("Debe elegir al Padre que firmará la constancia");
+            if(this.cargoim=='')this.errorMostrarMsjModal4.push("Debe elegir el cargo del padre que firmará la constancia");
+             if(this.montoConstancia ==''){
+                    this.errorMostrarMsjModal4.push("Debe cobrar la constancia");
+                }if(!RE.test(this.montoConstancia))this.errorMostrarMsjModal4.push("La ofrenda por constancias solo pueden ser decimales");
+
+            if (this.errorMostrarMsjModal4.length) this.errorModal4 = 1;
+
+            return this.errorModal4;
+        },
+
+        pdfConstacia(id_sacramento,id_padre,id_madre){
+            if(id_padre == null){
+                    id_padre=0;
+            }
+            if(id_madre == null){
+                    id_madre=0;
+              }
+            window.open('http://127.0.0.1:8000/persona/certificadoPrimeraComunion/'+ id_sacramento+'/'+id_padre+ '/'+id_madre);
+        },
+
+        eliminarImpresion(){
+              let me=this;
+              axios.put('/persona/eliminarDatosImpresion',{
+                  'id':this.id_impresion,
+              }) .then(function (response) {
+                })
+                .catch(function (error) {
+                    // handle error
+                    console.log(error);
+                });
+            },
+           
+             abrirModal2(modelo, accion, data = []){
+                switch(modelo){
+                    case "primeracomunion":
+                    {
+                        switch(accion){
+                            case 'imprimir':{
+                                this.modal4=1;
+                                this.tituloModal = 'Imprimir acta de Primera Comunión';
+                                this.id_sacramento=data['id'];
+                                this.id_padre=data['id_padre'];
+                                this.id_madre=data['id_madre'];
+                                this.idperso='';
+                                this.cargoim='';
+                                this.conceptoim='';
+                                break;
+                            }
+                        }
+                    }
+                }
+            }    
 
 
             },
             
         mounted() {
              this.listarPersona(1,this.nombre,this.apellido);
+             this.llenadoarray();
+             this.selectCategoria();
+             this.llenadolista('','');
             
         }
     }

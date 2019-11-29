@@ -15,9 +15,9 @@ class ResumenEconomicoController extends Controller
      */
     public function index(Request $request)
     {
-      //  if(!$request->ajax()) return redirect('/');
+      if(!$request->ajax()) return redirect('/');
        
-
+    
         $fechaActual=new \DateTime();
         $anio=$fechaActual->format('Y');
         $mes=$fechaActual->format('m');
@@ -26,17 +26,17 @@ class ResumenEconomicoController extends Controller
         $total1nulos=0;
         $total2=0;
         $total2nulos=0;
-    
 
-                
              
                 $categorias = CategoriaResumen::join('efectivos','categorias_resumenes.id','=','efectivos.idcare')
-                                ->select(DB::raw('ROW_NUMBER() OVER() as id_temp'),'efectivos.tipo','categorias_resumenes.nombre_categoria as nombres',DB::raw('sum(monto) as montos'))
+                                ->select(DB::raw('ROW_NUMBER() OVER() as id_temp'),'efectivos.tipo','categorias_resumenes.nombre_categoria as nombres',
+                                DB::raw('sum(monto) as montos'))
                                 ->whereYear('efectivos.fecha', $anio)->whereMonth('efectivos.fecha', $mes)
                                 ->groupby('efectivos.tipo','categorias_resumenes.nombre_categoria')->get();
                 $nullos = DB::table('efectivos')->select(DB::raw('ROW_NUMBER() OVER() as id_tempnul'),'tipo', 'descripcion_efectivo', 'monto')
                             ->whereNull('idcare')->whereYear('fecha', $anio)->whereMonth('fecha', $mes)->get();
                            
+                          
                             $envio['categoria']=$categorias;
                             $envio['nullo']=$nullos;
 
@@ -62,50 +62,65 @@ class ResumenEconomicoController extends Controller
                             $envio['egresos']=$egresos;
                             $envio['total']=$ingresos-$egresos;
                             
-
-                         //   $envio['categoria'] = array_search($categorias->toArray(), $results->toArray());
-
-                     /*  $pro=DB::table(DB::raw("({$categorias}) as x"))
-                                ->select(DB::raw('ROW_NUMBER() OVER() as id_temp'),'x.tipo','x.descripcion_efectivo','x.monto');
-                                $envio['categorias']=$pro;
-
-                     //    $pro = DB::table('categorias_resumenes')->select(DB::raw('ROW_NUMBER() OVER() as id_temp'))->get();
-                        //  select($nullos.'tipo',$nullos.'descripcion_efectivo',$nullos.'monto') ->get();
-
-                       /* $pro= DB::select(DB::raw('Select ROW_NUMBER() over()AS id_temp, x.tipo, x.nombre_categoria, x.montos
-                        from (Select T.tipo, C.nombre_categoria, sum(T.monto) as montos 
-                        from categorias_resumenes C inner join efectivos T on T.idcare=C.id 
-                        where extract(month from T.fecha)=09 and extract(year from T.fecha)=2019 group by(C.nombre_categoria, T.tipo)
-                        union select tipo, descripcion_efectivo, monto from efectivos 
-                        where idcare is null and extract(month from fecha)=09 and extract(year from fecha)=2019) as x;
-                        '));*/
-
        return $envio;
       
     }
+    public function buscarAM(Request $request)
+    {
+      if(!$request->ajax()) return redirect('/');
+       
+        $anio=$request->anioBuscar;
+        $mes=$request->mesBuscar;
 
-  /*  public function listarPdfResumido(){
+        switch($mes){
+            case 'ENERO': $mes=01;
+            break;
+            case 'FEBRERO': $mes=02;
+            break;
+            case 'MARZO': $mes=03;
+            break;
+            case 'ABRIL': $mes=04;
+            break;
+            case 'MAYO': $mes=05;
+            break;
+            case 'JUNIO': $mes=06;
+            break;
+            case 'JULIO': $mes=07;
+            break;
+            case 'AGOSTO': $mes=8;
+            break;
+            case 'SEPTIEMBRE': $mes=9;
+            break;
+            case 'OCTUBRE': $mes=10;
+            break;
+            case 'NOVIEMBRE': $mes=11;
+            break;
+            case 'DICIEMBRE': $mes=12;
+            break;
+            }
+        
 
-        $fechaActual=new \DateTime();
-        $anio=$fechaActual->format('Y');
-        $mes=$fechaActual->format('m');
         $envio=array();  
         $total1=0;
         $total1nulos=0;
         $total2=0;
         $total2nulos=0;
     
+             
                 $categorias = CategoriaResumen::join('efectivos','categorias_resumenes.id','=','efectivos.idcare')
-                                ->select(DB::raw('ROW_NUMBER() OVER() as id_temp'),'efectivos.tipo','categorias_resumenes.nombre_categoria as nombres',DB::raw('sum(monto) as montos'))
+                                ->select(DB::raw('ROW_NUMBER() OVER() as id_temp'),'efectivos.tipo','categorias_resumenes.nombre_categoria as nombres',
+                                DB::raw('sum(monto) as montos'))
                                 ->whereYear('efectivos.fecha', $anio)->whereMonth('efectivos.fecha', $mes)
                                 ->groupby('efectivos.tipo','categorias_resumenes.nombre_categoria')->get();
                 $nullos = DB::table('efectivos')->select(DB::raw('ROW_NUMBER() OVER() as id_tempnul'),'tipo', 'descripcion_efectivo', 'monto')
                             ->whereNull('idcare')->whereYear('fecha', $anio)->whereMonth('fecha', $mes)->get();
                            
+                          
+                          
                             $envio['categoria']=$categorias;
                             $envio['nullo']=$nullos;
 
-                         /*   foreach($categorias as &$t){
+                            foreach($categorias as &$t){
             
                                 if($t->tipo==1){
                                     $total1=$total1+$t->montos;
@@ -126,16 +141,10 @@ class ResumenEconomicoController extends Controller
                            $envio['ingresos']=$ingresos;
                             $envio['egresos']=$egresos;
                             $envio['total']=$ingresos-$egresos;
-        
-        $fechaActual=new \DateTime();
-        $anio=$fechaActual->format('Y');
-        $mes=$fechaActual->format('m');
-        $efectivos= DB::table('efectivos')->whereYear('fecha', $anio)->whereMonth('fecha', $mes)->orderBy('id','desc')->get();
-        
-
-        $pdf= \PDF::loadView('pdf.efectivosCEMpdf',['efectivos'=>$efectivos]);
-        return $pdf->download('ControlEconomicoMensual.pdf');
-    }*/
+                            
+       return $envio;
+      
+    }
    
     public function listarPdfResumido(){
 
@@ -160,4 +169,6 @@ class ResumenEconomicoController extends Controller
     $pdf= \PDF::loadView('pdf.efectivosCEMRpdf',['categorias'=>$envio['categoria'], 'efectivos'=>$envio['nullo']]);
     return $pdf->download('ControlEconomicoMensualResumido.pdf');
 }
+
+
 }

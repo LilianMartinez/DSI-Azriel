@@ -48,8 +48,8 @@ Route::group(['middleware'=>['auth']],function(){
                             Route::put('/efectivo/eliminar','EfectivoController@destroy');
                             Route::get('/efectivo/suma','EfectivoController@buscar');
                             Route::get('/efectivo/sumaM','EfectivoController@buscarM');
-                            Route::get('/efectivo/listarPdfGeneral','EfectivoController@listarPdfGeneral')->name('efectivos_pdf');
-                            Route::get('/efectivo/listarPdfResumido','ResumenEconomicoController@listarPdfResumido')->name('efectivos_pdfR');
+                            Route::get('/efectivo/listarPdfGeneral','EfectivoController@listarPdfGeneral')->name('efectivos_pdf'); //general actual
+                            Route::get('/efectivo/listarPdfResumido','ResumenEconomicoController@listarPdfResumido')->name('efectivos_pdfR'); //resumido actual
                             Route::get('/efectivo/buscarResumen','EfectivoController@buscarResumen');
                             
                             
@@ -117,6 +117,9 @@ Route::group(['middleware'=>['auth']],function(){
 
                             //TABLA DE RESUMEN ECONOMICO
                             Route::get('/resumeneconomico','ResumenEconomicoController@index');
+                            Route::get('/resumeneconomico/buscarAM','ResumenEconomicoController@buscarAM');
+
+                            
 
                             //TABLA IGLESIA
                             Route::get('/iglesia','IglesiaController@index');
@@ -137,8 +140,23 @@ Route::group(['middleware'=>['auth']],function(){
                             //Route::put('/sacramento/finalizarexpediente','SacramentoController@finalizarexpediente');
 
                             //Certificados
+                            Route::put('/persona/registrarImpresion','PersonaController2@registrarImpresion');
+                            Route::put('/persona/eliminarDatosImpresion','PersonaController2@eliminarDatosImpresion');
+                                    //Matrimonio
                             Route::get('/persona/certificadoMatri/{id}','PersonaController2@certificadoMatri')->name('matrimonio_pdf');
                             Route::put('/persona/certificadoMatri','PersonaController2@certificadoMatri');
+
+                                    //Bautizo
+                            Route::get('/persona/certificadoBautizo/{id}/{id_padre}/{id_madre}','PersonaController2@certificadoBautizo')->name('bautizo_pdf');
+                            Route::put('/persona/certificadoBautizo','PersonaController2@certificadoBautizo');
+
+                                    //Primera Comunion
+                            Route::get('/persona/certificadoPrimeraComunion/{id}/{id_padre}/{id_madre}','PersonaController2@certificadoPrimeraComunion')->name('primeracomunion_pdf');
+                            Route::put('/persona/certificadoPrimeraComunion','PersonaController2@certificadoPrimeraComunion');
+
+                                    //Confirma
+                            Route::get('/persona/certificadoConfirma/{id}/{id_padre}/{id_madre}/{id_realizante1}','PersonaController2@certificadoConfirma')->name('confirma_pdf');
+                            Route::put('/persona/certificadoConfirma','PersonaController2@certificadoConfirma');
 
                             //TABLA ZONAS
                             Route::get('/zona','ZonaController@index');

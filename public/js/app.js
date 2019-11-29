@@ -1860,6 +1860,94 @@ module.exports = function isBuffer (obj) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -2088,7 +2176,9 @@ __webpack_require__.r(__webpack_exports__);
 //
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
-    return {
+    var _ref;
+
+    return _ref = {
       id_sacramento: 0,
       id_persona: 0,
       folio: 0,
@@ -2099,7 +2189,9 @@ __webpack_require__.r(__webpack_exports__);
       nota: '',
       fecha_realizacion: '',
       nombreRea: '',
+      //P
       apellido_realizante: '',
+      //A
       id_madre: 0,
       id_padre: 0,
       nombrePadre: '',
@@ -2129,16 +2221,16 @@ __webpack_require__.r(__webpack_exports__);
       errorDatos: 0,
       errorMostrarMjs: [],
       tipocomponente: 1,
-      pagination: {
-        'total': 0,
-        'current_page': 0,
-        'per_page': 0,
-        'last_page': 0,
-        'from': 0,
-        'to': 0
-      },
-      offset: 3
-    };
+      //PARA IMPIRMIR CONSTANCIAS PDF
+      modal4: 0
+    }, _defineProperty(_ref, "tituloModal", ''), _defineProperty(_ref, "conceptoim", ''), _defineProperty(_ref, "idperso", ''), _defineProperty(_ref, "cargoim", ''), _defineProperty(_ref, "arraysacerdote", []), _defineProperty(_ref, "arraycargo", []), _defineProperty(_ref, "sacerdote", ''), _defineProperty(_ref, "montoConstancia", ''), _defineProperty(_ref, "idcare", 0), _defineProperty(_ref, "arraycategorias", []), _defineProperty(_ref, "nombre_categoria", ''), _defineProperty(_ref, "errorModal4", 0), _defineProperty(_ref, "errorMostrarMsjModal4", []), _defineProperty(_ref, "pagination", {
+      'total': 0,
+      'current_page': 0,
+      'per_page': 0,
+      'last_page': 0,
+      'from': 0,
+      'to': 0
+    }), _defineProperty(_ref, "offset", 3), _ref;
   },
   computed: {
     isActived: function isActived() {
@@ -2223,6 +2315,120 @@ __webpack_require__.r(__webpack_exports__);
       this.apellidoPadrino2 = '';
       this.nombreSacer = '';
     },
+    cerrarModal4: function cerrarModal4() {
+      this.modal4 = 0;
+      this.tituloModal = '';
+      this.id_sacramento = '';
+      this.enConcepto = '';
+      this.idcare = '', this.cargosacerdote = 0, this.idsacerdote = 0, this.montoConstancia = '';
+      this.idcare = 0;
+      this.errorModal4 = 0;
+      this.errorMostrarMsjModal4 = [];
+      this.idperso = '';
+      this.cargoim = '';
+      this.conceptoim = '';
+      this.cobrado = false;
+    },
+    cobrar: function cobrar() {
+      this.cobrado = true; //AQUÍ AGREGAR EL DESABILITAR COBRAR1
+    },
+    llenadolista: function llenadolista(buscar, criterio) {
+      var me = this;
+      var url = '/persona/buscarsacerdote';
+      axios.get(url).then(function (response) {
+        me.arraysacerdote = response.data;
+      })["catch"](function (error) {
+        console.log(error);
+      });
+    },
+    //autocompletar sacerdotes
+    llenadoarray: function llenadoarray() {
+      this.arraycargo = new Array('DIACONO', 'PARROCO', 'PADRE', 'ARZOBISPO', 'CARDENAL', 'NUNCIO APOSTOLICO', 'MONSEÑOR');
+    },
+    selectCategoria: function selectCategoria() {
+      var me = this;
+      var url = '/categoriaresumen/selectCategoriaRe';
+      axios.get(url).then(function (response) {
+        // handle success
+        var respuesta = response.data;
+        me.arraycategorias = respuesta.categorias;
+      })["catch"](function (error) {
+        // handle error
+        console.log(error);
+      });
+    },
+    //////////Impresion
+    registrarImpresion: function registrarImpresion() {
+      /////////AQUI
+      var me = this;
+      axios.put('/persona/registrarImpresion', {
+        'idsacra': this.id_sacramento,
+        'idperso': this.idperso,
+        'cargoim': this.cargoim,
+        'conceptoim': this.conceptoim
+      }).then(function (response) {
+        me.listarActasBautizo();
+        me.cerrarModal4();
+        console.log(response);
+      })["catch"](function (error) {});
+    },
+    imprimirConstancia: function imprimirConstancia() {
+      if (this.validarModal4()) {
+        return;
+      }
+
+      axios.put('/persona/certificadoBautizo', {
+        'id': this.id_sacramento,
+        'id_madre': this.id_madre,
+        'id_padre': this.id_padre
+      }).then(function (response) {
+        me.listarActasBautizo();
+        me.cerrarModal4();
+      })["catch"](function (error) {
+        console.log(error);
+      });
+      var me = this;
+      this.registrarImpresion();
+      this.pdfConstacia(me.id_sacramento, me.id_padre, me.id_madre);
+      this.eliminarImpresion();
+    },
+    validarModal4: function validarModal4() {
+      this.errorModal4 = 0;
+      this.errorMostrarMsjModal4 = [];
+      var RE = /^\d*(\.\d{1})?\d{0,1}$/;
+      this.conceptoim;
+      this.montoConstancia;
+      if (this.cobrado != true) this.errorMostrarMsjModal4.push("Debe cobrar la solicitud de la constancia de confirma");
+      if (this.conceptoim == '') this.errorMostrarMsjModal4.push("El campo de motivo de la constancia no puede estar vacio");
+      if (this.idperso == '') this.errorMostrarMsjModal4.push("Debe elegir al Padre que firmará la constancia");
+      if (this.cargoim == '') this.errorMostrarMsjModal4.push("Debe elegir el cargo del padre que firmará la constancia");
+
+      if (this.montoConstancia == '') {
+        this.errorMostrarMsjModal4.push("Debe cobrar la constancia");
+      }
+
+      if (!RE.test(this.montoConstancia)) this.errorMostrarMsjModal4.push("La ofrenda por constancias solo pueden ser decimales");
+      if (this.errorMostrarMsjModal4.length) this.errorModal4 = 1;
+      return this.errorModal4;
+    },
+    pdfConstacia: function pdfConstacia(id_sacramento, id_padre, id_madre) {
+      if (id_padre == null) {
+        id_padre = 0;
+      }
+
+      if (id_madre == null) {
+        id_madre = 0;
+      }
+
+      window.open('http://127.0.0.1:8000/persona/certificadoBautizo/' + id_sacramento + '/' + id_padre + '/' + id_madre);
+    },
+    eliminarImpresion: function eliminarImpresion() {
+      var me = this;
+      axios.put('/persona/eliminarDatosImpresion', {}).then(function (response) {})["catch"](function (error) {
+        // handle error
+        console.log(error);
+      });
+    },
     abrirModal: function abrirModal(modelo, accion) {
       var data = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : [];
 
@@ -2240,7 +2446,22 @@ __webpack_require__.r(__webpack_exports__);
                 }
 
               case 'actualizar':
-                {}
+                {
+                  break;
+                }
+
+              case 'imprimir':
+                {
+                  this.modal4 = 1;
+                  this.tituloModal = 'Imprimir acta de bautizo';
+                  this.id_sacramento = data['id'];
+                  this.id_padre = data['id_padre'];
+                  this.id_madre = data['id_madre'];
+                  this.idperso = '';
+                  this.cargoim = '';
+                  this.conceptoim = '';
+                  break;
+                }
             }
           }
       }
@@ -2248,6 +2469,9 @@ __webpack_require__.r(__webpack_exports__);
   },
   mounted: function mounted() {
     this.listarActasBautizo(1, this.buscar, this.criterio, this.tipocomponente);
+    this.llenadoarray();
+    this.selectCategoria();
+    this.llenadolista('', '');
   }
 });
 
@@ -2770,6 +2994,7 @@ __webpack_require__.r(__webpack_exports__);
                   this.idiglesia = data['idiglesia'];
                   this.idzona = data['idzona'];
                   this.feligreses_id = data['id'];
+                  this.nombre_zona = data['nombre_zona'];
                   break;
                 }
 
@@ -3930,7 +4155,6 @@ __webpack_require__.r(__webpack_exports__);
       var url = '/efectivo?page=' + page + '&buscar=' + buscar2 + '&criterio=' + criterio + '&componente=' + tipocomponente;
       axios.get(url).then(function (response) {
         // handle success
-        //console.log(response);
         var respuesta = response.data;
         me.arrayEfectivo = respuesta.efectivos.data;
         me.pagination = respuesta.pagination;
@@ -4187,6 +4411,93 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -4224,6 +4535,25 @@ __webpack_require__.r(__webpack_exports__);
       ano: '',
       verificacion: 0,
       accionbotones: 0,
+      /////////Impresion///////
+      //tituloModal:'',
+      modal4: 0,
+      conceptoim: '',
+      idperso: '',
+      cargoim: '',
+      arraysacerdote: [],
+      arraycargo: [],
+      sacerdote: '',
+      montoConstancia: '',
+      idcare: 0,
+      arraycategorias: [],
+      nombre_categoria: '',
+      id_madre: 0,
+      id_realizante1: 0,
+      id_padre: 0,
+      id_sacramento: 0,
+      errorModal4: 0,
+      errorMostrarMsjModal4: [],
       pagination: {
         'total': 0,
         'current_page': 0,
@@ -4376,10 +4706,155 @@ __webpack_require__.r(__webpack_exports__);
       })["catch"](function (error) {
         console.log(error);
       });
+    },
+    /////////////////////////// TODO LO RELACIONADO A IMPRESION DE CERTIFICADOS /////////////////////////////
+    cerrarModal4: function cerrarModal4() {
+      this.modal4 = 0;
+      this.tituloModal = '';
+      this.id_sacramento = '';
+      this.enConcepto = '';
+      this.idcare = '', this.cargosacerdote = 0, this.idsacerdote = 0, this.montoConstancia = '';
+      this.idcare = 0;
+      this.errorModal4 = 0;
+      this.errorMostrarMsjModal4 = [];
+      this.idperso = '';
+      this.cargoim = '';
+      this.conceptoim = '';
+      this.cobrado = false;
+    },
+    cobrar: function cobrar() {
+      this.cobrado = true; //AQUÍ AGREGAR EL DESABILITAR COBRAR1
+    },
+    llenadolista: function llenadolista(buscar, criterio) {
+      var me = this;
+      var url = '/persona/buscarsacerdote';
+      axios.get(url).then(function (response) {
+        me.arraysacerdote = response.data;
+      })["catch"](function (error) {
+        console.log(error);
+      });
+    },
+    //autocompletar sacerdotes
+    llenadoarray: function llenadoarray() {
+      this.arraycargo = new Array('DIACONO', 'PARROCO', 'PADRE', 'ARZOBISPO', 'CARDENAL', 'NUNCIO APOSTOLICO', 'MONSEÑOR');
+    },
+    selectCategoria: function selectCategoria() {
+      var me = this;
+      var url = '/categoriaresumen/selectCategoriaRe';
+      axios.get(url).then(function (response) {
+        // handle success
+        var respuesta = response.data;
+        me.arraycategorias = respuesta.categorias;
+      })["catch"](function (error) {
+        // handle error
+        console.log(error);
+      });
+    },
+    //////////Impresion
+    registrarImpresion: function registrarImpresion() {
+      var me = this;
+      axios.put('/persona/registrarImpresion', {
+        'idsacra': this.id_sacramento,
+        'idperso': this.idperso,
+        'cargoim': this.cargoim,
+        'conceptoim': this.conceptoim
+      }).then(function (response) {
+        me.listarPersona();
+        me.cerrarModal4();
+        console.log(response);
+      })["catch"](function (error) {});
+    },
+    imprimirConstancia: function imprimirConstancia() {
+      if (this.validarModal4()) {
+        return;
+      }
+
+      axios.put('/persona/certificadoConfirma', {
+        'id': this.id_sacramento,
+        'id_madre': this.id_madre,
+        'id_padre': this.id_padre,
+        'id_realizante1': this.id_realizante1
+      }).then(function (response) {
+        me.listarPersona();
+        me.cerrarModal4();
+      })["catch"](function (error) {
+        console.log(error);
+      });
+      var me = this;
+      this.registrarImpresion();
+      this.pdfConstacia(me.id_sacramento, me.id_padre, me.id_madre, me.id_realizante1);
+      this.eliminarImpresion();
+    },
+    validarModal4: function validarModal4() {
+      this.errorModal4 = 0;
+      this.errorMostrarMsjModal4 = [];
+      var RE = /^\d*(\.\d{1})?\d{0,1}$/;
+      this.conceptoim;
+      this.montoConstancia;
+      if (this.cobrado != true) this.errorMostrarMsjModal4.push("Debe cobrar la solicitud de la constancia de confirma");
+      if (this.conceptoim == '') this.errorMostrarMsjModal4.push("El campo de motivo de la constancia no puede estar vacio");
+      if (this.idperso == '') this.errorMostrarMsjModal4.push("Debe elegir al Padre que firmará la constancia");
+      if (this.cargoim == '') this.errorMostrarMsjModal4.push("Debe elegir el cargo del padre que firmará la constancia");
+
+      if (this.montoConstancia == '') {
+        this.errorMostrarMsjModal4.push("Debe cobrar la constancia");
+      }
+
+      if (!RE.test(this.montoConstancia)) this.errorMostrarMsjModal4.push("La ofrenda por constancias solo pueden ser decimales");
+      if (this.errorMostrarMsjModal4.length) this.errorModal4 = 1;
+      return this.errorModal4;
+    },
+    pdfConstacia: function pdfConstacia(id_sacramento, id_padre, id_madre, id_realizante1) {
+      if (id_padre == null) {
+        id_padre = 0;
+      }
+
+      if (id_madre == null) {
+        id_madre = 0;
+      }
+
+      window.open('http://127.0.0.1:8000/persona/certificadoConfirma/' + id_sacramento + '/' + id_padre + '/' + id_madre + '/' + id_realizante1);
+    },
+    eliminarImpresion: function eliminarImpresion() {
+      var me = this;
+      axios.put('/persona/eliminarDatosImpresion', {
+        'id': this.id_impresion
+      }).then(function (response) {})["catch"](function (error) {
+        // handle error
+        console.log(error);
+      });
+    },
+    abrirModal2: function abrirModal2(modelo, accion) {
+      var data = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : [];
+
+      switch (modelo) {
+        case "confirma":
+          {
+            switch (accion) {
+              case 'imprimir':
+                {
+                  this.modal4 = 1;
+                  this.tituloModal = 'Imprimir acta de Confirma';
+                  this.id_sacramento = data['id'];
+                  this.id_padre = data['id_padre'];
+                  this.id_madre = data['id_madre'];
+                  this.id_realizante1 = data['id_realizante1'];
+                  this.idperso = '';
+                  this.cargoim = '';
+                  this.conceptoim = '';
+                  console.log(data);
+                  break;
+                }
+            }
+          }
+      }
     }
   },
   mounted: function mounted() {
     this.listarPersona(1, this.nombre, this.apellido);
+    this.llenadoarray();
+    this.selectCategoria();
+    this.llenadolista('', '');
   }
 });
 
@@ -4683,6 +5158,94 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -4720,6 +5283,24 @@ __webpack_require__.r(__webpack_exports__);
       ano: '',
       verificacion: 0,
       accionbotones: 0,
+      /////////Impresion///////
+      //tituloModal:'',
+      modal4: 0,
+      conceptoim: '',
+      idperso: '',
+      cargoim: '',
+      arraysacerdote: [],
+      arraycargo: [],
+      sacerdote: '',
+      montoConstancia: '',
+      idcare: 0,
+      arraycategorias: [],
+      nombre_categoria: '',
+      id_madre: 0,
+      id_padre: 0,
+      id_sacramento: 0,
+      errorModal4: 0,
+      errorMostrarMsjModal4: [],
       pagination: {
         'total': 0,
         'current_page': 0,
@@ -4872,10 +5453,151 @@ __webpack_require__.r(__webpack_exports__);
       })["catch"](function (error) {
         console.log(error);
       });
+    },
+    /////////////////////////// TODO LO RELACIONADO A IMPRESION DE CERTIFICADOS /////////////////////////////
+    cerrarModal4: function cerrarModal4() {
+      this.modal4 = 0;
+      this.tituloModal = '';
+      this.id_sacramento = '';
+      this.enConcepto = '';
+      this.idcare = '', this.cargosacerdote = 0, this.idsacerdote = 0, this.montoConstancia = '';
+      this.idcare = 0;
+      this.errorModal4 = 0;
+      this.errorMostrarMsjModal4 = [];
+      this.idperso = '';
+      this.cargoim = '';
+      this.conceptoim = '';
+      this.cobrado = false;
+    },
+    cobrar: function cobrar() {
+      this.cobrado = true; //AQUÍ AGREGAR EL DESABILITAR COBRAR1
+    },
+    llenadolista: function llenadolista(buscar, criterio) {
+      var me = this;
+      var url = '/persona/buscarsacerdote';
+      axios.get(url).then(function (response) {
+        me.arraysacerdote = response.data;
+      })["catch"](function (error) {
+        console.log(error);
+      });
+    },
+    //autocompletar sacerdotes
+    llenadoarray: function llenadoarray() {
+      this.arraycargo = new Array('DIACONO', 'PARROCO', 'PADRE', 'ARZOBISPO', 'CARDENAL', 'NUNCIO APOSTOLICO', 'MONSEÑOR');
+    },
+    selectCategoria: function selectCategoria() {
+      var me = this;
+      var url = '/categoriaresumen/selectCategoriaRe';
+      axios.get(url).then(function (response) {
+        // handle success
+        var respuesta = response.data;
+        me.arraycategorias = respuesta.categorias;
+      })["catch"](function (error) {
+        // handle error
+        console.log(error);
+      });
+    },
+    //////////Impresion
+    registrarImpresion: function registrarImpresion() {
+      var me = this;
+      axios.put('/persona/registrarImpresion', {
+        'idsacra': this.id_sacramento,
+        'idperso': this.idperso,
+        'cargoim': this.cargoim,
+        'conceptoim': this.conceptoim
+      }).then(function (response) {
+        me.listarPersona();
+        me.cerrarModal4();
+      })["catch"](function (error) {});
+    },
+    imprimirConstancia: function imprimirConstancia() {
+      if (this.validarModal4()) {
+        return;
+      }
+
+      axios.put('/persona/certificadoPrimeraComunion', {
+        'id': this.id_sacramento,
+        'id_madre': this.id_madre,
+        'id_padre': this.id_padre
+      }).then(function (response) {
+        me.listarPersona();
+        me.cerrarModal4();
+      })["catch"](function (error) {
+        console.log(error);
+      });
+      var me = this;
+      this.registrarImpresion();
+      this.pdfConstacia(me.id_sacramento, me.id_padre, me.id_madre);
+      this.eliminarImpresion();
+    },
+    validarModal4: function validarModal4() {
+      this.errorModal4 = 0;
+      this.errorMostrarMsjModal4 = [];
+      var RE = /^\d*(\.\d{1})?\d{0,1}$/;
+      this.conceptoim;
+      this.montoConstancia;
+      if (this.cobrado != true) this.errorMostrarMsjModal4.push("Debe cobrar la solicitud de la constancia de confirma");
+      if (this.conceptoim == '') this.errorMostrarMsjModal4.push("El campo de motivo de la constancia no puede estar vacio");
+      if (this.idperso == '') this.errorMostrarMsjModal4.push("Debe elegir al Padre que firmará la constancia");
+      if (this.cargoim == '') this.errorMostrarMsjModal4.push("Debe elegir el cargo del padre que firmará la constancia");
+
+      if (this.montoConstancia == '') {
+        this.errorMostrarMsjModal4.push("Debe cobrar la constancia");
+      }
+
+      if (!RE.test(this.montoConstancia)) this.errorMostrarMsjModal4.push("La ofrenda por constancias solo pueden ser decimales");
+      if (this.errorMostrarMsjModal4.length) this.errorModal4 = 1;
+      return this.errorModal4;
+    },
+    pdfConstacia: function pdfConstacia(id_sacramento, id_padre, id_madre) {
+      if (id_padre == null) {
+        id_padre = 0;
+      }
+
+      if (id_madre == null) {
+        id_madre = 0;
+      }
+
+      window.open('http://127.0.0.1:8000/persona/certificadoPrimeraComunion/' + id_sacramento + '/' + id_padre + '/' + id_madre);
+    },
+    eliminarImpresion: function eliminarImpresion() {
+      var me = this;
+      axios.put('/persona/eliminarDatosImpresion', {
+        'id': this.id_impresion
+      }).then(function (response) {})["catch"](function (error) {
+        // handle error
+        console.log(error);
+      });
+    },
+    abrirModal2: function abrirModal2(modelo, accion) {
+      var data = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : [];
+
+      switch (modelo) {
+        case "primeracomunion":
+          {
+            switch (accion) {
+              case 'imprimir':
+                {
+                  this.modal4 = 1;
+                  this.tituloModal = 'Imprimir acta de Primera Comunión';
+                  this.id_sacramento = data['id'];
+                  this.id_padre = data['id_padre'];
+                  this.id_madre = data['id_madre'];
+                  this.idperso = '';
+                  this.cargoim = '';
+                  this.conceptoim = '';
+                  break;
+                }
+            }
+          }
+      }
     }
   },
   mounted: function mounted() {
     this.listarPersona(1, this.nombre, this.apellido);
+    this.llenadoarray();
+    this.selectCategoria();
+    this.llenadolista('', '');
   }
 });
 
@@ -5612,7 +6334,6 @@ __webpack_require__.r(__webpack_exports__);
       var url = '/categoriaresumen?buscar=' + buscar2 + '&criterio=' + criterio;
       axios.get(url).then(function (response) {
         me.arraycategoriasresumenes = response.data;
-        console.log(response);
       })["catch"](function (error) {
         console.log(error);
       });
@@ -7598,6 +8319,14 @@ __webpack_require__.r(__webpack_exports__);
       arraysacerdote: [],
       arraycargo: [],
       arraycategorias: [],
+      //Para impresion en PDF
+      id_impresion: '',
+      //creo que no lo ocuparé pero por si acaso v:
+      idsacra: '',
+      //creo que tampoco lo ocupo
+      idperso: '',
+      cargoim: '',
+      conceptoim: '',
       arrayMatrimonio1: [],
       //Nos sirve para almacenar objetos de tipo sacramento
       modal: 0,
@@ -7669,29 +8398,48 @@ __webpack_require__.r(__webpack_exports__);
     cobrar: function cobrar() {
       this.cobrado = true; //AQUÍ AGREGAR EL DESABILITAR COBRAR1
     },
+    registrarImpresion: function registrarImpresion() {
+      /////////AQUI
+      var me = this;
+      axios.put('/persona/registrarImpresion', {
+        'idsacra': this.sacramento_id,
+        'idperso': this.idperso,
+        'cargoim': this.cargoim,
+        'conceptoim': this.conceptoim
+      }).then(function (response) {
+        me.listarMatrimonio1();
+        me.cerrarModal4();
+      })["catch"](function (error) {});
+    },
     imprimirConstancia: function imprimirConstancia() {
       if (this.validarModal4()) {
         return;
       }
 
       axios.put('/persona/certificadoMatri', {
-        //'id':this.enConcepto,
-        'id': this.sacramento_id,
-        'idsacerdote': this.idsacerdote,
-        'cargosacerdote': this.cargosacerdote,
-        'enConcepto': this.enConcepto
+        'id': this.sacramento_id
       }).then(function (response) {
         me.listarMatrimonio1();
         me.cerrarModal4();
-        console.log(response);
       })["catch"](function (error) {
         console.log(error);
       });
       var me = this;
+      this.registrarImpresion();
       this.pdfConstacia(me.sacramento_id);
+      this.eliminarImpresion();
     },
     pdfConstacia: function pdfConstacia(sacramento_id) {
       window.open('http://127.0.0.1:8000/persona/certificadoMatri/' + sacramento_id);
+    },
+    eliminarImpresion: function eliminarImpresion() {
+      var me = this;
+      axios.put('/persona/eliminarDatosImpresion', {
+        'id': this.id_impresion
+      }).then(function (response) {})["catch"](function (error) {
+        // handle error
+        console.log(error);
+      });
     },
     listarMatrimonio1: function listarMatrimonio1(page, buscar, criterio) {
       var me = this;
@@ -8509,7 +9257,19 @@ __webpack_require__.r(__webpack_exports__);
     validarModal4: function validarModal4() {
       this.errorModal4 = 0;
       this.errorMostrarMsjModal4 = [];
-      if (this.cobrado != true) this.errorMostrarMsjModal4.push("Debe cobrar la solicitud de la constancia matrimonial");
+      var RE = /^\d*(\.\d{1})?\d{0,1}$/;
+      this.conceptoim;
+      this.montoConstancia;
+      if (this.cobrado != true) this.errorMostrarMsjModal4.push("Debe cobrar la solicitud de la constancia de confirma");
+      if (this.conceptoim == '') this.errorMostrarMsjModal4.push("El campo de motivo de la constancia no puede estar vacio");
+      if (this.idperso == '') this.errorMostrarMsjModal4.push("Debe elegir al Padre que firmará la constancia");
+      if (this.cargoim == '') this.errorMostrarMsjModal4.push("Debe elegir el cargo del padre que firmará la constancia");
+
+      if (this.montoConstancia == '') {
+        this.errorMostrarMsjModal4.push("Debe cobrar la constancia");
+      }
+
+      if (!RE.test(this.montoConstancia)) this.errorMostrarMsjModal4.push("La ofrenda por constancias solo pueden ser decimales");
       if (this.errorMostrarMsjModal4.length) this.errorModal4 = 1;
       return this.errorModal4;
     },
@@ -8638,6 +9398,9 @@ __webpack_require__.r(__webpack_exports__);
       this.idcare = 0;
       this.errorModal4 = 0;
       this.errorMostrarMsjModal4 = [];
+      this.idperso = '';
+      this.cargoim = '';
+      this.conceptoim = '';
       this.cobrado = false;
     },
     //En "modelo" va el nombre de la tabla guardada aquí, que por convencion de laravel es plural: "modelos"
@@ -8665,7 +9428,6 @@ __webpack_require__.r(__webpack_exports__);
 
             case 'actualizar':
               {
-                //console.log(data);
                 this.modal = 1;
                 this.tituloModal = 'Actualizar Expediente Matrimonial';
                 this.tipoAccion = 2;
@@ -8720,7 +9482,7 @@ __webpack_require__.r(__webpack_exports__);
     },
     //autocompletar sacerdotes
     llenadoarray: function llenadoarray() {
-      this.arraycargo = new Array('DIACONO', 'PADRE', 'ARZOBISPO', 'CARDENAL', 'NUNCIO APOSTOLICO', 'MONSEÑOR');
+      this.arraycargo = new Array('DIACONO', 'PARROCO', 'PADRE', 'ARZOBISPO', 'CARDENAL', 'NUNCIO APOSTOLICO', 'MONSEÑOR');
     },
     //Aquí comienza el modal del paso 2: Agregar lugar y fecha de boda, sacerdote encargado y...
     abrirModal2: function abrirModal2(modelo, accion) {
@@ -8835,10 +9597,9 @@ __webpack_require__.r(__webpack_exports__);
 
                 this.tituloModal = 'Imprimir constancia de boda: ' + apellidoNovioMostrar + ' - ' + apellidoNoviaMostrar;
                 this.sacramento_id = data['id'];
-                this.idsacerdote = '';
-                this.cargosacerdote = '';
-                this.enConcepto = '';
-                console.log(data);
+                this.idperso = '';
+                this.cargoim = '';
+                this.conceptoim = '';
                 break;
               }
           }
@@ -11943,13 +12704,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
 var moment = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js");
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -11980,6 +12734,10 @@ var moment = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js"
       checkedNa: [],
       checked: 0,
       arrayResumenEcoSel: [],
+      /////////////////////////////
+      arraymes: [],
+      mesBuscar: '',
+      anioBuscar: '',
       errorEfectivo: 0,
       errorMostrarMsjDescripcion: [],
       errorMostrarMsjMonto: [],
@@ -12031,15 +12789,12 @@ var moment = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js"
     }
   },
   methods: {
-    listaResumenEconomico: function listaResumenEconomico(page, buscar, criterio) {
+    llenadoarray: function llenadoarray() {
+      this.arraymes = new Array('ENERO', 'FEBRERO', 'MARZO', 'ABRIL', 'MAYO', 'JUNIO', 'JULIO', 'AGOSTO', 'SEPTIEMBRE', 'OCTUBRE', 'NOVIEMBRE', 'DICIEMBRE');
+    },
+    listaResumenEconomico: function listaResumenEconomico(mesBuscar, anioBuscar) {
       var me = this;
-      var lengthbuscar = this.buscar.length;
-
-      if (lengthbuscar > 0) {
-        var buscar2 = this.buscar.toUpperCase();
-      } else buscar2 = this.buscar;
-
-      var url = '/resumeneconomico?page=' + page + '&buscar=' + buscar2 + '&criterio=' + criterio;
+      var url = '/resumeneconomico?&anioBuscar=' + anioBuscar + '&mesBuscar=' + mesBuscar;
       axios.get(url).then(function (response) {
         // handle success
         var respuesta = response.data;
@@ -12048,24 +12803,32 @@ var moment = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js"
         me.egresos = respuesta.egresos;
         me.ingresos = respuesta.ingresos;
         me.total = respuesta.total; //   me.pagination= respuesta.pagination;
-      })["catch"](function (error) {
-        // handle error
-        console.log(error);
+      })["catch"](function (error) {// handle error
+        //  console.log(error);
+      });
+    },
+    filtrarResumenEconomico: function filtrarResumenEconomico(anioBuscar, mesBuscar) {
+      var me = this;
+      var url = '/resumeneconomico/buscarAM?anioBuscar=' + anioBuscar + '&mesBuscar=' + mesBuscar;
+      axios.get(url).then(function (response) {
+        // handle success
+        var respuesta = response.data;
+        me.arrayResumenEco = respuesta.categoria;
+        me.arrayResumenEconull = respuesta.nullo;
+        me.egresos = respuesta.egresos;
+        me.ingresos = respuesta.ingresos;
+        me.total = respuesta.total;
+      })["catch"](function (error) {// handle error
+        //  console.log(error);
       });
     },
     cargarPDF: function cargarPDF() {
       window.open('http://127.0.0.1:8000/efectivo/listarPdfResumido', '_blank');
-    },
-    cambiarPagina: function cambiarPagina(page, buscar, criterio) {
-      var me = this; //Actualiza la pagina actualizar
-
-      me.pagination.current_page = page; //Envia la peticion para visualizar la data de esa pagina
-
-      me.listaResumenEconomico(page, buscar, criterio);
     }
   },
   mounted: function mounted() {
-    this.listaResumenEconomico(1, this.buscar, this.criterio);
+    this.listaResumenEconomico(1, this.anioBuscar, this.mesBuscar);
+    this.llenadoarray();
   }
 });
 
@@ -15348,7 +16111,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n/*Aquí ya comienza el CSS, ke kreisi */\n.modal-content{\n       width: 100% !important;\n       position: absolute !important\n}\n.mostrar{\n       display: list-item !important;\n       opacity: 1 !important;\n       position: absolute !important;\n       background-color: #3c29297a !important;\n}\n.div-error{ /* estos dos estilos son para validación */\n       display: flex;\n       justify-content: center;\n}\n.text-error{\n       color: red !important;\n       font-weight: bold;\n}\n.margen{\n       margin-bottom: 10px;\n}\n   \n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n/*Aquí ya comienza el CSS, ke kreisi */\n.modal-content{\n       width: 100% !important;\n       position: absolute !important\n}\n.mostrar{\n       display: list-item !important;\n       opacity: 1 !important;\n       position: absolute !important;\n       background-color: #3c29297a !important;\n}\n.div-error{ /* estos dos estilos son para validación */\n       display: flex;\n       justify-content: center;\n}\n.text-error{\n       color: red !important;\n       font-weight: bold;\n}\n.margen{\n       margin-bottom: 10px;\n}\n   \n", ""]);
 
 // exports
 
@@ -15405,7 +16168,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "\n.modal-content{\n    width: 100% !important;\n    position: absolute !important\n}\n.mostrar{\n    display: list-item !important;\n    opacity: 1 !important;\n    position: absolute !important;\n    background-color: #3c29297a !important;\n}\n.margen{\n    margin-bottom: 10px;\n}\n.div-error{\n    display: flex;\n    justify-content: center;\n}\n.text-error{\n    color: red !important;\n    font-weight: bold;\n}\n", ""]);
+exports.push([module.i, "\n.modal-content{\n      width: 100% !important;\n      position: absolute !important\n}\n.mostrar{\n      display: list-item !important;\n      opacity: 1 !important;\n      position: absolute !important;\n      background-color: #3c29297a !important;\n}\n.margen{\n      margin-bottom: 10px;\n}\n.div-error{\n      display: flex;\n      justify-content: center;\n}\n.text-error{\n      color: red !important;\n      font-weight: bold;\n}\n#input-groupG {\nposition: relative;\ndisplay: flex;\nwidth: 100%;\n}\n#zonaiglesia {\n    font-size:  x-large;\n    font-weight: bold;\n}\n", ""]);
 
 // exports
 
@@ -54512,9 +55275,11 @@ var render = function() {
                       [_c("i", { staticClass: "icon-pencil" })]
                     ),
                     _vm._v("  \n                                      "),
+                    _vm._v(" "),
                     _c(
                       "button",
                       {
+                        staticClass: "btn btn-success btn-sm",
                         attrs: { type: "button" },
                         on: {
                           click: function($event) {
@@ -54526,7 +55291,12 @@ var render = function() {
                           }
                         }
                       },
-                      [_c("i", { staticClass: "icon-trash  enter" })]
+                      [
+                        _c("i", { staticClass: "icon-plus" }),
+                        _vm._v(
+                          " Imprimir\n                                     "
+                        )
+                      ]
                     )
                   ])
                 }),
@@ -55468,6 +56238,380 @@ var render = function() {
           ]
         )
       ]
+    ),
+    _vm._v(" "),
+    _c(
+      "div",
+      {
+        staticClass: "modal fade",
+        class: { mostrar: _vm.modal4 },
+        staticStyle: { display: "none" },
+        attrs: {
+          tabindex: "-1",
+          role: "dialog",
+          "aria-labelledby": "myModalLabel",
+          "aria-hidden": "true"
+        }
+      },
+      [
+        _c(
+          "div",
+          {
+            staticClass: "modal-dialog modal-primary modal-lg",
+            attrs: { role: "document" }
+          },
+          [
+            _c("div", { staticClass: "modal-content" }, [
+              _c("div", { staticClass: "modal-header" }, [
+                _c("h4", {
+                  staticClass: "modal-title",
+                  domProps: { textContent: _vm._s(_vm.tituloModal) }
+                }),
+                _vm._v(" "),
+                _c(
+                  "button",
+                  {
+                    staticClass: "close",
+                    attrs: { type: "button", "aria-label": "Close" },
+                    on: {
+                      click: function($event) {
+                        return _vm.cerrarModal4()
+                      }
+                    }
+                  },
+                  [
+                    _c("span", { attrs: { "aria-hidden": "true" } }, [
+                      _vm._v("×")
+                    ])
+                  ]
+                )
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "modal-body" }, [
+                _c(
+                  "form",
+                  {
+                    staticClass: "form-horizontal",
+                    attrs: {
+                      action: "",
+                      method: "post",
+                      enctype: "multipart/form-data"
+                    }
+                  },
+                  [
+                    _c("div", { staticClass: "form-group row" }, [
+                      _vm._m(2),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "col-md-5" }, [
+                        _c("input", {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: _vm.conceptoim,
+                              expression: "conceptoim"
+                            }
+                          ],
+                          staticClass: "form-control",
+                          attrs: {
+                            type: "text",
+                            placeholder: "ej: Padrinos de bautismo"
+                          },
+                          domProps: { value: _vm.conceptoim },
+                          on: {
+                            input: function($event) {
+                              if ($event.target.composing) {
+                                return
+                              }
+                              _vm.conceptoim = $event.target.value
+                            }
+                          }
+                        })
+                      ])
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "form-group row" }, [
+                      _vm._m(3),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "col-md-5" }, [
+                        _c(
+                          "select",
+                          {
+                            directives: [
+                              {
+                                name: "model",
+                                rawName: "v-model",
+                                value: _vm.idperso,
+                                expression: "idperso"
+                              }
+                            ],
+                            staticClass: "form-control",
+                            on: {
+                              change: function($event) {
+                                var $$selectedVal = Array.prototype.filter
+                                  .call($event.target.options, function(o) {
+                                    return o.selected
+                                  })
+                                  .map(function(o) {
+                                    var val = "_value" in o ? o._value : o.value
+                                    return val
+                                  })
+                                _vm.idperso = $event.target.multiple
+                                  ? $$selectedVal
+                                  : $$selectedVal[0]
+                              }
+                            }
+                          },
+                          [
+                            _c(
+                              "option",
+                              { attrs: { value: "0", disabled: "" } },
+                              [_vm._v("Seleccione")]
+                            ),
+                            _vm._v(" "),
+                            _vm._l(_vm.arraysacerdote, function(sacerdote) {
+                              return _c(
+                                "option",
+                                {
+                                  key: sacerdote.id,
+                                  domProps: { value: sacerdote.id }
+                                },
+                                [
+                                  _vm._v(
+                                    _vm._s(sacerdote.nombre_persona) +
+                                      ", " +
+                                      _vm._s(sacerdote.apellido_persona)
+                                  )
+                                ]
+                              )
+                            })
+                          ],
+                          2
+                        )
+                      ])
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "form-group row" }, [
+                      _vm._m(4),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "col-md-5" }, [
+                        _c(
+                          "select",
+                          {
+                            directives: [
+                              {
+                                name: "model",
+                                rawName: "v-model",
+                                value: _vm.cargoim,
+                                expression: "cargoim"
+                              }
+                            ],
+                            staticClass: "form-control",
+                            on: {
+                              change: function($event) {
+                                var $$selectedVal = Array.prototype.filter
+                                  .call($event.target.options, function(o) {
+                                    return o.selected
+                                  })
+                                  .map(function(o) {
+                                    var val = "_value" in o ? o._value : o.value
+                                    return val
+                                  })
+                                _vm.cargoim = $event.target.multiple
+                                  ? $$selectedVal
+                                  : $$selectedVal[0]
+                              }
+                            }
+                          },
+                          [
+                            _c(
+                              "option",
+                              { attrs: { value: "0", disabled: "" } },
+                              [_vm._v("Cargo")]
+                            ),
+                            _vm._v(" "),
+                            _vm._l(_vm.arraycargo, function(sacerdote) {
+                              return _c("option", {
+                                key: sacerdote.id,
+                                domProps: {
+                                  value: sacerdote,
+                                  textContent: _vm._s(sacerdote)
+                                }
+                              })
+                            })
+                          ],
+                          2
+                        )
+                      ])
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "form-group row" }, [
+                      _vm._m(5),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "col-md-5" }, [
+                        _c("input", {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: _vm.montoConstancia,
+                              expression: "montoConstancia"
+                            }
+                          ],
+                          staticClass: "form-control",
+                          attrs: { type: "number", placeholder: "20.00" },
+                          domProps: { value: _vm.montoConstancia },
+                          on: {
+                            input: function($event) {
+                              if ($event.target.composing) {
+                                return
+                              }
+                              _vm.montoConstancia = $event.target.value
+                            }
+                          }
+                        })
+                      ])
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "form-group row" }, [
+                      _c("label", { staticClass: "col-md-3" }, [
+                        _vm._v("Categoría")
+                      ]),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "col-md-5" }, [
+                        _c(
+                          "select",
+                          {
+                            directives: [
+                              {
+                                name: "model",
+                                rawName: "v-model",
+                                value: _vm.idcare,
+                                expression: "idcare"
+                              }
+                            ],
+                            staticClass: "form-control",
+                            on: {
+                              change: function($event) {
+                                var $$selectedVal = Array.prototype.filter
+                                  .call($event.target.options, function(o) {
+                                    return o.selected
+                                  })
+                                  .map(function(o) {
+                                    var val = "_value" in o ? o._value : o.value
+                                    return val
+                                  })
+                                _vm.idcare = $event.target.multiple
+                                  ? $$selectedVal
+                                  : $$selectedVal[0]
+                              }
+                            }
+                          },
+                          [
+                            _c(
+                              "option",
+                              { attrs: { value: "0", disabled: "" } },
+                              [_vm._v("Seleccione")]
+                            ),
+                            _vm._v(" "),
+                            _vm._l(_vm.arraycategorias, function(categorias) {
+                              return _c("option", {
+                                key: categorias.id,
+                                domProps: {
+                                  value: categorias.id,
+                                  textContent: _vm._s(
+                                    categorias.nombre_categoria
+                                  )
+                                }
+                              })
+                            })
+                          ],
+                          2
+                        )
+                      ])
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "form-group row" }, [
+                      _c("div", { staticClass: "col-md-3" }),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "col-md-2" }, [
+                        _c(
+                          "button",
+                          {
+                            staticClass: "btn btn-secondary btn-block",
+                            attrs: { type: "button" },
+                            on: { click: _vm.cobrar }
+                          },
+                          [_vm._v("Cobrar")]
+                        ),
+                        _vm._v(" \n                                 ")
+                      ])
+                    ]),
+                    _vm._v(" "),
+                    _c(
+                      "div",
+                      {
+                        directives: [
+                          {
+                            name: "show",
+                            rawName: "v-show",
+                            value: _vm.errorModal4,
+                            expression: "errorModal4"
+                          }
+                        ],
+                        staticClass: "form-group row div-error"
+                      },
+                      [
+                        _c(
+                          "div",
+                          { staticClass: "text-center text-error" },
+                          _vm._l(_vm.errorMostrarMsjModal4, function(error) {
+                            return _c("div", {
+                              key: error,
+                              domProps: { textContent: _vm._s(error) }
+                            })
+                          }),
+                          0
+                        )
+                      ]
+                    )
+                  ]
+                )
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "modal-footer" }, [
+                _c(
+                  "button",
+                  {
+                    staticClass: "btn btn-secondary",
+                    attrs: { type: "button" },
+                    on: {
+                      click: function($event) {
+                        return _vm.cerrarModal4()
+                      }
+                    }
+                  },
+                  [_vm._v("Cerrar")]
+                ),
+                _vm._v(" "),
+                _c(
+                  "button",
+                  {
+                    staticClass: "btn btn-primary",
+                    attrs: { type: "button" },
+                    on: {
+                      click: function($event) {
+                        return _vm.imprimirConstancia()
+                      }
+                    }
+                  },
+                  [_vm._v("Imprimir Constancia")]
+                )
+              ])
+            ])
+          ]
+        )
+      ]
     )
   ])
 }
@@ -55501,6 +56645,67 @@ var staticRenderFns = [
         ])
       ])
     ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "label",
+      {
+        staticClass: "col-md-3 form-control-label",
+        attrs: { for: "text-input" }
+      },
+      [
+        _vm._v("Motivo de la constancia:"),
+        _c("b", { staticClass: "alerta" }, [_vm._v("*")])
+      ]
+    )
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "label",
+      {
+        staticClass: "col-md-3 form-control-label",
+        attrs: { for: "text-input" }
+      },
+      [
+        _vm._v("Nombre del sacerdote"),
+        _c("b", { staticClass: "alerta" }, [_vm._v("*")])
+      ]
+    )
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "label",
+      {
+        staticClass: "col-md-3 form-control-label",
+        attrs: { for: "text-input" }
+      },
+      [_vm._v("Cargo"), _c("b", { staticClass: "alerta" }, [_vm._v("*")])]
+    )
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "label",
+      {
+        staticClass: "col-md-3 form-control-label",
+        attrs: { for: "text-input" }
+      },
+      [
+        _vm._v("Ofrenda por constancia"),
+        _c("b", { staticClass: "alerta" }, [_vm._v("*")])
+      ]
+    )
   }
 ]
 render._withStripped = true
@@ -59444,7 +60649,30 @@ var render = function() {
                           " " +
                           _vm._s(realizante.mapellido)
                       )
-                    ])
+                    ]),
+                    _vm._v(
+                      "\n                                    \n                                 "
+                    ),
+                    _c(
+                      "button",
+                      {
+                        staticClass: "btn btn-success btn-sm",
+                        attrs: { type: "button" },
+                        on: {
+                          click: function($event) {
+                            return _vm.abrirModal2(
+                              "confirma",
+                              "imprimir",
+                              realizante
+                            )
+                          }
+                        }
+                      },
+                      [
+                        _c("i", { staticClass: "icon-plus" }),
+                        _vm._v(" Imprimir\n                                 ")
+                      ]
+                    )
                   ])
                 }),
                 0
@@ -59536,7 +60764,381 @@ var render = function() {
           ])
         ])
       ])
-    ])
+    ]),
+    _vm._v(" "),
+    _c(
+      "div",
+      {
+        staticClass: "modal fade",
+        class: { mostrar: _vm.modal4 },
+        staticStyle: { display: "none" },
+        attrs: {
+          tabindex: "-1",
+          role: "dialog",
+          "aria-labelledby": "myModalLabel",
+          "aria-hidden": "true"
+        }
+      },
+      [
+        _c(
+          "div",
+          {
+            staticClass: "modal-dialog modal-primary modal-lg",
+            attrs: { role: "document" }
+          },
+          [
+            _c("div", { staticClass: "modal-content" }, [
+              _c("div", { staticClass: "modal-header" }, [
+                _c("h4", {
+                  staticClass: "modal-title",
+                  domProps: { textContent: _vm._s(_vm.tituloModal) }
+                }),
+                _vm._v(" "),
+                _c(
+                  "button",
+                  {
+                    staticClass: "close",
+                    attrs: { type: "button", "aria-label": "Close" },
+                    on: {
+                      click: function($event) {
+                        return _vm.cerrarModal4()
+                      }
+                    }
+                  },
+                  [
+                    _c("span", { attrs: { "aria-hidden": "true" } }, [
+                      _vm._v("×")
+                    ])
+                  ]
+                )
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "modal-body" }, [
+                _c(
+                  "form",
+                  {
+                    staticClass: "form-horizontal",
+                    attrs: {
+                      action: "",
+                      method: "post",
+                      enctype: "multipart/form-data"
+                    }
+                  },
+                  [
+                    _c("div", { staticClass: "form-group row" }, [
+                      _vm._m(2),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "col-md-5" }, [
+                        _c("input", {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: _vm.conceptoim,
+                              expression: "conceptoim"
+                            }
+                          ],
+                          staticClass: "form-control",
+                          attrs: {
+                            type: "text",
+                            placeholder: "ej: Padrinos de bautismo"
+                          },
+                          domProps: { value: _vm.conceptoim },
+                          on: {
+                            input: function($event) {
+                              if ($event.target.composing) {
+                                return
+                              }
+                              _vm.conceptoim = $event.target.value
+                            }
+                          }
+                        })
+                      ])
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "form-group row" }, [
+                      _vm._m(3),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "col-md-5" }, [
+                        _c(
+                          "select",
+                          {
+                            directives: [
+                              {
+                                name: "model",
+                                rawName: "v-model",
+                                value: _vm.idperso,
+                                expression: "idperso"
+                              }
+                            ],
+                            staticClass: "form-control",
+                            on: {
+                              change: function($event) {
+                                var $$selectedVal = Array.prototype.filter
+                                  .call($event.target.options, function(o) {
+                                    return o.selected
+                                  })
+                                  .map(function(o) {
+                                    var val = "_value" in o ? o._value : o.value
+                                    return val
+                                  })
+                                _vm.idperso = $event.target.multiple
+                                  ? $$selectedVal
+                                  : $$selectedVal[0]
+                              }
+                            }
+                          },
+                          [
+                            _c(
+                              "option",
+                              { attrs: { value: "0", disabled: "" } },
+                              [_vm._v("Seleccione")]
+                            ),
+                            _vm._v(" "),
+                            _vm._l(_vm.arraysacerdote, function(sacerdote) {
+                              return _c(
+                                "option",
+                                {
+                                  key: sacerdote.id,
+                                  domProps: { value: sacerdote.id }
+                                },
+                                [
+                                  _vm._v(
+                                    _vm._s(sacerdote.nombre_persona) +
+                                      ", " +
+                                      _vm._s(sacerdote.apellido_persona)
+                                  )
+                                ]
+                              )
+                            })
+                          ],
+                          2
+                        )
+                      ])
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "form-group row" }, [
+                      _vm._m(4),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "col-md-5" }, [
+                        _c(
+                          "select",
+                          {
+                            directives: [
+                              {
+                                name: "model",
+                                rawName: "v-model",
+                                value: _vm.cargoim,
+                                expression: "cargoim"
+                              }
+                            ],
+                            staticClass: "form-control",
+                            on: {
+                              change: function($event) {
+                                var $$selectedVal = Array.prototype.filter
+                                  .call($event.target.options, function(o) {
+                                    return o.selected
+                                  })
+                                  .map(function(o) {
+                                    var val = "_value" in o ? o._value : o.value
+                                    return val
+                                  })
+                                _vm.cargoim = $event.target.multiple
+                                  ? $$selectedVal
+                                  : $$selectedVal[0]
+                              }
+                            }
+                          },
+                          [
+                            _c(
+                              "option",
+                              { attrs: { value: "0", disabled: "" } },
+                              [_vm._v("Cargo")]
+                            ),
+                            _vm._v(" "),
+                            _vm._l(_vm.arraycargo, function(sacerdote) {
+                              return _c("option", {
+                                key: sacerdote.id,
+                                domProps: {
+                                  value: sacerdote,
+                                  textContent: _vm._s(sacerdote)
+                                }
+                              })
+                            })
+                          ],
+                          2
+                        )
+                      ])
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "form-group row" }, [
+                      _vm._m(5),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "col-md-5" }, [
+                        _c("input", {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: _vm.montoConstancia,
+                              expression: "montoConstancia"
+                            }
+                          ],
+                          staticClass: "form-control",
+                          attrs: { type: "number", placeholder: "20.00" },
+                          domProps: { value: _vm.montoConstancia },
+                          on: {
+                            input: function($event) {
+                              if ($event.target.composing) {
+                                return
+                              }
+                              _vm.montoConstancia = $event.target.value
+                            }
+                          }
+                        })
+                      ])
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "form-group row" }, [
+                      _c("label", { staticClass: "col-md-3" }, [
+                        _vm._v("Categoría")
+                      ]),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "col-md-5" }, [
+                        _c(
+                          "select",
+                          {
+                            directives: [
+                              {
+                                name: "model",
+                                rawName: "v-model",
+                                value: _vm.idcare,
+                                expression: "idcare"
+                              }
+                            ],
+                            staticClass: "form-control",
+                            on: {
+                              change: function($event) {
+                                var $$selectedVal = Array.prototype.filter
+                                  .call($event.target.options, function(o) {
+                                    return o.selected
+                                  })
+                                  .map(function(o) {
+                                    var val = "_value" in o ? o._value : o.value
+                                    return val
+                                  })
+                                _vm.idcare = $event.target.multiple
+                                  ? $$selectedVal
+                                  : $$selectedVal[0]
+                              }
+                            }
+                          },
+                          [
+                            _c(
+                              "option",
+                              { attrs: { value: "0", disabled: "" } },
+                              [_vm._v("Seleccione")]
+                            ),
+                            _vm._v(" "),
+                            _vm._l(_vm.arraycategorias, function(categorias) {
+                              return _c("option", {
+                                key: categorias.id,
+                                domProps: {
+                                  value: categorias.id,
+                                  textContent: _vm._s(
+                                    categorias.nombre_categoria
+                                  )
+                                }
+                              })
+                            })
+                          ],
+                          2
+                        )
+                      ])
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "form-group row" }, [
+                      _c("div", { staticClass: "col-md-3" }),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "col-md-2" }, [
+                        _c(
+                          "button",
+                          {
+                            staticClass: "btn btn-secondary btn-block",
+                            attrs: { type: "button" },
+                            on: { click: _vm.cobrar }
+                          },
+                          [_vm._v("Cobrar")]
+                        ),
+                        _vm._v(" \n                                 ")
+                      ])
+                    ]),
+                    _vm._v(" "),
+                    _c(
+                      "div",
+                      {
+                        directives: [
+                          {
+                            name: "show",
+                            rawName: "v-show",
+                            value: _vm.errorModal4,
+                            expression: "errorModal4"
+                          }
+                        ],
+                        staticClass: "form-group row div-error"
+                      },
+                      [
+                        _c(
+                          "div",
+                          { staticClass: "text-center text-error" },
+                          _vm._l(_vm.errorMostrarMsjModal4, function(error) {
+                            return _c("div", {
+                              key: error,
+                              domProps: { textContent: _vm._s(error) }
+                            })
+                          }),
+                          0
+                        )
+                      ]
+                    )
+                  ]
+                )
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "modal-footer" }, [
+                _c(
+                  "button",
+                  {
+                    staticClass: "btn btn-secondary",
+                    attrs: { type: "button" },
+                    on: {
+                      click: function($event) {
+                        return _vm.cerrarModal4()
+                      }
+                    }
+                  },
+                  [_vm._v("Cerrar")]
+                ),
+                _vm._v(" "),
+                _c(
+                  "button",
+                  {
+                    staticClass: "btn btn-primary",
+                    attrs: { type: "button" },
+                    on: {
+                      click: function($event) {
+                        return _vm.imprimirConstancia()
+                      }
+                    }
+                  },
+                  [_vm._v("Imprimir Constancia")]
+                )
+              ])
+            ])
+          ]
+        )
+      ]
+    )
   ])
 }
 var staticRenderFns = [
@@ -59560,9 +61162,72 @@ var staticRenderFns = [
         _vm._v(" "),
         _c("th", [_vm._v("Nombre padre")]),
         _vm._v(" "),
-        _c("th", [_vm._v("Nombre madre")])
+        _c("th", [_vm._v("Nombre madre")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Opciones")])
       ])
     ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "label",
+      {
+        staticClass: "col-md-3 form-control-label",
+        attrs: { for: "text-input" }
+      },
+      [
+        _vm._v("Motivo de la constancia:"),
+        _c("b", { staticClass: "alerta" }, [_vm._v("*")])
+      ]
+    )
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "label",
+      {
+        staticClass: "col-md-3 form-control-label",
+        attrs: { for: "text-input" }
+      },
+      [
+        _vm._v("Nombre del sacerdote"),
+        _c("b", { staticClass: "alerta" }, [_vm._v("*")])
+      ]
+    )
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "label",
+      {
+        staticClass: "col-md-3 form-control-label",
+        attrs: { for: "text-input" }
+      },
+      [_vm._v("Cargo"), _c("b", { staticClass: "alerta" }, [_vm._v("*")])]
+    )
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "label",
+      {
+        staticClass: "col-md-3 form-control-label",
+        attrs: { for: "text-input" }
+      },
+      [
+        _vm._v("Ofrenda por constancia"),
+        _c("b", { staticClass: "alerta" }, [_vm._v("*")])
+      ]
+    )
   }
 ]
 render._withStripped = true
@@ -60050,7 +61715,30 @@ var render = function() {
                           " " +
                           _vm._s(realizante.mapellido)
                       )
-                    ])
+                    ]),
+                    _vm._v(
+                      "\n                                    \n                                 "
+                    ),
+                    _c(
+                      "button",
+                      {
+                        staticClass: "btn btn-success btn-sm",
+                        attrs: { type: "button" },
+                        on: {
+                          click: function($event) {
+                            return _vm.abrirModal2(
+                              "primeracomunion",
+                              "imprimir",
+                              realizante
+                            )
+                          }
+                        }
+                      },
+                      [
+                        _c("i", { staticClass: "icon-plus" }),
+                        _vm._v(" Imprimir\n                                 ")
+                      ]
+                    )
                   ])
                 }),
                 0
@@ -60142,7 +61830,381 @@ var render = function() {
           ])
         ])
       ])
-    ])
+    ]),
+    _vm._v(" "),
+    _c(
+      "div",
+      {
+        staticClass: "modal fade",
+        class: { mostrar: _vm.modal4 },
+        staticStyle: { display: "none" },
+        attrs: {
+          tabindex: "-1",
+          role: "dialog",
+          "aria-labelledby": "myModalLabel",
+          "aria-hidden": "true"
+        }
+      },
+      [
+        _c(
+          "div",
+          {
+            staticClass: "modal-dialog modal-primary modal-lg",
+            attrs: { role: "document" }
+          },
+          [
+            _c("div", { staticClass: "modal-content" }, [
+              _c("div", { staticClass: "modal-header" }, [
+                _c("h4", {
+                  staticClass: "modal-title",
+                  domProps: { textContent: _vm._s(_vm.tituloModal) }
+                }),
+                _vm._v(" "),
+                _c(
+                  "button",
+                  {
+                    staticClass: "close",
+                    attrs: { type: "button", "aria-label": "Close" },
+                    on: {
+                      click: function($event) {
+                        return _vm.cerrarModal4()
+                      }
+                    }
+                  },
+                  [
+                    _c("span", { attrs: { "aria-hidden": "true" } }, [
+                      _vm._v("×")
+                    ])
+                  ]
+                )
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "modal-body" }, [
+                _c(
+                  "form",
+                  {
+                    staticClass: "form-horizontal",
+                    attrs: {
+                      action: "",
+                      method: "post",
+                      enctype: "multipart/form-data"
+                    }
+                  },
+                  [
+                    _c("div", { staticClass: "form-group row" }, [
+                      _vm._m(2),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "col-md-5" }, [
+                        _c("input", {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: _vm.conceptoim,
+                              expression: "conceptoim"
+                            }
+                          ],
+                          staticClass: "form-control",
+                          attrs: {
+                            type: "text",
+                            placeholder: "ej: Padrinos de bautismo"
+                          },
+                          domProps: { value: _vm.conceptoim },
+                          on: {
+                            input: function($event) {
+                              if ($event.target.composing) {
+                                return
+                              }
+                              _vm.conceptoim = $event.target.value
+                            }
+                          }
+                        })
+                      ])
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "form-group row" }, [
+                      _vm._m(3),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "col-md-5" }, [
+                        _c(
+                          "select",
+                          {
+                            directives: [
+                              {
+                                name: "model",
+                                rawName: "v-model",
+                                value: _vm.idperso,
+                                expression: "idperso"
+                              }
+                            ],
+                            staticClass: "form-control",
+                            on: {
+                              change: function($event) {
+                                var $$selectedVal = Array.prototype.filter
+                                  .call($event.target.options, function(o) {
+                                    return o.selected
+                                  })
+                                  .map(function(o) {
+                                    var val = "_value" in o ? o._value : o.value
+                                    return val
+                                  })
+                                _vm.idperso = $event.target.multiple
+                                  ? $$selectedVal
+                                  : $$selectedVal[0]
+                              }
+                            }
+                          },
+                          [
+                            _c(
+                              "option",
+                              { attrs: { value: "0", disabled: "" } },
+                              [_vm._v("Seleccione")]
+                            ),
+                            _vm._v(" "),
+                            _vm._l(_vm.arraysacerdote, function(sacerdote) {
+                              return _c(
+                                "option",
+                                {
+                                  key: sacerdote.id,
+                                  domProps: { value: sacerdote.id }
+                                },
+                                [
+                                  _vm._v(
+                                    _vm._s(sacerdote.nombre_persona) +
+                                      ", " +
+                                      _vm._s(sacerdote.apellido_persona)
+                                  )
+                                ]
+                              )
+                            })
+                          ],
+                          2
+                        )
+                      ])
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "form-group row" }, [
+                      _vm._m(4),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "col-md-5" }, [
+                        _c(
+                          "select",
+                          {
+                            directives: [
+                              {
+                                name: "model",
+                                rawName: "v-model",
+                                value: _vm.cargoim,
+                                expression: "cargoim"
+                              }
+                            ],
+                            staticClass: "form-control",
+                            on: {
+                              change: function($event) {
+                                var $$selectedVal = Array.prototype.filter
+                                  .call($event.target.options, function(o) {
+                                    return o.selected
+                                  })
+                                  .map(function(o) {
+                                    var val = "_value" in o ? o._value : o.value
+                                    return val
+                                  })
+                                _vm.cargoim = $event.target.multiple
+                                  ? $$selectedVal
+                                  : $$selectedVal[0]
+                              }
+                            }
+                          },
+                          [
+                            _c(
+                              "option",
+                              { attrs: { value: "0", disabled: "" } },
+                              [_vm._v("Cargo")]
+                            ),
+                            _vm._v(" "),
+                            _vm._l(_vm.arraycargo, function(sacerdote) {
+                              return _c("option", {
+                                key: sacerdote.id,
+                                domProps: {
+                                  value: sacerdote,
+                                  textContent: _vm._s(sacerdote)
+                                }
+                              })
+                            })
+                          ],
+                          2
+                        )
+                      ])
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "form-group row" }, [
+                      _vm._m(5),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "col-md-5" }, [
+                        _c("input", {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: _vm.montoConstancia,
+                              expression: "montoConstancia"
+                            }
+                          ],
+                          staticClass: "form-control",
+                          attrs: { type: "number", placeholder: "20.00" },
+                          domProps: { value: _vm.montoConstancia },
+                          on: {
+                            input: function($event) {
+                              if ($event.target.composing) {
+                                return
+                              }
+                              _vm.montoConstancia = $event.target.value
+                            }
+                          }
+                        })
+                      ])
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "form-group row" }, [
+                      _c("label", { staticClass: "col-md-3" }, [
+                        _vm._v("Categoría")
+                      ]),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "col-md-5" }, [
+                        _c(
+                          "select",
+                          {
+                            directives: [
+                              {
+                                name: "model",
+                                rawName: "v-model",
+                                value: _vm.idcare,
+                                expression: "idcare"
+                              }
+                            ],
+                            staticClass: "form-control",
+                            on: {
+                              change: function($event) {
+                                var $$selectedVal = Array.prototype.filter
+                                  .call($event.target.options, function(o) {
+                                    return o.selected
+                                  })
+                                  .map(function(o) {
+                                    var val = "_value" in o ? o._value : o.value
+                                    return val
+                                  })
+                                _vm.idcare = $event.target.multiple
+                                  ? $$selectedVal
+                                  : $$selectedVal[0]
+                              }
+                            }
+                          },
+                          [
+                            _c(
+                              "option",
+                              { attrs: { value: "0", disabled: "" } },
+                              [_vm._v("Seleccione")]
+                            ),
+                            _vm._v(" "),
+                            _vm._l(_vm.arraycategorias, function(categorias) {
+                              return _c("option", {
+                                key: categorias.id,
+                                domProps: {
+                                  value: categorias.id,
+                                  textContent: _vm._s(
+                                    categorias.nombre_categoria
+                                  )
+                                }
+                              })
+                            })
+                          ],
+                          2
+                        )
+                      ])
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "form-group row" }, [
+                      _c("div", { staticClass: "col-md-3" }),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "col-md-2" }, [
+                        _c(
+                          "button",
+                          {
+                            staticClass: "btn btn-secondary btn-block",
+                            attrs: { type: "button" },
+                            on: { click: _vm.cobrar }
+                          },
+                          [_vm._v("Cobrar")]
+                        ),
+                        _vm._v(" \n                                 ")
+                      ])
+                    ]),
+                    _vm._v(" "),
+                    _c(
+                      "div",
+                      {
+                        directives: [
+                          {
+                            name: "show",
+                            rawName: "v-show",
+                            value: _vm.errorModal4,
+                            expression: "errorModal4"
+                          }
+                        ],
+                        staticClass: "form-group row div-error"
+                      },
+                      [
+                        _c(
+                          "div",
+                          { staticClass: "text-center text-error" },
+                          _vm._l(_vm.errorMostrarMsjModal4, function(error) {
+                            return _c("div", {
+                              key: error,
+                              domProps: { textContent: _vm._s(error) }
+                            })
+                          }),
+                          0
+                        )
+                      ]
+                    )
+                  ]
+                )
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "modal-footer" }, [
+                _c(
+                  "button",
+                  {
+                    staticClass: "btn btn-secondary",
+                    attrs: { type: "button" },
+                    on: {
+                      click: function($event) {
+                        return _vm.cerrarModal4()
+                      }
+                    }
+                  },
+                  [_vm._v("Cerrar")]
+                ),
+                _vm._v(" "),
+                _c(
+                  "button",
+                  {
+                    staticClass: "btn btn-primary",
+                    attrs: { type: "button" },
+                    on: {
+                      click: function($event) {
+                        return _vm.imprimirConstancia()
+                      }
+                    }
+                  },
+                  [_vm._v("Imprimir Constancia")]
+                )
+              ])
+            ])
+          ]
+        )
+      ]
+    )
   ])
 }
 var staticRenderFns = [
@@ -60166,9 +62228,72 @@ var staticRenderFns = [
         _vm._v(" "),
         _c("th", [_vm._v("Nombre padre")]),
         _vm._v(" "),
-        _c("th", [_vm._v("Nombre madre")])
+        _c("th", [_vm._v("Nombre madre")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Opciones")])
       ])
     ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "label",
+      {
+        staticClass: "col-md-3 form-control-label",
+        attrs: { for: "text-input" }
+      },
+      [
+        _vm._v("Motivo de la constancia:"),
+        _c("b", { staticClass: "alerta" }, [_vm._v("*")])
+      ]
+    )
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "label",
+      {
+        staticClass: "col-md-3 form-control-label",
+        attrs: { for: "text-input" }
+      },
+      [
+        _vm._v("Nombre del sacerdote"),
+        _c("b", { staticClass: "alerta" }, [_vm._v("*")])
+      ]
+    )
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "label",
+      {
+        staticClass: "col-md-3 form-control-label",
+        attrs: { for: "text-input" }
+      },
+      [_vm._v("Cargo"), _c("b", { staticClass: "alerta" }, [_vm._v("*")])]
+    )
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "label",
+      {
+        staticClass: "col-md-3 form-control-label",
+        attrs: { for: "text-input" }
+      },
+      [
+        _vm._v("Ofrenda por constancia"),
+        _c("b", { staticClass: "alerta" }, [_vm._v("*")])
+      ]
+    )
   }
 ]
 render._withStripped = true
@@ -66340,8 +68465,8 @@ var render = function() {
                             {
                               name: "model",
                               rawName: "v-model",
-                              value: _vm.enConcepto,
-                              expression: "enConcepto"
+                              value: _vm.conceptoim,
+                              expression: "conceptoim"
                             }
                           ],
                           staticClass: "form-control",
@@ -66349,13 +68474,13 @@ var render = function() {
                             type: "text",
                             placeholder: "ej: Padrinos de bautismo"
                           },
-                          domProps: { value: _vm.enConcepto },
+                          domProps: { value: _vm.conceptoim },
                           on: {
                             input: function($event) {
                               if ($event.target.composing) {
                                 return
                               }
-                              _vm.enConcepto = $event.target.value
+                              _vm.conceptoim = $event.target.value
                             }
                           }
                         })
@@ -66373,8 +68498,8 @@ var render = function() {
                               {
                                 name: "model",
                                 rawName: "v-model",
-                                value: _vm.idsacerdote,
-                                expression: "idsacerdote"
+                                value: _vm.idperso,
+                                expression: "idperso"
                               }
                             ],
                             staticClass: "form-control",
@@ -66388,7 +68513,7 @@ var render = function() {
                                     var val = "_value" in o ? o._value : o.value
                                     return val
                                   })
-                                _vm.idsacerdote = $event.target.multiple
+                                _vm.idperso = $event.target.multiple
                                   ? $$selectedVal
                                   : $$selectedVal[0]
                               }
@@ -66434,8 +68559,8 @@ var render = function() {
                               {
                                 name: "model",
                                 rawName: "v-model",
-                                value: _vm.cargosacerdote,
-                                expression: "cargosacerdote"
+                                value: _vm.cargoim,
+                                expression: "cargoim"
                               }
                             ],
                             staticClass: "form-control",
@@ -66449,7 +68574,7 @@ var render = function() {
                                     var val = "_value" in o ? o._value : o.value
                                     return val
                                   })
-                                _vm.cargosacerdote = $event.target.multiple
+                                _vm.cargoim = $event.target.multiple
                                   ? $$selectedVal
                                   : $$selectedVal[0]
                               }
@@ -73895,9 +76020,13 @@ var render = function() {
         _vm._m(1),
         _vm._v(" "),
         _c("div", { staticClass: "card-body" }, [
-          _c("div", { staticClass: "form-group row" }, [
-            _c("div", { staticClass: "col-md-6" }, [
-              _c("div", { staticClass: "input-group" }, [
+          _c("div", [
+            _c("div", { attrs: { id: "input-groupG" } }, [
+              _c("label", { attrs: { id: "zonaiglesia", for: "text-input" } }, [
+                _vm._v("MES")
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "col-md-3" }, [
                 _c(
                   "select",
                   {
@@ -73905,11 +76034,11 @@ var render = function() {
                       {
                         name: "model",
                         rawName: "v-model",
-                        value: _vm.criterio,
-                        expression: "criterio"
+                        value: _vm.mesBuscar,
+                        expression: "mesBuscar"
                       }
                     ],
-                    staticClass: "form-control col-md-3",
+                    staticClass: "form-control",
                     on: {
                       change: function($event) {
                         var $$selectedVal = Array.prototype.filter
@@ -73920,35 +76049,45 @@ var render = function() {
                             var val = "_value" in o ? o._value : o.value
                             return val
                           })
-                        _vm.criterio = $event.target.multiple
+                        _vm.mesBuscar = $event.target.multiple
                           ? $$selectedVal
                           : $$selectedVal[0]
                       }
                     }
                   },
                   [
-                    _c("option", { attrs: { value: "descripcion_efectivo" } }, [
-                      _vm._v("Concepto")
+                    _c("option", { attrs: { value: "0", disabled: "" } }, [
+                      _vm._v("Mes")
                     ]),
                     _vm._v(" "),
-                    _c("option", { attrs: { value: "monto" } }, [
-                      _vm._v("Cantidad de dinero")
-                    ])
-                  ]
-                ),
-                _vm._v(" "),
+                    _vm._l(_vm.arraymes, function(mes) {
+                      return _c("option", {
+                        key: mes.id,
+                        domProps: { value: mes, textContent: _vm._s(mes) }
+                      })
+                    })
+                  ],
+                  2
+                )
+              ]),
+              _vm._v(" "),
+              _c("label", { attrs: { id: "zonaiglesia", for: "text-input" } }, [
+                _vm._v("AÑO")
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "col-md-3" }, [
                 _c("input", {
                   directives: [
                     {
                       name: "model",
                       rawName: "v-model",
-                      value: _vm.buscar,
-                      expression: "buscar"
+                      value: _vm.anioBuscar,
+                      expression: "anioBuscar"
                     }
                   ],
                   staticClass: "form-control",
-                  attrs: { type: "text", placeholder: "Texto a buscar" },
-                  domProps: { value: _vm.buscar },
+                  attrs: { type: "number", placeholder: "Ejem:2019" },
+                  domProps: { value: _vm.anioBuscar },
                   on: {
                     keyup: function($event) {
                       if (
@@ -73958,42 +76097,40 @@ var render = function() {
                         return null
                       }
                       return _vm.listaResumenEconomico(
-                        1,
-                        _vm.buscar,
-                        _vm.criterio,
-                        2
+                        _vm.anioBuscar,
+                        _vm.mesBuscar
                       )
                     },
                     input: function($event) {
                       if ($event.target.composing) {
                         return
                       }
-                      _vm.buscar = $event.target.value
+                      _vm.anioBuscar = $event.target.value
                     }
                   }
-                }),
-                _vm._v(" "),
-                _c(
-                  "button",
-                  {
-                    staticClass: "btn btn-primary",
-                    attrs: { type: "submit" },
-                    on: {
-                      click: function($event) {
-                        return _vm.listaResumenEconomico(
-                          1,
-                          _vm.buscar,
-                          _vm.criterio,
-                          2
-                        )
-                      }
+                })
+              ]),
+              _vm._v(" "),
+              _c(
+                "button",
+                {
+                  staticClass: "btn btn-primary",
+                  attrs: { type: "button" },
+                  on: {
+                    click: function($event) {
+                      return _vm.filtrarResumenEconomico(
+                        _vm.anioBuscar,
+                        _vm.mesBuscar
+                      )
                     }
-                  },
-                  [_c("i", { staticClass: "fa fa-search" }), _vm._v(" Buscar")]
-                )
-              ])
+                  }
+                },
+                [_c("i", { staticClass: "fa fa-search" }), _vm._v("Filtrar")]
+              )
             ])
           ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "form-group row" }),
           _vm._v(" "),
           _c(
             "table",
@@ -74111,7 +76248,9 @@ var render = function() {
               },
               [
                 _c("i", { staticClass: "icon-doc" }),
-                _vm._v(" Generar Reporte Resumido\n                         ")
+                _vm._v(
+                  " Generar Reporte Resumido Actual\n                         "
+                )
               ]
             )
           ])

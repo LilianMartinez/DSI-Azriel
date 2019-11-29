@@ -530,6 +530,7 @@
                                 this.idiglesia=data['idiglesia'];
                                 this.idzona=data['idzona'];
                                 this.feligreses_id=data['id'];
+                                this.nombre_zona=data['nombre_zona'];
                                break;
                             }
                              case 'eliminar':

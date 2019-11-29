@@ -160,7 +160,6 @@
                 var url='/categoriaresumen?buscar=' + buscar2 + '&criterio=' + criterio;
                 axios.get(url) .then(function (response) {
                     me.arraycategoriasresumenes=response.data;
-                    console.log(response);
                 })
                 .catch(function (error) {
                     console.log(error);
