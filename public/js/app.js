@@ -2067,125 +2067,16 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     var _ref;
 
     return _ref = {
-      id_sacramento: 0,
-      id_persona: 0,
+      id_sacramento: '',
       folio: 0,
       libro: 0,
       asiento: 0,
       id_nota: 0,
-      id_realizante: 0,
       nota: '',
       fecha_realizacion: '',
       nombreRea: '',
@@ -2209,8 +2100,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       nombrePadrino1: '',
       apellidoPadrino1: '',
       arraybautizo: [],
-      nombrePadrino2: '',
-      apellidoPadrino2: '',
       precio: 0,
       modal: 0,
       modal1: 0,
@@ -2296,24 +2185,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     cerrarModal: function cerrarModal() {
       this.modal = 0;
       this.tituloModal = '';
-      this.folio = '';
-      this.libro = '';
-      this.asiento = '';
-      this.duiRea = '';
-      this.nombreRea = '';
-      this.apellido_realizante = '', this.duiMadre = '';
-      this.nombreMadre = '';
-      this.apellidoMadre = '';
-      this.duiPadre = '';
-      this.nombrePadre = '';
-      this.apellidoPadre = '';
-      this.duiPadrino1 = '';
-      this.nombrePadrino1 = '';
-      this.apellidoPadrino1 = '';
-      this.duiPadrino2 = '';
-      this.nombrePadrino2 = '';
-      this.apellidoPadrino2 = '';
-      this.nombreSacer = '';
+      this.errorDatos = 0;
+      this.nota = '';
     },
     cerrarModal4: function cerrarModal4() {
       this.modal4 = 0;
@@ -2436,11 +2309,12 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         case "bautizo":
           {
             switch (accion) {
-              case 'marginar':
+              case 'marginaracta':
                 {
                   this.modal = 1;
                   this.tituloModal = 'Marginar Acta';
                   this.nota = '';
+                  this.id_sacramento = data['id'];
                   this.tipoAccion = 1;
                   break;
                 }
@@ -2465,6 +2339,30 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
             }
           }
       }
+    },
+    validarmarginacion: function validarmarginacion() {
+      this.errorDatos = 0;
+      this.errorMostrarMsj = [];
+      var patron = /^[a-zA-ZÑñÁáÉéÍíÓóÚúÜü\s]+$/;
+      if (!patron.test(this.nota)) this.errorMostrarMsj.push("La nota solo debe tener letras");
+      if (this.errorMostrarMsj.length) this.errorDatos = 1;
+      return this.errorDatos;
+    },
+    marginar: function marginar() {
+      if (this.validarmarginacion()) {
+        return;
+      }
+
+      var me = this;
+      axios.put('/nota/marginaracta', {
+        'notam': this.nota,
+        'idsacra': this.id_sacramento
+      }).then(function (response) {
+        me.listarActasBautizo();
+        me.cerrarModal();
+      })["catch"](function (error) {
+        console.log(error);
+      });
     }
   },
   mounted: function mounted() {
@@ -10292,6 +10190,73 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -10852,7 +10817,9 @@ __webpack_require__.r(__webpack_exports__);
 //
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
-    return {
+    var _ref;
+
+    return _ref = {
       id: '',
       tipo: '',
       folio: '',
@@ -10871,53 +10838,8 @@ __webpack_require__.r(__webpack_exports__);
       nombremadre: '',
       dui: '',
       duimadre: '',
-      duipadre: '',
-      nombresacerdote: '',
-      arraysacerdote: [],
-      sexo: '',
-      fechana: '',
-      idpd1: '',
-      idpd2: '',
-      idpd3: '',
-      idpd4: '',
-      duipd1: '',
-      duipd2: '',
-      duipd3: '',
-      duipd4: '',
-      nombrepd1: '',
-      apellidopd1: '',
-      Acciondui: 0,
-      accion: 0,
-      accionp: 0,
-      accionsexo: 0,
-      cambiarm: 0,
-      cambiarmb: 0,
-      monto: 0,
-      arraybautizo: [],
-      nombrepd2: '',
-      apellidopd2: '',
-      nombrepd3: '',
-      apellidopd3: '',
-      nombrepd4: '',
-      apellidopd4: '',
-      precio: 0,
-      modal: 0,
-      tituloModal: '',
-      partida: '',
-      tipoAccion: 0,
-      errorDatos: 0,
-      errorMostrarMjs: [],
-      anio: '',
-      verificacion: 0,
-      accionbotones: 0,
-      fechana2: '',
-      alcaldia: '',
-      id_realizante: '',
-      sexopd1: '',
-      sexopd2: '',
-      sexopd3: '',
-      sexopd4: ''
-    };
+      duipadre: ''
+    }, _defineProperty(_ref, "tipo", ''), _defineProperty(_ref, "idsacerdote", ''), _defineProperty(_ref, "nombresacerdote", ''), _defineProperty(_ref, "apellidosacerdote", ''), _defineProperty(_ref, "cargosacerdote", ''), _defineProperty(_ref, "arraysacerdote", []), _defineProperty(_ref, "arraycategorias", []), _defineProperty(_ref, "arraycargo", []), _defineProperty(_ref, "sexo", ''), _defineProperty(_ref, "fechana", ''), _defineProperty(_ref, "idpd1", ''), _defineProperty(_ref, "idpd2", ''), _defineProperty(_ref, "idpd3", ''), _defineProperty(_ref, "idpd4", ''), _defineProperty(_ref, "duipd1", ''), _defineProperty(_ref, "duipd2", ''), _defineProperty(_ref, "duipd3", ''), _defineProperty(_ref, "duipd4", ''), _defineProperty(_ref, "nombrepd1", ''), _defineProperty(_ref, "apellidopd1", ''), _defineProperty(_ref, "idcare", ''), _defineProperty(_ref, "Acciondui", 0), _defineProperty(_ref, "accion", 0), _defineProperty(_ref, "accionp", 0), _defineProperty(_ref, "accionsexo", 0), _defineProperty(_ref, "cambiarm", 0), _defineProperty(_ref, "cambiarmb", 0), _defineProperty(_ref, "monto", 0), _defineProperty(_ref, "arraybautizo", []), _defineProperty(_ref, "nombrepd2", ''), _defineProperty(_ref, "apellidopd2", ''), _defineProperty(_ref, "nombrepd3", ''), _defineProperty(_ref, "apellidopd3", ''), _defineProperty(_ref, "nombrepd4", ''), _defineProperty(_ref, "apellidopd4", ''), _defineProperty(_ref, "precio", 0), _defineProperty(_ref, "modal", 0), _defineProperty(_ref, "tituloModal", ''), _defineProperty(_ref, "partida", ''), _defineProperty(_ref, "tipoAccion", 0), _defineProperty(_ref, "errorDatos", 0), _defineProperty(_ref, "errorMostrarMsj", []), _defineProperty(_ref, "anio", ''), _defineProperty(_ref, "verificacion", 0), _defineProperty(_ref, "accionbotones", 0), _defineProperty(_ref, "fechana2", ''), _defineProperty(_ref, "alcaldia", ''), _defineProperty(_ref, "id_realizante", ''), _defineProperty(_ref, "sexopd1", ''), _defineProperty(_ref, "sexopd2", ''), _defineProperty(_ref, "sexopd3", ''), _defineProperty(_ref, "sexopd4", ''), _ref;
   },
   methods: {
     //Mt. para calcular edad y ver si se muestra o no el div que contiene el dui del realizante
@@ -10961,6 +10883,10 @@ __webpack_require__.r(__webpack_exports__);
       switch (d) {
         case '1':
           {
+            if (this.validarvalores('1')) {
+              return;
+            }
+
             this.verificarpersona(); //datos del realizante
 
             break;
@@ -10968,6 +10894,10 @@ __webpack_require__.r(__webpack_exports__);
 
         case '2':
           {
+            if (this.validarvalores('3')) {
+              return;
+            }
+
             this.cambiarm = 2; //datos de los padres
 
             break;
@@ -10975,6 +10905,10 @@ __webpack_require__.r(__webpack_exports__);
 
         case '3':
           {
+            if (this.validarvalores('4')) {
+              return;
+            }
+
             this.cambiarm = 3; //padrino 1 
 
             break;
@@ -10982,6 +10916,10 @@ __webpack_require__.r(__webpack_exports__);
 
         case '4':
           {
+            if (this.validarvalores('5')) {
+              return;
+            }
+
             this.cambiarm = 4; //padrino 2
 
             break;
@@ -10989,6 +10927,10 @@ __webpack_require__.r(__webpack_exports__);
 
         case '5':
           {
+            if (this.validarvalores('6')) {
+              return;
+            }
+
             this.cambiarm = 5; //padrino 3
 
             break;
@@ -10996,6 +10938,10 @@ __webpack_require__.r(__webpack_exports__);
 
         case '6':
           {
+            if (this.validarvalores('7')) {
+              return;
+            }
+
             this.cambiarm = 6; //padrino 4
 
             break;
@@ -11003,6 +10949,10 @@ __webpack_require__.r(__webpack_exports__);
 
         case '7':
           {
+            if (this.validarvalores('8')) {
+              return;
+            }
+
             this.cambiarm = 7; //datos de la celebracion
 
             break;
@@ -11010,6 +10960,10 @@ __webpack_require__.r(__webpack_exports__);
 
         case '8':
           {
+            if (this.validarvalores('9')) {
+              return;
+            }
+
             this.cambiarm = 8; //regresar a 5
 
             break;
@@ -11053,7 +11007,7 @@ __webpack_require__.r(__webpack_exports__);
     },
     //Mt. cuando da eliminar en el formulario
     cerrar: function cerrar() {
-      this.precio = 0;
+      this.precio = '';
       this.nombrerealizante = '';
       this.apellidorealizante = '';
       this.nombremadre = '';
@@ -11074,7 +11028,10 @@ __webpack_require__.r(__webpack_exports__);
       this.apellidopd3 = '';
       this.nombrepd4 = '';
       this.apellidopd4 = '';
+      this.idcare = '';
       this.nombresacerdote = '';
+      this.apellidosacerdote = '';
+      this.cargosacerdote = '';
       this.fecharealizacion = '';
       this.fechana = '';
       this.dui = '';
@@ -11095,6 +11052,8 @@ __webpack_require__.r(__webpack_exports__);
       this.sexopd2 = '';
       this.sexopd3 = '';
       this.sexopd4 = '';
+      this.monto = '';
+      this.asiento = '';
     },
     cerrarm: function cerrarm() {
       //botones cancelat
@@ -11120,7 +11079,10 @@ __webpack_require__.r(__webpack_exports__);
       this.nombrepd4 = '';
       this.apellidopd4 = '';
       this.nombresacerdote = '';
+      this.apellidosacerdote = '';
+      this.cargosacerdote = '';
       this.fecharealizacion = '';
+      this.idcare = '';
       this.fechana = '';
       this.dui = '';
       this.accion = 0;
@@ -11145,10 +11107,25 @@ __webpack_require__.r(__webpack_exports__);
       this.sexopd2 = '';
       this.sexopd3 = '';
       this.sexopd4 = '';
+      this.asiento = '';
+      this.monto = '';
     },
     //Mt. cuando le da modificar en el modal
     cerrarmodal: function cerrarmodal() {
       this.modal = 0;
+    },
+    llenadolista: function llenadolista(buscar, criterio) {
+      var me = this;
+      var url = '/persona/buscarsacerdote';
+      axios.get(url).then(function (response) {
+        me.arraysacerdote = response.data;
+      })["catch"](function (error) {
+        console.log(error);
+      });
+    },
+    //autocompletar sacerdotes
+    llenadoarray: function llenadoarray() {
+      this.arraycargo = new Array('DIACONO', 'PADRE', 'ARZOBISPO', 'CARDENAL', 'NUNCIO APOSTOLICO', 'MONSEÑOR');
     },
     abrirmodal: function abrirmodal() {
       this.modal = 1;
@@ -11277,6 +11254,188 @@ __webpack_require__.r(__webpack_exports__);
         console.log(error);
       });
     },
+    validarvalores: function validarvalores(d) {
+      this.errorDatos = 0;
+      this.errorMostrarMsj = [];
+      var RE = /^([0-9])*$/;
+      var patron = /^[a-zA-ZÑñÁáÉéÍíÓóÚúÜü\s]+$/;
+      var anioc = /^\d{4}$/;
+      var patrondui = /^\d{9}$/;
+      var fecha = new Date();
+      var anioac = fecha.getFullYear();
+      var mesac = fecha.getMonth();
+
+      switch (d) {
+        case '1':
+          {
+            var Min_Length = 5;
+            var lengthmin = this.alcaldia.length;
+            if (lengthmin < Min_Length) this.errorMostrarMsj.push("La alcaldía debe tener más de 5 letras");
+            if (RE.test(this.alcaldia)) this.errorMostrarMsj.push("La alcaldia solo debe de tener letras");
+            if (!this.libro) this.errorMostrarMsj.push("El numero de libro no puede estar vacío");
+            if (this.libro == 0) this.errorMostrarMsj.push("El numero de libro no puede ser 0");
+            if (!RE.test(this.libro)) this.errorMostrarMsj.push("El numero de libro debe ser un numero entero");
+            if (!this.partida) this.errorMostrarMsj.push("El numero de la partida no puede estar vacío");
+            if (this.partida == 0) this.errorMostrarMsj.push("El numero de la partida no puede ser 0");
+            if (!RE.test(this.partida)) this.errorMostrarMsj.push("El numero de la partida debe ser un numero entero");
+            if (!this.folio) this.errorMostrarMsj.push("El numero de folio no puede estar vacío");
+            if (this.folio == 0) this.errorMostrarMsj.push("El numero de folio no puede ser 0");
+            if (!RE.test(this.folio)) this.errorMostrarMsj.push("El numero de folio debe ser un numero entero");
+            if (!this.anio) this.errorMostrarMsj.push("El año no puede estar vacío");
+            if (!anioc.test(this.anio)) this.errorMostrarMsj.push("El año debe tener 4 numeros enteros");
+            if (this.anio < 1900) this.errorMostrarMsj.push("El año debe ser mayor a 1990");
+            if (anioac < this.anio) this.errorMostrarMsj.push("El año debe ser menor o igual al actual");
+            if (this.errorMostrarMsj.length) this.errorDatos = 1;
+            return this.errorDatos;
+            break;
+          }
+
+        case '2':
+          {
+            this.errorMostrarMsj.push("Esta persona ya realizo este sacramento. Por favor verificar datos");
+            if (this.errorMostrarMsj.length) this.errorDatos = 1;
+            return this.errorDatos;
+            break;
+          }
+
+        case '3':
+          {
+            var values = this.fechana.split("-");
+            var diana = values[2];
+            var mesna = values[1];
+            var aniona = values[0];
+
+            if (this.Acciondui == 1) {
+              if (!patrondui.test(this.dui)) this.errorMostrarMsj.push("El dui debe de tener 9 numeros");
+            }
+
+            if (!this.nombrerealizante) this.errorMostrarMsj.push("El nombre del realizante no puede estar vacio");
+            if (!patron.test(this.nombrerealizante)) this.errorMostrarMsj.push("El nombre del realizante solo debe de tener letras");
+            if (!this.apellidorealizante) this.errorMostrarMsj.push("El apellido del realizante no puede estar vacio");
+            if (!patron.test(this.apellidorealizante)) this.errorMostrarMsj.push("El apellido del realizante solo debe de tener letras");
+            if (!this.sexo) this.errorMostrarMsj.push("El sexo no puede estar vacio");
+            if (aniona < 1900) this.errorMostrarMsj.push("El año debe de ser mayor a 1990");
+            if (anioac < aniona) this.errorMostrarMsj.push("El año debe ser menor o igual al actual");
+            if (mesac < mesna && aniona == anioac) this.errorMostrarMsj.push("El mes debe ser menor al actual");
+            if (this.errorMostrarMsj.length) this.errorDatos = 1;
+            return this.errorDatos;
+            break;
+          }
+
+        case '4':
+          {
+            if (!(!this.duimadre && !this.nombremadre && !this.apellidomadre)) {
+              if (!patrondui.test(this.duimadre)) this.errorMostrarMsj.push("El dui de la madre debe de tener 9 numeros");
+              if (!patron.test(this.nombremadre)) this.errorMostrarMsj.push("El nombre de la madre solo debe de tener letras");
+              if (!patron.test(this.apellidomadre)) this.errorMostrarMsj.push("El apellido de la madre solo debe de tener letras");
+              if (this.errorMostrarMsj.length) this.errorDatos = 1;
+              return this.errorDatos;
+            }
+
+            if (!(!this.duipadre && !this.nombrepadre && !this.apellidopadre)) {
+              if (!patrondui.test(this.duipadre)) this.errorMostrarMsj.push("El dui del padre debe de tener 9 numeros");
+              if (!patron.test(this.nombrepadre)) this.errorMostrarMsj.push("El nombre del padre solo debe de tener letras");
+              if (!patron.test(this.apellidopadre)) this.errorMostrarMsj.push("El apellido del padre solo debe de tener letras");
+              if (this.errorMostrarMsj.length) this.errorDatos = 1;
+              return this.errorDatos;
+            }
+
+            break;
+          }
+
+        case '5':
+          {
+            if (!(!this.duipd1 && !this.nombrepd1 && !this.apellidopd1 && !this.sexopd1)) {
+              if (!patrondui.test(this.duipd1)) this.errorMostrarMsj.push("El dui del padrino 1 debe de tener 9 numeros");
+              if (!patron.test(this.nombrepd1)) this.errorMostrarMsj.push("El nombre del padrino 1 solo debe de tener letras");
+              if (!patron.test(this.apellidopd1)) this.errorMostrarMsj.push("El apellido del padrino 1 solo debe de tener letras");
+              if (!this.sexopd1) this.errorMostrarMsj.push("El sexo no puede estar vacio");
+              if (this.errorMostrarMsj.length) this.errorDatos = 1;
+              return this.errorDatos;
+            }
+
+            break;
+          }
+
+        case '6':
+          {
+            if (!(!this.duipd2 && !this.nombrepd2 && !this.apellidopd2 && !this.sexopd2)) {
+              if (!patrondui.test(this.duipd2)) this.errorMostrarMsj.push("El dui del padrino 2 debe de tener 9 numeros");
+              if (!patron.test(this.nombrepd2)) this.errorMostrarMsj.push("El nombre del padrino 2 solo debe de tener letras");
+              if (!patron.test(this.apellidopd2)) this.errorMostrarMsj.push("El apellido del padrino 2 solo debe de tener letras");
+              if (!this.sexopd2) this.errorMostrarMsj.push("El sexo no puede estar vacio");
+              if (this.errorMostrarMsj.length) this.errorDatos = 1;
+              return this.errorDatos;
+            }
+
+            break;
+          }
+
+        case '7':
+          {
+            if (!(!this.duipd3 && !this.nombrepd3 && !this.apellidopd3 && !this.sexopd3)) {
+              if (!patrondui.test(this.duipd3)) this.errorMostrarMsj.push("El dui del padrino 3 debe de tener 9 numeros");
+              if (!patron.test(this.nombrepd3)) this.errorMostrarMsj.push("El nombre del padrino 3 solo debe de tener letras");
+              if (!patron.test(this.apellidopd3)) this.errorMostrarMsj.push("El apellido del padrino 3 solo debe de tener letras");
+              if (!this.sexopd3) this.errorMostrarMsj.push("El sexo no puede estar vacio");
+              if (this.errorMostrarMsj.length) this.errorDatos = 1;
+              return this.errorDatos;
+            }
+
+            break;
+          }
+
+        case '8':
+          {
+            if (!(!this.duipd4 && !this.nombrepd4 && !this.apellidopd4 && !this.sexopd4)) {
+              if (!patrondui.test(this.duipd4)) this.errorMostrarMsj.push("El dui del padrino 4 debe de tener 9 numeros");
+              if (!patron.test(this.nombrepd4)) this.errorMostrarMsj.push("El nombre del padrino 4 solo debe de tener letras");
+              if (!patron.test(this.apellidopd4)) this.errorMostrarMsj.push("El apellido del padrino 4 solo debe de tener letras");
+              if (!this.sexopd4) this.errorMostrarMsj.push("El sexo no puede estar vacio");
+              if (this.errorMostrarMsj.length) this.errorDatos = 1;
+              return this.errorDatos;
+            }
+
+            break;
+          }
+
+        case '9':
+          {
+            var RED = /^\d*(\.\d{1})?\d{0,1}$/;
+            if (!this.librob) this.errorMostrarMsj.push("El numero de libro no puede estar vacio");
+            if (this.librob == 0) this.errorMostrarMsj.push("No puede tener el valor 0");
+            if (!RE.test(this.librob)) this.errorMostrarMsj.push("El numero de libro debe de tener numeros enteros");
+            if (!this.foliob) this.errorMostrarMsj.push("El numero de folio no puede estar vacio");
+            if (this.foliob == 0) this.errorMostrarMsj.push("No puede tener el valor 0");
+            if (!RE.test(this.foliob)) this.errorMostrarMsj.push("El numero de folio debe de tener numeros enteros");
+            if (!this.asiento) this.errorMostrarMsj.push("El numero de asiento no puede estar vacio");
+            if (this.asiento == 0) this.errorMostrarMsj.push("El numero de asiento no debe ser 0");
+            if (!RE.test(this.asiento)) this.errorMostrarMsj.push("El numero de asiento debe de tener numeros enteros");
+            if (!this.monto) this.errorMostrarMsj.push("El numero de la ofrenda no puede estar vacio");
+            if (!RED.test(this.monto)) this.errorMostrarMsj.push("El monto debe de tener solo decimales");
+            var values = this.fecharealizacion.split("-");
+            var aniore = values[0];
+            if (aniore < 1989) this.errorMostrarMsj.push("El año debe ser mayor a 1989");
+            if (anioac < aniore) this.errorMostrarMsj.push("El año debe ser menor al actual");
+            if (!this.idcare) this.errorMostrarMsj.push("La categoria no puede estar vacia");
+            if (this.errorMostrarMsj.length) this.errorDatos = 1;
+            return this.errorDatos;
+            break;
+          }
+      }
+    },
+    selectCategoria: function selectCategoria() {
+      var me = this;
+      var url = '/categoriaresumen/selectCategoriaRe';
+      axios.get(url).then(function (response) {
+        // handle success
+        var respuesta = response.data;
+        me.arraycategorias = respuesta.categorias;
+      })["catch"](function (error) {
+        // handle error
+        console.log(error);
+      });
+    },
     registrar: function registrar() {
       var me = this;
       var m = this.idmadre;
@@ -11388,17 +11547,17 @@ __webpack_require__.r(__webpack_exports__);
       }
 
       if (m != '' && p != '' && pd1 != '' && dp2 == '' && dp3 == '' && dp4 == '') {
-        // introduje los duis pero no hay datos de padrino 4
+        // introduje los duis pero no hay datos de padrino 2, 3 y 4
         this.tipo = 20;
       }
 
       if (m != '' && p != '' && dp1 == '' && dp2 == '' && dp3 == '' && dp4 == '') {
-        // introduje los duis pero no hay datos de padrino 4
+        // introduje los duis pero no hay datos de padrinos
         this.tipo = 21;
       }
 
       if (m != '' && duip == '' && pd1 != '' && pd2 != '' && pd3 != '' && pd4 != '') {
-        // introduje los duis pero no hay datos de padrino 4
+        // introduje los duis pero no hay datos de papa
         this.tipo = 22;
       }
 
@@ -11442,29 +11601,48 @@ __webpack_require__.r(__webpack_exports__);
         this.tipo = 30;
       }
 
-      if (duim == '' && duip == '' && dp1 == '' && dp2 == '' && dp3 == '' && dp4 == '') {
+      if (duim == '' && duip == '' && pd1 != '' && pd2 != '' && pd3 != '' && pd4 != '') {
         // introduje los duis pero no hay datos de padrino 4
         this.tipo = 31;
       }
 
-      if (duim == '' && duip == '' && pd1 != '' && pd2 != '' && pd3 != '' && pd4 != '') {
+      if (duim == '' && duip == '' && pd1 != '' && pd2 != '' && pd3 != '' && dp4 == '') {
         // introduje los duis pero no hay datos de padrino 4
         this.tipo = 32;
       }
 
-      if (duim == '' && duip == '' && pd1 != '' && pd2 != '' && pd3 != '' && dp4 == '') {
+      if (duim == '' && duip == '' && pd1 != '' && pd2 != '' && dp3 == '' && dp4 == '') {
         // introduje los duis pero no hay datos de padrino 4
         this.tipo = 33;
       }
 
-      if (duim == '' && duip == '' && pd1 != '' && pd2 != '' && dp3 == '' && dp4 == '') {
+      if (duim == '' && duip == '' && pd1 != '' && dp2 == '' && dp3 == '' && dp4 == '') {
         // introduje los duis pero no hay datos de padrino 4
         this.tipo = 34;
       }
 
-      if (duim == '' && duip == '' && pd1 != '' && dp2 == '' && dp3 == '' && dp4 == '') {
-        // introduje los duis pero no hay datos de padrino 4
+      if (m == '' && p == '' && pd1 == '' && dp2 == '' && dp3 == '' && dp4 == '') {
+        // no tiene datos en el sistema y no tiene padrino 2, 3 y 4
         this.tipo = 35;
+      }
+
+      if (m == '' && p == '' && pd1 == '' && pd2 == '' && dp3 == '' && dp4 == '') {
+        // no tiene datos en el sistema y no tiene padrino 3 y 4
+        this.tipo = 36;
+      }
+
+      if (m == '' && duip == '' && pd1 == '' && dp2 == '' && dp3 == '' && dp4 == '') {
+        // no tiene papa ni padrinos 2, 3 y 4
+        this.tipo = 37;
+      }
+
+      if (duim == '' && p == '' && pd1 == '' && dp2 == '' && dp3 == '' && dp4 == '') {
+        // no tiene mama ni padrinos 2, 3 y 4
+        this.tipo = 38;
+      }
+
+      if (duim == '' && duip == '' && pd1 == '' && dp2 == '' && dp3 == '' && dp4 == '') {
+        this.tipo = 39;
       }
 
       axios.put('/bautizo/registrar', {
@@ -11485,7 +11663,10 @@ __webpack_require__.r(__webpack_exports__);
         'dui_pd2': this.duipd2,
         'dui_pd3': this.duipd3,
         'fecha': this.fecharealizacion,
-        'sacerdote': this.nombresacerdote,
+        'idcate': this.idcare,
+        'sacerdote': this.idsacerdote,
+        'titulo': this.cargosacerdote,
+        'monto': this.monto,
         'id_pd1': this.idpd1,
         'id_pd2': this.idpd2,
         'id_pd3': this.idpd3,
@@ -11539,6 +11720,10 @@ __webpack_require__.r(__webpack_exports__);
         } else {
           me.cambiarm = 1;
           me.cambiarmb = 1;
+        }
+
+        if (respuesta == 2) {
+          me.validarvalores('2');
         }
       })["catch"](function (error) {
         console.log(error);
@@ -11688,6 +11873,11 @@ __webpack_require__.r(__webpack_exports__);
         });
       }
     }
+  },
+  mounted: function mounted() {
+    this.llenadoarray();
+    this.selectCategoria();
+    this.llenadolista("", "");
   }
 });
 
@@ -55258,6 +55448,10 @@ var render = function() {
                       )
                     ]),
                     _vm._v(" "),
+                    _c("td", {
+                      domProps: { textContent: _vm._s(bautizo.nota) }
+                    }),
+                    _vm._v(" "),
                     _c(
                       "button",
                       {
@@ -55266,7 +55460,7 @@ var render = function() {
                           click: function($event) {
                             return _vm.abrirModal(
                               "bautizo",
-                              "marginarActa",
+                              "marginaracta",
                               bautizo
                             )
                           }
@@ -55396,7 +55590,7 @@ var render = function() {
       {
         staticClass: "modal fade",
         class: { mostrar: _vm.modal },
-        staticStyle: { "overflow-y": "scroll" },
+        staticStyle: { display: "none" },
         attrs: {
           tabindex: "-1",
           role: "dialog",
@@ -55457,7 +55651,7 @@ var render = function() {
                           staticClass: "col-md-3 form-control-label",
                           attrs: { for: "text-input" }
                         },
-                        [_vm._v("Folio")]
+                        [_vm._v("Nota Marginal")]
                       ),
                       _vm._v(" "),
                       _c("div", { staticClass: "col-md-9" }, [
@@ -55466,706 +55660,22 @@ var render = function() {
                             {
                               name: "model",
                               rawName: "v-model",
-                              value: _vm.folio,
-                              expression: "folio"
+                              value: _vm.nota,
+                              expression: "nota"
                             }
                           ],
                           staticClass: "form-control",
                           attrs: {
                             type: "text",
-                            placeholder: "Ingrese el numero del folio"
+                            placeholder: "Ingrese la nota marginal"
                           },
-                          domProps: { value: _vm.folio },
+                          domProps: { value: _vm.nota },
                           on: {
                             input: function($event) {
                               if ($event.target.composing) {
                                 return
                               }
-                              _vm.folio = $event.target.value
-                            }
-                          }
-                        })
-                      ])
-                    ]),
-                    _vm._v(" "),
-                    _c("div", { staticClass: "form-group row" }, [
-                      _c(
-                        "label",
-                        {
-                          staticClass: "col-md-3 form-control-label",
-                          attrs: { for: "text-input" }
-                        },
-                        [_vm._v("Libro")]
-                      ),
-                      _vm._v(" "),
-                      _c("div", { staticClass: "col-md-9" }, [
-                        _c("input", {
-                          directives: [
-                            {
-                              name: "model",
-                              rawName: "v-model",
-                              value: _vm.libro,
-                              expression: "libro"
-                            }
-                          ],
-                          staticClass: "form-control",
-                          attrs: {
-                            type: "text",
-                            placeholder: "Ingrese el numero del libro"
-                          },
-                          domProps: { value: _vm.libro },
-                          on: {
-                            input: function($event) {
-                              if ($event.target.composing) {
-                                return
-                              }
-                              _vm.libro = $event.target.value
-                            }
-                          }
-                        })
-                      ])
-                    ]),
-                    _vm._v(" "),
-                    _c("div", { staticClass: "form-group row" }, [
-                      _c(
-                        "label",
-                        {
-                          staticClass: "col-md-3 form-control-label",
-                          attrs: { for: "text-input" }
-                        },
-                        [_vm._v("Asiento")]
-                      ),
-                      _vm._v(" "),
-                      _c("div", { staticClass: "col-md-9" }, [
-                        _c("input", {
-                          directives: [
-                            {
-                              name: "model",
-                              rawName: "v-model",
-                              value: _vm.asiento,
-                              expression: "asiento"
-                            }
-                          ],
-                          staticClass: "form-control",
-                          attrs: {
-                            type: "text",
-                            placeholder: "Ingrese el numero del asiento"
-                          },
-                          domProps: { value: _vm.asiento },
-                          on: {
-                            input: function($event) {
-                              if ($event.target.composing) {
-                                return
-                              }
-                              _vm.asiento = $event.target.value
-                            }
-                          }
-                        })
-                      ])
-                    ]),
-                    _vm._v(" "),
-                    _c("div", { staticClass: "form-group row" }, [
-                      _c(
-                        "label",
-                        {
-                          staticClass: "col-md-3 form-control-label",
-                          attrs: { for: "text-input" }
-                        },
-                        [_vm._v("Dui del Hijo")]
-                      ),
-                      _vm._v(" "),
-                      _c("div", { staticClass: "col-md-9" }, [
-                        _c("input", {
-                          directives: [
-                            {
-                              name: "model",
-                              rawName: "v-model",
-                              value: _vm.duiRea,
-                              expression: "duiRea"
-                            }
-                          ],
-                          staticClass: "form-control",
-                          attrs: {
-                            type: "text",
-                            placeholder: "Ingrese el dui"
-                          },
-                          domProps: { value: _vm.duiRea },
-                          on: {
-                            input: function($event) {
-                              if ($event.target.composing) {
-                                return
-                              }
-                              _vm.duiRea = $event.target.value
-                            }
-                          }
-                        })
-                      ])
-                    ]),
-                    _vm._v(" "),
-                    _c("div", { staticClass: "form-group row" }, [
-                      _c(
-                        "label",
-                        {
-                          staticClass: "col-md-3 form-control-label",
-                          attrs: { for: "text-input" }
-                        },
-                        [_vm._v("Nombre del Hijo")]
-                      ),
-                      _vm._v(" "),
-                      _c("div", { staticClass: "col-md-9" }, [
-                        _c("input", {
-                          directives: [
-                            {
-                              name: "model",
-                              rawName: "v-model",
-                              value: _vm.nombreRea,
-                              expression: "nombreRea"
-                            }
-                          ],
-                          staticClass: "form-control",
-                          attrs: {
-                            type: "text",
-                            placeholder: "Nombre del hijo"
-                          },
-                          domProps: { value: _vm.nombreRea },
-                          on: {
-                            input: function($event) {
-                              if ($event.target.composing) {
-                                return
-                              }
-                              _vm.nombreRea = $event.target.value
-                            }
-                          }
-                        })
-                      ])
-                    ]),
-                    _vm._v(" "),
-                    _c("div", { staticClass: "form-group row" }, [
-                      _c(
-                        "label",
-                        {
-                          staticClass: "col-md-3 form-control-label",
-                          attrs: { for: "text-input" }
-                        },
-                        [_vm._v("Apellido del Hijo")]
-                      ),
-                      _vm._v(" "),
-                      _c("div", { staticClass: "col-md-9" }, [
-                        _c("input", {
-                          directives: [
-                            {
-                              name: "model",
-                              rawName: "v-model",
-                              value: _vm.apellido_realizante,
-                              expression: "apellido_realizante"
-                            }
-                          ],
-                          staticClass: "form-control",
-                          attrs: {
-                            type: "text",
-                            placeholder: "Apellido del hijo"
-                          },
-                          domProps: { value: _vm.apellido_realizante },
-                          on: {
-                            input: function($event) {
-                              if ($event.target.composing) {
-                                return
-                              }
-                              _vm.apellido_realizante = $event.target.value
-                            }
-                          }
-                        })
-                      ])
-                    ]),
-                    _vm._v(" "),
-                    _c("div", { staticClass: "form-group row" }, [
-                      _c(
-                        "label",
-                        {
-                          staticClass: "col-md-3 form-control-label",
-                          attrs: { for: "text-input" }
-                        },
-                        [_vm._v("Dui de la Madre")]
-                      ),
-                      _vm._v(" "),
-                      _c("div", { staticClass: "col-md-9" }, [
-                        _c("input", {
-                          directives: [
-                            {
-                              name: "model",
-                              rawName: "v-model",
-                              value: _vm.duiMadre,
-                              expression: "duiMadre"
-                            }
-                          ],
-                          staticClass: "form-control",
-                          attrs: {
-                            type: "text",
-                            placeholder: "Ingrese el dui"
-                          },
-                          domProps: { value: _vm.duiMadre },
-                          on: {
-                            input: function($event) {
-                              if ($event.target.composing) {
-                                return
-                              }
-                              _vm.duiMadre = $event.target.value
-                            }
-                          }
-                        })
-                      ])
-                    ]),
-                    _vm._v(" "),
-                    _c("div", { staticClass: "form-group row" }, [
-                      _c(
-                        "label",
-                        {
-                          staticClass: "col-md-3 form-control-label",
-                          attrs: { for: "text-input" }
-                        },
-                        [_vm._v("Nombre de la Madre")]
-                      ),
-                      _vm._v(" "),
-                      _c("div", { staticClass: "col-md-9" }, [
-                        _c("input", {
-                          directives: [
-                            {
-                              name: "model",
-                              rawName: "v-model",
-                              value: _vm.nombreMadre,
-                              expression: "nombreMadre"
-                            }
-                          ],
-                          staticClass: "form-control",
-                          attrs: {
-                            type: "text",
-                            placeholder: "Nombre de la madre"
-                          },
-                          domProps: { value: _vm.nombreMadre },
-                          on: {
-                            input: function($event) {
-                              if ($event.target.composing) {
-                                return
-                              }
-                              _vm.nombreMadre = $event.target.value
-                            }
-                          }
-                        })
-                      ])
-                    ]),
-                    _vm._v(" "),
-                    _c("div", { staticClass: "form-group row" }, [
-                      _c(
-                        "label",
-                        {
-                          staticClass: "col-md-3 form-control-label",
-                          attrs: { for: "text-input" }
-                        },
-                        [_vm._v("Apellido de la Madre")]
-                      ),
-                      _vm._v(" "),
-                      _c("div", { staticClass: "col-md-9" }, [
-                        _c("input", {
-                          directives: [
-                            {
-                              name: "model",
-                              rawName: "v-model",
-                              value: _vm.apellidoMadre,
-                              expression: "apellidoMadre"
-                            }
-                          ],
-                          staticClass: "form-control",
-                          attrs: {
-                            type: "text",
-                            placeholder: "Apellido de la madre"
-                          },
-                          domProps: { value: _vm.apellidoMadre },
-                          on: {
-                            input: function($event) {
-                              if ($event.target.composing) {
-                                return
-                              }
-                              _vm.apellidoMadre = $event.target.value
-                            }
-                          }
-                        })
-                      ])
-                    ]),
-                    _vm._v(" "),
-                    _c("div", { staticClass: "form-group row" }, [
-                      _c(
-                        "label",
-                        {
-                          staticClass: "col-md-3 form-control-label",
-                          attrs: { for: "text-input" }
-                        },
-                        [_vm._v("Dui del Padre")]
-                      ),
-                      _vm._v(" "),
-                      _c("div", { staticClass: "col-md-9" }, [
-                        _c("input", {
-                          directives: [
-                            {
-                              name: "model",
-                              rawName: "v-model",
-                              value: _vm.duiPadre,
-                              expression: "duiPadre"
-                            }
-                          ],
-                          staticClass: "form-control",
-                          attrs: {
-                            type: "text",
-                            placeholder: "Ingrese el dui"
-                          },
-                          domProps: { value: _vm.duiPadre },
-                          on: {
-                            input: function($event) {
-                              if ($event.target.composing) {
-                                return
-                              }
-                              _vm.duiPadre = $event.target.value
-                            }
-                          }
-                        })
-                      ])
-                    ]),
-                    _vm._v(" "),
-                    _c("div", { staticClass: "form-group row" }, [
-                      _c(
-                        "label",
-                        {
-                          staticClass: "col-md-3 form-control-label",
-                          attrs: { for: "text-input" }
-                        },
-                        [_vm._v("Nombre del Padre")]
-                      ),
-                      _vm._v(" "),
-                      _c("div", { staticClass: "col-md-9" }, [
-                        _c("input", {
-                          directives: [
-                            {
-                              name: "model",
-                              rawName: "v-model",
-                              value: _vm.nombrePadre,
-                              expression: "nombrePadre"
-                            }
-                          ],
-                          staticClass: "form-control",
-                          attrs: {
-                            type: "text",
-                            placeholder: "Nombre del padre"
-                          },
-                          domProps: { value: _vm.nombrePadre },
-                          on: {
-                            input: function($event) {
-                              if ($event.target.composing) {
-                                return
-                              }
-                              _vm.nombrePadre = $event.target.value
-                            }
-                          }
-                        })
-                      ])
-                    ]),
-                    _vm._v(" "),
-                    _c("div", { staticClass: "form-group row" }, [
-                      _c(
-                        "label",
-                        {
-                          staticClass: "col-md-3 form-control-label",
-                          attrs: { for: "text-input" }
-                        },
-                        [_vm._v("Apellido del Padre")]
-                      ),
-                      _vm._v(" "),
-                      _c("div", { staticClass: "col-md-9" }, [
-                        _c("input", {
-                          directives: [
-                            {
-                              name: "model",
-                              rawName: "v-model",
-                              value: _vm.apellidoPadre,
-                              expression: "apellidoPadre"
-                            }
-                          ],
-                          staticClass: "form-control",
-                          attrs: {
-                            type: "text",
-                            placeholder: "Apellido del padre"
-                          },
-                          domProps: { value: _vm.apellidoPadre },
-                          on: {
-                            input: function($event) {
-                              if ($event.target.composing) {
-                                return
-                              }
-                              _vm.apellidoPadre = $event.target.value
-                            }
-                          }
-                        })
-                      ])
-                    ]),
-                    _vm._v(" "),
-                    _c("div", { staticClass: "form-group row" }, [
-                      _c(
-                        "label",
-                        {
-                          staticClass: "col-md-3 form-control-label",
-                          attrs: { for: "text-input" }
-                        },
-                        [_vm._v("Dui del Padrino")]
-                      ),
-                      _vm._v(" "),
-                      _c("div", { staticClass: "col-md-9" }, [
-                        _c("input", {
-                          directives: [
-                            {
-                              name: "model",
-                              rawName: "v-model",
-                              value: _vm.duiPadrino1,
-                              expression: "duiPadrino1"
-                            }
-                          ],
-                          staticClass: "form-control",
-                          attrs: {
-                            type: "text",
-                            placeholder: "Ingrese el dui"
-                          },
-                          domProps: { value: _vm.duiPadrino1 },
-                          on: {
-                            input: function($event) {
-                              if ($event.target.composing) {
-                                return
-                              }
-                              _vm.duiPadrino1 = $event.target.value
-                            }
-                          }
-                        })
-                      ])
-                    ]),
-                    _vm._v(" "),
-                    _c("div", { staticClass: "form-group row" }, [
-                      _c(
-                        "label",
-                        {
-                          staticClass: "col-md-3 form-control-label",
-                          attrs: { for: "text-input" }
-                        },
-                        [_vm._v("Nombre del Padrino")]
-                      ),
-                      _vm._v(" "),
-                      _c("div", { staticClass: "col-md-9" }, [
-                        _c("input", {
-                          directives: [
-                            {
-                              name: "model",
-                              rawName: "v-model",
-                              value: _vm.nombrePadrino1,
-                              expression: "nombrePadrino1"
-                            }
-                          ],
-                          staticClass: "form-control",
-                          attrs: {
-                            type: "text",
-                            placeholder: "Nombre del padrino"
-                          },
-                          domProps: { value: _vm.nombrePadrino1 },
-                          on: {
-                            input: function($event) {
-                              if ($event.target.composing) {
-                                return
-                              }
-                              _vm.nombrePadrino1 = $event.target.value
-                            }
-                          }
-                        })
-                      ])
-                    ]),
-                    _vm._v(" "),
-                    _c("div", { staticClass: "form-group row" }, [
-                      _c(
-                        "label",
-                        {
-                          staticClass: "col-md-3 form-control-label",
-                          attrs: { for: "text-input" }
-                        },
-                        [_vm._v("Apellido del Padrino")]
-                      ),
-                      _vm._v(" "),
-                      _c("div", { staticClass: "col-md-9" }, [
-                        _c("input", {
-                          directives: [
-                            {
-                              name: "model",
-                              rawName: "v-model",
-                              value: _vm.apellidoPadrino1,
-                              expression: "apellidoPadrino1"
-                            }
-                          ],
-                          staticClass: "form-control",
-                          attrs: {
-                            type: "text",
-                            placeholder: "Apellido del padrino"
-                          },
-                          domProps: { value: _vm.apellidoPadrino1 },
-                          on: {
-                            input: function($event) {
-                              if ($event.target.composing) {
-                                return
-                              }
-                              _vm.apellidoPadrino1 = $event.target.value
-                            }
-                          }
-                        })
-                      ])
-                    ]),
-                    _vm._v(" "),
-                    _c("div", { staticClass: "form-group row" }, [
-                      _c(
-                        "label",
-                        {
-                          staticClass: "col-md-3 form-control-label",
-                          attrs: { for: "text-input" }
-                        },
-                        [_vm._v("Dui del Padrino")]
-                      ),
-                      _vm._v(" "),
-                      _c("div", { staticClass: "col-md-9" }, [
-                        _c("input", {
-                          directives: [
-                            {
-                              name: "model",
-                              rawName: "v-model",
-                              value: _vm.duiPadrino2,
-                              expression: "duiPadrino2"
-                            }
-                          ],
-                          staticClass: "form-control",
-                          attrs: {
-                            type: "text",
-                            placeholder: "Ingrese el dui"
-                          },
-                          domProps: { value: _vm.duiPadrino2 },
-                          on: {
-                            input: function($event) {
-                              if ($event.target.composing) {
-                                return
-                              }
-                              _vm.duiPadrino2 = $event.target.value
-                            }
-                          }
-                        })
-                      ])
-                    ]),
-                    _vm._v(" "),
-                    _c("div", { staticClass: "form-group row" }, [
-                      _c(
-                        "label",
-                        {
-                          staticClass: "col-md-3 form-control-label",
-                          attrs: { for: "text-input" }
-                        },
-                        [_vm._v("Nombre del Padrino")]
-                      ),
-                      _vm._v(" "),
-                      _c("div", { staticClass: "col-md-9" }, [
-                        _c("input", {
-                          directives: [
-                            {
-                              name: "model",
-                              rawName: "v-model",
-                              value: _vm.nombrePadrino2,
-                              expression: "nombrePadrino2"
-                            }
-                          ],
-                          staticClass: "form-control",
-                          attrs: {
-                            type: "text",
-                            placeholder: "Nombre del padrino"
-                          },
-                          domProps: { value: _vm.nombrePadrino2 },
-                          on: {
-                            input: function($event) {
-                              if ($event.target.composing) {
-                                return
-                              }
-                              _vm.nombrePadrino2 = $event.target.value
-                            }
-                          }
-                        })
-                      ])
-                    ]),
-                    _vm._v(" "),
-                    _c("div", { staticClass: "form-group row" }, [
-                      _c(
-                        "label",
-                        {
-                          staticClass: "col-md-3 form-control-label",
-                          attrs: { for: "text-input" }
-                        },
-                        [_vm._v("Apellido del Padrino")]
-                      ),
-                      _vm._v(" "),
-                      _c("div", { staticClass: "col-md-9" }, [
-                        _c("input", {
-                          directives: [
-                            {
-                              name: "model",
-                              rawName: "v-model",
-                              value: _vm.apellidoPadrino2,
-                              expression: "apellidoPadrino2"
-                            }
-                          ],
-                          staticClass: "form-control",
-                          attrs: {
-                            type: "text",
-                            placeholder: "Apellido del padrino"
-                          },
-                          domProps: { value: _vm.apellidoPadrino2 },
-                          on: {
-                            input: function($event) {
-                              if ($event.target.composing) {
-                                return
-                              }
-                              _vm.apellidoPadrino2 = $event.target.value
-                            }
-                          }
-                        })
-                      ])
-                    ]),
-                    _vm._v(" "),
-                    _c("div", { staticClass: "form-group row" }, [
-                      _c(
-                        "label",
-                        {
-                          staticClass: "col-md-3 form-control-label",
-                          attrs: { for: "text-input" }
-                        },
-                        [_vm._v("Nombre del Sacerdote")]
-                      ),
-                      _vm._v(" "),
-                      _c("div", { staticClass: "col-md-9" }, [
-                        _c("input", {
-                          directives: [
-                            {
-                              name: "model",
-                              rawName: "v-model",
-                              value: _vm.nombreSacer,
-                              expression: "nombreSacer"
-                            }
-                          ],
-                          staticClass: "form-control",
-                          attrs: {
-                            type: "text",
-                            placeholder: "Nombre del sacerdote"
-                          },
-                          domProps: { value: _vm.nombreSacer },
-                          on: {
-                            input: function($event) {
-                              if ($event.target.composing) {
-                                return
-                              }
-                              _vm.nombreSacer = $event.target.value
+                              _vm.nota = $event.target.value
                             }
                           }
                         })
@@ -56226,7 +55736,7 @@ var render = function() {
                         attrs: { type: "button" },
                         on: {
                           click: function($event) {
-                            return _vm.registrarBautizo()
+                            return _vm.marginar()
                           }
                         }
                       },
@@ -56639,6 +56149,8 @@ var staticRenderFns = [
         _c("th", [_vm._v("Asiento")]),
         _vm._v(" "),
         _c("th", [_vm._v("Nombre del realizante")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Nota Marginal")]),
         _vm._v(" "),
         _c("th", { staticStyle: { "text-align": "center" } }, [
           _vm._v("Opciones")
@@ -70607,6 +70119,34 @@ var render = function() {
                 ])
               ]),
               _vm._v(" "),
+              _c(
+                "div",
+                {
+                  directives: [
+                    {
+                      name: "show",
+                      rawName: "v-show",
+                      value: _vm.errorDatos,
+                      expression: "errorDatos"
+                    }
+                  ],
+                  staticClass: "form-group row div-error"
+                },
+                [
+                  _c(
+                    "div",
+                    { staticClass: "text-center text-error" },
+                    _vm._l(_vm.errorMostrarMsj, function(error) {
+                      return _c("div", {
+                        key: error,
+                        domProps: { textContent: _vm._s(error) }
+                      })
+                    }),
+                    0
+                  )
+                ]
+              ),
+              _vm._v(" "),
               _c("div", { staticClass: "col-md-4 modal-fo" }, [
                 _c(
                   "button",
@@ -70821,7 +70361,7 @@ var render = function() {
                       staticClass: "col-md-3 form-control-label",
                       attrs: { for: "text-input" }
                     },
-                    [_vm._v("DUI")]
+                    [_vm._v("Documento de identidad")]
                   ),
                   _vm._v(" "),
                   _c("div", { staticClass: "col-md-5" }, [
@@ -70847,6 +70387,34 @@ var render = function() {
                       }
                     })
                   ])
+                ]
+              ),
+              _vm._v(" "),
+              _c(
+                "div",
+                {
+                  directives: [
+                    {
+                      name: "show",
+                      rawName: "v-show",
+                      value: _vm.errorDatos,
+                      expression: "errorDatos"
+                    }
+                  ],
+                  staticClass: "form-group row div-error"
+                },
+                [
+                  _c(
+                    "div",
+                    { staticClass: "text-center text-error" },
+                    _vm._l(_vm.errorMostrarMsj, function(error) {
+                      return _c("div", {
+                        key: error,
+                        domProps: { textContent: _vm._s(error) }
+                      })
+                    }),
+                    0
+                  )
                 ]
               ),
               _vm._v(" "),
@@ -70906,7 +70474,7 @@ var render = function() {
                     staticClass: "col-md-3 form-control-label",
                     attrs: { for: "text-input" }
                   },
-                  [_vm._v("DUI")]
+                  [_vm._v("Documento de identidad")]
                 ),
                 _vm._v(" "),
                 _c("div", { staticClass: "col-md-5" }, [
@@ -71016,7 +70584,7 @@ var render = function() {
                     staticClass: "col-md-3 form-control-label",
                     attrs: { for: "text-input" }
                   },
-                  [_vm._v("DUI")]
+                  [_vm._v("Documento de identidad")]
                 ),
                 _vm._v(" "),
                 _c("div", { staticClass: "col-md-5" }, [
@@ -71131,6 +70699,34 @@ var render = function() {
                 ])
               ]),
               _vm._v(" "),
+              _c(
+                "div",
+                {
+                  directives: [
+                    {
+                      name: "show",
+                      rawName: "v-show",
+                      value: _vm.errorDatos,
+                      expression: "errorDatos"
+                    }
+                  ],
+                  staticClass: "form-group row div-error"
+                },
+                [
+                  _c(
+                    "div",
+                    { staticClass: "text-center text-error" },
+                    _vm._l(_vm.errorMostrarMsj, function(error) {
+                      return _c("div", {
+                        key: error,
+                        domProps: { textContent: _vm._s(error) }
+                      })
+                    }),
+                    0
+                  )
+                ]
+              ),
+              _vm._v(" "),
               _c("div", { staticClass: "col-md-5 modal-fo" }, [
                 _c(
                   "button",
@@ -71187,7 +70783,7 @@ var render = function() {
                     staticClass: "col-md-3 form-control-label",
                     attrs: { for: "text-input" }
                   },
-                  [_vm._v("DUI")]
+                  [_vm._v("Documento de identidad")]
                 ),
                 _vm._v(" "),
                 _c("div", { staticClass: "col-md-5" }, [
@@ -71348,6 +70944,34 @@ var render = function() {
                 ])
               ]),
               _vm._v(" "),
+              _c(
+                "div",
+                {
+                  directives: [
+                    {
+                      name: "show",
+                      rawName: "v-show",
+                      value: _vm.errorDatos,
+                      expression: "errorDatos"
+                    }
+                  ],
+                  staticClass: "form-group row div-error"
+                },
+                [
+                  _c(
+                    "div",
+                    { staticClass: "text-center text-error" },
+                    _vm._l(_vm.errorMostrarMsj, function(error) {
+                      return _c("div", {
+                        key: error,
+                        domProps: { textContent: _vm._s(error) }
+                      })
+                    }),
+                    0
+                  )
+                ]
+              ),
+              _vm._v(" "),
               _c("div", { staticClass: "col-md-5 modal-fo" }, [
                 _c(
                   "button",
@@ -71416,7 +71040,7 @@ var render = function() {
                     staticClass: "col-md-3 form-control-label",
                     attrs: { for: "text-input" }
                   },
-                  [_vm._v("DUI")]
+                  [_vm._v("Documento de identidad")]
                 ),
                 _vm._v(" "),
                 _c("div", { staticClass: "col-md-5" }, [
@@ -71591,6 +71215,34 @@ var render = function() {
                 ])
               ]),
               _vm._v(" "),
+              _c(
+                "div",
+                {
+                  directives: [
+                    {
+                      name: "show",
+                      rawName: "v-show",
+                      value: _vm.errorDatos,
+                      expression: "errorDatos"
+                    }
+                  ],
+                  staticClass: "form-group row div-error"
+                },
+                [
+                  _c(
+                    "div",
+                    { staticClass: "text-center text-error" },
+                    _vm._l(_vm.errorMostrarMsj, function(error) {
+                      return _c("div", {
+                        key: error,
+                        domProps: { textContent: _vm._s(error) }
+                      })
+                    }),
+                    0
+                  )
+                ]
+              ),
+              _vm._v(" "),
               _c("div", { staticClass: "col-md-5 modal-fo" }, [
                 _c(
                   "button",
@@ -71661,7 +71313,7 @@ var render = function() {
                     staticClass: "col-md-3 form-control-label",
                     attrs: { for: "text-input" }
                   },
-                  [_vm._v("DUI")]
+                  [_vm._v("Documento de identidad")]
                 ),
                 _vm._v(" "),
                 _c("div", { staticClass: "col-md-5" }, [
@@ -71822,6 +71474,34 @@ var render = function() {
                 ])
               ]),
               _vm._v(" "),
+              _c(
+                "div",
+                {
+                  directives: [
+                    {
+                      name: "show",
+                      rawName: "v-show",
+                      value: _vm.errorDatos,
+                      expression: "errorDatos"
+                    }
+                  ],
+                  staticClass: "form-group row div-error"
+                },
+                [
+                  _c(
+                    "div",
+                    { staticClass: "text-center text-error" },
+                    _vm._l(_vm.errorMostrarMsj, function(error) {
+                      return _c("div", {
+                        key: error,
+                        domProps: { textContent: _vm._s(error) }
+                      })
+                    }),
+                    0
+                  )
+                ]
+              ),
+              _vm._v(" "),
               _c("div", { staticClass: "col-md-5 modal-fo" }, [
                 _c(
                   "button",
@@ -71890,7 +71570,7 @@ var render = function() {
                     staticClass: "col-md-3 form-control-label",
                     attrs: { for: "text-input" }
                   },
-                  [_vm._v("DUI")]
+                  [_vm._v("Documento de identidad")]
                 ),
                 _vm._v(" "),
                 _c("div", { staticClass: "col-md-5" }, [
@@ -72064,6 +71744,34 @@ var render = function() {
                   ])
                 ])
               ]),
+              _vm._v(" "),
+              _c(
+                "div",
+                {
+                  directives: [
+                    {
+                      name: "show",
+                      rawName: "v-show",
+                      value: _vm.errorDatos,
+                      expression: "errorDatos"
+                    }
+                  ],
+                  staticClass: "form-group row div-error"
+                },
+                [
+                  _c(
+                    "div",
+                    { staticClass: "text-center text-error" },
+                    _vm._l(_vm.errorMostrarMsj, function(error) {
+                      return _c("div", {
+                        key: error,
+                        domProps: { textContent: _vm._s(error) }
+                      })
+                    }),
+                    0
+                  )
+                ]
+              ),
               _vm._v(" "),
               _c("div", { staticClass: "col-md-5 modal-fo" }, [
                 _c(
@@ -72268,10 +71976,173 @@ var render = function() {
                 ])
               ]),
               _vm._v(" "),
-              _vm._m(31),
+              _c("div", { staticClass: "form-group row" }, [
+                _c("label", { staticClass: "col-md-3 form-control-label" }, [
+                  _vm._v("Categoria")
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "col-md-5" }, [
+                  _c(
+                    "select",
+                    {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.idcare,
+                          expression: "idcare"
+                        }
+                      ],
+                      staticClass: "form-control",
+                      on: {
+                        change: function($event) {
+                          var $$selectedVal = Array.prototype.filter
+                            .call($event.target.options, function(o) {
+                              return o.selected
+                            })
+                            .map(function(o) {
+                              var val = "_value" in o ? o._value : o.value
+                              return val
+                            })
+                          _vm.idcare = $event.target.multiple
+                            ? $$selectedVal
+                            : $$selectedVal[0]
+                        }
+                      }
+                    },
+                    [
+                      _c("option", { attrs: { value: "0", disabled: "" } }, [
+                        _vm._v("Seleccione")
+                      ]),
+                      _vm._v(" "),
+                      _vm._l(_vm.arraycategorias, function(categorias) {
+                        return _c("option", {
+                          key: categorias.id,
+                          domProps: {
+                            value: categorias.id,
+                            textContent: _vm._s(categorias.nombre_categoria)
+                          }
+                        })
+                      })
+                    ],
+                    2
+                  )
+                ])
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "form-group row" }, [
+                _vm._m(31),
+                _vm._v(" "),
+                _c("div", { staticClass: "col-md-5" }, [
+                  _c(
+                    "select",
+                    {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.idsacerdote,
+                          expression: "idsacerdote"
+                        }
+                      ],
+                      staticClass: "form-control",
+                      on: {
+                        change: function($event) {
+                          var $$selectedVal = Array.prototype.filter
+                            .call($event.target.options, function(o) {
+                              return o.selected
+                            })
+                            .map(function(o) {
+                              var val = "_value" in o ? o._value : o.value
+                              return val
+                            })
+                          _vm.idsacerdote = $event.target.multiple
+                            ? $$selectedVal
+                            : $$selectedVal[0]
+                        }
+                      }
+                    },
+                    [
+                      _c("option", { attrs: { value: "0", disabled: "" } }, [
+                        _vm._v("Seleccione")
+                      ]),
+                      _vm._v(" "),
+                      _vm._l(_vm.arraysacerdote, function(sacerdote) {
+                        return _c(
+                          "option",
+                          {
+                            key: sacerdote.id,
+                            domProps: { value: sacerdote.id }
+                          },
+                          [
+                            _vm._v(
+                              _vm._s(sacerdote.nombre_persona) +
+                                ", " +
+                                _vm._s(sacerdote.apellido_persona)
+                            )
+                          ]
+                        )
+                      })
+                    ],
+                    2
+                  )
+                ])
+              ]),
               _vm._v(" "),
               _c("div", { staticClass: "form-group row" }, [
                 _vm._m(32),
+                _vm._v(" "),
+                _c("div", { staticClass: "col-md-5" }, [
+                  _c(
+                    "select",
+                    {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.cargosacerdote,
+                          expression: "cargosacerdote"
+                        }
+                      ],
+                      staticClass: "form-control",
+                      on: {
+                        change: function($event) {
+                          var $$selectedVal = Array.prototype.filter
+                            .call($event.target.options, function(o) {
+                              return o.selected
+                            })
+                            .map(function(o) {
+                              var val = "_value" in o ? o._value : o.value
+                              return val
+                            })
+                          _vm.cargosacerdote = $event.target.multiple
+                            ? $$selectedVal
+                            : $$selectedVal[0]
+                        }
+                      }
+                    },
+                    [
+                      _c("option", { attrs: { value: "0", disabled: "" } }, [
+                        _vm._v("Cargo")
+                      ]),
+                      _vm._v(" "),
+                      _vm._l(_vm.arraycargo, function(sacerdote) {
+                        return _c("option", {
+                          key: sacerdote.id,
+                          domProps: {
+                            value: sacerdote,
+                            textContent: _vm._s(sacerdote)
+                          }
+                        })
+                      })
+                    ],
+                    2
+                  )
+                ])
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "form-group row" }, [
+                _vm._m(33),
                 _vm._v(" "),
                 _c("div", { staticClass: "col-md-5" }, [
                   _c("input", {
@@ -72297,6 +72168,34 @@ var render = function() {
                   })
                 ])
               ]),
+              _vm._v(" "),
+              _c(
+                "div",
+                {
+                  directives: [
+                    {
+                      name: "show",
+                      rawName: "v-show",
+                      value: _vm.errorDatos,
+                      expression: "errorDatos"
+                    }
+                  ],
+                  staticClass: "form-group row div-error"
+                },
+                [
+                  _c(
+                    "div",
+                    { staticClass: "text-center text-error" },
+                    _vm._l(_vm.errorMostrarMsj, function(error) {
+                      return _c("div", {
+                        key: error,
+                        domProps: { textContent: _vm._s(error) }
+                      })
+                    }),
+                    0
+                  )
+                ]
+              ),
               _vm._v(" "),
               _c(
                 "div",
@@ -73429,23 +73328,6 @@ var render = function() {
                         _c(
                           "label",
                           {
-                            staticClass: "col-md-4 form-control-label",
-                            attrs: { for: "text-input" }
-                          },
-                          [_vm._v("Celebrada por:")]
-                        ),
-                        _vm._v(" "),
-                        _c(
-                          "label",
-                          { staticClass: "col-md-6 form-control-label" },
-                          [_vm._v(" " + _vm._s(_vm.nombresacerdote))]
-                        )
-                      ]),
-                      _vm._v(" "),
-                      _c("div", { staticClass: "form-group row" }, [
-                        _c(
-                          "label",
-                          {
                             staticClass: "col-md-3 form-control-label",
                             attrs: { for: "text-input" }
                           },
@@ -73976,21 +73858,30 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "form-group row" }, [
-      _c(
-        "label",
-        {
-          staticClass: "col-md-3 form-control-label",
-          attrs: { for: "text-input" }
-        },
-        [
-          _vm._v("Nombre del sacerdote"),
-          _c("b", { staticClass: "alerta" }, [_vm._v("*")])
-        ]
-      ),
-      _vm._v(" "),
-      _c("div", { staticClass: "col-md-5" })
-    ])
+    return _c(
+      "label",
+      {
+        staticClass: "col-md-3 form-control-label",
+        attrs: { for: "text-input" }
+      },
+      [
+        _vm._v("Nombre del sacerdote"),
+        _c("b", { staticClass: "alerta" }, [_vm._v("*")])
+      ]
+    )
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "label",
+      {
+        staticClass: "col-md-3 form-control-label",
+        attrs: { for: "text-input" }
+      },
+      [_vm._v("Cargo"), _c("b", { staticClass: "alerta" }, [_vm._v("*")])]
+    )
   },
   function() {
     var _vm = this

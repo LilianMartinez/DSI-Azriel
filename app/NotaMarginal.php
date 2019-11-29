@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class NotaMarginal extends Model
 {
-    protected  $table = 'nota_marginal';
+    protected  $table = 'notas_marginales';
     protected $primarykey = 'id';
     protected $fillable = ['nota', 'id_sacramento'];
 

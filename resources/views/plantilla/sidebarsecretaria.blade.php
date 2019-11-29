@@ -15,7 +15,7 @@
                                 <a class="nav-link" href="#"><i class="icon-bag"></i> Calendario de Avisos</a>
                             </li>
                         </ul>
-                    </li>-->
+                    </li>
                     <li class="nav-item nav-dropdown">
                         <a class="nav-link nav-dropdown-toggle" href="#"><i class="icon-bag"></i>Sacramentos</a>
                         <ul class="nav-dropdown-items">
@@ -35,11 +35,6 @@
                             <ul class="nav-dropdown-items">
                             <li @click="menu=4" class="nav-item">
                                 <a class="nav-link" href="#"><i class="icon-bag"></i>Hacer registro</a>
-                            </li>
-                            <li @click="menu=5" class="nav-item">
-                                <a class="nav-link" href="#"><i class="icon-bag"></i>Historial</a>
-                            </li>
-                            </ul>
                             </li>
                             <li @click="menu=20" class="nav-item">
                                 <a class="nav-link" href="#"><i class="icon-bag"></i> Confirma</a>

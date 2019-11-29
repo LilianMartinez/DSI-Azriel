@@ -63,7 +63,10 @@ Route::group(['middleware'=>['auth']],function(){
                             //TABLA BAUTIZO
                             Route::get('/bautizo','BautizoController@index');
                             Route::put('/bautizo/registrar','BautizoController@store');
-                            Route::put('/bautizo/marginaracta','BautizoController@marginacionacta');
+                            Route::put('/nota/marginaracta','BautizoController@marginar');
+                           
+                            //TABLA NOTA MARGINAL
+                            
 
 
                             //TABLA PERSONA
