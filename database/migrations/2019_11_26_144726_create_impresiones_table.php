@@ -4,20 +4,21 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateIglesiasTable extends Migration
+class CreateImpresionesTable extends Migration
 {
     /**
      * Run the migrations.
-     *.
+     *
      * @return void
      */
     public function up()
     {
-        Schema::create('iglesias', function (Blueprint $table) {
+        Schema::create('impresiones', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->timestamps();
-            $table->string('nombre_iglesia',100);
-            $table->integer('estado')->nullable();
+            $table->Integer('idsacra');
+            $table->Integer('idperso');
+            $table->string('cargoim');
+            $table->string('conceptoim');
         });
     }
 
@@ -28,6 +29,6 @@ class CreateIglesiasTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('iglesias');
+        Schema::dropIfExists('impresiones');
     }
 }

@@ -48,8 +48,8 @@ Route::group(['middleware'=>['auth']],function(){
                             Route::put('/efectivo/eliminar','EfectivoController@destroy');
                             Route::get('/efectivo/suma','EfectivoController@buscar');
                             Route::get('/efectivo/sumaM','EfectivoController@buscarM');
-                            Route::get('/efectivo/listarPdfGeneral','EfectivoController@listarPdfGeneral')->name('efectivos_pdf');
-                            Route::get('/efectivo/listarPdfResumido','ResumenEconomicoController@listarPdfResumido')->name('efectivos_pdfR');
+                            Route::get('/efectivo/listarPdfGeneral','EfectivoController@listarPdfGeneral')->name('efectivos_pdf'); //general actual
+                            Route::get('/efectivo/listarPdfResumido','ResumenEconomicoController@listarPdfResumido')->name('efectivos_pdfR'); //resumido actual
                             Route::get('/efectivo/buscarResumen','EfectivoController@buscarResumen');
                             
                             
@@ -63,7 +63,10 @@ Route::group(['middleware'=>['auth']],function(){
                             //TABLA BAUTIZO
                             Route::get('/bautizo','BautizoController@index');
                             Route::put('/bautizo/registrar','BautizoController@store');
-                            Route::put('/bautizo/marginaracta','BautizoController@marginacionacta');
+                            Route::put('/nota/marginaracta','BautizoController@marginar');
+                           
+                            //TABLA NOTA MARGINAL
+                            
 
 
                             //TABLA PERSONA
@@ -117,6 +120,9 @@ Route::group(['middleware'=>['auth']],function(){
 
                             //TABLA DE RESUMEN ECONOMICO
                             Route::get('/resumeneconomico','ResumenEconomicoController@index');
+                            Route::get('/resumeneconomico/buscarAM','ResumenEconomicoController@buscarAM');
+
+                            
 
                             //TABLA IGLESIA
                             Route::get('/iglesia','IglesiaController@index');
@@ -136,8 +142,57 @@ Route::group(['middleware'=>['auth']],function(){
                             Route::put('/sacramento/desactivarexpediente','SacramentoController@desactivarexpediente');
                             //Route::put('/sacramento/finalizarexpediente','SacramentoController@finalizarexpediente');
 
-                            //Tabla Calendar
-                            //Route::apiResource('/calendar', 'CalendarController');
+                            //Certificados
+                            Route::put('/persona/registrarImpresion','PersonaController2@registrarImpresion');
+                            Route::put('/persona/eliminarDatosImpresion','PersonaController2@eliminarDatosImpresion');
+                                    //Matrimonio
+                            Route::get('/persona/certificadoMatri/{id}','PersonaController2@certificadoMatri')->name('matrimonio_pdf');
+                            Route::put('/persona/certificadoMatri','PersonaController2@certificadoMatri');
+
+                                    //Bautizo
+                            Route::get('/persona/certificadoBautizo/{id}/{id_padre}/{id_madre}','PersonaController2@certificadoBautizo')->name('bautizo_pdf');
+                            Route::put('/persona/certificadoBautizo','PersonaController2@certificadoBautizo');
+
+                                    //Primera Comunion
+                            Route::get('/persona/certificadoPrimeraComunion/{id}/{id_padre}/{id_madre}','PersonaController2@certificadoPrimeraComunion')->name('primeracomunion_pdf');
+                            Route::put('/persona/certificadoPrimeraComunion','PersonaController2@certificadoPrimeraComunion');
+
+                                    //Confirma
+                            Route::get('/persona/certificadoConfirma/{id}/{id_padre}/{id_madre}/{id_realizante1}','PersonaController2@certificadoConfirma')->name('confirma_pdf');
+                            Route::put('/persona/certificadoConfirma','PersonaController2@certificadoConfirma');
+
+                            //TABLA ZONAS
+                            Route::get('/zona','ZonaController@index');
+                            Route::put('/zona/registrar','ZonaController@store');
+                            Route::put('/zona/actualizar','ZonaController@update');
+                            Route::put('/zona/eliminar','ZonaController@eliminar');
+                            Route::get('/zona/buscarZona','ZonaController@buscarZona');
+
+                            //TABLA DE MANTENIMIENTO DE CATEGORIA DE INVENTARIOS PARA IGLESIAS
+                            Route::get('/categoriainventario','CategoriaInventarioController@index');
+                            Route::put('/categoriainventario/registrar','CategoriaInventarioController@store');
+                            Route::put('/categoriainventario/actualizar','CategoriaInventarioController@update');
+                            Route::put('/categoriainventario/eliminar','CategoriaInventarioController@eliminar');
+                            
+                            //FELIGRESES--De la tabla PERSONA
+                            Route::get('/feligreses','FeligresController@index');
+                            Route::put('/feligreses/registrar','FeligresController@store');
+                            Route::put('/feligreses/update','FeligresController@update');
+                            Route::post('/feligreses/buscarIglesia','FeligresController@buscarIglesia');
+                            Route::put('/feligreses/eliminar','FeligresController@eliminar');
+
+                            //TABLA DE INVENTARIO DE IGLESIAS
+                            Route::get('/productoinv','ProductoInventarioController@index');
+                            Route::put('/productoinv/registrar','ProductoInventarioController@store');
+                            Route::put('/productoinv/actualizar','ProductoInventarioController@actualizar');
+                            Route::post('/productoinv/buscarIglesia','FeligresController@buscarIglesia');
+                            Route::get('/categoriainventario/buscarCateInve','CategoriaInventarioController@buscar');
+
+                            //TABLA PARA CONTROL SECTORIAL
+                            Route::post('/sectorial/buscarIglesiaFeligreses','ControlSectorialController@buscarIglesiaFeligreses');
+                            Route::post('/sectorial/buscarIglesiaInventarios','ControlSectorialController@buscarIglesiaInventarios');
+
+
                             
             });
 

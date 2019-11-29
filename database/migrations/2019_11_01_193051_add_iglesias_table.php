@@ -4,21 +4,18 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateIglesiasTable extends Migration
+class AddIglesiasTable extends Migration
 {
     /**
      * Run the migrations.
-     *.
+     *
      * @return void
      */
     public function up()
     {
-        Schema::create('iglesias', function (Blueprint $table) {
-            $table->bigIncrements('id');
-            $table->timestamps();
-            $table->string('nombre_iglesia',100);
-            $table->integer('estado')->nullable();
-        });
+        Schema::table('iglesias', function (Blueprint $table) {
+            $table->integer('idzona')->nullable();
+                });
     }
 
     /**
@@ -28,6 +25,6 @@ class CreateIglesiasTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('iglesias');
+        //
     }
 }

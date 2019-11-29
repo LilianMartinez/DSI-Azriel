@@ -15,7 +15,7 @@ class CategoriaResumenController extends Controller
      */
     public function index(Request $request)
     {
-        if(!$request->ajax()) return redirect('/');
+      //  if(!$request->ajax()) return redirect('/');
   
         $buscar = $request->buscar;
         $criterio = $request->criterio;
@@ -33,7 +33,7 @@ class CategoriaResumenController extends Controller
 
     public function eliminarCR(Request $id)
     {
-        if(!$id->ajax()) return redirect('/');
+      //  if(!$id->ajax()) return redirect('/');
         $cambiar=2;
      
         $categoriaResumen = DB::table('categorias_resumenes')->where("id",$id->id)->update(["estado"=>$cambiar]);

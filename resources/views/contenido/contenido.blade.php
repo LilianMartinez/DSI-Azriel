@@ -4,7 +4,7 @@
       @if (Auth::check())
             @if(Auth::user()->idrol==1)
                         <template v-if="menu==0">
-                            <h1>Escritorio</h1>
+                          <escritorio></escritorio>
                         </template>
 
                         <template v-if="menu==3">
@@ -37,7 +37,7 @@
 
             @elseif(Auth::user()->idrol==2)
                         <template v-if="menu==0">
-                            <h1>Escritorio</h1>
+                            <escritorio></escritorio>
                         </template>
                         
                         <template v-if="menu==1">
@@ -79,14 +79,18 @@
                         <template v-if="menu==9">
                             <h1>Listado donaciones</h1>
                         </template>
-                            
+
                         <template v-if="menu==12">
-                            <h1>Comunidad Parroquial</h1>
+                        <controlsectorialfeligreses></controlsectorialfeligreses>
                         </template>
-                        
+                            
                         <template v-if="menu==13">
-                            <h1>Inventario de Iglesias</h1>
+                           <controlsectorialinventarios></controlsectorialinventarios>
                         </template>
+                        <!--<template v-if="menu==25">
+                            <inventarioiglesia></inventarioiglesia>
+                        </template>-->                                          
+
                         <template v-if="menu==20">
                         <historialconfirmas></historialconfirmas>
                         </template>
@@ -116,6 +120,12 @@
                         </template>
                         <template v-if="menu==22">
                         <iglesias></iglesias>
+                        </template>
+                        <template v-if="menu==24">
+                            <zonas></zonas>
+                        </template>
+                        <template v-if="menu==26">
+                         <categoriainventario></categoriainventario>
                         </template>
             @else
             @endif

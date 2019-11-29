@@ -6,11 +6,11 @@
                 <!-- Ejemplo de tabla Listado -->
                 <div class="card">
                     <div class="card-header">
-                        <label class="titulo-encabezados">Iglesias</label>
+                        <label class="titulo-encabezados">Categorias de los inventarios</label>
                     </div>
                     <div class="card-body">
                     <div class="input-group margen">
-                            <button type="button" @click="abrirModal('iglesias','registrar')" class="btn btn-primary">
+                            <button type="button" @click="abrirModal('categorias','registrar')" class="btn btn-primary">
                                     <i class="icon-plus"></i>&nbsp;Nuevo
                             </button>
                         </div>
@@ -18,39 +18,30 @@
                             <div class="col-md-6">
                                 <div class="input-group">
                                     <select class="form-control col-md-3" v-model="criterio">
-                                      <option value="nombre_iglesia">Nombre iglesia</option>
+                                      <option value="nombre_categoriainv"> Nombre categoría</option>
+                                      <option value="descripcion_categoriainv"> Descripción de la categoría</option>
                                     </select>
-                                    <input type="text"  v-model="buscar" @keyup.enter="listariglesias(buscar,criterio)" class="form-control" placeholder="Texto a buscar">
-                                    <button type="submit" @click="listariglesias(buscar,criterio) " class="btn btn-primary"><i class="fa fa-search"></i> Buscar</button>
+                                    <input type="text"  v-model="buscar" @keyup.enter="listarcategoriasinventario(buscar,criterio)" class="form-control" placeholder="Texto a buscar">
+                                    <button type="submit" @click="listarcategoriasinventario(buscar,criterio) " class="btn btn-primary"><i class="fa fa-search"></i> Buscar</button>
                                 </div>
                             </div>
                         </div>
                         <table class="table table-bordered table-striped table-sm">
                             <thead>
                                 <tr>
-                                    <th>Nombre Iglesia</th>
-                                    <th>Zona</th>
+                                    <th>Nombre de la categoría</th>
+                                    <th>Descripción de la categoría</th>
                                     <th>Opcion</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr v-for="iglesia in arrayiglesiasZ" :key="iglesia.id">                              
-                                    <td v-text="iglesia.nombre_iglesia"></td>
-                                    <td v-text="iglesia.nombre_zona"></td>
-                                        <button type="button" @click="abrirModal('iglesias','actualizar',iglesia)" >
+                                <tr v-for="categoriai in arraycateinve" :key="categoriai.id">                              
+                                    <td v-text="categoriai.nombre_categoriainv"></td>
+                                    <td v-text="categoriai.descripcion_categoriainv"></td>
+                                        <button type="button" @click="abrirModal('categorias','actualizar',categoriai)" >
                                           <i class="icon-pencil"></i>
                                         </button> &nbsp;
-                                         <button  type="button" class="btn btn-danger btn-sm"  @click="abrirModal('iglesias','eliminar',iglesia)" >
-                                          <i class="icon-trash  enter"></i>
-                                        </button>
-                                </tr>
-                                 <tr v-for="iglesia in arrayiglesias" :key="iglesia.id">                              
-                                    <td v-text="iglesia.nombre_iglesia"></td>
-                                    <td v-text="iglesia.nombre_zona"></td>
-                                        <button type="button" @click="abrirModal('iglesias','actualizar',iglesia)" >
-                                          <i class="icon-pencil"></i>
-                                        </button> &nbsp;
-                                         <button  type="button" class="btn btn-danger btn-sm"  @click="abrirModal('iglesias','eliminar',iglesia)" >
+                                         <button  type="button" class="btn btn-danger btn-sm"  @click="abrirModal('categorias','eliminar',categoriai)" >
                                           <i class="icon-trash  enter"></i>
                                         </button>
                                 </tr>
@@ -74,18 +65,15 @@
                         <div class="modal-body">
                             <form action="" method="post" enctype="multipart/form-data" class="form-horizontal">
                             <div class="form-group row">
-                                    <label class="col-md-3 form-control-label" for="text-input">Nombre de la iglesia<b class="alerta">*</b></label>
+                                    <label class="col-md-3 form-control-label" for="text-input">Nombre de la categoría<b class="alerta">*</b></label>
                                     <div class="col-md-5">
-                                        <input type="text" tabindexgt="0" v-model="nombre_iglesia" class="form-control" placeholder="Nombre Iglesia">
+                                        <input type="text" tabindexgt="0" v-model="nombre_categoriainv" class="form-control" placeholder="Ejem. Vestimenta del padre">
                                     </div>
                             </div>
-                            <div class="form-group row">
-                                    <label class="col-md-3 form-control-label" for="text-input">Zona</label> <!-- ZONAAAAAAAAAAA-->
+                              <div class="form-group row">
+                                    <label class="col-md-3 form-control-label" for="text-input">Descripción de la categoría</label>
                                     <div class="col-md-5">
-                                        <select class="form-control" v-model="idzona"> 
-                                        <option value="0" disabled>Seleccione</option>
-                                        <option v-for="zona in arrayzona" :key="zona.id" v-bind:value="zona.id" v-text="zona.nombre_zona"></option>
-                                        </select >
+                                        <textarea rows="8" tabindexgt="-1" cols="45" v-model="descripcion_categoriainv" placeholder="Ejem. Vestimenta que usa el padre en las misas"></textarea>
                                     </div>
                             </div>
                                 <div v-show="errorDatos" class="form-group row div-error">
@@ -98,8 +86,8 @@
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" @click="cerrarModal()">Cerrar</button>
-                            <button type="button" class="btn btn-primary" v-if="tipoAccion==1" @click="registrariglesias()">Guardar</button>
-                            <button type="button" class="btn btn-primary" v-if="tipoAccion==2" @click="actualizariglesias()">Actualizar</button>
+                            <button type="button" class="btn btn-primary" v-if="tipoAccion==1" @click="registrarcategoriainventario()">Guardar</button>
+                            <button type="button" class="btn btn-primary" v-if="tipoAccion==2" @click="actualizarcategoriainventario()">Actualizar</button>
                         </div>
                     </div>
                     <!-- /.modal-content -->
@@ -119,22 +107,19 @@
                         </div>
                         <div class="modal-body">
                                 <div class="form-group row">
-                                            <label class="col-md-3 form-control-label" for="text-input">Nombre de la iglesia</label>
-                                                <div class="col-md-9">
-                                                        <label class="col-md-3 form-control-label" v-text="nombre_iglesia" ></label>
-                                                </div>   
+                                            <b class="alerta"> <label class="col-md-1 form-control-label" for="text-input">Nombre de la categoría</label></b>
+                                            <b class="alerta"><label class="col-md-3 form-control-label" for="text-input">{{nombre_categoriainv}}</label></b>   
                                 </div>
                                 <div class="form-group row">
-                                            <label class="col-md-3 form-control-label" for="text-input">Zona</label>
-                                                <div class="col-md-9">
-                                                        <label class="col-md-3 form-control-label" v-text="nombre_zona"></label>
-                                                </div> 
+                                            <b class="alerta"> <label class="col-md-1 form-control-label" for="text-input">Descripción de la categoría</label></b>
+                                            <b class="alerta"><label class="col-md-3 form-control-label" for="text-input">{{descripcion_categoriainv}}</label></b>   
                                 </div>
-                        </div>
+                        
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-dismiss="modal" @click="cerrarModal()">Cerrar</button>
                             <button type="button" class="btn btn-danger" @click="eliminar()">Eliminar</button>
                         </div>
+                    </div>
                     </div>
                     <!-- /.modal-content -->
                 </div>
@@ -148,19 +133,15 @@
     export default {
       data(){
             return{
-                iglesias_id:0,
-                idzona:'',
-                zona:'',
-                nombre_zona:'',
-                nombre_iglesia:'',
-                arrayiglesias:[],
-                arrayiglesiasZ:[],
-                arrayzona:[],
+                cateinve_id:0,
+                nombre_categoriainv:'',
+                descripcion_categoriainv:'',
+                arraycateinve:[],
                 modal : 0,
                 modal2: 0,
                 tituloModal : '',
                 tipoAccion:0,
-                criterio:'nombre_iglesia', 
+                criterio:'nombre_categoriainv', 
                 buscar: '',
                 errorDatos:0,
                 errorMostrarMsj:[],
@@ -169,17 +150,7 @@
         },
         methods:{
 
-            llenadolistazona(buscar,criterio){
-            let me=this;
-            var url='zona/buscarZona'; //////////////////////////
-            axios.get(url) .then(function (response) {
-                me.arrayzona=response.data;
-            })
-            .catch(function (error) {
-                console.log(error);
-            });
-        },
-            listariglesias(buscar,criterio,estado){
+            listarcategoriasinventario(buscar,criterio,estado){
                 let me=this;
                 var lengthbuscar = this.buscar.length;
                  if(lengthbuscar >0)
@@ -187,12 +158,9 @@
                      var buscar2= this.buscar.toUpperCase();
                  }else
                  buscar2=this.buscar;
-                var url='/iglesia?buscar=' + buscar2 + '&criterio=' + criterio;
+                var url='/categoriainventario?buscar=' + buscar2 + '&criterio=' + criterio;
                 axios.get(url) .then(function (response) {
-                    var respuesta= response.data;
-                    me.arrayiglesiasZ=respuesta.iglesiasZ;
-                    me.arrayiglesias=respuesta.iglesias;
-                    console.log(response);
+                    me.arraycateinve = response.data;
                 })
                 .catch(function (error) {
                     console.log(error);
@@ -206,51 +174,60 @@
                 var RE = /^\d*(\.\d{1})?\d{0,1}$/;
                var Max_Length = 99;
                var Min_Length = 3;
-               var lengthmax = this.nombre_iglesia.length;
-               var lengthmin = this.nombre_iglesia.length;
-               if (!lengthmax > Max_Length)this.errorMostrarMsj.push("El nombre de la iglesia debe tener menos de 99 caracteres");
-                if (lengthmin < Min_Length)this.errorMostrarMsj.push("El nombre de la iglesia debe tener más 3 letras");
+               var lengthmax = this.nombre_categoriainv.length;
+               var lengthmin = this.nombre_categoriainv.length;
+
+               var lengthmaxD = this.descripcion_categoriainv.length;
+               var lengthminD = this.descripcion_categoriainv.length;
+
+               
+                if (!lengthmax > Max_Length)this.errorMostrarMsj.push("El nombre de la categoria debe tener menos de 99 letras");
+                if (lengthmin < Min_Length)this.errorMostrarMsj.push("El nombre de la categoria debe tener más 3 letras");
+
+                if(this.descripcion_categoriainv != ''){
+                    if (!lengthmaxD > Max_Length)this.errorMostrarMsj.push("La descripción de la categoría debe tener menos de 99 letras");
+                    if (lengthminD < Min_Length)this.errorMostrarMsj.push("La descripción de la categoría debe tener más 3 letras");
+                }
                 if(this.errorMostrarMsj.length) this.errorDatos=1;
             
 
                 return this.errorDatos;
             },
              
-             registrariglesias(){
+             registrarcategoriainventario(){
                  if(this.validarvalores()){
                   return;   
                  }
     
              let me=this;
               var buscar='';
-                var criterio='nombre_iglesia';
-              axios.put('/iglesia/registrar',{
-                  'nombre_iglesia': this.nombre_iglesia.toUpperCase(),
-                  'idz':this.idzona,
+                var criterio='nombre_categoriainv';
+              axios.put('/categoriainventario/registrar',{
+                  'nombre_categoriainv': this.nombre_categoriainv.toUpperCase(),
+                  'descripcion_categoriainv': this.descripcion_categoriainv.toUpperCase(),
               }) .then(function (response) {
                     me.cerrarModal();
-                    me.listariglesias(buscar,criterio);
+                    me.listarcategoriasinventario(buscar,criterio);
                 }) .catch(function (error) {
                  
                 });
 
             },
-         
-            actualizariglesias(){
+            actualizarcategoriainventario(){
                 if(this.validarvalores()){
                   return;   
                  }
                
                 let me=this;
                 var buscar='';
-                var criterio='nombre_iglesia';
-                axios.put('/iglesia/actualizar',{
-                  'nombre_iglesia': this.nombre_iglesia.toUpperCase(),
-                  'idz':this.idzona,
-                  'id':this.iglesias_id,
+                var criterio='nombre_categoriainv';
+                axios.put('/categoriainventario/actualizar',{
+                 'nombre_categoriainv': this.nombre_categoriainv.toUpperCase(),
+                  'descripcion_categoriainv': this.descripcion_categoriainv.toUpperCase(),
+                  'id':this.cateinve_id,
                     }) .then(function (response) {
                     me.cerrarModal();
-                    me.listariglesias(buscar,criterio);
+                   me.listarcategoriasinventario(buscar,criterio);
                 })
                 .catch(function (error) {
                     // handle error
@@ -260,13 +237,12 @@
              eliminar(){
                 let me=this;
                 var buscar='';
-                var criterio='nombre_iglesia';
-                axios.put('/iglesia/eliminar',{
-                  'idz':this.idzona,
-                  'id':this.iglesias_id,
+                var criterio='nombre_categoriainv';
+                axios.put('/categoriainventario/eliminar',{
+                  'id':this.cateinve_id,
                     }) .then(function (response) {
                     me.cerrarModal();
-                    me.listariglesias(buscar,criterio);
+                    me.listarcategoriasinventario(buscar,criterio);
                 })
                 .catch(function (error) {
                     // handle error
@@ -278,46 +254,45 @@
                 this.modal2=0;
                 this.tituloModal='';
                 this.tipoAccion=0;
-                this.nombre_iglesia='';
+                this.nombre_categoriainv='';
+                this.descripcion_categoriainv='';
                 this.buscar='';
-                this.criterio='nombre_iglesia';
-                this.idzona='';
+                this.criterio='nombre_categoriainv';
             
             },
     
           abrirModal(modelo, accion, data=[]){
                 switch(modelo){
-                    case "iglesias":
+                    case "categorias":
                     {
                         switch(accion){
                             case 'registrar':
                             {
                                 this.modal=1;
-                                this.tituloModal='Nuevo Iglesia';
+                                this.tituloModal='Nueva Categoría';
                                 this.tipoAccion=1;
-                                this.nombre_iglesia='';
-                                this.idzona='';
+                                this.nombre_categoriainv='';
+                                this.descripcion_categoriainv='';
                                 break;
 
                             }
                              case 'actualizar':
                             {
                                  this.modal=1;
-                                this.tituloModal='Modificar Iglesia';
+                                this.tituloModal='Modificar Categoría';
                                 this.tipoAccion=2;
-                                this.iglesias_id=data['id'];
-                                this.nombre_iglesia=data['nombre_iglesia'];
-                                this.idzona=data['idz'];
+                                this.cateinve_id=data['id'];
+                                this.nombre_categoriainv=data['nombre_categoriainv'];
+                                this.descripcion_categoriainv=data['descripcion_categoriainv'];
                                break;
                             }
                              case 'eliminar':
                             {
                                 this.modal2=1;
-                                this.tituloModal='Eliminar Iglesia';
-                                this.iglesias_id=data['id'];
-                                this.nombre_iglesia=data['nombre_iglesia'];
-                                this.nombre_zona=data['nombre_zona'];
-                                this.idzona=data['idz'];
+                                this.tituloModal='Eliminar Categoría';
+                                this.cateinve_id=data['id'];
+                                this.nombre_categoriainv=data['nombre_categoriainv'];
+                                this.descripcion_categoriainv=data['descripcion_categoriainv'];
                                break;
                             }
                         }
@@ -327,8 +302,7 @@
             }
         },
         mounted() {
-            this.listariglesias(this.buscar,this.criterio);
-            this.llenadolistazona('','');
+            this.listarcategoriasinventario(this.buscar,this.criterio);
         }
     }
 </script>

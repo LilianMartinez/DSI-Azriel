@@ -4,20 +4,21 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateIglesiasTable extends Migration
+class CreateCategoriasInventariosTable extends Migration
 {
     /**
      * Run the migrations.
-     *.
+     *
      * @return void
      */
     public function up()
     {
-        Schema::create('iglesias', function (Blueprint $table) {
+        Schema::create('categorias_inventarios', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->timestamps();
-            $table->string('nombre_iglesia',100);
+            $table->string('nombre_categoriainv',100);
+            $table->string('descripcion_categoriainv',100)->nullable();
             $table->integer('estado')->nullable();
+            $table->timestamps();
         });
     }
 
@@ -28,6 +29,6 @@ class CreateIglesiasTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('iglesias');
+        Schema::dropIfExists('articulos');
     }
 }

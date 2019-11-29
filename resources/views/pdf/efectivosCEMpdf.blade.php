@@ -94,6 +94,9 @@
     <div>
 <body>
             <?php
+            $now= now();
+            $now2=$now->format("d/m/Y H:i:s");
+
             $anio=date("Y");
             $fechaT=date("F");
 
@@ -139,7 +142,7 @@
 
             ?>
 
-      <h3>CONTROL ECONOMICO DEL MES DE {{$fechaT}} {{$anio}}<span class="derecha">{{now()}}</span></h3>
+      <h3>CONTROL ECONOMICO DEL MES DE {{$fechaT}} {{$anio}}<span class="derecha">{{$now2}}</span></h3>
     </div>
     <div>
         <table class="table table-bordered table-striped table-sm">
@@ -147,8 +150,8 @@
                     <tr>
                         <th>Factura</th>
                         <th>Concepto</th>
-                        <th>Ingreso</th>
-                        <th>Egreso </th>
+                        <th>Ingreso ($)</th>
+                        <th>Egreso ($)</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -177,11 +180,11 @@
                 
                      <div class="totales2">
                             <label class="negrita">SUBTOTAL: </label>
-                            <label>Ingresos: {{$total1}} </label>                              
-                            <label>Egresos: {{$total2}}</label> 
+                            <label>Ingresos: $ {{$total1}} </label>                              
+                            <label>Egresos: $ {{$total2}}</label> 
                     </div>
                     <div class="totales2">
-                            <label class="negrita">TOTAL:  </label>
+                            <label class="negrita">TOTAL: $ </label>
                             <label> {{$total}}</label>
                     </div>
 

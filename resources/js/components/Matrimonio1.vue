@@ -439,6 +439,7 @@
             <div class="modal fade" tabindex="-1" :class="{'mostrar' : modal4}" role="dialog" aria-labelledby="myModalLabel" style="display: none;" aria-hidden="true">
                 <div class="modal-dialog modal-primary modal-lg" role="document">
                     <div class="modal-content">
+                      <!-- <div v-for="sacramento in arrayMatrimonio1" :key="sacramento.id">  GLORIA-->
                         <div class="modal-header">
                             <!--el v-text="tituloModal" muestra el titulo segun el metodo mostrarModal -->
                             <h4 class="modal-title" v-text="tituloModal"></h4>
@@ -452,13 +453,13 @@
                                 <div class="form-group row">
                                     <label class="col-md-3 form-control-label" for="text-input">Motivo de la constancia:<b class="alerta">*</b></label>
                                     <div class="col-md-5">
-                                        <input type="text" v-model="enConcepto" class="form-control" placeholder="ej: Padrinos de bautismo">
+                                        <input type="text" v-model="conceptoim" class="form-control" placeholder="ej: Padrinos de bautismo">
                                     </div>
                                 </div>    
                                 <div class="form-group row">
                                 <label class="col-md-3 form-control-label" for="text-input">Nombre del sacerdote<b class="alerta">*</b></label>
                                     <div class="col-md-5">
-                                        <select class="form-control" v-model="idsacerdote"> 
+                                        <select class="form-control" v-model="idperso"> 
                                         <option value="0" disabled>Seleccione</option>
                                         <option v-for="sacerdote in arraysacerdote" :key="sacerdote.id" v-bind:value="sacerdote.id" >{{sacerdote.nombre_persona}}, {{sacerdote.apellido_persona}}</option>
                                         </select >
@@ -467,7 +468,7 @@
                                 <div class="form-group row">
                                     <label class="col-md-3 form-control-label" for="text-input">Cargo<b class="alerta">*</b></label>
                                     <div class="col-md-5">
-                                            <select class="form-control" v-model="cargosacerdote"> 
+                                            <select class="form-control" v-model="cargoim"> 
                                             <option value="0" disabled>Cargo</option>
                                             <option v-for="sacerdote in arraycargo" :key="sacerdote.id" v-bind:value="sacerdote" v-text="sacerdote"></option>
                                             </select>
@@ -505,6 +506,7 @@
                             <button type="button" class="btn btn-secondary" @click="cerrarModal4()">Cerrar</button>
                             <button type="button" class="btn btn-primary" @click="imprimirConstancia()">Imprimir Constancia</button>
                         </div>
+                   <!-- </div> GLORIA-->
                     </div>
                     <!-- /.modal-content -->
                 </div>
@@ -544,6 +546,7 @@
       data(){
           //Dave: En esta función declaramos las variables que utilizaremos
             return{
+           //     id:'', //id del id_sacramento capturado <---es para certificados
                 sacramento_id:0,
                 libro : '',
                 num_expediente : '',
@@ -596,6 +599,13 @@
                 arraysacerdote:[],
                 arraycargo:[],
                 arraycategorias:[],
+
+                //Para impresion en PDF
+                id_impresion:'', //creo que no lo ocuparé pero por si acaso v:
+                idsacra:'', //creo que tampoco lo ocupo
+                idperso:'',
+                cargoim:'',
+                conceptoim:'',
 
                 arrayMatrimonio1 : [], //Nos sirve para almacenar objetos de tipo sacramento
                 modal:0, //Nos sirve para poder activar o desactivar el modal
@@ -655,6 +665,61 @@
             }
         },
     methods:{
+
+        cobrar: function (){
+            this.cobrado=true;
+            //AQUÍ AGREGAR EL DESABILITAR COBRAR1
+
+        },
+
+        registrarImpresion(){  /////////AQUI
+            let me=this;
+              axios.put('/persona/registrarImpresion',{
+                    'idsacra':this.sacramento_id,
+                    'idperso':this.idperso,
+                    'cargoim':this.cargoim,
+                    'conceptoim':this.conceptoim,
+              }) .then(function (response) {
+                    me.listarMatrimonio1();
+                    me.cerrarModal4();
+                }) .catch(function (error) {
+                 
+                });
+        },
+
+        imprimirConstancia(){
+            if(this.validarModal4()){
+                return;
+            }
+            axios.put('/persona/certificadoMatri',{
+                    'id':this.sacramento_id,
+                }).then(function (response) { 
+                    me.listarMatrimonio1();
+                    me.cerrarModal4();
+                }) .catch(function (error) {
+                    console.log(error);
+                });
+                 let me=this;
+                 this.registrarImpresion();
+                 this.pdfConstacia(me.sacramento_id);
+                 this.eliminarImpresion();
+        },
+
+        pdfConstacia(sacramento_id){
+            window.open('http://127.0.0.1:8000/persona/certificadoMatri/'+ sacramento_id);
+        },
+
+        eliminarImpresion(){
+              let me=this;
+              axios.put('/persona/eliminarDatosImpresion',{
+                  'id':this.id_impresion,
+              }) .then(function (response) {
+                })
+                .catch(function (error) {
+                    // handle error
+                    console.log(error);
+                });
+            },
 
         listarMatrimonio1(page, buscar, criterio){
             let me=this;
@@ -1357,13 +1422,6 @@
             me.cerrarModal3();
         },
 
-        imprimirConstancia(){
-            if(this.validarModal4()){
-                return;
-            }
-
-        },
-
         //este lo ocupa el método Registrar
         validarMatrimonio1(){
             this.errorMatrimonio1=0;
@@ -1481,6 +1539,17 @@
         validarModal4(){
             this.errorModal4=0;
             this.errorMostrarMsjModal4=[];
+            var RE = /^\d*(\.\d{1})?\d{0,1}$/;
+            this.conceptoim;
+            this.montoConstancia;
+
+            if(this.cobrado!=true)this.errorMostrarMsjModal4.push("Debe cobrar la solicitud de la constancia de confirma");
+            if(this.conceptoim=='')this.errorMostrarMsjModal4.push("El campo de motivo de la constancia no puede estar vacio");
+            if(this.idperso=='')this.errorMostrarMsjModal4.push("Debe elegir al Padre que firmará la constancia");
+            if(this.cargoim=='')this.errorMostrarMsjModal4.push("Debe elegir el cargo del padre que firmará la constancia");
+             if(this.montoConstancia ==''){
+                    this.errorMostrarMsjModal4.push("Debe cobrar la constancia");
+                }if(!RE.test(this.montoConstancia))this.errorMostrarMsjModal4.push("La ofrenda por constancias solo pueden ser decimales");
 
             if (this.errorMostrarMsjModal4.length) this.errorModal4 = 1;
 
@@ -1614,6 +1683,10 @@
             this.idcare=0;
             this.errorModal4=0;
             this.errorMostrarMsjModal4=[];
+            this.idperso='';
+            this.cargoim='';
+            this.conceptoim='';
+            this.cobrado=false;
         },
 
         //En "modelo" va el nombre de la tabla guardada aquí, que por convencion de laravel es plural: "modelos"
@@ -1638,7 +1711,6 @@
                             }
                         case 'actualizar':
                             {
-                                //console.log(data);
                                 this.modal=1;
                                 this.tituloModal= 'Actualizar Expediente Matrimonial';
                                 this.tipoAccion=2;
@@ -1698,7 +1770,7 @@
         },
         //autocompletar sacerdotes
         llenadoarray(){            
-                this.arraycargo= new Array('DIACONO','PADRE','ARZOBISPO','CARDENAL','NUNCIO APOSTOLICO','MONSEÑOR');                
+                this.arraycargo= new Array('DIACONO','PARROCO', 'PADRE','ARZOBISPO','CARDENAL','NUNCIO APOSTOLICO','MONSEÑOR');                
             },
 
         //Aquí comienza el modal del paso 2: Agregar lugar y fecha de boda, sacerdote encargado y...
@@ -1805,8 +1877,9 @@
                                 }
                                 this.tituloModal ='Imprimir constancia de boda: ' + apellidoNovioMostrar + ' - ' + apellidoNoviaMostrar;
                                 this.sacramento_id=data['id'];
-                                this.enConcepto='';
-
+                                this.idperso='';
+                                this.cargoim='';
+                                this.conceptoim='';
                                 break;
                             }
                     }
