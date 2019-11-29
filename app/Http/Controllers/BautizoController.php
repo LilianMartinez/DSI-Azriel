@@ -25,15 +25,14 @@ class BautizoController extends Controller
                         ->leftjoin('personas as p','s.id_realizante1','=','p.id')
                         ->leftjoin('notas_marginales as n','s.id','=','n.id_sacramento')
                         ->where('s.tipo_sacramento',1)
-                        'p.id_padre','p.id_madre')
-                        ->select('s.id','s.folio','s.libro','s.asiento','p.nombre_persona as nombreRea','p.apellido_persona as apellido_realizante','n.id_sacramento as chale','n.nota')
+                        ->select('s.id','s.folio','s.libro','s.asiento','p.nombre_persona as nombreRea','p.apellido_persona as apellido_realizante','n.id_sacramento as chale','n.nota' ,'p.id_padre','p.id_madre')
                         ->orderBy('s.id_realizante1','desc')->paginate(15);
         } 
         else{
             $bautizo = DB::table('sacramentos as s')
             ->leftjoin('personas as p','s.id_realizante1','=','p.id')
             ->leftjoin('notas_marginales as n','s.id','=','n.id_sacramento')
-            ->select('s.id','s.folio','s.libro','s.asiento','p.nombre_persona as nombreRea','p.apellido_persona as apellido_realizante','n.id_sacramento as chale','n.nota')
+            ->select('s.id','s.folio','s.libro','s.asiento','p.nombre_persona as nombreRea','p.apellido_persona as apellido_realizante','n.id_sacramento as chale','n.nota','p.id_padre','p.id_madre')
             ->where('s.' .$criterio, 'like', '%'. $buscar . '%')->orderBy('s.id','desc')->paginate(15);
         }
 
