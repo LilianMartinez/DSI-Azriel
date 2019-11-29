@@ -1378,7 +1378,7 @@
                 this.errorMostrarMsjMatrimonio1.push("Todos los datos son obligatorios");
             }else{
                 if(!soloIntPositivo.test(this.libro) || !soloIntPositivo.test(this.num_expediente))this.errorMostrarMsjMatrimonio1.push("En libro y número de expediente solo se permiten números enteros positivos");
-                if(!patrondui.test(this.novioD) || !patrondui.test(this.noviaD))this.errorMostrarMsjMatrimonio1.push("Error, El dui debe contener 9 números");
+                //if(!patrondui.test(this.novioD) || !patrondui.test(this.noviaD))this.errorMostrarMsjMatrimonio1.push("Error, El dui debe contener 9 números");
                 if(!patron.test(this.novioNom) || !patron.test(this.novioAp))this.errorMostrarMsjMatrimonio1.push("Los datos del novio deben contener letras solamente");
                 if(!patron.test(this.noviaNom) || !patron.test(this.noviaAp))this.errorMostrarMsjMatrimonio1.push("Los datos de la novia debe contener letras solamente");
                 if(!decimales.test(this.ofrendaExp))this.errorMostrarMsjMatrimonio1.push("La ofrenda debe de ser un número positivo");
@@ -1430,7 +1430,7 @@
                 this.errorMostrarMsjModal3.push("Complete los datos de la persona 1");
             }else{
                 if(!patron.test(this.pad1Nom) || !patron.test(this.pad1Ap)) this.errorMostrarMsjModal3.push("Los datos de la persona 1 debe contener letras solamente");
-                if(!patrondui.test(this.pad1D))this.errorMostrarMsjModal3.push("Error, El dui de la persona 1 debe contener 9 números");
+                //if(!patrondui.test(this.pad1D))this.errorMostrarMsjModal3.push("Error, El dui de la persona 1 debe contener 9 números");
 
                 if(!(!this.mad1D && !this.mad1Nom && !this.mad1Ap && this.mad1Sexo==0 &&
                    !this.pad2D && !this.pad2Nom && !this.pad2Ap && this.pad2Sexo==0 &&
@@ -1440,7 +1440,7 @@
                         this.errorMostrarMsjModal3.push("Complete los datos de la persona 2");
                     }else{
                         if(!patron.test(this.mad1Nom) || !patron.test(this.mad1Ap)) this.errorMostrarMsjModal3.push("Los datos de la persona 2 debe contener letras solamente");
-                        if(!patrondui.test(this.mad1D))this.errorMostrarMsjModal3.push("Error, El dui de la persona 2 debe contener 9 números");
+                        //if(!patrondui.test(this.mad1D))this.errorMostrarMsjModal3.push("Error, El dui de la persona 2 debe contener 9 números");
 
                         if(!(!this.pad2D && !this.pad2Nom && !this.pad2Ap && this.pad2Sexo==0 &&
                         !this.mad2D && !this.mad2Nom && !this.mad2Ap && this.mad2Sexo==0)){
@@ -1449,14 +1449,14 @@
                                 this.errorMostrarMsjModal3.push("Complete los datos de la persona 3");
                             }else{
                                 if(!patron.test(this.pad2Nom) || !patron.test(this.pad2Ap)) this.errorMostrarMsjModal3.push("Los datos de la persona 3 debe contener letras solamente");
-                                if(!patrondui.test(this.pad2D))this.errorMostrarMsjModal3.push("Error, El dui de la persona 3 debe contener 9 números");
+                                //if(!patrondui.test(this.pad2D))this.errorMostrarMsjModal3.push("Error, El dui de la persona 3 debe contener 9 números");
 
                                 if(!(!this.mad2D && !this.mad2Nom && !this.mad2Ap && this.mad2Sexo==0)){
                                     if(!this.mad2D || !this.mad2Nom || !this.mad2Ap || this.mad2Sexo==0){
                                         this.errorMostrarMsjModal3.push("Complete los datos de la persona 4");
                                     }else{
                                         if(!patron.test(this.mad2Nom) || !patron.test(this.mad2Ap)) this.errorMostrarMsjModal3.push("Los datos de la persona 4 debe contener letras solamente");
-                                        if(!patrondui.test(this.mad2D))this.errorMostrarMsjModal3.push("Error, El dui de la persona 4 debe contener 9 números");
+                                        //if(!patrondui.test(this.mad2D))this.errorMostrarMsjModal3.push("Error, El dui de la persona 4 debe contener 9 números");
                                     }
                                 }
                             }

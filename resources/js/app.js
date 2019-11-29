@@ -24,6 +24,7 @@ window.Vue = require('vue');
 // const files = require.context('./', true, /\.vue$/i);
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default));
 
+Vue.component('calendario', require('./components/CalendarComponent.vue').default);
 Vue.component('efectivo', require('./components/Efectivo.vue').default);
 Vue.component('user', require('./components/User.vue').default);
 Vue.component('historialefectivo', require('./components/HistorialEfectivo.vue').default);

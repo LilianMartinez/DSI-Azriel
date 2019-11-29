@@ -41,11 +41,11 @@
                         </template>
                         
                         <template v-if="menu==1">
-                            <h1>Eventos</h1>
+                            <h1>Posiblemente quitemos esta onda</h1>
                         </template>
                     
                         <template v-if="menu==2">
-                            <h1>Calendario de Avisos</h1>
+                            <calendario></calendario>
                         </template>
                         
                         <template v-if="menu==3">

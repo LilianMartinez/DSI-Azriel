@@ -135,6 +135,9 @@ Route::group(['middleware'=>['auth']],function(){
                             Route::put('/sacramento/activarexpediente','SacramentoController@activarexpediente');
                             Route::put('/sacramento/desactivarexpediente','SacramentoController@desactivarexpediente');
                             //Route::put('/sacramento/finalizarexpediente','SacramentoController@finalizarexpediente');
+
+                            //Tabla Calendar
+                            //Route::apiResource('/calendar', 'CalendarController');
                             
             });
 
