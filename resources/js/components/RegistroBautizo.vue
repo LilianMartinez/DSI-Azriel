@@ -43,6 +43,12 @@
                                     <input type="text" tabindexgt="0" v-model="anio" class="form-control" placeholder="9999">
                                 </div>
                             </div>
+                            <div v-show="errorDatos" class="form-group row div-error">
+                                <div class="text-center text-error">
+                                    <div v-for="error in errorMostrarMsj" :key="error" v-text="error">
+                                    </div>
+                                </div>
+                            </div> 
                             <div class="col-md-4 modal-fo">
                                 <button type="button" class="btn btn-secondary" @click="siguiente('1')">Siguiente</button>
                             </div>  
@@ -79,11 +85,17 @@
                                 </div>
                             </div>
                             <div class="form-group row" v-show="Acciondui==1">
-                                <label class="col-md-3 form-control-label" for="text-input">DUI</label>
+                                <label class="col-md-3 form-control-label" for="text-input">Documento de identidad</label>
                                 <div class="col-md-5">
                                     <input tabindexgt="0" v-model="dui" class="form-control" placeholder="999999999">
                                 </div>
                             </div>
+                            <div v-show="errorDatos" class="form-group row div-error">
+                                <div class="text-center text-error">
+                                    <div v-for="error in errorMostrarMsj" :key="error" v-text="error">
+                                    </div>
+                                </div>
+                            </div> 
                             <div class="col-md-4 modal-fo">
                                 <button type="button" class="btn btn-secondary" @click="siguiente('12')">Regresar</button>
                                 <button type="button" class="btn btn-secondary" @click="siguiente('2')">Siguiente</button>
@@ -97,7 +109,7 @@
                                 <label class="col-md-3 form-control-label" for="text-input"><b>Datos de la madre</b></label>
                             </div>
                             <div class="form-group row">
-                                <label class="col-md-3 form-control-label" for="text-input">DUI</label>
+                                <label class="col-md-3 form-control-label" for="text-input">Documento de identidad</label>
                                 <div class="col-md-5">
                                     <input tabindexgt="0" v-model="duimadre" class="form-control" placeholder="999999999"  @keydown.tab="duim()" >
                                 </div>
@@ -118,7 +130,7 @@
                                 <label class="col-md-3 form-control-label" for="text-input"><b>Datos del padre</b></label>
                             </div>
                             <div class="form-group row">
-                                <label class="col-md-3 form-control-label" for="text-input">DUI</label>
+                                <label class="col-md-3 form-control-label" for="text-input">Documento de identidad</label>
                                 <div class="col-md-5">
                                     <input tabindexgt="0" v-model="duipadre" class="form-control" placeholder="999999999" @keydown.tab="duip()">
                                 </div>
@@ -135,6 +147,12 @@
                                     <input type="text" tabindexgt="0" v-model="apellidopadre" class="form-control" placeholder="Apellidos del padre">
                                 </div>
                             </div>
+                            <div v-show="errorDatos" class="form-group row div-error">
+                                <div class="text-center text-error">
+                                    <div v-for="error in errorMostrarMsj" :key="error" v-text="error">
+                                    </div>
+                                </div>
+                            </div> 
                             <div class="col-md-5 modal-fo">
                                 <button type="button" class="btn btn-secondary" @click="siguiente('11')">Regresar</button>
                                 <button type="button" class="btn btn-primary" @click="siguiente('3')">Siguiente</button>
@@ -148,7 +166,7 @@
                                 <label class="col-md-3 form-control-label" for="text-input"><b>Datos del padrino 1</b></label>
                             </div>
                             <div class="form-group row">
-                                <label class="col-md-3 form-control-label" for="text-input">DUI</label>
+                                <label class="col-md-3 form-control-label" for="text-input">Documento de identidad</label>
                                 <div class="col-md-5">
                                     <input tabindexgt="0" v-model="duipd1" class="form-control" placeholder="999999999"  @keydown.tab="duip1()" >
                                 </div>
@@ -174,6 +192,12 @@
                                     </table>
                                 </div>
                             </div>
+                            <div v-show="errorDatos" class="form-group row div-error">
+                                <div class="text-center text-error">
+                                    <div v-for="error in errorMostrarMsj" :key="error" v-text="error">
+                                    </div>
+                                </div>
+                            </div> 
                             <div class="col-md-5 modal-fo">
                                 <button type="button" class="btn btn-secondary" @click="siguiente('10')">Regresar</button>
                                 <button type="button" class="btn btn-primary" @click="siguiente('4')">Nuevo padrino</button>
@@ -185,7 +209,7 @@
                                 <label class="col-md-3 form-control-label" for="text-input"><b>Datos del padrino 2</b></label>
                             </div>
                             <div class="form-group row">
-                                <label class="col-md-3 form-control-label" for="text-input">DUI</label>
+                                <label class="col-md-3 form-control-label" for="text-input">Documento de identidad</label>
                                 <div class="col-md-5">
                                     <input tabindexgt="0" v-model="duipd2" class="form-control" placeholder="999999999" @keydown.tab="duip2()">
                                 </div>
@@ -211,6 +235,12 @@
                                     </table>
                                 </div>
                             </div>
+                            <div v-show="errorDatos" class="form-group row div-error">
+                                <div class="text-center text-error">
+                                    <div v-for="error in errorMostrarMsj" :key="error" v-text="error" >
+                                    </div>
+                                </div>
+                            </div> 
                             <div class="col-md-5 modal-fo">
                                 <button type="button" class="btn btn-secondary" @click="siguiente('10')">Regresar</button>
                                 <button type="button" class="btn btn-primary" @click="siguiente('5')">Nuevo Padrino</button>
@@ -225,7 +255,7 @@
                                 <label class="col-md-3 form-control-label" for="text-input"><b>Datos del padrino 3</b></label>
                             </div>
                             <div class="form-group row">
-                                <label class="col-md-3 form-control-label" for="text-input">DUI</label>
+                                <label class="col-md-3 form-control-label" for="text-input">Documento de identidad</label>
                                 <div class="col-md-5">
                                     <input tabindexgt="0" v-model="duipd3" class="form-control" placeholder="999999999"  @keydown.tab="duip3()" >
                                 </div>
@@ -251,6 +281,12 @@
                                     </table>
                                 </div>
                             </div>
+                            <div v-show="errorDatos" class="form-group row div-error">
+                                <div class="text-center text-error">
+                                    <div v-for="error in errorMostrarMsj" :key="error" v-text="error">
+                                    </div>
+                                </div>
+                            </div> 
                             <div class="col-md-5 modal-fo">
                                 <button type="button" class="btn btn-secondary" @click="siguiente('10')">Regresar</button>
                                 <button type="button" class="btn btn-primary" @click="siguiente('6')">Nuevo Padrino</button>
@@ -262,7 +298,7 @@
                                 <label class="col-md-3 form-control-label" for="text-input"><b>Datos del padrino 4</b></label>
                             </div>
                             <div class="form-group row">
-                                <label class="col-md-3 form-control-label" for="text-input">DUI</label>
+                                <label class="col-md-3 form-control-label" for="text-input">Documento de identidad</label>
                                 <div class="col-md-5">
                                     <input tabindexgt="0" v-model="duipd4" class="form-control" placeholder="999999999" @keydown.tab="duip4()">
                                 </div>
@@ -288,6 +324,12 @@
                                     </table>
                                 </div>
                             </div>
+                            <div v-show="errorDatos" class="form-group row div-error">
+                                <div class="text-center text-error">
+                                    <div v-for="error in errorMostrarMsj" :key="error" v-text="error">
+                                    </div>
+                                </div>
+                            </div> 
                             <div class="col-md-5 modal-fo">
                                 <button type="button" class="btn btn-secondary" @click="siguiente('10')">Regresar</button>
                                 <button type="button" class="btn btn-primary" @click="siguiente('7')">Siguiente</button>
@@ -322,9 +364,30 @@
                                 </div>
                             </div>
                             <div class="form-group row">
+                                <label class="col-md-3 form-control-label">Categoria</label>
+                                <div class="col-md-5">
+                                    <select class="form-control" v-model="idcare"> 
+                                        <option value="0" disabled>Seleccione</option>
+                                        <option v-for="categorias in arraycategorias" :key="categorias.id"  v-bind:value="categorias.id" v-text="categorias.nombre_categoria"></option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group row">
                                 <label class="col-md-3 form-control-label" for="text-input">Nombre del sacerdote<b class="alerta">*</b></label>
                                 <div class="col-md-5">
-                                    
+                                        <select class="form-control" v-model="idsacerdote"> 
+                                        <option value="0" disabled>Seleccione</option>
+                                        <option v-for="sacerdote in arraysacerdote" :key="sacerdote.id" v-bind:value="sacerdote.id" >{{sacerdote.nombre_persona}}, {{sacerdote.apellido_persona}}</option>
+                                        </select >
+                                    </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-md-3 form-control-label" for="text-input">Cargo<b class="alerta">*</b></label>
+                                <div class="col-md-5">
+                                    <select class="form-control" v-model="cargosacerdote"> 
+                                        <option value="0" disabled>Cargo</option>
+                                        <option v-for="sacerdote in arraycargo" :key="sacerdote.id" v-bind:value="sacerdote" v-text="sacerdote"></option>
+                                    </select>
                                 </div>
                             </div>
                             <div class="form-group row">
@@ -333,6 +396,12 @@
                                     <input type="date" class="form-control datepicker" name="date" v-model="fecharealizacion" >
                                 </div>
                             </div>
+                            <div v-show="errorDatos" class="form-group row div-error">
+                                <div class="text-center text-error">
+                                    <div v-for="error in errorMostrarMsj" :key="error" v-text="error">
+                                    </div>
+                                </div>
+                            </div> 
                             <div v-show="cambiarmb==1">
                                 <div class="col-md-6">
                                     <button type="button" class="btn btn-secondary" @click="siguiente('10')">Regresar</button>
@@ -526,10 +595,6 @@
                                             <label class="col-md-6 form-control-label" >{{fecharealizacion}}</label>
                                         </div>
                                         <div class="form-group row">
-                                            <label class="col-md-4 form-control-label" for="text-input">Celebrada por:</label>
-                                            <label class="col-md-6 form-control-label" > {{nombresacerdote}}</label>
-                                        </div>
-                                        <div class="form-group row">
                                             <label class="col-md-3 form-control-label" for="text-input">Ofrenda</label>
                                             <label class="col-md-3 form-control-label" >{{monto}}</label>
                                         </div>
@@ -579,8 +644,14 @@ export default {
             dui:'',
             duimadre:'',
             duipadre:'',
+            tipo:'',
+            idsacerdote:'',
             nombresacerdote:'',
+            apellidosacerdote:'',
+            cargosacerdote:'',
             arraysacerdote:[],
+            arraycategorias:[],
+            arraycargo:[],
             sexo:'',
             fechana:'',
             idpd1:'',
@@ -593,6 +664,7 @@ export default {
             duipd4:'',
             nombrepd1:'',
             apellidopd1:'',
+            idcare:'',
             Acciondui:0,
             accion:0,
             accionp:0,
@@ -613,7 +685,7 @@ export default {
             partida:'',
             tipoAccion:0,
             errorDatos:0,
-            errorMostrarMjs:[],
+            errorMostrarMsj:[],
             anio:'',
             verificacion:0,
             accionbotones:0,
@@ -673,41 +745,66 @@ export default {
             switch(d){
                 case '1':
                 {
+                    if(this.validarvalores('1')){
+                        return;
+                    }
+
                     this.verificarpersona();  //datos del realizante
                     break;
                 }
                 case '2':
                 {
+                    if(this.validarvalores('3')){
+                        return;
+                    }
                     this.cambiarm=2;   //datos de los padres
                     break;
                 }
                 case '3':
                 {
+                    if(this.validarvalores('4')){
+                        return;
+                    }
                     this.cambiarm=3;  //padrino 1 
                     break;
                 }
                 case '4':
                 {
+                    if(this.validarvalores('5')){
+                        return;
+                    }
                     this.cambiarm=4;   //padrino 2
                     break;
                 }
                 case '5':
                 {
+                    if(this.validarvalores('6')){
+                        return;
+                    }
                     this.cambiarm=5;   //padrino 3
                     break;
                 }
                 case '6':
                 {
+                    if(this.validarvalores('7')){
+                        return;
+                    }
                     this.cambiarm=6;   //padrino 4
                     break;
                 }
                 case '7':
                 {
+                    if(this.validarvalores('8')){
+                        return;
+                    }
                     this.cambiarm=7;   //datos de la celebracion
                     break;
                 } 
                 case '8':
                 {
+                    if(this.validarvalores('9')){
+                        return;
+                    }
                     this.cambiarm=8;  //regresar a 5
                     break;
                 }
@@ -743,7 +840,7 @@ export default {
         },
             //Mt. cuando da eliminar en el formulario
         cerrar(){
-            this.precio=0;
+            this.precio='';
             this.nombrerealizante='';
             this.apellidorealizante='';
             this.nombremadre='';
@@ -764,7 +861,10 @@ export default {
             this.apellidopd3='';
             this.nombrepd4='';
             this.apellidopd4='';
+            this.idcare='';
             this.nombresacerdote='';
+            this.apellidosacerdote='';
+            this.cargosacerdote='';
             this.fecharealizacion='';
             this.fechana='';
             this.dui='';
@@ -784,7 +884,9 @@ export default {
             this.sexopd1='';
             this.sexopd2='';
             this.sexopd3='';
-            this.sexopd4='';    
+            this.sexopd4='';   
+            this.monto='';
+            this.asiento=''; 
 
         },
         cerrarm(){ //botones cancelat
@@ -810,7 +912,10 @@ export default {
             this.nombrepd4='';
             this.apellidopd4='';
             this.nombresacerdote='';
+            this.apellidosacerdote='';
+            this.cargosacerdote='';
             this.fecharealizacion='';
+            this.idcare='';
             this.fechana='';
             this.dui='';
             this.accion=0;
@@ -834,12 +939,30 @@ export default {
             this.sexopd1='';
             this.sexopd2='';
             this.sexopd3='';
-            this.sexopd4='';       
+            this.sexopd4='';    
+            this.asiento='';   
+            this.monto='';
 
         },
             //Mt. cuando le da modificar en el modal
         cerrarmodal(){
             this.modal=0;
+        },
+
+        llenadolista(buscar,criterio){
+            let me=this;
+            var url='/persona/buscarsacerdote';
+            axios.get(url) .then(function (response) {
+                me.arraysacerdote=response.data;
+            })
+            .catch(function (error) {
+                console.log(error);
+                });
+        },
+        //autocompletar sacerdotes
+        llenadoarray(){        
+            this.arraycargo= new Array('DIACONO','PADRE','ARZOBISPO','CARDENAL','NUNCIO APOSTOLICO','MONSEÑOR');
+            
         },
 
         abrirmodal(){
@@ -957,11 +1080,172 @@ export default {
 
             },
 
+            validarvalores(d){
+                this.errorDatos=0;
+                this.errorMostrarMsj=[];
+                var RE = /^([0-9])*$/;
+                var patron =/^[a-zA-ZÑñÁáÉéÍíÓóÚúÜü\s]+$/;
+                var anioc = /^\d{4}$/;
+                var patrondui= /^\d{9}$/;
+                var fecha = new Date();
+                var anioac = fecha.getFullYear();
+                var mesac = fecha.getMonth();
+                
+               switch(d){
+                   case '1':{
+                        var Min_Length = 5;
+                        var lengthmin = this.alcaldia.length;
+                        if (lengthmin < Min_Length)this.errorMostrarMsj.push("La alcaldía debe tener más de 5 letras");
+                        if(RE.test(this.alcaldia))this.errorMostrarMsj.push("La alcaldia solo debe de tener letras");
+                        if(!this.libro) this.errorMostrarMsj.push("El numero de libro no puede estar vacío");
+                        if(this.libro == 0) this.errorMostrarMsj.push("El numero de libro no puede ser 0");
+                        if (!RE.test(this.libro))  this.errorMostrarMsj.push("El numero de libro debe ser un numero entero");
+                        if(!this.partida) this.errorMostrarMsj.push("El numero de la partida no puede estar vacío");
+                        if(this.partida == 0) this.errorMostrarMsj.push("El numero de la partida no puede ser 0");
+                        if (!RE.test(this.partida))  this.errorMostrarMsj.push("El numero de la partida debe ser un numero entero");
+                        if(!this.folio) this.errorMostrarMsj.push("El numero de folio no puede estar vacío");
+                        if(this.folio == 0) this.errorMostrarMsj.push("El numero de folio no puede ser 0");
+                        if (!RE.test(this.folio))  this.errorMostrarMsj.push("El numero de folio debe ser un numero entero");
+                        if(!this.anio) this.errorMostrarMsj.push("El año no puede estar vacío");
+                        if (!anioc.test(this.anio))  this.errorMostrarMsj.push("El año debe tener 4 numeros enteros");
+                        if(this.anio < 1900) this.errorMostrarMsj.push("El año debe ser mayor a 1990");
+                        if(anioac<this.anio) this.errorMostrarMsj.push("El año debe ser menor o igual al actual");
+                        if(this.errorMostrarMsj.length) this.errorDatos=1;
+                        return this.errorDatos;
+                        break;
+                   }
+                   case '2':{
+                        this.errorMostrarMsj.push("Esta persona ya realizo este sacramento. Por favor verificar datos");
+                        if(this.errorMostrarMsj.length) this.errorDatos=1;
+                        return this.errorDatos;
+                        break;
+                   }
+                   case '3':{
+                       var values = this.fechana.split("-");
+                       var diana = values[2];
+                       var mesna = values[1];
+                       var aniona = values[0];
+                       if(this.Acciondui==1){
+                           if(!patrondui.test(this.dui)) this.errorMostrarMsj.push("El dui debe de tener 9 numeros");
+                       }
+                        if(!this.nombrerealizante) this.errorMostrarMsj.push("El nombre del realizante no puede estar vacio");
+                        if(!patron.test(this.nombrerealizante)) this.errorMostrarMsj.push("El nombre del realizante solo debe de tener letras");
+                        if(!this.apellidorealizante) this.errorMostrarMsj.push("El apellido del realizante no puede estar vacio");
+                        if(!patron.test(this.apellidorealizante)) this.errorMostrarMsj.push("El apellido del realizante solo debe de tener letras");
+                        if(!this.sexo) this.errorMostrarMsj.push("El sexo no puede estar vacio");
+                        if(aniona < 1900) this.errorMostrarMsj.push("El año debe de ser mayor a 1990");
+                        if(anioac < aniona) this.errorMostrarMsj.push("El año debe ser menor o igual al actual");
+                        if(mesac<mesna && aniona==anioac) this.errorMostrarMsj.push("El mes debe ser menor al actual");
+                        if(this.errorMostrarMsj.length) this.errorDatos=1;
+                        return this.errorDatos;
+                        break;
+                   }
+                   case '4':{
+                       if(!(!this.duimadre && !this.nombremadre && !this.apellidomadre)){
+                           if(!patrondui.test(this.duimadre)) this.errorMostrarMsj.push("El dui de la madre debe de tener 9 numeros");
+                            if(!patron.test(this.nombremadre)) this.errorMostrarMsj.push("El nombre de la madre solo debe de tener letras");
+                            if(!patron.test(this.apellidomadre)) this.errorMostrarMsj.push("El apellido de la madre solo debe de tener letras");
+                            if(this.errorMostrarMsj.length) this.errorDatos=1;
+                            return this.errorDatos;
+                       }
+                       if(!(!this.duipadre && !this.nombrepadre && !this.apellidopadre)){
+                            if(!patrondui.test(this.duipadre)) this.errorMostrarMsj.push("El dui del padre debe de tener 9 numeros");
+                            if(!patron.test(this.nombrepadre)) this.errorMostrarMsj.push("El nombre del padre solo debe de tener letras");
+                            if(!patron.test(this.apellidopadre)) this.errorMostrarMsj.push("El apellido del padre solo debe de tener letras");
+                            if(this.errorMostrarMsj.length) this.errorDatos=1;
+                            return this.errorDatos;
+                       }
+                        
+                        break;
+                   }
+                   case '5':{
+                       if(!(!this.duipd1 && !this.nombrepd1 && !this.apellidopd1 && !this.sexopd1)){
+                           if(!patrondui.test(this.duipd1)) this.errorMostrarMsj.push("El dui del padrino 1 debe de tener 9 numeros");
+                            if(!patron.test(this.nombrepd1)) this.errorMostrarMsj.push("El nombre del padrino 1 solo debe de tener letras");
+                            if(!patron.test(this.apellidopd1)) this.errorMostrarMsj.push("El apellido del padrino 1 solo debe de tener letras");
+                            if(!this.sexopd1) this.errorMostrarMsj.push("El sexo no puede estar vacio");
+                            if(this.errorMostrarMsj.length) this.errorDatos=1;
+                            return this.errorDatos;
+                       }
+                        
+                        break;
+                   }
+                   case '6':{
+                       if(!(!this.duipd2 && !this.nombrepd2 && !this.apellidopd2 && !this.sexopd2)){
+                           if(!patrondui.test(this.duipd2)) this.errorMostrarMsj.push("El dui del padrino 2 debe de tener 9 numeros");
+                            if(!patron.test(this.nombrepd2)) this.errorMostrarMsj.push("El nombre del padrino 2 solo debe de tener letras");
+                            if(!patron.test(this.apellidopd2)) this.errorMostrarMsj.push("El apellido del padrino 2 solo debe de tener letras");
+                            if(!this.sexopd2) this.errorMostrarMsj.push("El sexo no puede estar vacio");
+                            if(this.errorMostrarMsj.length) this.errorDatos=1;
+                            return this.errorDatos;
+                       }
+                        break;
+                   }
+                   case '7':{
+                        if(!(!this.duipd3 && !this.nombrepd3 && !this.apellidopd3 && !this.sexopd3)){
+                           if(!patrondui.test(this.duipd3)) this.errorMostrarMsj.push("El dui del padrino 3 debe de tener 9 numeros");
+                            if(!patron.test(this.nombrepd3)) this.errorMostrarMsj.push("El nombre del padrino 3 solo debe de tener letras");
+                            if(!patron.test(this.apellidopd3)) this.errorMostrarMsj.push("El apellido del padrino 3 solo debe de tener letras");
+                            if(!this.sexopd3) this.errorMostrarMsj.push("El sexo no puede estar vacio");
+                            if(this.errorMostrarMsj.length) this.errorDatos=1;
+                            return this.errorDatos;
+                       }
+                        break;
+                   }
+                   case '8':{
+                        if(!(!this.duipd4 && !this.nombrepd4 && !this.apellidopd4 && !this.sexopd4)){
+                           if(!patrondui.test(this.duipd4)) this.errorMostrarMsj.push("El dui del padrino 4 debe de tener 9 numeros");
+                            if(!patron.test(this.nombrepd4)) this.errorMostrarMsj.push("El nombre del padrino 4 solo debe de tener letras");
+                            if(!patron.test(this.apellidopd4)) this.errorMostrarMsj.push("El apellido del padrino 4 solo debe de tener letras");
+                            if(!this.sexopd4) this.errorMostrarMsj.push("El sexo no puede estar vacio");
+                            if(this.errorMostrarMsj.length) this.errorDatos=1;
+                            return this.errorDatos;
+                       }
+                        break;
+                   }
+                   case '9':{
+                        var RED = /^\d*(\.\d{1})?\d{0,1}$/;
+                        if(!this.librob) this.errorMostrarMsj.push("El numero de libro no puede estar vacio");
+                        if(this.librob == 0) this.errorMostrarMsj.push("No puede tener el valor 0");
+                        if(!RE.test(this.librob)) this.errorMostrarMsj.push("El numero de libro debe de tener numeros enteros");
+                        if(!this.foliob) this.errorMostrarMsj.push("El numero de folio no puede estar vacio");
+                        if(this.foliob == 0) this.errorMostrarMsj.push("No puede tener el valor 0");
+                        if(!RE.test(this.foliob)) this.errorMostrarMsj.push("El numero de folio debe de tener numeros enteros");
+                        if(!this.asiento) this.errorMostrarMsj.push("El numero de asiento no puede estar vacio");
+                        if(this.asiento == 0) this.errorMostrarMsj.push("El numero de asiento no debe ser 0");
+                        if(!RE.test(this.asiento)) this.errorMostrarMsj.push("El numero de asiento debe de tener numeros enteros");
+                        if(!this.monto) this.errorMostrarMsj.push("El numero de la ofrenda no puede estar vacio");
+                        if(!RED.test(this.monto)) this.errorMostrarMsj.push("El monto debe de tener solo decimales");
+                        var values = this.fecharealizacion.split("-");
+                        var aniore = values[0];
+                        if(aniore < 1989) this.errorMostrarMsj.push("El año debe ser mayor a 1989");
+                        if(anioac < aniore) this.errorMostrarMsj.push("El año debe ser menor al actual");
+                        if(!this.idcare) this.errorMostrarMsj.push("La categoria no puede estar vacia");
+                        if(this.errorMostrarMsj.length) this.errorDatos=1;
+                        return this.errorDatos;
+                        break;
+                   }
+               }
+                
+            },
+            selectCategoria(){
+                let me=this;
+                var url='/categoriaresumen/selectCategoriaRe';
+                axios.get(url) .then(function (response) {
+                    // handle success
+                    var respuesta= response.data;
+                    me.arraycategorias=respuesta.categorias;
+                })
+                .catch(function (error) {
+                    // handle error
+                    console.log(error);
+                });
+            },
+
             registrar(){
-               
+                
                 let me=this;
               
-                
                 var m=this.idmadre;
                 var p=this.idpadre;
                 var duim=this.duimadre;
@@ -1031,13 +1315,13 @@ export default {
                 if(m!='' && p!='' && pd1!='' && pd2!='' && dp3=='' && dp4==''){ // introduje los duis pero no hay datos de padrino 3 y 4
                     this.tipo=19;
                 }
-                if(m!='' && p!='' && pd1!='' && dp2=='' && dp3=='' && dp4==''){ // introduje los duis pero no hay datos de padrino 4
+                if(m!='' && p!='' && pd1!='' && dp2=='' && dp3=='' && dp4==''){ // introduje los duis pero no hay datos de padrino 2, 3 y 4
                     this.tipo=20;
                 }
-                if(m!='' && p!='' && dp1=='' && dp2=='' && dp3=='' && dp4==''){ // introduje los duis pero no hay datos de padrino 4
+                if(m!='' && p!='' && dp1=='' && dp2=='' && dp3=='' && dp4==''){ // introduje los duis pero no hay datos de padrinos
                     this.tipo=21;
                 }
-                if(m!='' && duip=='' && pd1!='' && pd2!='' && pd3!='' && pd4!=''){ // introduje los duis pero no hay datos de padrino 4
+                if(m!='' && duip=='' && pd1!='' && pd2!='' && pd3!='' && pd4!=''){ // introduje los duis pero no hay datos de papa
                     this.tipo=22;
                 }
                 if(m!='' && duip=='' && pd1!='' && pd2!='' && pd3!='' && dp4==''){ // introduje los duis pero no hay datos de padrino 4
@@ -1064,20 +1348,32 @@ export default {
                 if(duim=='' && p!='' && pd1!='' && dp2=='' &&dp3=='' && dp4==''){ // introduje los duis pero no hay datos de padrino 4
                     this.tipo=30;
                 }
-                if(duim=='' && duip=='' && dp1=='' && dp2=='' && dp3=='' && dp4==''){ // introduje los duis pero no hay datos de padrino 4
+                if(duim=='' && duip=='' && pd1!='' && pd2!='' && pd3!='' &&pd4!=''){ // introduje los duis pero no hay datos de padrino 4
                     this.tipo=31;
                 }
-                if(duim=='' && duip=='' && pd1!='' && pd2!='' && pd3!='' &&pd4!=''){ // introduje los duis pero no hay datos de padrino 4
+                if(duim=='' && duip=='' && pd1!='' &&pd2!='' && pd3!='' && dp4==''){ // introduje los duis pero no hay datos de padrino 4
                     this.tipo=32;
                 }
-                if(duim=='' && duip=='' && pd1!='' &&pd2!='' && pd3!='' && dp4==''){ // introduje los duis pero no hay datos de padrino 4
+                if(duim=='' && duip=='' && pd1!='' && pd2!='' && dp3=='' && dp4==''){ // introduje los duis pero no hay datos de padrino 4
                     this.tipo=33;
                 }
-                if(duim=='' && duip=='' && pd1!='' && pd2!='' && dp3=='' && dp4==''){ // introduje los duis pero no hay datos de padrino 4
+                if(duim=='' && duip=='' &&pd1!='' && dp2=='' && dp3=='' && dp4==''){ // introduje los duis pero no hay datos de padrino 4
                     this.tipo=34;
                 }
-                if(duim=='' && duip=='' &&pd1!='' && dp2=='' && dp3=='' && dp4==''){ // introduje los duis pero no hay datos de padrino 4
-                    this.tipo=35;
+                if(m=='' && p=='' && pd1=='' && dp2=='' && dp3=='' && dp4==''){ // no tiene datos en el sistema y no tiene padrino 2, 3 y 4
+                   this.tipo = 35;
+                }
+                if(m=='' && p=='' && pd1=='' && pd2=='' && dp3=='' && dp4==''){ // no tiene datos en el sistema y no tiene padrino 3 y 4
+                    this.tipo = 36;
+                }
+                if(m=='' && duip=='' && pd1=='' && dp2=='' && dp3=='' && dp4==''){ // no tiene papa ni padrinos 2, 3 y 4
+                    this.tipo=37;
+                }
+                if(duim=='' && p=='' && pd1=='' && dp2=='' && dp3=='' && dp4==''){ // no tiene mama ni padrinos 2, 3 y 4
+                    this.tipo=38;
+                }
+                if(duim=='' && duip=='' && pd1=='' && dp2=='' && dp3=='' && dp4==''){
+                    this.tipo=39;
                 }
                     axios.put('/bautizo/registrar',{
                         'tipo':this.tipo,
@@ -1093,9 +1389,14 @@ export default {
                         'apellido_reali': this.apellidorealizante.toUpperCase(),
                         'dui_reali':this.dui,
                         'sexo':this.sexo,
+                        'dui_pd1':this.duipd1,
+                        'dui_pd2':this.duipd2,
                         'dui_pd3':this.duipd3,
                         'fecha' : this.fecharealizacion,
-                        'sacerdote' :this.nombresacerdote,
+                        'idcate':this.idcare,
+                        'sacerdote' :this.idsacerdote,
+                        'titulo':this.cargosacerdote,
+                        'monto':this.monto,
                         'id_pd1' :this.idpd1,
                         'id_pd2' : this.idpd2,
                         'id_pd3' : this.idpd3,
@@ -1153,6 +1454,9 @@ export default {
                 }else{
                     me.cambiarm=1;
                     me.cambiarmb=1;
+                }
+                if(respuesta==2){
+                    me.validarvalores('2');
                 }
                      
             }).catch(function (error) {
@@ -1294,7 +1598,16 @@ export default {
                     
         },
       
+    },
+    mounted() {
+        this.llenadoarray();
+        this.selectCategoria();
+        this.llenadolista("","");
     }
 }
 
 </script>
+
+<style>
+
+</style>

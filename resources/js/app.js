@@ -24,6 +24,7 @@ window.Vue = require('vue');
 // const files = require.context('./', true, /\.vue$/i);
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default));
 
+Vue.component('calendario', require('./components/CalendarComponent.vue').default);
 Vue.component('efectivo', require('./components/Efectivo.vue').default);
 Vue.component('user', require('./components/User.vue').default);
 Vue.component('historialefectivo', require('./components/HistorialEfectivo.vue').default);
@@ -45,6 +46,14 @@ Vue.component('compras', require('./components/Compras.vue').default);
 Vue.component('ventas', require('./components/Ventas.vue').default);
 Vue.component('canasta', require('./components/Canasta.vue').default);
 Vue.component('suelto', require('./components/Suelto.vue').default);
+Vue.component('zonas', require('./components/MantenimientoZona.vue').default);
+Vue.component('feligreses', require('./components/RegistrarFeligres.vue').default);
+Vue.component('inventarioiglesia', require('./components/RegistrarInventarioIglesia.vue').default);
+Vue.component('controlsectorialfeligreses', require('./components/ControlSectorialFeligreses.vue').default);
+Vue.component('controlsectorialinventarios', require('./components/ControlSectorialInventarios.vue').default);
+Vue.component('escritorio', require('./components/Escritorio.vue').default);
+Vue.component('categoriainventario', require('./components/MantenimientoCategoriaInventario.vue').default);
+
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application

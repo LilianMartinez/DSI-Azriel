@@ -8,23 +8,29 @@
                 <!-- Ejemplo de tabla Listado -->
                 <div class="card">
 
-                    <div class="card-header"><label class="titulo-encabezados">Resumen económico del mes</label>
-
-                        
+                    <div class="card-header"><label class="titulo-encabezados">Resumen económico del mes</label>                        
                     </div>
                     <div class="card-body">
-                        <div class="form-group row">
-                            <div class="col-md-6">
-                                <div class="input-group">
-                                    <select class="form-control col-md-3" v-model="criterio">
-                                      <option value="descripcion_efectivo">Concepto</option>
-                                      <option value="monto">Cantidad de dinero</option>
-                                    </select>
-                                    <input type="text" v-model="buscar" @keyup.enter="listaResumenEconomico(1,buscar,criterio,2)" class="form-control" placeholder="Texto a buscar">
-                                    <button type="submit" @click="listaResumenEconomico(1,buscar,criterio,2) " class="btn btn-primary"><i class="fa fa-search"></i> Buscar</button>
+                              <div>
+                                    <div id="input-groupG">                                  
+                                                <label id="zonaiglesia" for="text-input">MES</label>
+                                                <div class="col-md-3">
+                                                        <select class="form-control" v-model="mesBuscar"> 
+                                                        <option value="0" disabled>Mes</option>
+                                                        <option v-for="mes in arraymes" :key="mes.id" v-bind:value="mes" v-text="mes"></option>
+                                                        </select>
+                                                </div>
+                                                 <label id="zonaiglesia" for="text-input">AÑO</label>
+                                                <div class="col-md-3">
+                                                    <input type="number" v-model="anioBuscar" @keyup.enter="listaResumenEconomico(anioBuscar,mesBuscar)" class="form-control" placeholder="Ejem:2019">
+                                                </div>
+                                                <button type="button" @click="filtrarResumenEconomico(anioBuscar,mesBuscar) " class="btn btn-primary"><i class="fa fa-search"></i>Filtrar</button>
+                                                
+                                    </div>
                                 </div>
-                            </div>
-                        </div>
+
+                        <div class="form-group row">
+                        </div> 
                         <table class="table table-bordered table-striped table-sm">
                             <thead>
                                 <tr>
@@ -71,19 +77,11 @@
                                 </tr>
                             </tbody>
                         </table>
-                     <!--   <nav>
-                            <ul class="pagination">
-                                <li class="page-item" v-if="pagination.current_page > 1">
-                                    <a class="page-link" href="#" @click.prevent="cambiarPagina(pagination.current_page - 1,buscar,criterio)">Ant</a>
-                                </li>
-                                <li class="page-item" v-for="page in pagesNumber" :key="page" :class="[page == isActived ? 'active' :'']">
-                                    <a class="page-link" href="#" @click.prevent="cambiarPagina(page,buscar,criterio)" v-text="page"></a>
-                                </li>
-                                <li class="page-item" v-if="pagination.current_page < pagination.last_page">
-                                    <a class="page-link" href="#" @click.prevent="cambiarPagina(pagination.current_page + 1, buscar, criterio)">Sig</a>
-                                </li>
-                            </ul>
-                        </nav>-->
+                        <div class="input-group margen">
+                            <button type="button" @click="cargarPDF()" class="btn btn-info">
+                                    <i class="icon-doc"></i>&nbsp;Generar Reporte Resumido Actual
+                            </button>
+                        </div>
                     </div>
                 </div>
                 <!-- Fin ejemplo de tabla Listado -->
@@ -122,6 +120,11 @@
                 checkedNa:[],
                 checked:0,
                 arrayResumenEcoSel:[],
+
+                /////////////////////////////
+                arraymes:[],
+                mesBuscar:'',
+                anioBuscar:'',
 
                 errorEfectivo:0,
                 errorMostrarMsjDescripcion:[],
@@ -168,18 +171,14 @@
         },
         methods:{
 
-            listaResumenEconomico(page,buscar,criterio){
+            llenadoarray(){            
+                this.arraymes= new Array('ENERO','FEBRERO', 'MARZO','ABRIL','MAYO','JUNIO','JULIO','AGOSTO','SEPTIEMBRE','OCTUBRE','NOVIEMBRE','DICIEMBRE');                
+            },
+            listaResumenEconomico(mesBuscar,anioBuscar){
                 let me=this;
-                var lengthbuscar = this.buscar.length;
-                 if(lengthbuscar >0)
-                 {
-                     var buscar2= this.buscar.toUpperCase();
-                 }else
-                 buscar2=this.buscar;
-                var url='/resumeneconomico?page='+ page + '&buscar=' + buscar2 + '&criterio=' + criterio;
+                var url='/resumeneconomico?&anioBuscar=' + anioBuscar + '&mesBuscar=' + mesBuscar;
                 axios.get(url) .then(function (response) {
                     // handle success
-                    console.log(response);
                     var respuesta= response.data;
                     me.arrayResumenEco=respuesta.categoria;
                     me.arrayResumenEconull=respuesta.nullo;
@@ -190,22 +189,40 @@
                 })
                 .catch(function (error) {
                     // handle error
-                    console.log(error);
+                  //  console.log(error);
                 });
             
             },
-        cambiarPagina(page,buscar,criterio){
-            let me = this;
-            //Actualiza la pagina actualizar
-            me.pagination.current_page = page;
-            //Envia la peticion para visualizar la data de esa pagina
-            me.listaResumenEconomico(page,buscar,criterio);
+            filtrarResumenEconomico(anioBuscar,mesBuscar){
+                let me=this;
+                var url='/resumeneconomico/buscarAM?anioBuscar=' + anioBuscar + '&mesBuscar=' + mesBuscar;
+                axios.get(url) .then(function (response) {
+                    // handle success
+                    var respuesta= response.data;
+                    me.arrayResumenEco=respuesta.categoria;
+                    me.arrayResumenEconull=respuesta.nullo;
+                    me.egresos=respuesta.egresos;
+                    me.ingresos=respuesta.ingresos;
+                    me.total=respuesta.total;
+                })
+                .catch(function (error) {
+                    // handle error
+                  //  console.log(error);
+                });
+            },
+
+
+              cargarPDF(){
+            window.open('http://127.0.0.1:8000/efectivo/listarPdfResumido','_blank');
         },
+
+
     
         },
         
         mounted() {
-            this.listaResumenEconomico(1,this.buscar,this.criterio);
+            this.listaResumenEconomico(1,this.anioBuscar,this.mesBuscar);
+            this.llenadoarray();
            
         }
     }
@@ -232,4 +249,12 @@
         color: red !important;
         font-weight: bold;
     }
+    #input-groupG {
+  position: relative;
+  display: flex;
+  width: 100%; }
+
+  #zonaiglesia {
+      font-size:  x-large;
+      font-weight: bold; }
 </style>

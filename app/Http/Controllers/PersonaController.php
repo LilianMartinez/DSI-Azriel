@@ -120,7 +120,7 @@ class PersonaController extends Controller
                 ->where('s.tipo_sacramento',2)
                 ->leftjoin('personas as p','h.id_padre','=','p.id')
                 ->leftjoin('personas as m','h.id_madre','=','m.id')
-                ->select('s.id',
+                ->select('s.id', 'h.id_padre','h.id_madre',
                 'h.nombre_persona as hnom','h.apellido_persona as hapellido',
                 'p.nombre_persona as pnom','p.apellido_persona as papellido',
                 'm.nombre_persona as mnom','m.apellido_persona as mapellido')
@@ -131,7 +131,7 @@ class PersonaController extends Controller
                 ->where('h.apellido_persona', 'like','%' . $apellido .'%')
                 ->leftjoin('personas as p','h.id_padre','=','p.id')
                 ->leftjoin('personas as m','h.id_madre','=','m.id')
-                ->select('s.id',
+                ->select('s.id', 'h.id_padre','h.id_madre',
                 'h.nombre_persona as hnom','h.apellido_persona as hapellido',
                 'p.nombre_persona as pnom','p.apellido_persona as papellido',
                 'm.nombre_persona as mnom','m.apellido_persona as mapellido')
@@ -145,7 +145,7 @@ class PersonaController extends Controller
                 ->where('h.nombre_persona','like','%' . $nombre. '%')
                 ->leftjoin('personas as p','h.id_padre','=','p.id')
                 ->leftjoin('personas as m','h.id_madre','=','m.id')
-                ->select('s.id',
+                ->select('s.id', 'h.id_padre','h.id_madre',
                 'h.nombre_persona as hnom','h.apellido_persona as hapellido',
                 'p.nombre_persona as pnom','p.apellido_persona as papellido',
                 'm.nombre_persona as mnom','m.apellido_persona as mapellido')
@@ -157,7 +157,7 @@ class PersonaController extends Controller
                 ->where('h.apellido_persona', $apellido)
                 ->leftjoin('personas as p','h.id_padre','=','p.id')
                 ->leftjoin('personas as m','h.id_madre','=','m.id')
-                ->select('s.id',
+                ->select('s.id','h.id_padre','h.id_madre',
                 'h.nombre_persona as hnom','h.apellido_persona as hapellido',
                 'p.nombre_persona as pnom','p.apellido_persona as papellido',
                 'm.nombre_persona as mnom','m.apellido_persona as mapellido')
@@ -190,7 +190,7 @@ class PersonaController extends Controller
                 ->where('s.tipo_sacramento',3)
                 ->leftjoin('personas as p','h.id_padre','=','p.id')
                 ->leftjoin('personas as m','h.id_madre','=','m.id')
-                ->select('s.id',
+                ->select('s.id','h.id_padre','h.id_madre','s.id_realizante1',
                 'h.nombre_persona as hnom','h.apellido_persona as hapellido',
                 'p.nombre_persona as pnom','p.apellido_persona as papellido',
                 'm.nombre_persona as mnom','m.apellido_persona as mapellido')
@@ -201,7 +201,7 @@ class PersonaController extends Controller
                 ->where('h.apellido_persona', 'like','%' . $apellido .'%')
                 ->leftjoin('personas as p','h.id_padre','=','p.id')
                 ->leftjoin('personas as m','h.id_madre','=','m.id')
-                ->select('s.id',
+                ->select('s.id','h.id_padre','h.id_madre','s.id_realizante1',
                 'h.nombre_persona as hnom','h.apellido_persona as hapellido',
                 'p.nombre_persona as pnom','p.apellido_persona as papellido',
                 'm.nombre_persona as mnom','m.apellido_persona as mapellido')
@@ -215,7 +215,7 @@ class PersonaController extends Controller
                 ->where('h.nombre_persona','like','%' . $nombre. '%')
                 ->leftjoin('personas as p','h.id_padre','=','p.id')
                 ->leftjoin('personas as m','h.id_madre','=','m.id')
-                ->select('s.id',
+                ->select('s.id','h.id_padre','h.id_madre','s.id_realizante1',
                 'h.nombre_persona as hnom','h.apellido_persona as hapellido',
                 'p.nombre_persona as pnom','p.apellido_persona as papellido',
                 'm.nombre_persona as mnom','m.apellido_persona as mapellido')
@@ -227,7 +227,7 @@ class PersonaController extends Controller
                 ->where('h.apellido_persona', $apellido)
                 ->leftjoin('personas as p','h.id_padre','=','p.id')
                 ->leftjoin('personas as m','h.id_madre','=','m.id')
-                ->select('s.id',
+                ->select('s.id','h.id_padre','h.id_madre','s.id_realizante1',
                 'h.nombre_persona as hnom','h.apellido_persona as hapellido',
                 'p.nombre_persona as pnom','p.apellido_persona as papellido',
                 'm.nombre_persona as mnom','m.apellido_persona as mapellido')
@@ -258,14 +258,14 @@ class PersonaController extends Controller
             if($apellido==''){
                 $realizante = DB::table('personas as h')->join('sacramentos as s','s.id_realizante1','=','h.id')
                 ->where('s.tipo_sacramento',5)
-                ->select('s.id',
+                ->select('s.id','h.id_padre','h.id_madre',
                 'h.nombre_persona as hnom','h.apellido_persona as hapellido')
                 ->paginate(6);
             }else{
                 $realizante = DB::table('personas as h')->join('sacramentos as s','s.id_realizante1','=','h.id')
                 ->where('s.tipo_sacramento',5)
                 ->where('h.apellido_persona', 'like','%' . $apellido .'%')
-                ->select('s.id',
+                ->select('s.id','h.id_padre','h.id_madre',
                 'h.nombre_persona as hnom','h.apellido_persona as hapellido')
                 ->paginate(6);
             }
@@ -275,7 +275,7 @@ class PersonaController extends Controller
                 $realizante = DB::table('personas as h')->join('sacramentos as s','s.id_realizante1','=','h.id')
                 ->where('s.tipo_sacramento',5)
                 ->where('h.nombre_persona','like','%' . $nombre. '%')
-                ->select('s.id',
+                ->select('s.id','h.id_padre','h.id_madre',
                 'h.nombre_persona as hnom','h.apellido_persona as hapellido')
                 ->paginate(6);
             }else{
@@ -283,7 +283,7 @@ class PersonaController extends Controller
                 ->where('s.tipo_sacramento',5)
                 ->where('h.nombre_persona', $nombre)
                 ->where('h.apellido_persona', $apellido)
-                ->select('s.id',
+                ->select('s.id','h.id_padre','h.id_madre',
                 'h.nombre_persona as hnom','h.apellido_persona as hapellido')
                 ->paginate(6);
             }
@@ -895,10 +895,13 @@ class PersonaController extends Controller
         
         
         if ($buscar == ''){
-            $religiosos = Persona::where('estado','1')->orderBy('id')->get();
+            $religiosos = Persona::where('estado','1')
+                            ->where('tipo_persona','=',1)            
+            ->orderBy('id')->get();
         } else {
             $religiosos = Persona::where($criterio, 'like','%' . $buscar .'%')
             ->where('estado','1')
+            ->where('tipo_persona','=',1)
             ->orderBy('id')->get();
         }
         return $religiosos;
@@ -959,7 +962,9 @@ class PersonaController extends Controller
     public function buscarReli(Request $id)
     {
         if(!$id->ajax()) return redirect('/');
-       $religiosos = DB::table('personas')->where("id",$id->id)->first();
+       $religiosos = DB::table('personas')->where("id",$id->id)
+       ->where('tipo_persona','=',1)
+       ->first();
        return response()->json($religiosos);    
     }
 }

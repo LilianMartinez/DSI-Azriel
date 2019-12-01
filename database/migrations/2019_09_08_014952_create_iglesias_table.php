@@ -17,6 +17,7 @@ class CreateIglesiasTable extends Migration
             $table->bigIncrements('id');
             $table->timestamps();
             $table->string('nombre_iglesia',100);
+            $table->integer('estado')->nullable();
         });
     }
 
