@@ -31,8 +31,8 @@
                                     <th>Fecha</th>
                                     <th>Factura</th>
                                     <th>Concepto</th>
-                                    <th>Ingreso</th>
-                                    <th>Egreso </th>
+                                    <th>Ingreso ($)</th>
+                                    <th>Egreso ($)</th>
                                 </tr>
                             </thead>
                             <tbody>

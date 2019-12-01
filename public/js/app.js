@@ -15015,12 +15015,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
-//
-//
-//
-//
-//
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     var _ref;
@@ -15156,9 +15150,11 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       this.conceptoim = '';
       this.cobrado = false;
     },
-    cobrar: function cobrar() {
-      this.cobrado = true; //AQUÍ AGREGAR EL DESABILITAR COBRAR1
-    },
+
+    /* cobrar: function (){
+                 this.cobrado=true;
+                 //AQUÍ AGREGAR EL DESABILITAR COBRAR1
+               },*/
     llenadolista: function llenadolista(buscar, criterio) {
       var me = this;
       var url = '/persona/buscarsacerdote';
@@ -15199,6 +15195,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         'conceptoim': this.conceptoim
       }).then(function (response) {
         me.listarActasBautizo();
+        me.cobrar();
         me.mientras();
       })["catch"](function (error) {});
     },
@@ -15206,13 +15203,30 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       var me = this;
       this.pdfConstacia(me.id_sacramento, me.id_padre, me.id_madre);
     },
+    cobrar: function cobrar() {
+      var me = this;
+      var variable = 'Constancia de bautismo';
+      var tip = 1;
+      axios.put('/efectivo/registrar', {
+        'idcare': this.idcare,
+        'descripcion_efectivo': variable.toUpperCase(),
+        'monto': this.montoConstancia,
+        'tipo': tip
+      }).then(function (response) {
+        me.cerrarModal();
+        me.listarEfectivo(1, '', 'num_recibo', 1);
+        me.sumat();
+      })["catch"](function (error) {
+        // handle error
+        console.log(error);
+      });
+    },
     validarModal4: function validarModal4() {
       this.errorModal4 = 0;
       this.errorMostrarMsjModal4 = [];
       var RE = /^\d*(\.\d{1})?\d{0,1}$/;
       this.conceptoim;
       this.montoConstancia;
-      if (this.cobrado != true) this.errorMostrarMsjModal4.push("Debe cobrar la solicitud de la constancia de confirma");
       if (this.conceptoim == '') this.errorMostrarMsjModal4.push("El campo de motivo de la constancia no puede estar vacio");
       if (this.idperso == '') this.errorMostrarMsjModal4.push("Debe elegir al Padre que firmará la constancia");
       if (this.cargoim == '') this.errorMostrarMsjModal4.push("Debe elegir el cargo del padre que firmará la constancia");
@@ -15276,6 +15290,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
                   this.idperso = '';
                   this.cargoim = '';
                   this.conceptoim = '';
+                  this.idcare = '';
+                  this.montoConstancia = '';
                   break;
                 }
             }
@@ -18749,12 +18765,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -18972,9 +18982,11 @@ __webpack_require__.r(__webpack_exports__);
       this.conceptoim = '';
       this.cobrado = false;
     },
-    cobrar: function cobrar() {
-      this.cobrado = true; //AQUÍ AGREGAR EL DESABILITAR COBRAR1
-    },
+
+    /* cobrar: function (){
+                 this.cobrado=true;
+                 //AQUÍ AGREGAR EL DESABILITAR COBRAR1
+              },*/
     llenadolista: function llenadolista(buscar, criterio) {
       var me = this;
       var url = '/persona/buscarsacerdote';
@@ -19015,6 +19027,7 @@ __webpack_require__.r(__webpack_exports__);
         'conceptoim': this.conceptoim
       }).then(function (response) {
         me.listarPersona();
+        me.cobrar();
         me.mientras();
       })["catch"](function (error) {});
     },
@@ -19022,13 +19035,30 @@ __webpack_require__.r(__webpack_exports__);
       var me = this;
       this.pdfConstacia(me.id_sacramento, me.id_padre, me.id_madre, me.id_realizante1);
     },
+    cobrar: function cobrar() {
+      var me = this;
+      var variable = 'Constancia de confirma';
+      var tip = 1;
+      axios.put('/efectivo/registrar', {
+        'idcare': this.idcare,
+        'descripcion_efectivo': variable.toUpperCase(),
+        'monto': this.montoConstancia,
+        'tipo': tip
+      }).then(function (response) {
+        me.cerrarModal();
+        me.listarEfectivo(1, '', 'num_recibo', 1);
+        me.sumat();
+      })["catch"](function (error) {
+        // handle error
+        console.log(error);
+      });
+    },
     validarModal4: function validarModal4() {
       this.errorModal4 = 0;
       this.errorMostrarMsjModal4 = [];
       var RE = /^\d*(\.\d{1})?\d{0,1}$/;
       this.conceptoim;
       this.montoConstancia;
-      if (this.cobrado != true) this.errorMostrarMsjModal4.push("Debe cobrar la solicitud de la constancia de confirma");
       if (this.conceptoim == '') this.errorMostrarMsjModal4.push("El campo de motivo de la constancia no puede estar vacio");
       if (this.idperso == '') this.errorMostrarMsjModal4.push("Debe elegir al Padre que firmará la constancia");
       if (this.cargoim == '') this.errorMostrarMsjModal4.push("Debe elegir el cargo del padre que firmará la constancia");
@@ -19078,7 +19108,8 @@ __webpack_require__.r(__webpack_exports__);
                   this.idperso = '';
                   this.cargoim = '';
                   this.conceptoim = '';
-                  console.log(data);
+                  this.idcare = '';
+                  this.montoConstancia = '';
                   break;
                 }
             }
@@ -19479,11 +19510,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -19707,9 +19733,11 @@ __webpack_require__.r(__webpack_exports__);
       this.conceptoim = '';
       this.cobrado = false;
     },
-    cobrar: function cobrar() {
-      this.cobrado = true; //AQUÍ AGREGAR EL DESABILITAR COBRAR1
-    },
+
+    /*    cobrar: function (){
+                    this.cobrado=true;
+                    //AQUÍ AGREGAR EL DESABILITAR COBRAR1
+                 },*/
     llenadolista: function llenadolista(buscar, criterio) {
       var me = this;
       var url = '/persona/buscarsacerdote';
@@ -19751,6 +19779,7 @@ __webpack_require__.r(__webpack_exports__);
         'conceptoim': this.conceptoim
       }).then(function (response) {
         me.listarPersona();
+        me.cobrar();
         me.mientras();
       })["catch"](function (error) {});
     },
@@ -19758,13 +19787,30 @@ __webpack_require__.r(__webpack_exports__);
       var me = this;
       this.pdfConstacia(me.id_sacramento, me.id_padre, me.id_madre);
     },
+    cobrar: function cobrar() {
+      var me = this;
+      var variable = 'Constancia de primera comunión';
+      var tip = 1;
+      axios.put('/efectivo/registrar', {
+        'idcare': this.idcare,
+        'descripcion_efectivo': variable.toUpperCase(),
+        'monto': this.montoConstancia,
+        'tipo': tip
+      }).then(function (response) {
+        me.cerrarModal();
+        me.listarEfectivo(1, '', 'num_recibo', 1);
+        me.sumat();
+      })["catch"](function (error) {
+        // handle error
+        console.log(error);
+      });
+    },
     validarModal4: function validarModal4() {
       this.errorModal4 = 0;
       this.errorMostrarMsjModal4 = [];
       var RE = /^\d*(\.\d{1})?\d{0,1}$/;
       this.conceptoim;
       this.montoConstancia;
-      if (this.cobrado != true) this.errorMostrarMsjModal4.push("Debe cobrar la solicitud de la constancia de confirma");
       if (this.conceptoim == '') this.errorMostrarMsjModal4.push("El campo de motivo de la constancia no puede estar vacio");
       if (this.idperso == '') this.errorMostrarMsjModal4.push("Debe elegir al Padre que firmará la constancia");
       if (this.cargoim == '') this.errorMostrarMsjModal4.push("Debe elegir el cargo del padre que firmará la constancia");
@@ -19813,6 +19859,8 @@ __webpack_require__.r(__webpack_exports__);
                   this.idperso = '';
                   this.cargoim = '';
                   this.conceptoim = '';
+                  this.idcare = '';
+                  this.montoConstancia = '';
                   break;
                 }
             }
@@ -21928,6 +21976,10 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+var _methods;
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 //
 //
 //
@@ -22606,7 +22658,7 @@ __webpack_require__.r(__webpack_exports__);
       return pagesArray;
     }
   },
-  methods: {
+  methods: (_methods = {
     cobrar: function cobrar() {
       this.cobrado = true; //AQUÍ AGREGAR EL DESABILITAR COBRAR1
     },
@@ -22624,582 +22676,482 @@ __webpack_require__.r(__webpack_exports__);
         'conceptoim': this.conceptoim
       }).then(function (response) {
         me.listarMatrimonio1();
+        me.cobrar();
         me.mientras();
       })["catch"](function (error) {});
     },
     mientras: function mientras() {
       var me = this;
       this.pdfConstacia(me.sacramento_id);
-    },
-    pdfConstacia: function pdfConstacia(sacramento_id) {
-      window.open('http://127.0.0.1:8000/persona/certificadoMatri/' + sacramento_id);
-      this.cerrarModal4();
-    },
-    eliminarImpresion: function eliminarImpresion() {
-      var me = this;
-      axios.put('/persona/eliminarDatosImpresion', {}).then(function (response) {})["catch"](function (error) {
-        // handle error
+    }
+  }, _defineProperty(_methods, "cobrar", function cobrar() {
+    var me = this;
+    var variable = 'Constancia de matrimonio';
+    var tip = 1;
+    axios.put('/efectivo/registrar', {
+      'idcare': this.idcare,
+      'descripcion_efectivo': variable.toUpperCase(),
+      'monto': this.montoConstancia,
+      'tipo': tip
+    }).then(function (response) {
+      me.cerrarModal();
+      me.listarEfectivo(1, '', 'num_recibo', 1);
+      me.sumat();
+    })["catch"](function (error) {
+      // handle error
+      console.log(error);
+    });
+  }), _defineProperty(_methods, "pdfConstacia", function pdfConstacia(sacramento_id) {
+    window.open('http://127.0.0.1:8000/persona/certificadoMatri/' + sacramento_id);
+    this.cerrarModal4();
+  }), _defineProperty(_methods, "eliminarImpresion", function eliminarImpresion() {
+    var me = this;
+    axios.put('/persona/eliminarDatosImpresion', {}).then(function (response) {})["catch"](function (error) {
+      // handle error
+      console.log(error);
+    });
+  }), _defineProperty(_methods, "listarMatrimonio1", function listarMatrimonio1(page, buscar, criterio) {
+    var me = this;
+    var lengthbuscar = this.buscar.length;
+
+    if (lengthbuscar > 0) {
+      var buscar2 = this.buscar.toUpperCase();
+    } else buscar2 = this.buscar;
+
+    if (criterio == 'nombre_persona' || 'apellido_persona') {
+      var url = '/sacramentoplus?page=' + page + '&buscar=' + buscar2 + '&criterio=' + criterio;
+      axios.get(url).then(function (response) {
+        var respuesta = response.data;
+        me.arrayMatrimonio1 = respuesta.sacramentos.data;
+        me.pagination = respuesta.pagination;
+      })["catch"](function (error) {
         console.log(error);
       });
-    },
-    listarMatrimonio1: function listarMatrimonio1(page, buscar, criterio) {
-      var me = this;
-      var lengthbuscar = this.buscar.length;
+    } else {
+      var url = '/sacramento?page=' + page + '&buscar=' + buscar + '&criterio=' + criterio;
+      axios.get(url).then(function (response) {
+        var respuesta = response.data;
+        me.arrayMatrimonio1 = respuesta.sacramentos.data;
+        me.pagination = respuesta.pagination;
+      })["catch"](function (error) {
+        console.log(error);
+      });
+    }
+  }), _defineProperty(_methods, "cambiarPagina", function cambiarPagina(page, buscar, criterio) {
+    var me = this; //Actualiza la pagina del listado de matrimonios
 
-      if (lengthbuscar > 0) {
-        var buscar2 = this.buscar.toUpperCase();
-      } else buscar2 = this.buscar;
+    me.pagination.current_page = page; //Envia la peticion para visualizar la data de esa pagina
 
-      if (criterio == 'nombre_persona' || 'apellido_persona') {
-        var url = '/sacramentoplus?page=' + page + '&buscar=' + buscar2 + '&criterio=' + criterio;
-        axios.get(url).then(function (response) {
-          var respuesta = response.data;
-          me.arrayMatrimonio1 = respuesta.sacramentos.data;
-          me.pagination = respuesta.pagination;
-        })["catch"](function (error) {
-          console.log(error);
-        });
-      } else {
-        var url = '/sacramento?page=' + page + '&buscar=' + buscar + '&criterio=' + criterio;
-        axios.get(url).then(function (response) {
-          var respuesta = response.data;
-          me.arrayMatrimonio1 = respuesta.sacramentos.data;
-          me.pagination = respuesta.pagination;
-        })["catch"](function (error) {
-          console.log(error);
-        });
-      }
-    },
-    cambiarPagina: function cambiarPagina(page, buscar, criterio) {
-      var me = this; //Actualiza la pagina del listado de matrimonios
+    me.listarMatrimonio1(page, buscar, criterio);
+  }), _defineProperty(_methods, "llenarCamposNovio", function llenarCamposNovio() {
+    var data = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];
+    this.novioNom = data['nombre_persona'];
+    this.novioAp = data['apellido_persona'];
+    this.id_realizante1 = data['id'];
+  }), _defineProperty(_methods, "novioDui", function novioDui() {
+    var me = this;
+    var d = this.novioD;
 
-      me.pagination.current_page = page; //Envia la peticion para visualizar la data de esa pagina
+    if (d != '') {
+      /* vm.novioNom === 'ocultar';
+      vm.novioAp === 'ocultar'; */
+      var url = '/persona/duihombre?dui=' + d;
+      axios.get(url).then(function (response) {
+        var respuesta = response.data.solo;
+        var datos = response.data.persona;
 
-      me.listarMatrimonio1(page, buscar, criterio);
-    },
-    //Esto se usa para el autollenado con el num de dui
-    llenarCamposNovio: function llenarCamposNovio() {
-      var data = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];
-      this.novioNom = data['nombre_persona'];
-      this.novioAp = data['apellido_persona'];
-      this.id_realizante1 = data['id'];
-    },
-    //Esto tambien es para el autollenado con el num de dui; invocamos al metodo "buscarduis" del controlador
-    novioDui: function novioDui() {
-      var me = this;
-      var d = this.novioD;
-
-      if (d != '') {
-        /* vm.novioNom === 'ocultar';
-        vm.novioAp === 'ocultar'; */
-        var url = '/persona/duihombre?dui=' + d;
-        axios.get(url).then(function (response) {
-          var respuesta = response.data.solo;
-          var datos = response.data.persona;
-
-          if (respuesta == 2) {
-            me.llenarCamposNovio(datos);
-          }
-        })["catch"](function (error) {
-          console.log(error);
-        });
-      }
-      /* vm.novioNom === 'mostrar';
-      vm.novioAp === 'mostrar'; */
-
-    },
-    //Esto se usa para el autollenado con el num de dui
-    llenarCamposNovia: function llenarCamposNovia() {
-      var data = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];
-      this.noviaNom = data['nombre_persona'];
-      this.noviaAp = data['apellido_persona'];
-      this.id_realizante2 = data['id'];
-    },
-    //Esto tambien es para el autollenado con el num de dui; invocamos al metodo "buscarduis" del controlador
-    noviaDui: function noviaDui() {
-      var me = this;
-      var d = this.noviaD;
-
-      if (d != '') {
-        var url = '/persona/duimujer?dui=' + d;
-        axios.get(url).then(function (response) {
-          var respuesta = response.data.solo;
-          var datos = response.data.persona;
-
-          if (respuesta == 2) {
-            me.llenarCamposNovia(datos);
-          }
-        })["catch"](function (error) {
-          console.log(error);
-        });
-      }
-    },
-    //Esto se usa para el autollenado con el num de dui
-    //Usaremos 1 para el sacerdote y 4 para los padrinos
-    llenarCamposPadrino1: function llenarCamposPadrino1() {
-      var data = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];
-      this.pad1Nom = data['nombre_persona'];
-      this.pad1Ap = data['apellido_persona'];
-      this.id_padrino1 = data['id'];
-      this.pad1Sexo = data['sexo'];
-    },
-    //Esto tambien es para el autollenado con el num de dui; invocamos al metodo "buscarduis" del controlador
-    //usaremos 1 para el sacerdote y 4 para los padrinos
-    pad1Dui: function pad1Dui() {
-      var me = this;
-      var d = this.pad1D;
-
-      if (d != '') {
-        var url = '/persona/duis?dui=' + d;
-        axios.get(url).then(function (response) {
-          var respuesta = response.data.solo;
-          var datos = response.data.persona;
-
-          if (respuesta == 2) {
-            me.llenarCamposPadrino1(datos);
-          }
-        })["catch"](function (error) {
-          console.log(error);
-        });
-      }
-    },
-    llenarCamposMadrina1: function llenarCamposMadrina1() {
-      var data = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];
-      this.mad1Nom = data['nombre_persona'];
-      this.mad1Ap = data['apellido_persona'];
-      this.id_madrina1 = data['id'];
-      this.mad1Sexo = data['sexo'];
-    },
-    //Esto tambien es para el autollenado con el num de dui; invocamos al metodo "buscarduis" del controlador
-    mad1Dui: function mad1Dui() {
-      var me = this;
-      var d = this.mad1D;
-
-      if (d != '') {
-        var url = '/persona/duis?dui=' + d;
-        axios.get(url).then(function (response) {
-          var respuesta = response.data.solo;
-          var datos = response.data.persona;
-
-          if (respuesta == 2) {
-            me.llenarCamposMadrina1(datos);
-          }
-        })["catch"](function (error) {
-          console.log(error);
-        });
-      }
-    },
-    //Esto se usa para el autollenado con el num de dui
-    llenarCamposPadrino2: function llenarCamposPadrino2() {
-      var data = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];
-      this.pad2Nom = data['nombre_persona'];
-      this.pad2Ap = data['apellido_persona'];
-      this.id_padrino2 = data['id'];
-      this.pad2Sexo = data['sexo'];
-    },
-    //Esto tambien es para el autollenado con el num de dui; invocamos al metodo "buscarduis" del controlador
-    pad2Dui: function pad2Dui() {
-      var me = this;
-      var d = this.pad2D;
-
-      if (d != '') {
-        var url = '/persona/duis?dui=' + d;
-        axios.get(url).then(function (response) {
-          var respuesta = response.data.solo;
-          var datos = response.data.persona;
-
-          if (respuesta == 2) {
-            me.llenarCamposPadrino2(datos);
-          }
-        })["catch"](function (error) {
-          console.log(error);
-        });
-      }
-    },
-    llenarCamposMadrina2: function llenarCamposMadrina2() {
-      var data = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];
-      this.mad2Nom = data['nombre_persona'];
-      this.mad2Ap = data['apellido_persona'];
-      this.id_madrina2 = data['id'];
-      this.mad2Sexo = data['sexo'];
-    },
-    //Esto tambien es para el autollenado con el num de dui; invocamos al metodo "buscarduis" del controlador
-    mad2Dui: function mad2Dui() {
-      var me = this;
-      var d = this.mad2D;
-
-      if (d != '') {
-        var url = '/persona/duis?dui=' + d;
-        axios.get(url).then(function (response) {
-          var respuesta = response.data.solo;
-          var datos = response.data.persona;
-
-          if (respuesta == 2) {
-            me.llenarCamposMadrina2(datos);
-          }
-        })["catch"](function (error) {
-          console.log(error);
-        });
-      }
-    },
-    //Este es para la busqueda por dui del sacerdote
-    llenarCamposSacerdote: function llenarCamposSacerdote() {
-      var data = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];
-      this.sacerdoteNom = data['nombre_persona'];
-      this.sacerdoteAp = data['apellido_persona'];
-      this.id_sacerdote = data['id'];
-    },
-    //Esto tambien es para el autollenado con el num de dui; invocamos al metodo "buscarduis" del controlador
-    sacerdoteDui: function sacerdoteDui() {
-      var me = this;
-      var d = this.sacerdoteD;
-
-      if (d != '') {
-        var url = '/persona/duihombre?dui=' + d;
-        axios.get(url).then(function (response) {
-          var respuesta = response.data.solo;
-          var datos = response.data.persona;
-
-          if (respuesta == 2) {
-            me.llenarCamposSacerdote(datos);
-          }
-        })["catch"](function (error) {
-          console.log(error);
-        });
-      }
-    },
-    //Este método sirve para buscar si algun realizante quiere volverse a casar
-    encuentraNovio: function encuentraNovio(id) {
-      var sw = 0;
-
-      for (var i = 0; i < this.arrayMatrimonio1.length; i++) {
-        if (this.arrayMatrimonio1[i].id_realizante1 == id) {
-          sw = true;
+        if (respuesta == 2) {
+          me.llenarCamposNovio(datos);
         }
-      }
-      /* for(var i=0;i<this.arrayMatrimonio1.length;i++){
-          if(this.arrayMatrimonio1[i].id_realizante2==id){
-              sw=true;
-          }
-      } */
+      })["catch"](function (error) {
+        console.log(error);
+      });
+    }
+    /* vm.novioNom === 'mostrar';
+    vm.novioAp === 'mostrar'; */
 
+  }), _defineProperty(_methods, "llenarCamposNovia", function llenarCamposNovia() {
+    var data = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];
+    this.noviaNom = data['nombre_persona'];
+    this.noviaAp = data['apellido_persona'];
+    this.id_realizante2 = data['id'];
+  }), _defineProperty(_methods, "noviaDui", function noviaDui() {
+    var me = this;
+    var d = this.noviaD;
 
-      return sw;
-    },
+    if (d != '') {
+      var url = '/persona/duimujer?dui=' + d;
+      axios.get(url).then(function (response) {
+        var respuesta = response.data.solo;
+        var datos = response.data.persona;
 
-    /* encuentraNovia(id){
-        var sw=0;
-        for(var i=0;i<this.arrayMatrimonio1.length;i++){
-            if(this.arrayMatrimonio1[i].id_realizante2==id){
-                sw=true;
-            }
+        if (respuesta == 2) {
+          me.llenarCamposNovia(datos);
         }
-        return sw;
-    }, */
-    //No se borra este wey!!! Este si sirve :v
-    registrar: function registrar() {
-      if (this.validarMatrimonio1()) {
-        return;
+      })["catch"](function (error) {
+        console.log(error);
+      });
+    }
+  }), _defineProperty(_methods, "llenarCamposPadrino1", function llenarCamposPadrino1() {
+    var data = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];
+    this.pad1Nom = data['nombre_persona'];
+    this.pad1Ap = data['apellido_persona'];
+    this.id_padrino1 = data['id'];
+    this.pad1Sexo = data['sexo'];
+  }), _defineProperty(_methods, "pad1Dui", function pad1Dui() {
+    var me = this;
+    var d = this.pad1D;
+
+    if (d != '') {
+      var url = '/persona/duis?dui=' + d;
+      axios.get(url).then(function (response) {
+        var respuesta = response.data.solo;
+        var datos = response.data.persona;
+
+        if (respuesta == 2) {
+          me.llenarCamposPadrino1(datos);
+        }
+      })["catch"](function (error) {
+        console.log(error);
+      });
+    }
+  }), _defineProperty(_methods, "llenarCamposMadrina1", function llenarCamposMadrina1() {
+    var data = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];
+    this.mad1Nom = data['nombre_persona'];
+    this.mad1Ap = data['apellido_persona'];
+    this.id_madrina1 = data['id'];
+    this.mad1Sexo = data['sexo'];
+  }), _defineProperty(_methods, "mad1Dui", function mad1Dui() {
+    var me = this;
+    var d = this.mad1D;
+
+    if (d != '') {
+      var url = '/persona/duis?dui=' + d;
+      axios.get(url).then(function (response) {
+        var respuesta = response.data.solo;
+        var datos = response.data.persona;
+
+        if (respuesta == 2) {
+          me.llenarCamposMadrina1(datos);
+        }
+      })["catch"](function (error) {
+        console.log(error);
+      });
+    }
+  }), _defineProperty(_methods, "llenarCamposPadrino2", function llenarCamposPadrino2() {
+    var data = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];
+    this.pad2Nom = data['nombre_persona'];
+    this.pad2Ap = data['apellido_persona'];
+    this.id_padrino2 = data['id'];
+    this.pad2Sexo = data['sexo'];
+  }), _defineProperty(_methods, "pad2Dui", function pad2Dui() {
+    var me = this;
+    var d = this.pad2D;
+
+    if (d != '') {
+      var url = '/persona/duis?dui=' + d;
+      axios.get(url).then(function (response) {
+        var respuesta = response.data.solo;
+        var datos = response.data.persona;
+
+        if (respuesta == 2) {
+          me.llenarCamposPadrino2(datos);
+        }
+      })["catch"](function (error) {
+        console.log(error);
+      });
+    }
+  }), _defineProperty(_methods, "llenarCamposMadrina2", function llenarCamposMadrina2() {
+    var data = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];
+    this.mad2Nom = data['nombre_persona'];
+    this.mad2Ap = data['apellido_persona'];
+    this.id_madrina2 = data['id'];
+    this.mad2Sexo = data['sexo'];
+  }), _defineProperty(_methods, "mad2Dui", function mad2Dui() {
+    var me = this;
+    var d = this.mad2D;
+
+    if (d != '') {
+      var url = '/persona/duis?dui=' + d;
+      axios.get(url).then(function (response) {
+        var respuesta = response.data.solo;
+        var datos = response.data.persona;
+
+        if (respuesta == 2) {
+          me.llenarCamposMadrina2(datos);
+        }
+      })["catch"](function (error) {
+        console.log(error);
+      });
+    }
+  }), _defineProperty(_methods, "llenarCamposSacerdote", function llenarCamposSacerdote() {
+    var data = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];
+    this.sacerdoteNom = data['nombre_persona'];
+    this.sacerdoteAp = data['apellido_persona'];
+    this.id_sacerdote = data['id'];
+  }), _defineProperty(_methods, "sacerdoteDui", function sacerdoteDui() {
+    var me = this;
+    var d = this.sacerdoteD;
+
+    if (d != '') {
+      var url = '/persona/duihombre?dui=' + d;
+      axios.get(url).then(function (response) {
+        var respuesta = response.data.solo;
+        var datos = response.data.persona;
+
+        if (respuesta == 2) {
+          me.llenarCamposSacerdote(datos);
+        }
+      })["catch"](function (error) {
+        console.log(error);
+      });
+    }
+  }), _defineProperty(_methods, "encuentraNovio", function encuentraNovio(id) {
+    var sw = 0;
+
+    for (var i = 0; i < this.arrayMatrimonio1.length; i++) {
+      if (this.arrayMatrimonio1[i].id_realizante1 == id) {
+        sw = true;
       }
+    }
+    /* for(var i=0;i<this.arrayMatrimonio1.length;i++){
+        if(this.arrayMatrimonio1[i].id_realizante2==id){
+            sw=true;
+        }
+    } */
 
-      var me = this;
-      var novioD = this.novioD;
-      var noviaD = this.noviaD;
-      var idNovio = this.id_realizante1;
-      var idNovia = this.id_realizante2;
 
-      if (me.encuentraNovio(me.id_realizante1)) {
-        swal({
-          type: 'error',
-          title: 'Error...',
-          text: 'Uno de los dos novios ya tiene un expediente activo!'
-        });
-      } else {
-        if (idNovio == '') {
-          //Cuando No exista el id el novio
-          if (idNovia == '') {
-            //Cuando no exista el id de la novia
-            axios.put('/persona/registrar2', {
-              'tipo': '4.1',
-              'libro': this.libro,
-              'num_expediente': this.num_expediente,
-              'novioNom': this.novioNom.toUpperCase(),
-              'novioAp': this.novioAp.toUpperCase(),
-              'novioD': this.novioD,
-              'noviaNom': this.noviaNom.toUpperCase(),
-              'noviaAp': this.noviaAp.toUpperCase(),
-              'noviaD': this.noviaD,
-              'monto': this.ofrendaExp,
-              'idcate': this.idcare
-            }).then(function (response) {
-              //si todo funciona:
-              me.msjExito();
-              me.listarMatrimonio1();
-              me.cerrarModal();
-            })["catch"](function (error) {
-              console.log(error);
-            });
-          } else {
-            //Cuando si exista el id de la novia, pero No del novio
-            axios.put('/persona/registrar2', {
-              'tipo': '4.2',
-              'libro': this.libro,
-              'num_expediente': this.num_expediente,
-              'novioNom': this.novioNom.toUpperCase(),
-              'novioAp': this.novioAp.toUpperCase(),
-              'novioD': this.novioD,
-              'id_realizante2': this.id_realizante2,
-              'monto': this.ofrendaExp,
-              'idcate': this.idcare
-            }).then(function (response) {
-              //si todo funciona:
-              me.listarMatrimonio1();
-              me.cerrarModal();
-              me.msjExito();
-            })["catch"](function (error) {
-              console.log(error);
-            });
-          }
+    return sw;
+  }), _defineProperty(_methods, "registrar", function registrar() {
+    if (this.validarMatrimonio1()) {
+      return;
+    }
+
+    var me = this;
+    var novioD = this.novioD;
+    var noviaD = this.noviaD;
+    var idNovio = this.id_realizante1;
+    var idNovia = this.id_realizante2;
+
+    if (me.encuentraNovio(me.id_realizante1)) {
+      swal({
+        type: 'error',
+        title: 'Error...',
+        text: 'Uno de los dos novios ya tiene un expediente activo!'
+      });
+    } else {
+      if (idNovio == '') {
+        //Cuando No exista el id el novio
+        if (idNovia == '') {
+          //Cuando no exista el id de la novia
+          axios.put('/persona/registrar2', {
+            'tipo': '4.1',
+            'libro': this.libro,
+            'num_expediente': this.num_expediente,
+            'novioNom': this.novioNom.toUpperCase(),
+            'novioAp': this.novioAp.toUpperCase(),
+            'novioD': this.novioD,
+            'noviaNom': this.noviaNom.toUpperCase(),
+            'noviaAp': this.noviaAp.toUpperCase(),
+            'noviaD': this.noviaD,
+            'monto': this.ofrendaExp,
+            'idcate': this.idcare
+          }).then(function (response) {
+            //si todo funciona:
+            me.msjExito();
+            me.listarMatrimonio1();
+            me.cerrarModal();
+          })["catch"](function (error) {
+            console.log(error);
+          });
         } else {
-          //Sí existe el id del novio y...
-          if (idNovia == '') {
-            //Cuando no exista el id de la novia
-            axios.put('/persona/registrar2', {
-              'tipo': '4.3',
-              'libro': this.libro,
-              'num_expediente': this.num_expediente,
-              'noviaNom': this.noviaNom.toUpperCase(),
-              'noviaAp': this.noviaAp.toUpperCase(),
-              'noviaD': this.noviaD,
-              'id_realizante1': this.id_realizante1,
-              'monto': this.ofrendaExp,
-              'idcate': this.idcare
-            }).then(function (response) {
-              //si todo funciona:
-              me.listarMatrimonio1();
-              me.cerrarModal();
-              me.msjExito();
-            })["catch"](function (error) {
-              console.log(error);
-            });
-          } else {
-            //Cuando existen ambos novios
-            axios.put('/persona/registrar2', {
-              'tipo': '4.4',
-              'libro': this.libro,
-              'num_expediente': this.num_expediente,
-              'id_realizante1': this.id_realizante1,
-              'id_realizante2': this.id_realizante2,
-              'monto': this.ofrendaExp,
-              'idcate': this.idcare
-            }).then(function (response) {
-              //si todo funciona:
-              me.listarMatrimonio1();
-              me.cerrarModal();
-              me.msjExito();
-            })["catch"](function (error) {
-              console.log(error);
-            });
-          }
+          //Cuando si exista el id de la novia, pero No del novio
+          axios.put('/persona/registrar2', {
+            'tipo': '4.2',
+            'libro': this.libro,
+            'num_expediente': this.num_expediente,
+            'novioNom': this.novioNom.toUpperCase(),
+            'novioAp': this.novioAp.toUpperCase(),
+            'novioD': this.novioD,
+            'id_realizante2': this.id_realizante2,
+            'monto': this.ofrendaExp,
+            'idcate': this.idcare
+          }).then(function (response) {
+            //si todo funciona:
+            me.listarMatrimonio1();
+            me.cerrarModal();
+            me.msjExito();
+          })["catch"](function (error) {
+            console.log(error);
+          });
+        }
+      } else {
+        //Sí existe el id del novio y...
+        if (idNovia == '') {
+          //Cuando no exista el id de la novia
+          axios.put('/persona/registrar2', {
+            'tipo': '4.3',
+            'libro': this.libro,
+            'num_expediente': this.num_expediente,
+            'noviaNom': this.noviaNom.toUpperCase(),
+            'noviaAp': this.noviaAp.toUpperCase(),
+            'noviaD': this.noviaD,
+            'id_realizante1': this.id_realizante1,
+            'monto': this.ofrendaExp,
+            'idcate': this.idcare
+          }).then(function (response) {
+            //si todo funciona:
+            me.listarMatrimonio1();
+            me.cerrarModal();
+            me.msjExito();
+          })["catch"](function (error) {
+            console.log(error);
+          });
+        } else {
+          //Cuando existen ambos novios
+          axios.put('/persona/registrar2', {
+            'tipo': '4.4',
+            'libro': this.libro,
+            'num_expediente': this.num_expediente,
+            'id_realizante1': this.id_realizante1,
+            'id_realizante2': this.id_realizante2,
+            'monto': this.ofrendaExp,
+            'idcate': this.idcare
+          }).then(function (response) {
+            //si todo funciona:
+            me.listarMatrimonio1();
+            me.cerrarModal();
+            me.msjExito();
+          })["catch"](function (error) {
+            console.log(error);
+          });
         }
       }
-      /* }else{ //ESTO NO SE AUN PARA QUE SIRVE, por eso lo quité
-          me.guardarsacramento();
-      } */
+    }
+    /* }else{ //ESTO NO SE AUN PARA QUE SIRVE, por eso lo quité
+        me.guardarsacramento();
+    } */
 
-    },
-    guardarsacramento: function guardarsacramento() {
-      //Aun no se para que sirve :v
-      var me = this;
-      var tamaño = 0; //var length1 = this.id.length;
+  }), _defineProperty(_methods, "guardarsacramento", function guardarsacramento() {
+    //Aun no se para que sirve :v
+    var me = this;
+    var tamaño = 0; //var length1 = this.id.length;
 
-      axios.put('/sacramento/registrar', {
-        'fecha': this.fecharealizacion,
-        'realizante': this.id,
-        'sacerdote': this.nombresacerdote
-      }).then(function (response) {
-        //si todo funciona:
-        me.cerrarModal();
-        me.listarMatrimonio1();
-      })["catch"](function (error) {
-        console.log(error);
-      });
-    },
-    //ESTE ES PARA ACTUALIZAR.... ESTA ES LA BASURA QUE NO SERVIA
-    actualizarMatrimonio1: function actualizarMatrimonio1() {
-      //QUITAR ESTE BOTOOOOOOOOON
-      if (this.validarMatrimonio1()) {
-        return;
-      }
+    axios.put('/sacramento/registrar', {
+      'fecha': this.fecharealizacion,
+      'realizante': this.id,
+      'sacerdote': this.nombresacerdote
+    }).then(function (response) {
+      //si todo funciona:
+      me.cerrarModal();
+      me.listarMatrimonio1();
+    })["catch"](function (error) {
+      console.log(error);
+    });
+  }), _defineProperty(_methods, "actualizarMatrimonio1", function actualizarMatrimonio1() {
+    //QUITAR ESTE BOTOOOOOOOOON
+    if (this.validarMatrimonio1()) {
+      return;
+    }
 
-      var me = this;
-      var idNovio = this.id_realizante1;
-      var idNovia = this.id_realizante2;
-      axios.put('/persona/actualizar2', {
-        'tipo': '4',
-        'libro': this.libro,
-        'num_expediente': this.num_expediente,
-        'novioNom': this.novioNom.toUpperCase(),
-        'novioAp': this.novioAp.toUpperCase(),
-        'novioD': this.novioD,
-        'noviaNom': this.noviaNom.toUpperCase(),
-        'noviaAp': this.noviaAp.toUpperCase(),
-        'noviaD': this.noviaD,
-        'id': this.sacramento_id,
-        'id_realizante1': this.id_realizante1,
-        'id_realizante2': this.id_realizante2
-      }).then(function (response) {
-        //si todo funciona:
-        me.listarMatrimonio1();
-        me.cerrarModal();
-        me.msjExito();
-      })["catch"](function (error) {
-        console.log(error);
-      });
-    },
-    registrarBoda: function registrarBoda() {
-      if (this.validarModal3()) {
-        return;
-      }
+    var me = this;
+    var idNovio = this.id_realizante1;
+    var idNovia = this.id_realizante2;
+    axios.put('/persona/actualizar2', {
+      'tipo': '4',
+      'libro': this.libro,
+      'num_expediente': this.num_expediente,
+      'novioNom': this.novioNom.toUpperCase(),
+      'novioAp': this.novioAp.toUpperCase(),
+      'novioD': this.novioD,
+      'noviaNom': this.noviaNom.toUpperCase(),
+      'noviaAp': this.noviaAp.toUpperCase(),
+      'noviaD': this.noviaD,
+      'id': this.sacramento_id,
+      'id_realizante1': this.id_realizante1,
+      'id_realizante2': this.id_realizante2
+    }).then(function (response) {
+      //si todo funciona:
+      me.listarMatrimonio1();
+      me.cerrarModal();
+      me.msjExito();
+    })["catch"](function (error) {
+      console.log(error);
+    });
+  }), _defineProperty(_methods, "registrarBoda", function registrarBoda() {
+    if (this.validarModal3()) {
+      return;
+    }
 
-      var me = this;
-      var sacerdoteD = this.sacerdoteD;
-      var pad1D = this.pad1D;
-      var mad1D = this.mad1D;
-      var pad2D = this.pad2D;
-      var mad2D = this.mad2D;
-      var id_sacerdote = this.id_sacerdote;
-      var cargosacerdote = this.cargosacerdote;
-      var id_padrino1 = this.id_padrino1;
-      var id_madrina1 = this.id_madrina1;
-      var id_padrino2 = this.id_padrino2;
-      var id_madrina2 = this.id_madrina2;
-      var fecha_realizacion = this.fecha_realizacion;
-      var id_iglesia = this.id_iglesia;
+    var me = this;
+    var sacerdoteD = this.sacerdoteD;
+    var pad1D = this.pad1D;
+    var mad1D = this.mad1D;
+    var pad2D = this.pad2D;
+    var mad2D = this.mad2D;
+    var id_sacerdote = this.id_sacerdote;
+    var cargosacerdote = this.cargosacerdote;
+    var id_padrino1 = this.id_padrino1;
+    var id_madrina1 = this.id_madrina1;
+    var id_padrino2 = this.id_padrino2;
+    var id_madrina2 = this.id_madrina2;
+    var fecha_realizacion = this.fecha_realizacion;
+    var id_iglesia = this.id_iglesia;
 
-      if (mad2D == '') {
-        if (pad2D == '') {
-          if (mad1D == '') {
-            //guardar 1 padrino
+    if (mad2D == '') {
+      if (pad2D == '') {
+        if (mad1D == '') {
+          //guardar 1 padrino
+          if (id_padrino1 == '') {
+            //creamos el pad1
+            this.tipo = 1;
+          } else {
+            //recuperamos el pad1
+            this.tipo = 2;
+          } //GUARDAR EN BASE SOLO 1 PADRINO
+
+
+          axios.put('/sacramento/registrarboda', {
+            'tipo': this.tipo,
+            'id': this.sacramento_id,
+            'fecha_realizacion': this.fecha_realizacion,
+            'id_iglesia': this.id_iglesia,
+            'pad1Nom': this.pad1Nom.toUpperCase(),
+            'pad1Ap': this.pad1Ap.toUpperCase(),
+            'pad1D': this.pad1D,
+            'pad1Sexo': this.pad1Sexo,
+            'id_sacerdote': this.idsacerdote,
+            'titulo': this.cargosacerdote,
+            'id_padrino1': this.id_padrino1,
+            'monto': this.monto,
+            'idcate': this.idcare
+          }).then(function (response) {
+            //si todo funciona:
+            me.listarMatrimonio1();
+            me.cerrarModal3();
+            me.msjExito();
+          })["catch"](function (error) {
+            console.log(error);
+          });
+        } else {
+          //guardar 2 padrinos
+          if (id_madrina1 == '') {
             if (id_padrino1 == '') {
-              //creamos el pad1
-              this.tipo = 1;
+              //creamos mad1 y pad1
+              this.tipo = 3;
             } else {
-              //recuperamos el pad1
-              this.tipo = 2;
-            } //GUARDAR EN BASE SOLO 1 PADRINO
-
-
-            axios.put('/sacramento/registrarboda', {
-              'tipo': this.tipo,
-              'id': this.sacramento_id,
-              'fecha_realizacion': this.fecha_realizacion,
-              'id_iglesia': this.id_iglesia,
-              'pad1Nom': this.pad1Nom.toUpperCase(),
-              'pad1Ap': this.pad1Ap.toUpperCase(),
-              'pad1D': this.pad1D,
-              'pad1Sexo': this.pad1Sexo,
-              'id_sacerdote': this.idsacerdote,
-              'titulo': this.cargosacerdote,
-              'id_padrino1': this.id_padrino1,
-              'monto': this.monto,
-              'idcate': this.idcare
-            }).then(function (response) {
-              //si todo funciona:
-              me.listarMatrimonio1();
-              me.cerrarModal3();
-              me.msjExito();
-            })["catch"](function (error) {
-              console.log(error);
-            });
-          } else {
-            //guardar 2 padrinos
-            if (id_madrina1 == '') {
-              if (id_padrino1 == '') {
-                //creamos mad1 y pad1
-                this.tipo = 3;
-              } else {
-                //creamos mad1 y recuperamos pad1
-                this.tipo = 4;
-              }
-            } else {
-              if (id_padrino1 == '') {
-                //creamos pad1 y recuperamos mad1
-                this.tipo = 5;
-              } else {
-                //recuperamos pad1 y mad1
-                this.tipo = 6;
-              }
-            } //GUARDAR EN BASE SOLO 2 PADRINOS
-
-
-            axios.put('/sacramento/registrarboda', {
-              'tipo': this.tipo,
-              'id': this.sacramento_id,
-              'fecha_realizacion': this.fecha_realizacion,
-              'id_iglesia': this.id_iglesia,
-              'pad1Nom': this.pad1Nom.toUpperCase(),
-              'pad1Ap': this.pad1Ap.toUpperCase(),
-              'pad1D': this.pad1D,
-              'pad1Sexo': this.pad1Sexo,
-              'mad1Nom': this.mad1Nom.toUpperCase(),
-              'mad1Ap': this.mad1Ap.toUpperCase(),
-              'mad1D': this.mad1D,
-              'mad1Sexo': this.mad1Sexo,
-              'id_sacerdote': this.idsacerdote,
-              'titulo': this.cargosacerdote,
-              'id_padrino1': this.id_padrino1,
-              'id_madrina1': this.id_madrina1,
-              'monto': this.monto,
-              'idcate': this.idcare
-            }).then(function (response) {
-              //si todo funciona:
-              me.listarMatrimonio1();
-              me.cerrarModal3();
-              me.msjExito();
-            })["catch"](function (error) {
-              console.log(error);
-            });
-          }
-        } else {
-          //guardar 3 padrinos
-          if (id_padrino2 == '') {
-            if (id_madrina1 == '') {
-              if (id_padrino1 == '') {
-                //creamos mad1, pad1 y pad2
-                this.tipo = 7;
-              } else {
-                //creamos mad1 y pad2; recuperamos pad1
-                this.tipo = 8;
-              }
-            } else {
-              if (id_padrino1 == '') {
-                //creamos pad1 y pad2; recuperamos mad1
-                this.tipo = 9;
-              } else {
-                //creamos pad2; recuperamos pad1 y mad1
-                this.tipo = 10;
-              }
+              //creamos mad1 y recuperamos pad1
+              this.tipo = 4;
             }
           } else {
-            if (id_madrina1 == '') {
-              if (id_padrino1 == '') {
-                //creamos mad1 y pad1; recuperamos pad2
-                this.tipo = 11;
-              } else {
-                //creamos mad1; recuperamos pad1 y pad2
-                this.tipo = 12;
-              }
+            if (id_padrino1 == '') {
+              //creamos pad1 y recuperamos mad1
+              this.tipo = 5;
             } else {
-              if (id_padrino1 == '') {
-                //creamos pad1; recuperamos mad1 y pad2
-                this.tipo = 13;
-              } else {
-                //recuperamos pad1, pad2 y mad1
-                this.tipo = 14;
-              }
+              //recuperamos pad1 y mad1
+              this.tipo = 6;
             }
-          } //GUARDAR EN BASE SOLO 3 PADRINOS
+          } //GUARDAR EN BASE SOLO 2 PADRINOS
 
 
           axios.put('/sacramento/registrarboda', {
@@ -23215,15 +23167,10 @@ __webpack_require__.r(__webpack_exports__);
             'mad1Ap': this.mad1Ap.toUpperCase(),
             'mad1D': this.mad1D,
             'mad1Sexo': this.mad1Sexo,
-            'pad2Nom': this.pad2Nom.toUpperCase(),
-            'pad2Ap': this.pad2Ap.toUpperCase(),
-            'pad2D': this.pad2D,
-            'pad2Sexo': this.pad2Sexo,
             'id_sacerdote': this.idsacerdote,
             'titulo': this.cargosacerdote,
             'id_padrino1': this.id_padrino1,
             'id_madrina1': this.id_madrina1,
-            'id_padrino2': this.id_padrino2,
             'monto': this.monto,
             'idcate': this.idcare
           }).then(function (response) {
@@ -23236,84 +23183,44 @@ __webpack_require__.r(__webpack_exports__);
           });
         }
       } else {
-        //guardar 4 padrinos
-        if (id_madrina2 == '') {
-          if (id_padrino2 == '') {
-            if (id_madrina1 == '') {
-              if (id_padrino1 == '') {
-                //creamos los 4
-                this.tipo = 15;
-              } else {
-                // Recuperamos pad1, creamos los otros 3
-                this.tipo = 16;
-              }
+        //guardar 3 padrinos
+        if (id_padrino2 == '') {
+          if (id_madrina1 == '') {
+            if (id_padrino1 == '') {
+              //creamos mad1, pad1 y pad2
+              this.tipo = 7;
             } else {
-              if (id_padrino1 == '') {
-                //Recuperaremos madrina1; crearemos los otros 3
-                this.tipo = 17;
-              } else {
-                //recuperaremos madrina 1 y padrino 1; Y creamos los otros 2
-                this.tipo = 18;
-              }
+              //creamos mad1 y pad2; recuperamos pad1
+              this.tipo = 8;
             }
           } else {
-            if (id_madrina1 == '') {
-              if (id_padrino1 == '') {
-                //Solo , padrino2 y creamos los otros 3
-                this.tipo = 19;
-              } else {
-                //, padrino1 y padrino2; creamos los otros 2
-                this.tipo = 20;
-              }
+            if (id_padrino1 == '') {
+              //creamos pad1 y pad2; recuperamos mad1
+              this.tipo = 9;
             } else {
-              if (id_padrino1 == '') {
-                //, madrina1 y padrino2; creamos los otros 2
-                this.tipo = 21;
-              } else {
-                //recuperaremos id del sacerdote, pad1, pad2 y mad1; creamos el otro
-                this.tipo = 22;
-              }
+              //creamos pad2; recuperamos pad1 y mad1
+              this.tipo = 10;
             }
           }
         } else {
-          if (id_padrino2 == '') {
-            if (id_madrina1 == '') {
-              if (id_padrino1 == '') {
-                //Recuperamos id sacerdote y madrina2; Creamos los otros 3
-                this.tipo = 23;
-              } else {
-                //, padrino1 y madrina2; Creamos los otros 2
-                this.tipo = 24;
-              }
+          if (id_madrina1 == '') {
+            if (id_padrino1 == '') {
+              //creamos mad1 y pad1; recuperamos pad2
+              this.tipo = 11;
             } else {
-              if (id_padrino1 == '') {
-                //Recuperamos id sacerdote, madrina1 y madrina2; creamos los otros 2
-                this.tipo = 25;
-              } else {
-                //recuperaremos mad1, mad2 y pad1; creamos el otro
-                this.tipo = 26;
-              }
+              //creamos mad1; recuperamos pad1 y pad2
+              this.tipo = 12;
             }
           } else {
-            if (id_madrina1 == '') {
-              if (id_padrino1 == '') {
-                //, madrina2 y padrino2; creamos los otros2
-                this.tipo = 27;
-              } else {
-                //, madrina2, padrino1 y padrino2; creamos el otro
-                this.tipo = 28;
-              }
+            if (id_padrino1 == '') {
+              //creamos pad1; recuperamos mad1 y pad2
+              this.tipo = 13;
             } else {
-              if (id_padrino1 == '') {
-                //, madrina1, madrina2 y padrino2; creamos el otro
-                this.tipo = 29;
-              } else {
-                //recuperaremos TODOS PORQUE YA EXISTEN
-                this.tipo = 30;
-              }
+              //recuperamos pad1, pad2 y mad1
+              this.tipo = 14;
             }
           }
-        } //GUARDAR EN BASE LOS 4 PADRINOS
+        } //GUARDAR EN BASE SOLO 3 PADRINOS
 
 
         axios.put('/sacramento/registrarboda', {
@@ -23333,16 +23240,11 @@ __webpack_require__.r(__webpack_exports__);
           'pad2Ap': this.pad2Ap.toUpperCase(),
           'pad2D': this.pad2D,
           'pad2Sexo': this.pad2Sexo,
-          'mad2Nom': this.mad2Nom.toUpperCase(),
-          'mad2Ap': this.mad2Ap.toUpperCase(),
-          'mad2D': this.mad2D,
-          'mad2Sexo': this.mad2Sexo,
           'id_sacerdote': this.idsacerdote,
           'titulo': this.cargosacerdote,
           'id_padrino1': this.id_padrino1,
           'id_madrina1': this.id_madrina1,
           'id_padrino2': this.id_padrino2,
-          'id_madrina2': this.id_madrina2,
           'monto': this.monto,
           'idcate': this.idcare
         }).then(function (response) {
@@ -23353,528 +23255,617 @@ __webpack_require__.r(__webpack_exports__);
         })["catch"](function (error) {
           console.log(error);
         });
-      } //fin del else (caso que están todos los padrinos)
-
-
-      me.cerrarModal3();
-    },
-    //este lo ocupa el método Registrar
-    validarMatrimonio1: function validarMatrimonio1() {
-      this.errorMatrimonio1 = 0;
-      this.errorMostrarMsjMatrimonio1 = [];
-      var patron = /^[a-zA-ZÑñÁáÉéÍíÓóÚúÜü\s]+$/;
-      var patrondui = /^\d{9}$/;
-      var soloIntPositivo = /^\d*$/;
-      var decimales = /^\d+(\.\d{0,2})?$/; //Comprueba que las celdas no estén vacías
-
-      if (this.libro == '' || this.num_expediente == '' || this.novioD == '' || this.novioNom == '' || this.novioAp == '' || this.noviaD == '' || this.noviaNom == '' || this.noviaAp == '' || this.ofrendaExp == '') {
-        this.errorMostrarMsjMatrimonio1.push("Todos los datos son obligatorios");
-      } else {
-        if (!soloIntPositivo.test(this.libro) || !soloIntPositivo.test(this.num_expediente)) this.errorMostrarMsjMatrimonio1.push("En libro y número de expediente solo se permiten números enteros positivos"); //if(!patrondui.test(this.novioD) || !patrondui.test(this.noviaD))this.errorMostrarMsjMatrimonio1.push("Error, El dui debe contener 9 números");
-
-        if (!patron.test(this.novioNom) || !patron.test(this.novioAp)) this.errorMostrarMsjMatrimonio1.push("Los datos del novio deben contener letras solamente");
-        if (!patron.test(this.noviaNom) || !patron.test(this.noviaAp)) this.errorMostrarMsjMatrimonio1.push("Los datos de la novia debe contener letras solamente");
-        if (!decimales.test(this.ofrendaExp)) this.errorMostrarMsjMatrimonio1.push("La ofrenda debe de ser un número positivo");
-        if (this.idcare == 0) this.errorMostrarMsjMatrimonio1.push("Debe elegir una categoría");
       }
-
-      if (this.errorMostrarMsjMatrimonio1.length) this.errorMatrimonio1 = 1;
-      return this.errorMatrimonio1;
-    },
-    //este es para el modal 2 (fecha de realización y lugar)
-    validarModal2: function validarModal2() {
-      this.errorModal2 = 0;
-      this.errorMostrarMsjModal2 = [];
-      var fecha = new Date();
-      var actualYear = fecha.getFullYear();
-      var actualMes = fecha.getMonth();
-      var values = this.fecha_realizacion.split("-");
-      var anio = values[0];
-
-      if (!this.fecha_realizacion) {
-        this.errorMostrarMsjModal2.push("Seleccione la fecha de realización");
-      } else {
-        if (anio < 1989) this.errorMostrarMsjModal2.push("El año debe de ser mayor a 1989");
-        if (actualYear + 1 < anio) this.errorMostrarMsjModal2.push("El año debe ser menor o igual al " + (actualYear + 1));
-      }
-
-      if (this.id_iglesia == 0) this.errorMostrarMsjModal2.push("Seleccione una iglesia");
-      if (this.idsacerdote == 0) this.errorMostrarMsjModal2.push("Seleccione el encargado de la ceremonia");
-      if (this.cargosacerdote == 0) this.errorMostrarMsjModal2.push("Seleccione el cargo del encargado");
-      if (this.errorMostrarMsjModal2.length) this.errorModal2 = 1;
-      return this.errorModal2;
-    },
-    //este es para el modal 3 (datos de los padrinos y cobro)
-    validarModal3: function validarModal3() {
-      this.errorModal3 = 0;
-      this.errorMostrarMsjModal3 = [];
-      var patron = /^[a-zA-ZÑñÁáÉéÍíÓóÚúÜü\s]+$/;
-      var patrondui = /^\d{9}$/; //var soloIntPositivo= /^\d*$/;
-
-      var decimales = /^\d+(\.\d{0,2})?$/; //Esta súpervalidación ayuda a que sea imposible para el usuario dejar "padrinos en blanco"... así solo podrá ingresarlos en orden
-
-      if (!this.pad1D || !this.pad1Nom || !this.pad1Ap || this.pad1Sexo == 0) {
-        this.errorMostrarMsjModal3.push("Complete los datos de la persona 1");
-      } else {
-        if (!patron.test(this.pad1Nom) || !patron.test(this.pad1Ap)) this.errorMostrarMsjModal3.push("Los datos de la persona 1 debe contener letras solamente"); //if(!patrondui.test(this.pad1D))this.errorMostrarMsjModal3.push("Error, El dui de la persona 1 debe contener 9 números");
-
-        if (!(!this.mad1D && !this.mad1Nom && !this.mad1Ap && this.mad1Sexo == 0 && !this.pad2D && !this.pad2Nom && !this.pad2Ap && this.pad2Sexo == 0 && !this.mad2D && !this.mad2Nom && !this.mad2Ap && this.mad2Sexo == 0)) {
-          if (!this.mad1D || !this.mad1Nom || !this.mad1Ap || this.mad1Sexo == 0) {
-            this.errorMostrarMsjModal3.push("Complete los datos de la persona 2");
+    } else {
+      //guardar 4 padrinos
+      if (id_madrina2 == '') {
+        if (id_padrino2 == '') {
+          if (id_madrina1 == '') {
+            if (id_padrino1 == '') {
+              //creamos los 4
+              this.tipo = 15;
+            } else {
+              // Recuperamos pad1, creamos los otros 3
+              this.tipo = 16;
+            }
           } else {
-            if (!patron.test(this.mad1Nom) || !patron.test(this.mad1Ap)) this.errorMostrarMsjModal3.push("Los datos de la persona 2 debe contener letras solamente"); //if(!patrondui.test(this.mad1D))this.errorMostrarMsjModal3.push("Error, El dui de la persona 2 debe contener 9 números");
+            if (id_padrino1 == '') {
+              //Recuperaremos madrina1; crearemos los otros 3
+              this.tipo = 17;
+            } else {
+              //recuperaremos madrina 1 y padrino 1; Y creamos los otros 2
+              this.tipo = 18;
+            }
+          }
+        } else {
+          if (id_madrina1 == '') {
+            if (id_padrino1 == '') {
+              //Solo , padrino2 y creamos los otros 3
+              this.tipo = 19;
+            } else {
+              //, padrino1 y padrino2; creamos los otros 2
+              this.tipo = 20;
+            }
+          } else {
+            if (id_padrino1 == '') {
+              //, madrina1 y padrino2; creamos los otros 2
+              this.tipo = 21;
+            } else {
+              //recuperaremos id del sacerdote, pad1, pad2 y mad1; creamos el otro
+              this.tipo = 22;
+            }
+          }
+        }
+      } else {
+        if (id_padrino2 == '') {
+          if (id_madrina1 == '') {
+            if (id_padrino1 == '') {
+              //Recuperamos id sacerdote y madrina2; Creamos los otros 3
+              this.tipo = 23;
+            } else {
+              //, padrino1 y madrina2; Creamos los otros 2
+              this.tipo = 24;
+            }
+          } else {
+            if (id_padrino1 == '') {
+              //Recuperamos id sacerdote, madrina1 y madrina2; creamos los otros 2
+              this.tipo = 25;
+            } else {
+              //recuperaremos mad1, mad2 y pad1; creamos el otro
+              this.tipo = 26;
+            }
+          }
+        } else {
+          if (id_madrina1 == '') {
+            if (id_padrino1 == '') {
+              //, madrina2 y padrino2; creamos los otros2
+              this.tipo = 27;
+            } else {
+              //, madrina2, padrino1 y padrino2; creamos el otro
+              this.tipo = 28;
+            }
+          } else {
+            if (id_padrino1 == '') {
+              //, madrina1, madrina2 y padrino2; creamos el otro
+              this.tipo = 29;
+            } else {
+              //recuperaremos TODOS PORQUE YA EXISTEN
+              this.tipo = 30;
+            }
+          }
+        }
+      } //GUARDAR EN BASE LOS 4 PADRINOS
 
-            if (!(!this.pad2D && !this.pad2Nom && !this.pad2Ap && this.pad2Sexo == 0 && !this.mad2D && !this.mad2Nom && !this.mad2Ap && this.mad2Sexo == 0)) {
-              if (!this.pad2D || !this.pad2Nom || !this.pad2Ap || this.pad2Sexo == 0) {
-                this.errorMostrarMsjModal3.push("Complete los datos de la persona 3");
-              } else {
-                if (!patron.test(this.pad2Nom) || !patron.test(this.pad2Ap)) this.errorMostrarMsjModal3.push("Los datos de la persona 3 debe contener letras solamente"); //if(!patrondui.test(this.pad2D))this.errorMostrarMsjModal3.push("Error, El dui de la persona 3 debe contener 9 números");
 
-                if (!(!this.mad2D && !this.mad2Nom && !this.mad2Ap && this.mad2Sexo == 0)) {
-                  if (!this.mad2D || !this.mad2Nom || !this.mad2Ap || this.mad2Sexo == 0) {
-                    this.errorMostrarMsjModal3.push("Complete los datos de la persona 4");
-                  } else {
-                    if (!patron.test(this.mad2Nom) || !patron.test(this.mad2Ap)) this.errorMostrarMsjModal3.push("Los datos de la persona 4 debe contener letras solamente"); //if(!patrondui.test(this.mad2D))this.errorMostrarMsjModal3.push("Error, El dui de la persona 4 debe contener 9 números");
-                  }
+      axios.put('/sacramento/registrarboda', {
+        'tipo': this.tipo,
+        'id': this.sacramento_id,
+        'fecha_realizacion': this.fecha_realizacion,
+        'id_iglesia': this.id_iglesia,
+        'pad1Nom': this.pad1Nom.toUpperCase(),
+        'pad1Ap': this.pad1Ap.toUpperCase(),
+        'pad1D': this.pad1D,
+        'pad1Sexo': this.pad1Sexo,
+        'mad1Nom': this.mad1Nom.toUpperCase(),
+        'mad1Ap': this.mad1Ap.toUpperCase(),
+        'mad1D': this.mad1D,
+        'mad1Sexo': this.mad1Sexo,
+        'pad2Nom': this.pad2Nom.toUpperCase(),
+        'pad2Ap': this.pad2Ap.toUpperCase(),
+        'pad2D': this.pad2D,
+        'pad2Sexo': this.pad2Sexo,
+        'mad2Nom': this.mad2Nom.toUpperCase(),
+        'mad2Ap': this.mad2Ap.toUpperCase(),
+        'mad2D': this.mad2D,
+        'mad2Sexo': this.mad2Sexo,
+        'id_sacerdote': this.idsacerdote,
+        'titulo': this.cargosacerdote,
+        'id_padrino1': this.id_padrino1,
+        'id_madrina1': this.id_madrina1,
+        'id_padrino2': this.id_padrino2,
+        'id_madrina2': this.id_madrina2,
+        'monto': this.monto,
+        'idcate': this.idcare
+      }).then(function (response) {
+        //si todo funciona:
+        me.listarMatrimonio1();
+        me.cerrarModal3();
+        me.msjExito();
+      })["catch"](function (error) {
+        console.log(error);
+      });
+    } //fin del else (caso que están todos los padrinos)
+
+
+    me.cerrarModal3();
+  }), _defineProperty(_methods, "validarMatrimonio1", function validarMatrimonio1() {
+    this.errorMatrimonio1 = 0;
+    this.errorMostrarMsjMatrimonio1 = [];
+    var patron = /^[a-zA-ZÑñÁáÉéÍíÓóÚúÜü\s]+$/;
+    var patrondui = /^\d{9}$/;
+    var soloIntPositivo = /^\d*$/;
+    var decimales = /^\d+(\.\d{0,2})?$/; //Comprueba que las celdas no estén vacías
+
+    if (this.libro == '' || this.num_expediente == '' || this.novioD == '' || this.novioNom == '' || this.novioAp == '' || this.noviaD == '' || this.noviaNom == '' || this.noviaAp == '' || this.ofrendaExp == '') {
+      this.errorMostrarMsjMatrimonio1.push("Todos los datos son obligatorios");
+    } else {
+      if (!soloIntPositivo.test(this.libro) || !soloIntPositivo.test(this.num_expediente)) this.errorMostrarMsjMatrimonio1.push("En libro y número de expediente solo se permiten números enteros positivos"); //if(!patrondui.test(this.novioD) || !patrondui.test(this.noviaD))this.errorMostrarMsjMatrimonio1.push("Error, El dui debe contener 9 números");
+
+      if (!patron.test(this.novioNom) || !patron.test(this.novioAp)) this.errorMostrarMsjMatrimonio1.push("Los datos del novio deben contener letras solamente");
+      if (!patron.test(this.noviaNom) || !patron.test(this.noviaAp)) this.errorMostrarMsjMatrimonio1.push("Los datos de la novia debe contener letras solamente");
+      if (!decimales.test(this.ofrendaExp)) this.errorMostrarMsjMatrimonio1.push("La ofrenda debe de ser un número positivo");
+      if (this.idcare == 0) this.errorMostrarMsjMatrimonio1.push("Debe elegir una categoría");
+    }
+
+    if (this.errorMostrarMsjMatrimonio1.length) this.errorMatrimonio1 = 1;
+    return this.errorMatrimonio1;
+  }), _defineProperty(_methods, "validarModal2", function validarModal2() {
+    this.errorModal2 = 0;
+    this.errorMostrarMsjModal2 = [];
+    var fecha = new Date();
+    var actualYear = fecha.getFullYear();
+    var actualMes = fecha.getMonth();
+    var values = this.fecha_realizacion.split("-");
+    var anio = values[0];
+
+    if (!this.fecha_realizacion) {
+      this.errorMostrarMsjModal2.push("Seleccione la fecha de realización");
+    } else {
+      if (anio < 1989) this.errorMostrarMsjModal2.push("El año debe de ser mayor a 1989");
+      if (actualYear + 1 < anio) this.errorMostrarMsjModal2.push("El año debe ser menor o igual al " + (actualYear + 1));
+    }
+
+    if (this.id_iglesia == 0) this.errorMostrarMsjModal2.push("Seleccione una iglesia");
+    if (this.idsacerdote == 0) this.errorMostrarMsjModal2.push("Seleccione el encargado de la ceremonia");
+    if (this.cargosacerdote == 0) this.errorMostrarMsjModal2.push("Seleccione el cargo del encargado");
+    if (this.errorMostrarMsjModal2.length) this.errorModal2 = 1;
+    return this.errorModal2;
+  }), _defineProperty(_methods, "validarModal3", function validarModal3() {
+    this.errorModal3 = 0;
+    this.errorMostrarMsjModal3 = [];
+    var patron = /^[a-zA-ZÑñÁáÉéÍíÓóÚúÜü\s]+$/;
+    var patrondui = /^\d{9}$/; //var soloIntPositivo= /^\d*$/;
+
+    var decimales = /^\d+(\.\d{0,2})?$/; //Esta súpervalidación ayuda a que sea imposible para el usuario dejar "padrinos en blanco"... así solo podrá ingresarlos en orden
+
+    if (!this.pad1D || !this.pad1Nom || !this.pad1Ap || this.pad1Sexo == 0) {
+      this.errorMostrarMsjModal3.push("Complete los datos de la persona 1");
+    } else {
+      if (!patron.test(this.pad1Nom) || !patron.test(this.pad1Ap)) this.errorMostrarMsjModal3.push("Los datos de la persona 1 debe contener letras solamente"); //if(!patrondui.test(this.pad1D))this.errorMostrarMsjModal3.push("Error, El dui de la persona 1 debe contener 9 números");
+
+      if (!(!this.mad1D && !this.mad1Nom && !this.mad1Ap && this.mad1Sexo == 0 && !this.pad2D && !this.pad2Nom && !this.pad2Ap && this.pad2Sexo == 0 && !this.mad2D && !this.mad2Nom && !this.mad2Ap && this.mad2Sexo == 0)) {
+        if (!this.mad1D || !this.mad1Nom || !this.mad1Ap || this.mad1Sexo == 0) {
+          this.errorMostrarMsjModal3.push("Complete los datos de la persona 2");
+        } else {
+          if (!patron.test(this.mad1Nom) || !patron.test(this.mad1Ap)) this.errorMostrarMsjModal3.push("Los datos de la persona 2 debe contener letras solamente"); //if(!patrondui.test(this.mad1D))this.errorMostrarMsjModal3.push("Error, El dui de la persona 2 debe contener 9 números");
+
+          if (!(!this.pad2D && !this.pad2Nom && !this.pad2Ap && this.pad2Sexo == 0 && !this.mad2D && !this.mad2Nom && !this.mad2Ap && this.mad2Sexo == 0)) {
+            if (!this.pad2D || !this.pad2Nom || !this.pad2Ap || this.pad2Sexo == 0) {
+              this.errorMostrarMsjModal3.push("Complete los datos de la persona 3");
+            } else {
+              if (!patron.test(this.pad2Nom) || !patron.test(this.pad2Ap)) this.errorMostrarMsjModal3.push("Los datos de la persona 3 debe contener letras solamente"); //if(!patrondui.test(this.pad2D))this.errorMostrarMsjModal3.push("Error, El dui de la persona 3 debe contener 9 números");
+
+              if (!(!this.mad2D && !this.mad2Nom && !this.mad2Ap && this.mad2Sexo == 0)) {
+                if (!this.mad2D || !this.mad2Nom || !this.mad2Ap || this.mad2Sexo == 0) {
+                  this.errorMostrarMsjModal3.push("Complete los datos de la persona 4");
+                } else {
+                  if (!patron.test(this.mad2Nom) || !patron.test(this.mad2Ap)) this.errorMostrarMsjModal3.push("Los datos de la persona 4 debe contener letras solamente"); //if(!patrondui.test(this.mad2D))this.errorMostrarMsjModal3.push("Error, El dui de la persona 4 debe contener 9 números");
                 }
               }
             }
           }
         }
       }
+    }
 
-      if (this.monto == "") {
-        this.errorMostrarMsjModal3.push("Por favor ingrese la ofrenda por realización del matrimonio");
-      } else {
-        if (!decimales.test(this.monto)) this.errorMostrarMsjModal3.push("La ofrenda debe de ser un número positivo");
-        if (this.idcare == 0) this.errorMostrarMsjModal3.push("Seleccione una Categoría");
-      } //falta validar para que solo sean números
+    if (this.monto == "") {
+      this.errorMostrarMsjModal3.push("Por favor ingrese la ofrenda por realización del matrimonio");
+    } else {
+      if (!decimales.test(this.monto)) this.errorMostrarMsjModal3.push("La ofrenda debe de ser un número positivo");
+      if (this.idcare == 0) this.errorMostrarMsjModal3.push("Seleccione una Categoría");
+    } //falta validar para que solo sean números
 
 
-      if (this.errorMostrarMsjModal3.length) this.errorModal3 = 1;
-      return this.errorModal3;
-    },
-    validarModal4: function validarModal4() {
-      this.errorModal4 = 0;
-      this.errorMostrarMsjModal4 = [];
-      var RE = /^\d*(\.\d{1})?\d{0,1}$/;
-      this.conceptoim;
-      this.montoConstancia; //if(this.cobrado!=true)this.errorMostrarMsjModal4.push("Debe cobrar la solicitud de la constancia de confirma");
+    if (this.errorMostrarMsjModal3.length) this.errorModal3 = 1;
+    return this.errorModal3;
+  }), _defineProperty(_methods, "validarModal4", function validarModal4() {
+    this.errorModal4 = 0;
+    this.errorMostrarMsjModal4 = [];
+    var RE = /^\d*(\.\d{1})?\d{0,1}$/;
+    this.conceptoim;
+    this.montoConstancia; //if(this.cobrado!=true)this.errorMostrarMsjModal4.push("Debe cobrar la solicitud de la constancia de confirma");
 
-      if (this.conceptoim == '') this.errorMostrarMsjModal4.push("El campo de motivo de la constancia no puede estar vacio");
-      if (this.idperso == '') this.errorMostrarMsjModal4.push("Debe elegir al Padre que firmará la constancia");
-      if (this.cargoim == '') this.errorMostrarMsjModal4.push("Debe elegir el cargo del padre que firmará la constancia");
+    if (this.conceptoim == '') this.errorMostrarMsjModal4.push("El campo de motivo de la constancia no puede estar vacio");
+    if (this.idperso == '') this.errorMostrarMsjModal4.push("Debe elegir al Padre que firmará la constancia");
+    if (this.cargoim == '') this.errorMostrarMsjModal4.push("Debe elegir el cargo del padre que firmará la constancia");
 
-      if (this.montoConstancia == '') {
-        this.errorMostrarMsjModal4.push("Debe cobrar la constancia");
-      }
+    if (this.montoConstancia == '') {
+      this.errorMostrarMsjModal4.push("Debe cobrar la constancia");
+    }
 
-      if (!RE.test(this.montoConstancia)) this.errorMostrarMsjModal4.push("La ofrenda por constancias solo pueden ser decimales");
-      if (this.errorMostrarMsjModal4.length) this.errorModal4 = 1;
-      return this.errorModal4;
-    },
-    //Este cambia de un modal a otro (adelante y atras)
-    siguiente: function siguiente(d) {
-      switch (d) {
-        case '1':
-          {
-            if (this.validarModal2()) {
-              return;
+    if (!RE.test(this.montoConstancia)) this.errorMostrarMsjModal4.push("La ofrenda por constancias solo pueden ser decimales");
+    if (this.errorMostrarMsjModal4.length) this.errorModal4 = 1;
+    return this.errorModal4;
+  }), _defineProperty(_methods, "siguiente", function siguiente(d) {
+    switch (d) {
+      case '1':
+        {
+          if (this.validarModal2()) {
+            return;
+          }
+
+          this.modal3 = 1;
+          this.modal2 = 0;
+          break;
+        }
+
+      case '2':
+        {
+          this.modal2 = 1;
+          this.modal3 = 0;
+          break;
+        }
+    }
+  }), _defineProperty(_methods, "cerrarModal", function cerrarModal() {
+    this.modal = 0;
+    this.tituloModal = '';
+    this.tipoAccion = '';
+    this.sacramento_id = '';
+    this.libro = '';
+    this.num_expediente = '';
+    this.id_realizante1 = '';
+    this.id_realizante2 = '';
+    this.novioD = '';
+    this.novioNom = '';
+    this.novioAp = '';
+    this.noviaD = '';
+    this.noviaNom = '';
+    this.noviaAp = '';
+    this.ofrendaExp = '';
+    this.idcare = 0;
+    this.errorMatrimonio1 = 0;
+    this.errorMostrarMsjMatrimonio1 = [];
+  }), _defineProperty(_methods, "cerrarModal2", function cerrarModal2() {
+    this.modal2 = 0;
+    this.modal3 = 0;
+    this.tituloModal = '';
+    this.sacramento_id = '';
+    this.fecha_realizacion = '';
+    this.id_iglesia = 0;
+    this.idsacerdote = 0;
+    this.cargosacerdote = 0;
+    this.id_padrino1 = '';
+    this.id_madrina1 = '';
+    this.id_padrino2 = '';
+    this.id_madrina2 = '';
+    this.pad1D = '';
+    this.pad1Nom = '';
+    this.pad1Ap = '';
+    this.pad1Sexo = 0;
+    this.mad1D = '';
+    this.mad1Nom = '';
+    this.mad1Ap = '';
+    this.mad1Sexo = 0;
+    this.pad2D = '';
+    this.pad2Nom = '';
+    this.pad2Ap = '';
+    this.pad2Sexo = 0;
+    this.mad2D = '';
+    this.mad2Nom = '';
+    this.mad2Ap = '';
+    this.mad2Sexo = 0;
+    this.monto = '';
+    this.tipo = 0;
+    this.idcare = 0;
+    this.errorModal2 = 0;
+    this.errorMostrarMsjModal2 = [];
+  }), _defineProperty(_methods, "cerrarModal3", function cerrarModal3() {
+    this.modal2 = 0;
+    this.modal3 = 0;
+    this.tituloModal = '';
+    this.sacramento_id = '';
+    this.fecha_realizacion = '';
+    this.id_iglesia = 0;
+    this.idsacerdote = 0;
+    this.cargosacerdote = 0;
+    this.id_padrino1 = '';
+    this.id_madrina1 = '';
+    this.id_padrino2 = '';
+    this.id_madrina2 = '';
+    this.pad1D = '';
+    this.pad1Nom = '';
+    this.pad1Ap = '';
+    this.pad1Sexo = 0;
+    this.mad1D = '';
+    this.mad1Nom = '';
+    this.mad1Ap = '';
+    this.mad1Sexo = 0;
+    this.pad2D = '';
+    this.pad2Nom = '';
+    this.pad2Ap = '';
+    this.pad2Sexo = 0;
+    this.mad2D = '';
+    this.mad2Nom = '';
+    this.mad2Ap = '';
+    this.mad2Sexo = 0;
+    this.monto = '';
+    this.tipo = 0;
+    this.idcare = 0;
+    this.errorModal3 = 0;
+    this.errorMostrarMsjModal3 = [];
+  }), _defineProperty(_methods, "cerrarModal4", function cerrarModal4() {
+    this.modal4 = 0;
+    this.tituloModal = '';
+    this.sacramento_id = '';
+    this.enConcepto = '';
+    this.idcare = '', this.cargosacerdote = 0, this.idsacerdote = 0, this.montoConstancia = '';
+    this.idcare = 0;
+    this.errorModal4 = 0;
+    this.errorMostrarMsjModal4 = [];
+    this.idperso = '';
+    this.cargoim = '';
+    this.conceptoim = '';
+    this.cobrado = false;
+  }), _defineProperty(_methods, "abrirModal", function abrirModal(modelo, accion) {
+    var data = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : [];
+
+    switch (modelo) {
+      case "sacramento":
+        switch (accion) {
+          case 'registrar':
+            {
+              this.modal = 1;
+              this.tituloModal = 'Registrar Expediente Matrimonial';
+              this.libro = '';
+              this.num_expediente = '';
+              this.novioD = '';
+              this.novioNom = '';
+              this.novioAp = '';
+              this.noviaD = '';
+              this.noviaNom = '';
+              this.noviaAp = '';
+              this.tipoAccion = 1;
+              break;
             }
 
-            this.modal3 = 1;
-            this.modal2 = 0;
-            break;
-          }
+          case 'actualizar':
+            {
+              this.modal = 1;
+              this.tituloModal = 'Actualizar Expediente Matrimonial';
+              this.tipoAccion = 2;
+              this.sacramento_id = data['id'];
+              this.libro = data['libro'];
+              this.num_expediente = data['num_expediente'];
+              this.id_realizante1 = data['idNovio'];
+              this.id_realizante2 = data['idNovia'];
+              this.novioD = data['novioD'];
+              this.novioNom = data['novioNom'];
+              this.novioAp = data['novioAp'];
+              this.noviaD = data['noviaD'];
+              this.noviaNom = data['noviaNom'];
+              this.noviaAp = data['noviaAp'];
+              break;
+            }
+        }
 
-        case '2':
-          {
-            this.modal2 = 1;
-            this.modal3 = 0;
-            break;
-          }
-      }
-    },
-    //este cierra el modal del lapiz
-    cerrarModal: function cerrarModal() {
-      this.modal = 0;
-      this.tituloModal = '';
-      this.tipoAccion = '';
-      this.sacramento_id = '';
-      this.libro = '';
-      this.num_expediente = '';
-      this.id_realizante1 = '';
-      this.id_realizante2 = '';
-      this.novioD = '';
-      this.novioNom = '';
-      this.novioAp = '';
-      this.noviaD = '';
-      this.noviaNom = '';
-      this.noviaAp = '';
-      this.ofrendaExp = '';
-      this.idcare = 0;
-      this.errorMatrimonio1 = 0;
-      this.errorMostrarMsjMatrimonio1 = [];
-    },
-    //estos dos, cierran los modales de paso 2 y paso3
-    cerrarModal2: function cerrarModal2() {
-      this.modal2 = 0;
-      this.modal3 = 0;
-      this.tituloModal = '';
-      this.sacramento_id = '';
-      this.fecha_realizacion = '';
-      this.id_iglesia = 0;
-      this.idsacerdote = 0;
-      this.cargosacerdote = 0;
-      this.id_padrino1 = '';
-      this.id_madrina1 = '';
-      this.id_padrino2 = '';
-      this.id_madrina2 = '';
-      this.pad1D = '';
-      this.pad1Nom = '';
-      this.pad1Ap = '';
-      this.pad1Sexo = 0;
-      this.mad1D = '';
-      this.mad1Nom = '';
-      this.mad1Ap = '';
-      this.mad1Sexo = 0;
-      this.pad2D = '';
-      this.pad2Nom = '';
-      this.pad2Ap = '';
-      this.pad2Sexo = 0;
-      this.mad2D = '';
-      this.mad2Nom = '';
-      this.mad2Ap = '';
-      this.mad2Sexo = 0;
-      this.monto = '';
-      this.tipo = 0;
-      this.idcare = 0;
-      this.errorModal2 = 0;
-      this.errorMostrarMsjModal2 = [];
-    },
-    cerrarModal3: function cerrarModal3() {
-      this.modal2 = 0;
-      this.modal3 = 0;
-      this.tituloModal = '';
-      this.sacramento_id = '';
-      this.fecha_realizacion = '';
-      this.id_iglesia = 0;
-      this.idsacerdote = 0;
-      this.cargosacerdote = 0;
-      this.id_padrino1 = '';
-      this.id_madrina1 = '';
-      this.id_padrino2 = '';
-      this.id_madrina2 = '';
-      this.pad1D = '';
-      this.pad1Nom = '';
-      this.pad1Ap = '';
-      this.pad1Sexo = 0;
-      this.mad1D = '';
-      this.mad1Nom = '';
-      this.mad1Ap = '';
-      this.mad1Sexo = 0;
-      this.pad2D = '';
-      this.pad2Nom = '';
-      this.pad2Ap = '';
-      this.pad2Sexo = 0;
-      this.mad2D = '';
-      this.mad2Nom = '';
-      this.mad2Ap = '';
-      this.mad2Sexo = 0;
-      this.monto = '';
-      this.tipo = 0;
-      this.idcare = 0;
-      this.errorModal3 = 0;
-      this.errorMostrarMsjModal3 = [];
-    },
-    cerrarModal4: function cerrarModal4() {
-      this.modal4 = 0;
-      this.tituloModal = '';
-      this.sacramento_id = '';
-      this.enConcepto = '';
-      this.idcare = '', this.cargosacerdote = 0, this.idsacerdote = 0, this.montoConstancia = '';
-      this.idcare = 0;
-      this.errorModal4 = 0;
-      this.errorMostrarMsjModal4 = [];
-      this.idperso = '';
-      this.cargoim = '';
-      this.conceptoim = '';
-      this.cobrado = false;
-    },
-    //En "modelo" va el nombre de la tabla guardada aquí, que por convencion de laravel es plural: "modelos"
-    abrirModal: function abrirModal(modelo, accion) {
-      var data = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : [];
-
-      switch (modelo) {
-        case "sacramento":
-          switch (accion) {
-            case 'registrar':
-              {
-                this.modal = 1;
-                this.tituloModal = 'Registrar Expediente Matrimonial';
-                this.libro = '';
-                this.num_expediente = '';
-                this.novioD = '';
-                this.novioNom = '';
-                this.novioAp = '';
-                this.noviaD = '';
-                this.noviaNom = '';
-                this.noviaAp = '';
-                this.tipoAccion = 1;
-                break;
-              }
-
-            case 'actualizar':
-              {
-                this.modal = 1;
-                this.tituloModal = 'Actualizar Expediente Matrimonial';
-                this.tipoAccion = 2;
-                this.sacramento_id = data['id'];
-                this.libro = data['libro'];
-                this.num_expediente = data['num_expediente'];
-                this.id_realizante1 = data['idNovio'];
-                this.id_realizante2 = data['idNovia'];
-                this.novioD = data['novioD'];
-                this.novioNom = data['novioNom'];
-                this.novioAp = data['novioAp'];
-                this.noviaD = data['noviaD'];
-                this.noviaNom = data['noviaNom'];
-                this.noviaAp = data['noviaAp'];
-                break;
-              }
-          }
-
-      }
-    },
-    selectCategoria: function selectCategoria() {
-      var me = this;
-      var url = '/categoriaresumen/selectCategoriaRe';
-      axios.get(url).then(function (response) {
-        // handle success
-        var respuesta = response.data;
-        me.arraycategorias = respuesta.categorias;
-      })["catch"](function (error) {
-        // handle error
-        console.log(error);
-      });
-    },
-    //autocompletar iglesias
-    llenadolistaiglesia: function llenadolistaiglesia(buscar, criterio) {
-      var me = this;
-      var url = '/persona/buscariglesia';
-      axios.get(url).then(function (response) {
-        me.arrayiglesia = response.data;
-      })["catch"](function (error) {
-        console.log(error);
-      });
-    },
-    //autocompletar sacerdotes
-    llenadolista: function llenadolista(buscar, criterio) {
-      var me = this;
-      var url = '/persona/buscarsacerdote';
-      axios.get(url).then(function (response) {
-        me.arraysacerdote = response.data;
-      })["catch"](function (error) {
-        console.log(error);
-      });
-    },
-    //autocompletar sacerdotes
-    llenadoarray: function llenadoarray() {
-      this.arraycargo = new Array('DIACONO', 'PARROCO', 'PADRE', 'ARZOBISPO', 'CARDENAL', 'NUNCIO APOSTOLICO', 'MONSEÑOR');
-    },
-    //Aquí comienza el modal del paso 2: Agregar lugar y fecha de boda, sacerdote encargado y...
-    abrirModal2: function abrirModal2(modelo, accion) {
-      var data = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : [];
-
-      switch (modelo) {
-        case "sacramento":
-          switch (accion) {
-            case 'paso2':
-              {
-                this.modal2 = 1;
-                var apellidoNovioArray = apellidoNovioArray = data['novioAp'].split(' '); //la función split crea un array donde separa la cadena por ' '
-
-                var apellidoNoviaArray = apellidoNoviaArray = data['noviaAp'].split(' '); //Luego tomamos del array el primer apellido que está en la posición 0
-
-                var apellidoNovioMostrar = '';
-                var apellidoNoviaMostrar = ''; //Este IF valida los casos de los apellidos con "de, la, del"
-
-                if (apellidoNovioArray[0] == 'DE' || apellidoNovioArray[0] == 'LA' || apellidoNovioArray[0] == 'DEL') {
-                  if (apellidoNovioArray[1] == 'LA' || apellidoNovioArray[1] == 'LOS') {
-                    apellidoNovioMostrar = apellidoNovioArray[0] + ' ' + apellidoNovioArray[1] + ' ' + apellidoNovioArray[2];
-                  } else {
-                    apellidoNovioMostrar = apellidoNovioArray[0] + ' ' + apellidoNovioArray[1];
-                  }
-                } else {
-                  apellidoNovioMostrar = apellidoNovioArray[0];
-                } //el mismo caso anterior, para la novia
-
-
-                if (apellidoNoviaArray[0] == 'DE' || apellidoNoviaArray[0] == 'LA' || apellidoNoviaArray[0] == 'DEL') {
-                  if (apellidoNoviaArray[1] == 'LA' || apellidoNoviaArray[1] == 'LOS') {
-                    apellidoNoviaMostrar = apellidoNoviaArray[0] + ' ' + apellidoNoviaArray[1] + ' ' + apellidoNoviaArray[2];
-                  } else {
-                    apellidoNoviaMostrar = apellidoNoviaArray[0] + ' ' + apellidoNoviaArray[1];
-                  }
-                } else {
-                  apellidoNoviaMostrar = apellidoNoviaArray[0];
-                }
-
-                this.tituloModal = 'Datos de boda: ' + apellidoNovioMostrar + ' - ' + apellidoNoviaMostrar;
-                this.sacramento_id = data['id'];
-                this.fecha_realizacion = '';
-                this.iglesiaNom = ''; //Conviene más poner un combobox
-
-                this.idsacerdote = 0;
-                this.cargosacerdote = 0;
-                this.sacerdoteD = '';
-                this.sacerdoteNom = '';
-                this.sacerdoteAp = '';
-                this.id_iglesia = 0; //botones matrimonio realizado / Cancelado
-
-                this.tipoAccion = 3;
-                break;
-              }
-
-            case 'paso3':
-              {
-                this.modal3 = 1;
-                this.tituloModal = 'Datos de los padrinos';
-                this.sacramento_id = data['id'];
-                this.id_padrino = '';
-                this.pad1D = '';
-                this.pad1Nom = '';
-                this.pad1Ap = '';
-                this.id_madrina1 = '';
-                this.mad1D = '';
-                this.mad1Nom = '';
-                this.mad1Ap = '';
-                this.id_padrino2 = '';
-                this.pad2D = '';
-                this.pad2Nom = '';
-                this.pad2Ap = '';
-                this.id_madrina2 = '';
-                this.mad2D = '';
-                this.mad2Nom = '';
-                this.mad2Ap = ''; //botones matrimonio realizado / Cancelado
-
-                this.tipoAccion = 3;
-                break;
-              }
-
-            case 'paso4':
-              {
-                this.modal4 = 1;
-                var apellidoNovioArray = apellidoNovioArray = data['novioAp'].split(' '); //la función split crea un array donde separa la cadena por ' '
-
-                var apellidoNoviaArray = apellidoNoviaArray = data['noviaAp'].split(' '); //Luego tomamos del array el primer apellido que está en la posición 0
-
-                var apellidoNovioMostrar = '';
-                var apellidoNoviaMostrar = ''; //Este IF valida los casos de los apellidos con "de, la, del"
-
-                if (apellidoNovioArray[0] == 'DE' || apellidoNovioArray[0] == 'LA' || apellidoNovioArray[0] == 'DEL') {
-                  if (apellidoNovioArray[1] == 'LA' || apellidoNovioArray[1] == 'LOS') {
-                    apellidoNovioMostrar = apellidoNovioArray[0] + ' ' + apellidoNovioArray[1] + ' ' + apellidoNovioArray[2];
-                  } else {
-                    apellidoNovioMostrar = apellidoNovioArray[0] + ' ' + apellidoNovioArray[1];
-                  }
-                } else {
-                  apellidoNovioMostrar = apellidoNovioArray[0];
-                } //el mismo caso anterior, para la novia
-
-
-                if (apellidoNoviaArray[0] == 'DE' || apellidoNoviaArray[0] == 'LA' || apellidoNoviaArray[0] == 'DEL') {
-                  if (apellidoNoviaArray[1] == 'LA' || apellidoNoviaArray[1] == 'LOS') {
-                    apellidoNoviaMostrar = apellidoNoviaArray[0] + ' ' + apellidoNoviaArray[1] + ' ' + apellidoNoviaArray[2];
-                  } else {
-                    apellidoNoviaMostrar = apellidoNoviaArray[0] + ' ' + apellidoNoviaArray[1];
-                  }
-                } else {
-                  apellidoNoviaMostrar = apellidoNoviaArray[0];
-                }
-
-                this.tituloModal = 'Imprimir constancia de boda: ' + apellidoNovioMostrar + ' - ' + apellidoNoviaMostrar;
-                this.sacramento_id = data['id'];
-                this.idperso = '';
-                this.cargoim = '';
-                this.conceptoim = '';
-                break;
-              }
-          }
-
-      }
-    },
-    msjExito: function msjExito() {
-      swal({
-        type: 'success',
-        title: 'Datos guardados con éxito',
-        showConfirmButton: false,
-        timer: 1500
-      });
-    },
-    //el metodo del botón del basurero
-    desactivarExpediente: function desactivarExpediente(id) {
-      var _this = this;
-
-      swal({
-        title: '¿Esta seguro de desactivar este expediente?',
-        type: 'warning',
-        showCancelButton: true,
-        confirmButtonColor: '#3085d6',
-        cancelButtonColor: '#d33',
-        confirmButtonText: 'Aceptar!',
-        cancelButtonText: 'Cancelar',
-        confirmButtonClass: 'btn btn-success',
-        cancelButtonClass: 'btn btn-danger',
-        buttonsStyling: false,
-        reverseButtons: true
-      }).then(function (result) {
-        if (result.value) {
-          var me = _this;
-          axios.put('/sacramento/desactivarexpediente', {
-            'id': id
-          }).then(function (response) {
-            me.listarMatrimonio1(1, '', 'libro');
-            swal('Desactivado!', 'El registro ha sido desactivado con éxito.', 'success');
-          })["catch"](function (error) {
-            console.log(error);
-          });
-        } else if ( // Read more about handling dismissals
-        result.dismiss === swal.DismissReason.cancel) {}
-      });
-    },
-    //activa el expediente :v
-    activarExpediente: function activarExpediente(id) {
-      var _this2 = this;
-
-      swal({
-        title: '¿Esta seguro de activar este expediente?',
-        type: 'warning',
-        showCancelButton: true,
-        confirmButtonColor: '#3085d6',
-        cancelButtonColor: '#d33',
-        confirmButtonText: 'Aceptar!',
-        cancelButtonText: 'Cancelar',
-        confirmButtonClass: 'btn btn-success',
-        cancelButtonClass: 'btn btn-danger',
-        buttonsStyling: false,
-        reverseButtons: true
-      }).then(function (result) {
-        if (result.value) {
-          var me = _this2;
-          axios.put('/sacramento/activarexpediente', {
-            'id': id
-          }).then(function (response) {
-            me.listarMatrimonio1(1, '', 'libro');
-            swal('Activado!', 'El registro ha sido activado con éxito.', 'success');
-          })["catch"](function (error) {
-            console.log(error);
-          });
-        } else if ( // Read more about handling dismissals
-        result.dismiss === swal.DismissReason.cancel) {}
-      });
     }
-  },
+  }), _defineProperty(_methods, "selectCategoria", function selectCategoria() {
+    var me = this;
+    var url = '/categoriaresumen/selectCategoriaRe';
+    axios.get(url).then(function (response) {
+      // handle success
+      var respuesta = response.data;
+      me.arraycategorias = respuesta.categorias;
+    })["catch"](function (error) {
+      // handle error
+      console.log(error);
+    });
+  }), _defineProperty(_methods, "llenadolistaiglesia", function llenadolistaiglesia(buscar, criterio) {
+    var me = this;
+    var url = '/persona/buscariglesia';
+    axios.get(url).then(function (response) {
+      me.arrayiglesia = response.data;
+    })["catch"](function (error) {
+      console.log(error);
+    });
+  }), _defineProperty(_methods, "llenadolista", function llenadolista(buscar, criterio) {
+    var me = this;
+    var url = '/persona/buscarsacerdote';
+    axios.get(url).then(function (response) {
+      me.arraysacerdote = response.data;
+    })["catch"](function (error) {
+      console.log(error);
+    });
+  }), _defineProperty(_methods, "llenadoarray", function llenadoarray() {
+    this.arraycargo = new Array('DIACONO', 'PARROCO', 'PADRE', 'ARZOBISPO', 'CARDENAL', 'NUNCIO APOSTOLICO', 'MONSEÑOR');
+  }), _defineProperty(_methods, "abrirModal2", function abrirModal2(modelo, accion) {
+    var data = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : [];
+
+    switch (modelo) {
+      case "sacramento":
+        switch (accion) {
+          case 'paso2':
+            {
+              this.modal2 = 1;
+              var apellidoNovioArray = apellidoNovioArray = data['novioAp'].split(' '); //la función split crea un array donde separa la cadena por ' '
+
+              var apellidoNoviaArray = apellidoNoviaArray = data['noviaAp'].split(' '); //Luego tomamos del array el primer apellido que está en la posición 0
+
+              var apellidoNovioMostrar = '';
+              var apellidoNoviaMostrar = ''; //Este IF valida los casos de los apellidos con "de, la, del"
+
+              if (apellidoNovioArray[0] == 'DE' || apellidoNovioArray[0] == 'LA' || apellidoNovioArray[0] == 'DEL') {
+                if (apellidoNovioArray[1] == 'LA' || apellidoNovioArray[1] == 'LOS') {
+                  apellidoNovioMostrar = apellidoNovioArray[0] + ' ' + apellidoNovioArray[1] + ' ' + apellidoNovioArray[2];
+                } else {
+                  apellidoNovioMostrar = apellidoNovioArray[0] + ' ' + apellidoNovioArray[1];
+                }
+              } else {
+                apellidoNovioMostrar = apellidoNovioArray[0];
+              } //el mismo caso anterior, para la novia
+
+
+              if (apellidoNoviaArray[0] == 'DE' || apellidoNoviaArray[0] == 'LA' || apellidoNoviaArray[0] == 'DEL') {
+                if (apellidoNoviaArray[1] == 'LA' || apellidoNoviaArray[1] == 'LOS') {
+                  apellidoNoviaMostrar = apellidoNoviaArray[0] + ' ' + apellidoNoviaArray[1] + ' ' + apellidoNoviaArray[2];
+                } else {
+                  apellidoNoviaMostrar = apellidoNoviaArray[0] + ' ' + apellidoNoviaArray[1];
+                }
+              } else {
+                apellidoNoviaMostrar = apellidoNoviaArray[0];
+              }
+
+              this.tituloModal = 'Datos de boda: ' + apellidoNovioMostrar + ' - ' + apellidoNoviaMostrar;
+              this.sacramento_id = data['id'];
+              this.fecha_realizacion = '';
+              this.iglesiaNom = ''; //Conviene más poner un combobox
+
+              this.idsacerdote = 0;
+              this.cargosacerdote = 0;
+              this.sacerdoteD = '';
+              this.sacerdoteNom = '';
+              this.sacerdoteAp = '';
+              this.id_iglesia = 0; //botones matrimonio realizado / Cancelado
+
+              this.tipoAccion = 3;
+              break;
+            }
+
+          case 'paso3':
+            {
+              this.modal3 = 1;
+              this.tituloModal = 'Datos de los padrinos';
+              this.sacramento_id = data['id'];
+              this.id_padrino = '';
+              this.pad1D = '';
+              this.pad1Nom = '';
+              this.pad1Ap = '';
+              this.id_madrina1 = '';
+              this.mad1D = '';
+              this.mad1Nom = '';
+              this.mad1Ap = '';
+              this.id_padrino2 = '';
+              this.pad2D = '';
+              this.pad2Nom = '';
+              this.pad2Ap = '';
+              this.id_madrina2 = '';
+              this.mad2D = '';
+              this.mad2Nom = '';
+              this.mad2Ap = ''; //botones matrimonio realizado / Cancelado
+
+              this.tipoAccion = 3;
+              break;
+            }
+
+          case 'paso4':
+            {
+              this.modal4 = 1;
+              var apellidoNovioArray = apellidoNovioArray = data['novioAp'].split(' '); //la función split crea un array donde separa la cadena por ' '
+
+              var apellidoNoviaArray = apellidoNoviaArray = data['noviaAp'].split(' '); //Luego tomamos del array el primer apellido que está en la posición 0
+
+              var apellidoNovioMostrar = '';
+              var apellidoNoviaMostrar = ''; //Este IF valida los casos de los apellidos con "de, la, del"
+
+              if (apellidoNovioArray[0] == 'DE' || apellidoNovioArray[0] == 'LA' || apellidoNovioArray[0] == 'DEL') {
+                if (apellidoNovioArray[1] == 'LA' || apellidoNovioArray[1] == 'LOS') {
+                  apellidoNovioMostrar = apellidoNovioArray[0] + ' ' + apellidoNovioArray[1] + ' ' + apellidoNovioArray[2];
+                } else {
+                  apellidoNovioMostrar = apellidoNovioArray[0] + ' ' + apellidoNovioArray[1];
+                }
+              } else {
+                apellidoNovioMostrar = apellidoNovioArray[0];
+              } //el mismo caso anterior, para la novia
+
+
+              if (apellidoNoviaArray[0] == 'DE' || apellidoNoviaArray[0] == 'LA' || apellidoNoviaArray[0] == 'DEL') {
+                if (apellidoNoviaArray[1] == 'LA' || apellidoNoviaArray[1] == 'LOS') {
+                  apellidoNoviaMostrar = apellidoNoviaArray[0] + ' ' + apellidoNoviaArray[1] + ' ' + apellidoNoviaArray[2];
+                } else {
+                  apellidoNoviaMostrar = apellidoNoviaArray[0] + ' ' + apellidoNoviaArray[1];
+                }
+              } else {
+                apellidoNoviaMostrar = apellidoNoviaArray[0];
+              }
+
+              this.tituloModal = 'Imprimir constancia de boda: ' + apellidoNovioMostrar + ' - ' + apellidoNoviaMostrar;
+              this.sacramento_id = data['id'];
+              this.idperso = '';
+              this.cargoim = '';
+              this.conceptoim = '';
+              this.idcare = '';
+              this.montoConstancia = '';
+              break;
+            }
+        }
+
+    }
+  }), _defineProperty(_methods, "msjExito", function msjExito() {
+    swal({
+      type: 'success',
+      title: 'Datos guardados con éxito',
+      showConfirmButton: false,
+      timer: 1500
+    });
+  }), _defineProperty(_methods, "desactivarExpediente", function desactivarExpediente(id) {
+    var _this = this;
+
+    swal({
+      title: '¿Esta seguro de desactivar este expediente?',
+      type: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Aceptar!',
+      cancelButtonText: 'Cancelar',
+      confirmButtonClass: 'btn btn-success',
+      cancelButtonClass: 'btn btn-danger',
+      buttonsStyling: false,
+      reverseButtons: true
+    }).then(function (result) {
+      if (result.value) {
+        var me = _this;
+        axios.put('/sacramento/desactivarexpediente', {
+          'id': id
+        }).then(function (response) {
+          me.listarMatrimonio1(1, '', 'libro');
+          swal('Desactivado!', 'El registro ha sido desactivado con éxito.', 'success');
+        })["catch"](function (error) {
+          console.log(error);
+        });
+      } else if ( // Read more about handling dismissals
+      result.dismiss === swal.DismissReason.cancel) {}
+    });
+  }), _defineProperty(_methods, "activarExpediente", function activarExpediente(id) {
+    var _this2 = this;
+
+    swal({
+      title: '¿Esta seguro de activar este expediente?',
+      type: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Aceptar!',
+      cancelButtonText: 'Cancelar',
+      confirmButtonClass: 'btn btn-success',
+      cancelButtonClass: 'btn btn-danger',
+      buttonsStyling: false,
+      reverseButtons: true
+    }).then(function (result) {
+      if (result.value) {
+        var me = _this2;
+        axios.put('/sacramento/activarexpediente', {
+          'id': id
+        }).then(function (response) {
+          me.listarMatrimonio1(1, '', 'libro');
+          swal('Activado!', 'El registro ha sido activado con éxito.', 'success');
+        })["catch"](function (error) {
+          console.log(error);
+        });
+      } else if ( // Read more about handling dismissals
+      result.dismiss === swal.DismissReason.cancel) {}
+    });
+  }), _methods),
   // Fin de methods
   mounted: function mounted() {
     this.listarMatrimonio1(1, this.buscar, this.criterio);
@@ -33858,7 +33849,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n/*Aquí ya comienza el CSS, ke kreisi */\n.modal-content{\n       width: 100% !important;\n       position: absolute !important\n}\n.mostrar{\n       display: list-item !important;\n       opacity: 1 !important;\n       position: absolute !important;\n       background-color: #3c29297a !important;\n}\n.div-error{ /* estos dos estilos son para validación */\n       display: flex;\n       justify-content: center;\n}\n.text-error{\n       color: red !important;\n       font-weight: bold;\n}\n.margen{\n       margin-bottom: 10px;\n}\n   \n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n/*Aquí ya comienza el CSS, ke kreisi */\n.modal-content{\n       width: 100% !important;\n       position: absolute !important\n}\n.mostrar{\n       display: list-item !important;\n       opacity: 1 !important;\n       position: absolute !important;\n       background-color: #3c29297a !important;\n}\n.div-error{ /* estos dos estilos son para validación */\n       display: flex;\n       justify-content: center;\n}\n.text-error{\n       color: red !important;\n       font-weight: bold;\n}\n.margen{\n       margin-bottom: 10px;\n}\n   \n", ""]);
 
 // exports
 
@@ -73902,23 +73893,6 @@ var render = function() {
                       ])
                     ]),
                     _vm._v(" "),
-                    _c("div", { staticClass: "form-group row" }, [
-                      _c("div", { staticClass: "col-md-3" }),
-                      _vm._v(" "),
-                      _c("div", { staticClass: "col-md-2" }, [
-                        _c(
-                          "button",
-                          {
-                            staticClass: "btn btn-secondary btn-block",
-                            attrs: { type: "button" },
-                            on: { click: _vm.cobrar }
-                          },
-                          [_vm._v("Cobrar")]
-                        ),
-                        _vm._v(" \n                                 ")
-                      ])
-                    ]),
-                    _vm._v(" "),
                     _c(
                       "div",
                       {
@@ -74075,7 +74049,7 @@ var staticRenderFns = [
         attrs: { for: "text-input" }
       },
       [
-        _vm._v("Ofrenda por constancia"),
+        _vm._v("Ofrenda por constancia ($)"),
         _c("b", { staticClass: "alerta" }, [_vm._v("*")])
       ]
     )
@@ -79861,9 +79835,9 @@ var staticRenderFns = [
         _vm._v(" "),
         _c("th", [_vm._v("Concepto")]),
         _vm._v(" "),
-        _c("th", [_vm._v("Ingreso")]),
+        _c("th", [_vm._v("Ingreso ($)")]),
         _vm._v(" "),
-        _c("th", [_vm._v("Egreso ")]),
+        _c("th", [_vm._v("Egreso ($)")]),
         _vm._v(" "),
         _c("th", { staticStyle: { "text-align": "center" } }, [
           _vm._v("Opciones")
@@ -80529,23 +80503,6 @@ var render = function() {
                       ])
                     ]),
                     _vm._v(" "),
-                    _c("div", { staticClass: "form-group row" }, [
-                      _c("div", { staticClass: "col-md-3" }),
-                      _vm._v(" "),
-                      _c("div", { staticClass: "col-md-2" }, [
-                        _c(
-                          "button",
-                          {
-                            staticClass: "btn btn-secondary btn-block",
-                            attrs: { type: "button" },
-                            on: { click: _vm.cobrar }
-                          },
-                          [_vm._v("Cobrar")]
-                        ),
-                        _vm._v(" \n                                 ")
-                      ])
-                    ]),
-                    _vm._v(" "),
                     _c(
                       "div",
                       {
@@ -81048,9 +81005,9 @@ var staticRenderFns = [
         _vm._v(" "),
         _c("th", [_vm._v("Concepto")]),
         _vm._v(" "),
-        _c("th", [_vm._v("Ingreso")]),
+        _c("th", [_vm._v("Ingreso ($)")]),
         _vm._v(" "),
-        _c("th", [_vm._v("Egreso ")])
+        _c("th", [_vm._v("Egreso ($)")])
       ])
     ])
   }
@@ -81592,23 +81549,6 @@ var render = function() {
                           ],
                           2
                         )
-                      ])
-                    ]),
-                    _vm._v(" "),
-                    _c("div", { staticClass: "form-group row" }, [
-                      _c("div", { staticClass: "col-md-3" }),
-                      _vm._v(" "),
-                      _c("div", { staticClass: "col-md-2" }, [
-                        _c(
-                          "button",
-                          {
-                            staticClass: "btn btn-secondary btn-block",
-                            attrs: { type: "button" },
-                            on: { click: _vm.cobrar }
-                          },
-                          [_vm._v("Cobrar")]
-                        ),
-                        _vm._v(" \n                                 ")
                       ])
                     ]),
                     _vm._v(" "),
@@ -116982,7 +116922,7 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! C:\Users\win10\Documents\Diseño\II-2019\DSI-Azriel\resources\js\app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! C:\xampp\htdocs\DSI-Azriel\resources\js\app.js */"./resources/js/app.js");
 
 
 /***/ })

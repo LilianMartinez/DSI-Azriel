@@ -685,7 +685,8 @@
                     'conceptoim':this.conceptoim,
               }) .then(function (response) {
                     me.listarMatrimonio1();
-                      me.mientras();
+                    me.cobrar();
+                    me.mientras();
                 }) .catch(function (error) {
                 });
         },
@@ -693,6 +694,26 @@
             let me=this;
                 this.pdfConstacia(me.sacramento_id);
                 
+        },
+
+        cobrar(){
+            let me =this;
+            var variable='Constancia de matrimonio';
+            var tip=1;
+            axios.put('/efectivo/registrar',{
+                  'idcare':this.idcare,
+                  'descripcion_efectivo': variable.toUpperCase(),
+                  'monto':this.montoConstancia,
+                  'tipo':tip,
+              }) .then(function (response) {
+                    me.cerrarModal();
+                    me.listarEfectivo(1,'','num_recibo',1);
+                    me.sumat();
+                })
+                .catch(function (error) {
+                    // handle error
+                    console.log(error);
+                });
         },
 
         pdfConstacia(sacramento_id){
@@ -1872,6 +1893,8 @@
                                 this.idperso='';
                                 this.cargoim='';
                                 this.conceptoim='';
+                                this.idcare='';
+                                this.montoConstancia='';
                                 break;
                             }
                     }

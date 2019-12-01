@@ -110,12 +110,6 @@
                                     </div>
                                 </div>
 
-                                <div class="form-group row">
-                                    <div class="col-md-3"></div>
-                                    <div class="col-md-2">
-                                        <button type="button" class="btn btn-secondary btn-block" v-on:click="cobrar">Cobrar</button>&nbsp;
-                                    </div>
-                                </div>
                             <!-- Este div se utiliza para la validación -->
                             <div v-show="errorModal4" class="form-group row div-error">
                                 <div class="text-center text-error">
@@ -355,11 +349,11 @@
                 this.conceptoim='';
                 this.cobrado=false;
             },
-            cobrar: function (){
+           /* cobrar: function (){
                         this.cobrado=true;
                         //AQUÍ AGREGAR EL DESABILITAR COBRAR1
 
-                    },
+                    },*/
             
              llenadolista(buscar,criterio){
                 let me=this;
@@ -402,7 +396,8 @@
                     'conceptoim':this.conceptoim,
               }) .then(function (response) {
                     me.listarPersona();
-                     me.mientras();
+                    me.cobrar();
+                    me.mientras();
                 }) .catch(function (error) {
                 });
         },
@@ -411,8 +406,25 @@
                 this.pdfConstacia(me.id_sacramento, me.id_padre,me.id_madre,me.id_realizante1);
                 
         },
-        
-
+         cobrar(){
+            let me =this;
+            var variable='Constancia de confirma';
+            var tip=1;
+            axios.put('/efectivo/registrar',{
+                  'idcare':this.idcare,
+                  'descripcion_efectivo': variable.toUpperCase(),
+                  'monto':this.montoConstancia,
+                  'tipo':tip,
+              }) .then(function (response) {
+                    me.cerrarModal();
+                    me.listarEfectivo(1,'','num_recibo',1);
+                    me.sumat();
+                })
+                .catch(function (error) {
+                    // handle error
+                    console.log(error);
+                });
+        },
          validarModal4(){
             this.errorModal4=0;
             this.errorMostrarMsjModal4=[];
@@ -420,7 +432,6 @@
             this.conceptoim;
             this.montoConstancia;
 
-            if(this.cobrado!=true)this.errorMostrarMsjModal4.push("Debe cobrar la solicitud de la constancia de confirma");
             if(this.conceptoim=='')this.errorMostrarMsjModal4.push("El campo de motivo de la constancia no puede estar vacio");
             if(this.idperso=='')this.errorMostrarMsjModal4.push("Debe elegir al Padre que firmará la constancia");
             if(this.cargoim=='')this.errorMostrarMsjModal4.push("Debe elegir el cargo del padre que firmará la constancia");
@@ -471,7 +482,8 @@
                                 this.idperso='';
                                 this.cargoim='';
                                 this.conceptoim='';
-                                console.log(data);
+                                 this.idcare='';
+                                this.montoConstancia='';
                                 break;
                             }
                         }
