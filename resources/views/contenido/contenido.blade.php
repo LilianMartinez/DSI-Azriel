@@ -94,8 +94,8 @@
                         <historialsupletorias></historialsupletorias>
                         </template>
                         
-                        <template v-if="menu==14">
-                            <h1>Ayuda</h1>
+                        <template v-if="menu==10">
+                        <registroconfirmacion></registroconfirmacion>
                         </template>
                         
                         <template v-if="menu==15">
@@ -108,7 +108,7 @@
                         <template v-if="menu==17">
                         <montofijom></montofijom>
                         </template>
-                        <template v-if="menu==18">
+                        <template v-if="menu==23">
                         <categoriaresumen></categoriaresumen>
                         </template>
                         <template v-if="menu==19">
@@ -117,6 +117,22 @@
                         <template v-if="menu==22">
                         <iglesias></iglesias>
                         </template>
+                        <template v-if="menu==30">
+                        <productos></productos>
+                        </template>
+                        <template v-if="menu==31">
+                        <compras></compras>
+                        </template>
+                        <template v-if="menu==32">
+                        <suelto></suelto>
+                        </template>
+                        <template v-if="menu==33">
+                        <canasta></canasta>
+                        </template>
+                        <template v-if="menu==34">
+                        <ventas></ventas>
+                        </template>
+                        
             @else
             @endif
       @endif

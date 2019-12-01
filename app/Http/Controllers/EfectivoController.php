@@ -156,9 +156,10 @@ class EfectivoController extends Controller
        $total= $efectivo-$efectivo2;
        $envio['total']= number_format($total, 2);
 
-       //$fechaActual=new \DateTime('2019-01-01');//OBJETIVO TIPO FECHA APARTIR DE 01-01-2019
-       $fechaActual=new \DateTime();//FECHA ACTUAL
-       $efectivo = DB::table('efectivos') ->where('fecha', $fechaActual)->where("tipo",2)->sum("monto");
+       //$fechaActual=new \DateTime('2019-01-01');//OBJETIVO TIPO FECHA APARTIR DE 01-01-2019 
+       $fechaActual=new \DateTime();//FECHA ACTUAL 
+       $efectivo = DB::table('efectivos') ->select('num_recibo','descripcion_efectivo','tipo', 'monto',DB::raw('DATE_FORMAT(fecha, "%d/%m/%Y") as fecha'),'idcare')
+       ->where('fecha', $fechaActual)->where("tipo",2)->sum("monto");
        $envio['egreso']=$efectivo;
        $efectivo = DB::table('efectivos') ->where('fecha', $fechaActual)->where("tipo",1)->sum("monto");
        $envio['ingreso']=$efectivo;

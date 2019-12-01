@@ -64,6 +64,10 @@ Route::group(['middleware'=>['auth']],function(){
                             Route::put('/bautizo/registrar','BautizoController@store');
                             Route::put('/bautizo/marginaracta','BautizoController@marginacionacta');
 
+                            //TABLA confirma
+                            Route::put('/confirma/registrar','ConfirmaController@store');
+                            Route::put('/confirma/marginaracta','BautizoController@marginacionacta');
+
 
                             //TABLA PERSONA
                             Route::get('/persona/obtener','PersonaController3@realizante');
@@ -78,7 +82,7 @@ Route::group(['middleware'=>['auth']],function(){
 
                             //TABLA PERSONA
                             Route::get('/persona/obtener','PersonaController@realizante');
-                            Route::get('/persona/buscarsacerdote','PersonaController@buscarsacerdote');
+                            Route::get('/persona/buscarsacerdote3','PersonaController@buscarsacerdote');
                             Route::get('/persona/duis','PersonaController@buscarduis');
                             Route::get('/persona/pan','PersonaController@show');
                             Route::put('/persona/registrar','PersonaController@store'); 
@@ -122,6 +126,31 @@ Route::group(['middleware'=>['auth']],function(){
                             Route::post('/iglesia/buscarIgle','IglesiaController@buscar');
                             Route::put('/iglesia/actualizar','IglesiaController@update');
                             Route::put('/iglesia/eliminar','IglesiaController@eliminar');
+
+                            //TABLA Producto
+                            Route::get('/producto','ProductoController@index');
+                            Route::get('/productos/v','ProductoController@indexv');
+                            Route::get('/productos/venta','ProductoController@venta');
+                            Route::get('/producto/seleccionar','ProductoController@seleccionarProducto');
+                            Route::get('/producto/canasta','ProductoController@seleccionarProductoCanasta');
+                            Route::put('/producto/registrar','ProductoController@store');
+                            Route::put('/venta/registrar','ProductoController@guardarventa');
+                            Route::put('/producto/actualizar','ProductoController@update');
+                            Route::put('/producto/eliminar','ProductoController@eliminar');
+                            Route::get('/producto/existencia','ProductoController@seleccionarProductoExistencia');
+                            Route::get('/producto/informe','ProductoController@ConsultaInforme');
+                          
+
+                             //TABLA Compras
+                             Route::get('/compras','DetalleEntradaController@index');
+                             Route::put('/compras/registrar','DetalleEntradaController@store');
+
+                             //TABLA Canastas
+                             Route::get('/canastas','CanastasController@index');
+                             Route::put('/canastas/registrar','CanastasController@store');
+                             Route::get('/canastas/detalle','CanastasController@Buscar');
+                             Route::put('/canastas/vender','CanastasController@vender');
+                             
                             
                             //Tabla Sacramento
                             Route::get('/sacramento','SacramentoController@index');

@@ -6,6 +6,8 @@ use App\Persona;
 use App\Sacramentos3;
 use App\PartidaNacimiento;
 use App\Efectivo;
+use App\Iglesia;
+use App\CategoriaResumen;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 
@@ -42,10 +44,21 @@ class PersonaController extends Controller
     {
         $envio=array();
 
-        if(!$request->ajax()) return redirect('/');
+        if(!$request->ajax()) return redirect('/');{
         $persona = DB::table('personas')->where('tipo_persona',1)->get();
+        $envio['sacerdote']=$persona;
+        $categoriaResumen = CategoriaResumen::where('estado','=','1')
+       ->select('id','nombre_categoria','descripcion_categoria')->get();
+       $envio['categorias']=$categoriaResumen;
+       $iglesia = Iglesia::where('estado','=','1')->where('nombre_iglesia','like', '%'. 'PARROQUIA' .'%')
+       ->get();
+       $envio['iglesia']=$iglesia;
+        
 
-        return $persona;
+
+
+        return $envio;
+    }
     }
     public function realizante(Request $request)
     {
@@ -610,7 +623,6 @@ class PersonaController extends Controller
                         $efectivo->fecha= new \DateTime();
                         $efectivo->save();
 
-        
                         $personareali = new Persona();
                         $personareali->id=$idreali;
                         $personareali->nombre_persona= $request->nombre_reali;
@@ -707,7 +719,7 @@ class PersonaController extends Controller
                 $efectivo = new Efectivo();
                 $efectivo->id=$montos;
                 $efectivo->descripcion_efectivo='PRIMERA COMUNION';
-                        $efectivo->idcare=$request->idcate;
+                $efectivo->idcare=$request->idcate;
                 $efectivo->tipo= 1;
                 $efectivo->monto=$request->monto;
                 $efectivo->fecha= new \DateTime();

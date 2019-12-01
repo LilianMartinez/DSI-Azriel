@@ -50,7 +50,7 @@
                                 </div>
                                 </div> 
                             <div class="col-md-4 modal-fo">
-                                <button type="button" class="btn btn-secondary" @click="siguiente('1')">Siguiente</button>
+                                <button type="button" class="btn btn-primary" @click="siguiente('1')">Siguiente</button>
                             </div>  
                         </div>
                         <div v-show="cambiarm==1 || cambiarm==5">
@@ -60,13 +60,13 @@
                             <div class="form-group row">
                                 <label class="col-md-3 form-control-label" for="text-input">Nombres<b class="alerta">*</b></label>
                                 <div class="col-md-5">
-                                    <input type="text" tabindexgt="0" v-model="nombrerealizante" class="form-control" placeholder="Nombres del que ha recibido el sacramento">
+                                    <input type="text" tabindexgt="0" v-model="nombrerealizante" class="form-control" placeholder="Nombres"  @keydown.tab="validarvalores('7')">
                                 </div>
                             </div>
                             <div class="form-group row">
                                 <label class="col-md-3 form-control-label" for="text-input">Apellidos<b class="alerta">*</b></label>
                                 <div class="col-md-5">
-                                    <input type="text" tabindexgt="0" v-model="apellidorealizante" class="form-control" placeholder="Apellidos del que ha recibido el sacramento">
+                                    <input type="text" tabindexgt="0" v-model="apellidorealizante" class="form-control" placeholder="Apellidos"  @keydown.tab="validarvalores('8')">
                                 </div>
                             </div>
                             <div class="form-group row">
@@ -87,12 +87,17 @@
                             <div class="form-group row" v-show="Acciondui==1">
                                 <label class="col-md-3 form-control-label" for="text-input">DUI</label>
                                 <div class="col-md-4">
-                                    <input tabindexgt="0" v-model="dui" class="form-control" placeholder="999999999">
+                                    <input tabindexgt="0" v-model="dui" class="form-control" placeholder="999999999" @keydown.tab="validarvalores('11')">
                                 </div>
                             </div>
+                            <div v-show="errorDatos" class="form-group row div-error">
+                                <div class="text-center text-error">
+                                    <div v-for="error in errorMostrarMsj" :key="error" v-text="error"></div>
+                                </div>
+                            </div> 
                             <div class="col-md-4 modal-fo">
                                 <button type="button" class="btn btn-secondary" @click="siguiente('6')">Regresar</button>
-                                <button type="button" class="btn btn-secondary" @click="siguiente('2')">Siguiente</button>
+                                <button type="button" class="btn btn-primary" @click="siguiente('2')">Siguiente</button>
                             </div>  
                         </div>
                         <div v-show="cambiarm==2 || cambiarm==4">
@@ -105,7 +110,7 @@
                             <div class="form-group row">
                                 <label class="col-md-3 form-control-label" for="text-input">DUI</label>
                                 <div class="col-md-5">
-                                    <input tabindexgt="0" v-model="duimadre" class="form-control" placeholder="999999999"  @keydown.tab="duim()" >
+                                    <input tabindexgt="0" v-model="duimadre" class="form-control" placeholder="999999999"  @keydown.tab="duim()">
                                 </div>
                             </div>
                             <div class="form-group row">
@@ -126,7 +131,7 @@
                             <div class="form-group row">
                                 <label class="col-md-3 form-control-label" for="text-input">DUI</label>
                                 <div class="col-md-5">
-                                    <input tabindexgt="0" v-model="duipadre" class="form-control" placeholder="999999999" @keydown.tab="duip()">
+                                    <input tabindexgt="0" v-model="duipadre" class="form-control" placeholder="999999999" @keydown.tab="duip()" >
                                 </div>
                             </div>
                             <div class="form-group row">
@@ -141,6 +146,11 @@
                                     <input type="text" tabindexgt="0" v-model="apellidopadre" class="form-control" placeholder="Apellidos del padre">
                                 </div>
                             </div>
+                            <div v-show="errorDatos" class="form-group row div-error">
+                                <div class="text-center text-error">
+                                    <div v-for="error in errorMostrarMsj" :key="error" v-text="error"></div>
+                                </div>
+                            </div> 
                             <div class="col-md-5 modal-fo">
                                 <button type="button" class="btn btn-secondary" @click="siguiente('5')">Regresar</button>
                                 <button type="button" class="btn btn-primary" @click="siguiente('3')">Siguiente</button>
@@ -153,7 +163,7 @@
                                 <div class="form-group row">
                                 <label class="col-md-3 form-control-label" for="text-input">Ofrenda</label>
                                 <div class="col-md-5">
-                                    <input type="text"  v-model="monto" class="form-control">
+                                    <input type="text"  v-model="monto" class="form-control" @keydown.tab="validarvalores('15')">
                                 </div>
                             </div>
                             <div class="form-group row">
@@ -164,7 +174,7 @@
                                         <option v-for="categorias in arraycategorias" :key="categorias.id"  v-bind:value="categorias.id" v-text="categorias.nombre_categoria"></option>
                                         </select>
                                     </div>
-                                </div>
+                            </div>
                             <div class="form-group row">
                                 <label class="col-md-3 form-control-label" for="text-input">Nombre del sacerdote<b class="alerta">*</b></label>
                                 <div class="col-md-5">
@@ -186,9 +196,15 @@
                             <div class="form-group row">
                                 <label class="col-md-3 form-control-label" for="text-input">Fecha de realización<b class="alerta">*</b></label>
                                 <div class="col-md-5">
-                                    <input type="date" class="form-control datepicker" name="date" v-model="fecharealizacion" >
+                                    <input type="date" class="form-control datepicker" name="date" v-model="fecharealizacion" @keydown.tab="validarvalores('16')">
                                 </div>
                             </div>
+                            <div v-show="errorDatos" class="form-group row div-error">
+                                <div class="text-center text-error">
+                                <div v-for="error in errorMostrarMsj" :key="error" v-text="error">
+                                </div>
+                                </div>
+                                </div> 
                             <div v-show="cambiarmb==1">
                                 <div class="col-md-6">
                                     <button type="button" class="btn btn-secondary" @click="siguiente('4')">Regresar</button>
@@ -272,16 +288,12 @@
                                     </div>
                                     <div class="form-group row">
                                         <label class="col-md-4 form-control-label" for="text-input">Fecha de nacimiento:</label>
-                                        <label class="col-md-6 form-control-label" >{{fechana}}</label>
+                                        <label class="col-md-6 form-control-label" >{{fechanaes}}</label>
                                     </div>
                                     <div v-show="accionbotones==2">
                                         <div class="form-group row">
                                             <label class="col-md-4 form-control-label" for="text-input">Realizó su Primera Comunión:</label>
-                                            <label class="col-md-6 form-control-label" >{{fecharealizacion}}</label>
-                                        </div>
-                                        <div class="form-group row">
-                                            <label class="col-md-3 form-control-label" for="text-input">Ofrenda</label>
-                                            <label class="col-md-3 form-control-label" >{{monto}}</label>
+                                            <label class="col-md-6 form-control-label" >{{fecharealizaciones}}</label>
                                         </div>
                                         <div class="col-md-4 modal-fo">
                                             <button type="button" class="btn btn-secondary" @click="cerrarmodal()">Modificar</button>
@@ -325,12 +337,12 @@
                 idpadre:'',
                 idsacerdote:'',
                 id:'',
-                tipo:'',
                 nombresacerdote:'',
-                apellidosacerdote:'',
                 cargosacerdote:'',
                 fecharealizacion:'',
+                fecharealizaciones:'',
                 fechana:'',
+                fechanaes:'',
                 fechana2:'',
                 dui:'',
                 sexo:'',
@@ -366,18 +378,19 @@
                 var dia = values[2];
                 var mes = values[1];
                 var ano = values[0];
+                
+
                 if((dia=='') || (mes=='') || (ano==''))
                 {
                     this.Acciondui=0;
                 }else
                 {
- 
-                // cogemos los valores actuales
+                    // cogemos los valores actuales
                 var fecha_hoy = new Date();
                 var ahora_ano = fecha_hoy.getYear();
                 var ahora_mes = fecha_hoy.getMonth()+1;
                 var ahora_dia = fecha_hoy.getDate();
-
+ 
                 this.fechana2 = (ahora_ano + 1900) - ano;
 
                 if ( ahora_mes < mes )
@@ -393,11 +406,15 @@
                      this.fechana2-= 1900;
                 }
                 if (this.fechana2 >= 18)  {
+                    this.validarvalores('13');
                     this.Acciondui=1;
                 } else{
+                    this.validarvalores('13');
                     this.Acciondui=0;
                 }
                 }
+                
+                
             },
             //Para mostar las tres partes del formulario
             siguiente(d){
@@ -414,18 +431,29 @@
                             break;
                         }
                     case '2':
-                        {
+                        {   
+                            this.cambiar();
+                            this.validarvalores('12');
+                            if(this.errorDatos==1){
+                                this.cambiarm=1;
+                            }else{
                             this.cambiarm=2;
+                            }
                             break;
                         }
                     case '3':
                         {
+                            this.validarvalores('14');
+                            if(this.errorDatos==1){
+                                this.cambiarm=2;
+                            }else{
                             this.cambiarm=3;
-                            this.llenadolista('','');
+                            }
                             break;
                         }
                     case '4':
-                        {
+                        {   
+                            
                             this.cambiarm=4;
                             break;
                         }
@@ -465,7 +493,9 @@
                 this.nombresacerdote='';
                 this.cargosacerdote='';
                 this.fecharealizacion='';
+                this.fecharealizaciones='';
                 this.fechana='';
+                this.fechanaes='';
                 this.dui='';
                 this.Acciondui=0;
                 this.accion=0;
@@ -493,7 +523,9 @@
                 this.nombresacerdote='';
                 this.cargosacerdote='';
                 this.fecharealizacion='';
+                this.fecharealizaciones='';
                 this.fechana='';
+                this.fechanaes='';
                 this.dui='';
                 this.accion=0;
                 this.accionbotones=0;
@@ -522,12 +554,31 @@
             
             //Mostrar datos para confirmar el ingreso
             abrirmodal(){
+                this.validarvalores('17');
+                            if(this.errorDatos==1){
+                                this.modal=0;
+                            }else{
                 this.modal=1;
                 this.tituloModal='Confirmar ingreso'
                 this.accionbotones=2;
+
+                this.nombrerealizante= this.nombrerealizante.toUpperCase();
+                this.apellidorealizante= this.apellidorealizante.toUpperCase();
+                this.nombremadre= this.nombremadre.toUpperCase();
+                this.apellidomadre=this.apellidomadre.toUpperCase();
+                this.nombrepadre= this.nombrepadre.toUpperCase();
+                this.apellidopadre=this.apellidopadre.toUpperCase();
+               
+                var t = this.fechana;
+               this.fechanaes= t.replace(/^(\d{4})-(\d{2})-(\d{2})$/g,'$3/$2/$1');
+
+               var t2 = this.fecharealizacion;
+               this.fecharealizaciones= t2.replace(/^(\d{4})-(\d{2})-(\d{2})$/g,'$3/$2/$1');
+                        
                 //Si es F o M
                 if (this.sexo == 'M')   {
                     this.accionsexo=1;
+                    
                 }
                 if (this.sexo == 'F')   {
                     this.accionsexo=0;
@@ -543,26 +594,24 @@
                 if ((this.nombremadre == '') && (this.nombrepadre == ''))  {
                     this.accion=3;
                 }
+                            }
 
             },
             //autocompletar sacerdotes
-            llenadolista(buscar,criterio){
+            llenadolistas(){
                 let me=this;
-                var url='/persona/buscarsacerdote';
+                var url='/persona/buscarsacerdote3';
                 axios.get(url) .then(function (response) {
-                    me.arraysacerdote=response.data;
+                     me.arraysacerdote=response.data.sacerdote;
+                    me.arraycategorias=response.data.categorias;
+                
                 })
                 .catch(function (error) {
                     console.log(error);
                 });
             },
-            //autocompletar sacerdotes
-            llenadoarray(){
-                
-                    this.arraycargo= new Array('DIACONO','PADRE','ARZOBISPO','CARDENAL','NUNCIO APOSTOLICO','MONSEÑOR');
             
-                
-            },
+            
             
             abrirmodal2(){
                 this.modal=1;
@@ -605,36 +654,52 @@
                     axios.get(url) .then(function (response) {
                         var d = response.data.solo;            
                         if(d==1){
+                            response.data.realizante.forEach(function(element) {
+                            var texto = element.fecha_nacimiento;
+                            element.fecha_nacimiento= texto.replace(/^(\d{4})-(\d{2})-(\d{2})$/g,'$3/$2/$1');
+                            });
                             me.nombrerealizante= response.data.realizante.nombre_persona;
                             me.apellidorealizante=response.data.realizante.apellido_persona;
                             me.sexo=response.data.realizante.sexo;
-                            me.fechana=response.data.realizante.fecha_nacimiento;
+                            me.fechanaes=response.data.realizante.fecha_nacimiento;
                         }
                         if(d==2){
+                            response.data.realizante.forEach(function(element) {
+                            var texto = element.fecha_nacimiento;
+                            element.fecha_nacimiento= texto.replace(/^(\d{4})-(\d{2})-(\d{2})$/g,'$3/$2/$1');
+                            });
                             me.nombrepadre= response.data.padre.nombre_persona;
                             me.apellidopadre=response.data.padre.apellido_persona;
                             me.nombrerealizante= response.data.realizante.nombre_persona;
                             me.apellidorealizante=response.data.realizante.apellido_persona;
                             me.sexo=response.data.realizante.sexo;
-                            me.fechana=response.data.realizante.fecha_nacimiento;
+                            me.fechanaes=response.data.realizante.fecha_nacimiento;
                         }
                         if(d==3){
+                            response.data.realizante.forEach(function(element) {
+                            var texto = element.fecha_nacimiento;
+                            element.fecha_nacimiento= texto.replace(/^(\d{4})-(\d{2})-(\d{2})$/g,'$3/$2/$1');
+                            });
                             me.nombremadre= response.data.madre.nombre_persona;
                             me.apellidomadre=response.data.madre.apellido_persona;
                             me.nombrerealizante= response.data.realizante.nombre_persona;
                             me.apellidorealizante=response.data.realizante.apellido_persona;
                             me.sexo=response.data.realizante.sexo;
-                            me.fechana=response.data.realizante.fecha_nacimiento;
+                            me.fechanaes=response.data.realizante.fecha_nacimiento;
                         }
                         if(d==4){
-                        me.nombrepadre= response.data.padre.nombre_persona;
-                        me.apellidopadre=response.data.padre.apellido_persona;
-                        me.nombremadre= response.data.madre.nombre_persona;
-                        me.apellidomadre=response.data.madre.apellido_persona;
-                        me.nombrerealizante= response.data.realizante.nombre_persona;
-                        me.apellidorealizante=response.data.realizante.apellido_persona;
-                        me.sexo=response.data.realizante.sexo;
-                        me.fechana=response.data.realizante.fecha_nacimiento;
+                            response.data.realizante.forEach(function(element) {
+                            var texto = element.fecha_nacimiento;
+                            element.fecha_nacimiento= texto.replace(/^(\d{4})-(\d{2})-(\d{2})$/g,'$3/$2/$1');
+                            });
+                            me.nombrepadre= response.data.padre.nombre_persona;
+                            me.apellidopadre=response.data.padre.apellido_persona;
+                            me.nombremadre= response.data.madre.nombre_persona;
+                            me.apellidomadre=response.data.madre.apellido_persona;
+                            me.nombrerealizante= response.data.realizante.nombre_persona;
+                            me.apellidorealizante=response.data.realizante.apellido_persona;
+                            me.sexo=response.data.realizante.sexo;
+                            me.fechanaes=response.data.realizante.fecha_nacimiento;
                         }
                         me.verificacion=1;
                         me.abrirmodal2();
@@ -648,13 +713,19 @@
                 this.errorDatos=0;
                 this.errorMostrarMsj=[];
                 var RE = /^([0-9])*$/;
+                var patron =/^[a-zA-ZÑñÁáÉéÍíÓóÚúÜü\s]+$/; /////ESTOOOOOOOO
+                var anio= /^\d{4}$/;
+                var patrondui= /^\d{9}$/;
+                var fecha = new Date();
+                var anioac= fecha.getFullYear();
+                var mesac= fecha.getMonth();
                 switch(d){
                     case '1':
                         {
                             var Min_Length = 5;
                             var lengthmin = this.alcaldia.length;
                             if (lengthmin < Min_Length )this.errorMostrarMsj.push("La alcaldía debe tener más de 5 letras");
-                            if (RE.test(this.alcaldia))this.errorMostrarMsj.push("La alcaldía solo debe tener letras");
+                            if (!patron.test(this.alcaldia))this.errorMostrarMsj.push("La alcaldía solo debe tener letras");
                             if(this.errorMostrarMsj.length) this.errorDatos=1;
                             return this.errorDatos;
                             break;
@@ -664,8 +735,10 @@
                             var Min_Length = 5;
                             var lengthmin = this.alcaldia.length;
                             if (lengthmin < Min_Length)this.errorMostrarMsj.push("La alcaldía debe tener más de 5 letras");
-                            if(!this.libro) this.errorMostrarMsj.push("El numero de libro no puede estar vacío");
-                            if (!RE.test(this.libro))  this.errorMostrarMsj.push("El numero de libro debe ser un numero entero");
+                            if (!patron.test(this.alcaldia))this.errorMostrarMsj.push("La alcaldía solo debe tener letras");
+                            if(!this.libro) this.errorMostrarMsj.push("El número de libro no puede estar vacío");
+                            if(this.libro=='0') this.errorMostrarMsj.push("El número de libro debe ser distinto a 0");
+                            if (!RE.test(this.libro))  this.errorMostrarMsj.push("El número de libro debe ser un numero entero");
                             if(this.errorMostrarMsj.length) this.errorDatos=1;
                             return this.errorDatos;
                             break;
@@ -675,10 +748,13 @@
                             var Min_Length = 5;
                             var lengthmin = this.alcaldia.length;
                             if (lengthmin < Min_Length)this.errorMostrarMsj.push("La alcaldía debe tener más de 5 letras");
-                            if(!this.libro) this.errorMostrarMsj.push("El numero de libro no puede estar vacío");
-                            if (!RE.test(this.libro))  this.errorMostrarMsj.push("El numero de libro debe ser un numero entero");
-                            if(!this.partida) this.errorMostrarMsj.push("En numero de partida no puede estar vacío");
-                            if (!RE.test(this.partida))  this.errorMostrarMsj.push("El numero de partida debe ser un numero entero");
+                            if (!patron.test(this.alcaldia))this.errorMostrarMsj.push("La alcaldía solo debe tener letras");
+                            if(!this.libro) this.errorMostrarMsj.push("El número de libro no puede estar vacío");
+                            if (!RE.test(this.libro))  this.errorMostrarMsj.push("El número de libro debe ser un numero entero");
+                            if(this.libro=='0') this.errorMostrarMsj.push("El número de libro debe ser distinto a 0");
+                            if(!this.partida) this.errorMostrarMsj.push("En número de partida no puede estar vacío");
+                            if (!RE.test(this.partida))  this.errorMostrarMsj.push("El número de partida debe ser un numero entero");
+                            if(this.partida=='0') this.errorMostrarMsj.push("El número de partida debe ser distinto a 0");
                             if(this.errorMostrarMsj.length) this.errorDatos=1;
                             return this.errorDatos;
                             break;
@@ -688,12 +764,16 @@
                             var Min_Length = 5;
                             var lengthmin = this.alcaldia.length;
                             if (lengthmin < Min_Length)this.errorMostrarMsj.push("La alcaldía debe tener más de 5 letras");
-                            if(!this.libro) this.errorMostrarMsj.push("El numero de libro no puede estar vacío");
-                            if (!RE.test(this.libro))  this.errorMostrarMsj.push("El numero de libro debe ser un numero entero");
-                            if(!this.partida) this.errorMostrarMsj.push("En numero de partida no puede estar vacío");
-                            if (!RE.test(this.partida))  this.errorMostrarMsj.push("El numero de partida debe ser un numero entero");
-                            if(!this.folio) this.errorMostrarMsj.push("El numero de folio no puede estar vacío");
-                            if (!RE.test(this.folio))  this.errorMostrarMsj.push("El numero de folio debe ser un numero entero");
+                            if (!patron.test(this.alcaldia))this.errorMostrarMsj.push("La alcaldía solo debe tener letras");
+                            if(!this.libro) this.errorMostrarMsj.push("El número de libro no puede estar vacío");
+                            if (!RE.test(this.libro))  this.errorMostrarMsj.push("El número de libro debe ser un numero entero");
+                            if(this.libro=='0') this.errorMostrarMsj.push("El número de libro debe ser distinto a 0");
+                            if(!this.partida) this.errorMostrarMsj.push("En número de partida no puede estar vacío");
+                            if (!RE.test(this.partida))  this.errorMostrarMsj.push("El número de partida debe ser un numero entero");
+                            if(this.partida=='0') this.errorMostrarMsj.push("El número de partida debe ser distinto a 0");
+                            if(!this.folio) this.errorMostrarMsj.push("El número de folio no puede estar vacío");
+                            if (!RE.test(this.folio))  this.errorMostrarMsj.push("El número de folio debe ser un numero entero");
+                            if(this.folio=='0') this.errorMostrarMsj.push("El número de folio debe ser distinto a 0");
                             if(this.errorMostrarMsj.length) this.errorDatos=1;
                             return this.errorDatos;
                             break;
@@ -703,23 +783,161 @@
                             var Min_Length = 5;
                             var lengthmin = this.alcaldia.length;
                             if (lengthmin < Min_Length)this.errorMostrarMsj.push("La alcaldía debe tener más de 5 letras");
+                            if (!patron.test(this.alcaldia))this.errorMostrarMsj.push("La alcaldía solo debe tener letras");
                             if(!this.libro) this.errorMostrarMsj.push("El numero de libro no puede estar vacío");
-                            if (!RE.test(this.libro))  this.errorMostrarMsj.push("El numero de libro debe ser un numero entero");
-                            if(!this.partida) this.errorMostrarMsj.push("En numero de partida no puede estar vacío");
-                            if (!RE.test(this.partida))  this.errorMostrarMsj.push("El numero de partida debe ser un numero entero");
-                            if(!this.folio) this.errorMostrarMsj.push("El numero de folio no puede estar vacío");
-                            if (!RE.test(this.folio))  this.errorMostrarMsj.push("El numero de folio debe ser un numero entero");
+                            if (!RE.test(this.libro))  this.errorMostrarMsj.push("El número de libro debe ser un numero entero");
+                            if(this.libro=='0') this.errorMostrarMsj.push("El número de libro debe ser distinto a 0");
+                            if(!this.partida) this.errorMostrarMsj.push("En número de partida no puede estar vacío");
+                            if (!RE.test(this.partida))  this.errorMostrarMsj.push("El número de partida debe ser un numero entero");
+                            if(this.partida=='0') this.errorMostrarMsj.push("El número de partida debe ser distinto a 0");
+                            if(!this.folio) this.errorMostrarMsj.push("El número de folio no puede estar vacío");
+                            if (!RE.test(this.folio))  this.errorMostrarMsj.push("El número de folio debe ser un numero entero");
+                            if(this.folio=='0') this.errorMostrarMsj.push("El número de folio debe ser distinto a 0");
                             if(!this.ano) this.errorMostrarMsj.push("El año no puede estar vacío");
                             if (!RE.test(this.ano))  this.errorMostrarMsj.push("El año debe ser un numero entero");
+                            if(this.ano<'1900') this.errorMostrarMsj.push("El año debe ser un año mayor a 1900");
+                            if(this.ano>anioac) this.errorMostrarMsj.push("El año debe ser igual o menor al actual");
+                            if (!anio.test(this.ano))  this.errorMostrarMsj.push("El año debe ser de cuatro digitos");
                             if(this.errorMostrarMsj.length) this.errorDatos=1;
                             return this.errorDatos;
                             break;
                         }
                         case '6':
                             {
-                                this.errorMostrarMsj.push("Esta persona ya realizo este sacramento, favor verificar datos");
-                               if(this.errorMostrarMsj.length) this.errorDatos=1;
-                               break;
+                            this.errorMostrarMsj.push("Esta persona ya realizo este sacramento, favor verificar datos");
+                            if(this.errorMostrarMsj.length) this.errorDatos=1;
+                            break;
+                            }
+                        case '7':
+                            {
+                            var Min_Length = 3;
+                            var lengthmin = this.nombrerealizante.length;
+                            if (lengthmin < Min_Length)this.errorMostrarMsj.push("El nombre debe tener mas de tres letras");
+                            if (!patron.test(this.nombrerealizante))this.errorMostrarMsj.push("El nombre solo debe tener letras");
+                            if(this.errorMostrarMsj.length) this.errorDatos=1;
+                            return this.errorDatos;
+                            break;
+                            }
+                        case '8':
+                            {
+                            var Min_Length = 3;
+                            var lengthmin = this.nombrerealizante.length;
+                            if (lengthmin < Min_Length)this.errorMostrarMsj.push("El nombre debe tener mas de tres letras");
+                            if (!patron.test(this.nombrerealizante))this.errorMostrarMsj.push("El nombre solo debe tener letras");
+                            var lengthmin2 = this.apellidorealizante.length;
+                            if (lengthmin2 < Min_Length)this.errorMostrarMsj.push("El apellido debe tener mas de tres letras");
+                            if (!patron.test(this.apellidorealizante))this.errorMostrarMsj.push("El apellido solo debe tener letras");
+                            if(this.errorMostrarMsj.length) this.errorDatos=1;
+                            return this.errorDatos;
+                            break;
+                            }
+                        case '11':
+                            {
+                            var Min_Length = 3;
+                            var lengthmin = this.nombrerealizante.length;
+                            if (lengthmin < Min_Length)this.errorMostrarMsj.push("El nombre debe tener mas de tres letras");
+                            if (!patron.test(this.nombrerealizante))this.errorMostrarMsj.push("El nombre solo debe tener letras");
+                            var lengthmin2 = this.apellidorealizante.length;
+                            if (lengthmin2 < Min_Length)this.errorMostrarMsj.push("El apellido debe tener mas de tres letras");
+                            if (!patron.test(this.apellidorealizante))this.errorMostrarMsj.push("El apellido solo debe tener letras");
+                            if (!patrondui.test(this.dui))  this.errorMostrarMsj.push("El DUI debe ser de nueve digitos");
+                            if(this.errorMostrarMsj.length) this.errorDatos=1;
+                            return this.errorDatos;
+                            break;
+                            }
+                        case '12':
+                            {
+                            var Min_Length = 3;
+                            var lengthmin = this.nombrerealizante.length;
+                            if (lengthmin < Min_Length)this.errorMostrarMsj.push("El nombre debe tener mas de tres letras");
+                            if (!patron.test(this.nombrerealizante))this.errorMostrarMsj.push("El nombre solo debe tener letras");
+                            var lengthmin2 = this.apellidorealizante.length;
+                            if (lengthmin2 < Min_Length)this.errorMostrarMsj.push("El apellido debe tener mas de tres letras");
+                            if (!patron.test(this.apellidorealizante))this.errorMostrarMsj.push("El apellido solo debe tener letras");
+                            if (!patrondui.test(this.dui) && this.Acciondui==1)  this.errorMostrarMsj.push("El DUI debe ser de nueve digitos");
+                            if(!this.fechana) this.errorMostrarMsj.push("La fecha de nacimiento no puede estar vacia");
+                            if(!this.sexo)this.errorMostrarMsj.push("El sexo no puede estar vacio");
+                            var values=this.fechana.split("-");
+                            var dia = values[2];
+                            var mes = values[1];
+                            var ano = values[0];
+                            if (ano < 1900)this.errorMostrarMsj.push("El año debe ser mayor a 1990");
+                            if(anioac<ano) {
+                                this.errorMostrarMsj.push("El año debe ser menor o igual al actual");
+                                
+                            }
+                            if(mesac<mes && ano==anioac) {
+                                    this.errorMostrarMsj.push("El mes debe ser menor al actual");
+                                    }
+                            if(this.errorMostrarMsj.length) this.errorDatos=1;
+                            return this.errorDatos;
+                            }
+                        case '13':
+                            {
+                            var values=this.fechana.split("-");
+                            var dia = values[2];
+                            var mes = values[1];
+                            var ano = values[0];
+                            if (ano < 1900)this.errorMostrarMsj.push("El año debe ser mayor a 1990");
+                            if(anioac<ano) {
+                                this.errorMostrarMsj.push("El año debe ser menor o igual al actual");
+                                
+                            }
+                            if(mesac<mes && ano==anioac) {
+                                    this.errorMostrarMsj.push("El mes debe ser menor al actual");
+                                    }
+                            if(this.errorMostrarMsj.length) this.errorDatos=1;
+                            return this.errorDatos;
+                            break;
+                            }
+                        case '14':
+                        {
+                            if (this.nombremadre!='' && !patron.test(this.nombremadre))this.errorMostrarMsj.push("El nombre de la madre solo debe tener letras");
+                            if (this.apellidomadre!='' && !patron.test(this.apellidomadre))this.errorMostrarMsj.push("El apellido de la madre solo debe tener letras");
+                            if (this.nombrepadre!='' && !patron.test(this.nombrepadre))this.errorMostrarMsj.push("El nombre del padre solo debe tener letras");
+                            if (this.apellidopadre!='' && !patron.test(this.apellidopadre))this.errorMostrarMsj.push("El apellido del padre solo debe tener letras");
+                            if (this.duimadre!='' && !patrondui.test(this.duimadre))this.errorMostrarMsj.push("El DUI de la madre debe ser de nueve digitos");                     
+                            if (this.duipadre!='' && !patrondui.test(this.duipadre))this.errorMostrarMsj.push("El DUI del padre debe ser de nueve digitos");
+                            if(this.errorMostrarMsj.length) this.errorDatos=1;
+                            return this.errorDatos;
+                            break;
+                        }
+                        case '15':
+                            {
+                                var RE = /^\d*(\.\d{1})?\d{0,1}$/;
+                                if (!RE.test(this.monto))  this.errorMostrarMsj.push("El monto solo pueden ser decimales");
+                                if(this.errorMostrarMsj.length) this.errorDatos=1;
+                                return this.errorDatos;
+                                break;
+                            }
+                        case '16':
+                            {
+                                var RE = /^\d*(\.\d{1})?\d{0,1}$/;
+                                if (!RE.test(this.monto))  this.errorMostrarMsj.push("El monto solo pueden ser decimales");
+                                var values=this.fecharealizacion.split("-");
+                                var ano = values[0];
+                                if (ano < 1989)this.errorMostrarMsj.push("El año debe ser mayor a 1989");
+                                if(anioac<ano)this.errorMostrarMsj.push("El año debe ser menor o igual al actual");
+                                if(this.errorMostrarMsj.length) this.errorDatos=1;
+                                return this.errorDatos;
+                                break;
+
+                            }
+                            case '17':
+                            {
+                                var RE = /^\d*(\.\d{1})?\d{0,1}$/;
+                                if (!RE.test(this.monto))  this.errorMostrarMsj.push("El monto solo pueden ser decimales");
+                                var values=this.fecharealizacion.split("-");
+                                var ano = values[0];
+                                if(this.idsacerdote=='') this.errorMostrarMsj.push("Debe de seleccionar un sacerdote");
+                                if(this.cargosacerdote=='') this.errorMostrarMsj.push("Debe de asignar un cargo al sacerdote");
+                                if(this.idcare=='') this.errorMostrarMsj.push("Debe de seleccionar una categoria");
+                                if (ano < 1989)this.errorMostrarMsj.push("El año debe ser mayor a 1989");
+                                if(anioac<ano)this.errorMostrarMsj.push("El año debe ser menor o igual al actual");
+                                if(this.errorMostrarMsj.length) this.errorDatos=1;
+                                return this.errorDatos;
+                                break;
+
                             }
 
                 }  
@@ -738,7 +956,6 @@
                 var url='/partida/busqueda?alcaldia=' + alcaldia + '&libro=' + libro + '&partida=' + partida + '&folio=' + folio + '&ano=' + ano;
                     axios.get(url) .then(function (response) {
                         var respuesta=response.data.solo;
-                        console.log(respuesta);
                     if(respuesta==1){
                         me.id=response.data.realizante.idpersona;
                         me.llenarmodal(me.id);
@@ -768,6 +985,8 @@
                         var datos= response.data.persona;
                     if(respuesta==2){
                         me.llenarcamposm(datos);
+                    }else{
+                        me.idmadre='';
                     }
                     }).catch(function (error) {
                     console.log(error);
@@ -784,6 +1003,8 @@
                         var datos= response.data.persona;
                     if(respuesta==2){
                         me.llenarcamposp(datos);
+                    }else{
+                        me.idpadre='';
                     }
                     }).catch(function (error) {
                     console.log(error);
@@ -820,10 +1041,10 @@
                 if(m!='' && p!=''){ //introduje ambos duis
                     this.tipo=1;
                 }
-                if(m=='' && p!=''){ //introduje ambos duis pero el de mama no esta
+                if(m=='' && p!='' && duim!=''){ //introduje ambos duis pero el de mama no esta
                     this.tipo=2;
                 }
-                if(p=='' && m!=''){ //introduje ambos duis pero el de papa no esta
+                if(p=='' && m!='' && duip!=''){ //introduje ambos duis pero el de papa no esta
                     this.tipo=3;
                 }
                 if(m=='' && p==''){ //introduje ambos duis y ninguno esta
@@ -838,13 +1059,14 @@
                 if(duip=='' && duim==''){ //no hay datos de ambos
                     this.tipo=7;
                 }
-                if(duim!='' &&  m==''){ // es nueva mama, no tiene papa
+                if(duim!='' &&  m=='' && duip==''){ // es nueva mama, no tiene papa
                     this.tipo=8;
                 }
-                if(duip!='' &&  p==''){ // es nuevo papa, no tiene mama
+                if(duip!='' &&  p=='' && duim==''){ // es nuevo papa, no tiene mama
                     this.tipo=9;
                 }
-                    axios.put('/persona/registrar',{
+                console.log(this.tipo, m, p);
+                   axios.put('/persona/registrar',{
                         'tipo':this.tipo,
                         'nombre_m': this.nombremadre.toUpperCase(),
                         'apellido_m': this.apellidomadre.toUpperCase(),
@@ -877,7 +1099,7 @@
                 })
                 .catch(function (error) {
                     console.log(error);
-                });
+                }); 
                 }else{
                     me.guardarsacramento();
                 }
@@ -909,8 +1131,7 @@
             },
             
         mounted() {
-            this.llenadoarray();
-            this.selectCategoria();
+            this.llenadolistas();
             
         }
     }

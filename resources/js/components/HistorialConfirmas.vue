@@ -69,9 +69,6 @@
                 idpadre:'',
                 id:'',
                 nombresacerdote:'',
-                fecharealizacion:'',
-                fechana:'',
-                fechana2:'',
                 dui:'',
                 sexo:'',
                 Acciondui:0,
@@ -149,8 +146,6 @@
                 this.apellidopadre='';
                 this.duipadre='';
                 this.nombresacerdote='';
-                this.fecharealizacion='';
-                this.fechana='';
                 this.dui='';
                 this.Acciondui=0;
                 this.accion=0;
@@ -174,8 +169,6 @@
                 this.apellidopadre='';
                 this.duipadre='';
                 this.nombresacerdote='';
-                this.fecharealizacion='';
-                this.fechana='';
                 this.dui='';
                 this.accion=0;
                 this.accionbotones=0;

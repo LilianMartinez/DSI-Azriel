@@ -194,8 +194,10 @@
                  buscar2=this.buscar;
                 var url='/efectivo?page='+ page + '&buscar=' + buscar2 + '&criterio=' + criterio +'&componente=' + tipocomponente;
                 axios.get(url) .then(function (response) {
-                    // handle success
-                    console.log(response);
+                    response.data.efectivos.data.forEach(function(element) {
+                        var texto = element.fecha;
+                        element.fecha= texto.replace(/^(\d{4})-(\d{2})-(\d{2})$/g,'$3/$2/$1');
+                    });
                     var respuesta= response.data;
                     me.arrayEfectivo=respuesta.efectivos.data;
                     me.pagination= respuesta.pagination;

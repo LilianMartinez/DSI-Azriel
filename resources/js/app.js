@@ -30,6 +30,7 @@ Vue.component('historialefectivo', require('./components/HistorialEfectivo.vue')
 Vue.component('montofijom', require('./components/MantenimientoMontoFijo.vue').default);
 Vue.component('matrimonio1', require('./components/Matrimonio1.vue').default);
 Vue.component('registroprimeracomunion', require('./components/RegistroPrimeraComunion.vue').default);
+Vue.component('registroconfirmacion', require('./components/RegistroConfirmas.vue').default);
 Vue.component('historialprimeracomunion', require('./components/HistorialPrimeraComunion.vue').default);
 Vue.component('historialconfirmas', require('./components/HistorialConfirmas.vue').default);
 Vue.component('historialsupletorias', require('./components/HistorialSupletorias.vue').default);
@@ -39,6 +40,11 @@ Vue.component('registrobautizo', require('./components/RegistroBautizo.vue').def
 Vue.component('categoriaresumen', require('./components/MantenimientoCategoriaResumen.vue').default);
 Vue.component('religiosos', require('./components/MantenimientoReligiosos.vue').default);
 Vue.component('iglesias', require('./components/MantenimientoIglesia.vue').default);
+Vue.component('productos', require('./components/Producto.vue').default);
+Vue.component('compras', require('./components/Compras.vue').default);
+Vue.component('ventas', require('./components/Ventas.vue').default);
+Vue.component('canasta', require('./components/Canasta.vue').default);
+Vue.component('suelto', require('./components/Suelto.vue').default);
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application

@@ -328,7 +328,7 @@
                 var url='/categoriaresumen/selectCategoriaRe';
                 axios.get(url) .then(function (response) {
                     // handle success
-                    var respuesta= response.data;
+                    var respuesta= response.data; 
                     me.arraycategorias=respuesta.categorias;
                 })
                 .catch(function (error) {
@@ -464,14 +464,21 @@
                 this.errorDatos=0;
                 this.errorMostrarMsj=[];
                 var RE = /^\d*(\.\d{1})?\d{0,1}$/;
-               var Max_Length = 50;
-               var Min_Length = 5;
-               if(!this.tipo) this.errorMostrarMsj.push("El tipo no puede estar vacío");
-               var lengthmax = this.descripcion_efectivo.length;
-               var lengthmin = this.descripcion_efectivo.length;
-               if (lengthmax > Max_Length)this.errorMostrarMsj.push("El concepto debe tener menos de 50 letras");
+                var Max_Length = 50;
+                var Min_Length = 5;
+                if(!this.tipo) this.errorMostrarMsj.push("El tipo no puede estar vacío");
+                var lengthmax = this.descripcion_efectivo.length;
+                var lengthmin = this.descripcion_efectivo.length;
+                if (lengthmax > Max_Length)this.errorMostrarMsj.push("El concepto debe tener menos de 50 letras");
                 if (lengthmin < Min_Length)this.errorMostrarMsj.push("El concepto debe tener más de 5 letras");
-                if (!RE.test(this.monto))  this.errorMostrarMsj.push("El monto solo pueden ser decimales");
+                if(!this.monto) this.errorMostrarMsj.push("El monto no puede estar vacío");
+                if(this.monto){
+                    if(this.monto=='0'){
+                        this.errorMostrarMsj.push("El monto debe ser mayor que 0");
+                    }else{
+                        if (!RE.test(this.monto))  this.errorMostrarMsj.push("El monto solo pueden ser decimales");
+                    }
+                }
                 if(this.errorMostrarMsj.length) this.errorDatos=1;
             
 

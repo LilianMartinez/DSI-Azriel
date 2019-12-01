@@ -145,7 +145,6 @@
                  buscar2=this.buscar;
                 var url='/iglesia?buscar=' + buscar2 + '&criterio=' + criterio;
                 axios.get(url) .then(function (response) {
-                    console.log(response);
                     me.arrayiglesias=response.data;
                 })
                 .catch(function (error) {

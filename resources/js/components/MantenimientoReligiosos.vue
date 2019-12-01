@@ -173,7 +173,6 @@
                  buscar2=this.buscar;
                 var url='/religioso/index?buscar=' + buscar2 + '&criterio=' + criterio;
                 axios.get(url) .then(function (response) {
-                    console.log(response);
                     me.arrayreligiosos=response.data;
                 })
                 .catch(function (error) {
