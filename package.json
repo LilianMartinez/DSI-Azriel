@@ -26,7 +26,6 @@
     },
     "dependencies": {
         "@carbon/vue": "^2.12.6",
-        "fecha": "^3.0.3",
         "@fullcalendar/core": "^4.3.1",
         "@fullcalendar/daygrid": "^4.3.0",
         "@fullcalendar/interaction": "^4.3.0",

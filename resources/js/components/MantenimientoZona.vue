@@ -162,7 +162,7 @@
                var Min_Length = 3;
                var lengthmax = this.nombre_zona.length;
                var lengthmin = this.nombre_zona.length;
-                if (!lengthmax > Max_Length)this.errorMostrarMsj.push("El nombre debe tener menos de 100 caracteres");
+                if (lengthmax > Max_Length)this.errorMostrarMsj.push("El nombre debe tener menos de 100 caracteres");
                 if (lengthmin < Min_Length)this.errorMostrarMsj.push("El nombre debe tener más 3 letras");
                 if(this.errorMostrarMsj.length) this.errorDatos=1;
                 return this.errorDatos;

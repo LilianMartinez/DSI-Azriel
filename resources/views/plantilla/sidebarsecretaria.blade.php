@@ -11,10 +11,10 @@
                                 <a class="nav-link" href="#"><i class="icon-wallet"></i>Caja chica diaria</a>
                             </li>
                             <li @click="menu=7" class="nav-item">
-                                <a class="nav-link" href="#"><i class="icon-wallet"></i> Historial de registros</a>
+                                <a class="nav-link" href="#"><i class="icon-wallet"></i>Historial de registros</a>
                             </li>
                             <li @click="menu=8" class="nav-item">
-                                <a class="nav-link" href="#"><i class="icon-notebook"></i> Informe</a>
+                                <a class="nav-link" href="#"><i class="icon-notebook"></i>Resumen Economico</a>
                             </li>
                         </ul>
                     </li>
@@ -25,10 +25,10 @@
                         <a class="nav-link nav-dropdown-toggle" href="#"><i class="icon-bag"></i>Bautizo</a>
                             <ul class="nav-dropdown-items">
                             <li @click="menu=3" class="nav-item">
-                                <a class="nav-link" href="#"><i class="icon-bag"></i> Bautizo</a>
+                                <a class="nav-link" href="#"><i class="icon-bag"></i>Historial</a>
                             </li>
                             <li @click="menu=18" class="nav-item">
-                                <a class="nav-link" href="#"><i class="icon-bag"></i> Registro Bautizo</a>
+                                <a class="nav-link" href="#"><i class="icon-bag"></i>Registro</a>
                             </li>
                             </ul>
                         </li>
@@ -57,43 +57,12 @@
                             <li @click="menu=6" class="nav-item">
                                 <a class="nav-link" href="#"><i class="icon-bag"></i>Matrimonio</a>
                             </li>
-                            <li class="nav-item nav-dropdown">
-                            <a class="nav-link nav-dropdown-toggle" href="#"><i class="icon-bag"></i>Supletoria</a>
-                            <ul class="nav-dropdown-items">
-                            <li @click="menu=11" class="nav-item">
-                                <a class="nav-link" href="#"><i class="icon-bag"></i>Registro</a>
-                            </li>
-                            <li @click="menu=21" class="nav-item">
-                                <a class="nav-link" href="#"><i class="icon-bag"></i>Historial</a>
-                            </li>
-                            </ul>
-                            </li>
                         </ul>
                     </li>
         
-                    <li class="nav-item nav-dropdown">
-                        <a class="nav-link nav-dropdown-toggle" href="#"><i class="icon-bag"></i>Calendario Parroquial</a>
-                        <ul class="nav-dropdown-items">
-                            <li @click="menu=1" class="nav-item">
-                                <a class="nav-link" href="#"><i class="icon-bag"></i> Eventos</a>
-                            </li>
-                            <li @click="menu=2" class="nav-item">
-                                <a class="nav-link" href="#"><i class="icon-bag"></i> Calendario de Avisos</a>
-                            </li>
-                            <li @click="menu=8" class="nav-item">
-                                <a class="nav-link" href="#"><i class="icon-notebook"></i>Resumen Económico</a>
-                            </li>
-                        </ul>
+                    <li @click="menu=2" class="nav-item">
+                                <a class="nav-link" href="#"><i class="icon-bag"></i>Calendario de Eventos</a>
                     </li>
-                   <!--  <li class="nav-item nav-dropdown">
-                        <a class="nav-link nav-dropdown-toggle" href="#"><i class="icon-basket"></i> Donaciones</a>
-                        <ul class="nav-dropdown-items">
-                            <li @click="menu=9" class="nav-item">
-                                <a class="nav-link" href="#"><i class="icon-notebook"></i> Listado donaciones</a>
-                            </li>
-                        </ul>
-                    </li>-->
-                  
                     <li class="nav-item nav-dropdown">
                         <a class="nav-link nav-dropdown-toggle" href="#"><i class="icon-pie-chart"></i> Control Sectorial</a>
                         <ul class="nav-dropdown-items">
@@ -106,12 +75,6 @@
                             
                         </ul>
                     </li>
-                   <!-- <li @click="menu=14" class="nav-item">
-                        <a class="nav-link" href="#"><i class="icon-book-open"></i> Ayuda <span class="badge badge-danger">PDF</span></a>
-                    </li>
-                    <li @click="menu=15" class="nav-item">
-                        <a class="nav-link" href="#"><i class="icon-info"></i> Acerca de...<span class="badge badge-info">IT</span></a>
-                    </li>-->
                     <li class="nav-item nav-dropdown">
                         <a class="nav-link nav-dropdown-toggle" href="#"><i class="icon-pie-chart"></i> Mantenimientos</a>
                         <ul class="nav-dropdown-items">
@@ -148,7 +111,7 @@
                                 <a class="nav-link" href="#"><i class="icon-chart"></i>Canastas</a>
                             </li>
                             <li @click="menu=32" class="nav-item">
-                                <a class="nav-link" href="#"><i class="icon-chart"></i>Menudeo</a>
+                                <a class="nav-link" href="#"><i class="icon-chart"></i>Productos individuales</a>
                             </li>
                             <li @click="menu=34" class="nav-item">
                                 <a class="nav-link" href="#"><i class="icon-chart"></i>Informe</a>
