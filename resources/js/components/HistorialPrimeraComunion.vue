@@ -396,8 +396,12 @@
                 });
             },
             //////////Impresion
-            registrarImpresion(){  
+            imprimirConstancia(){  
             let me=this;
+            if(this.validarModal4()){
+                return;
+            } 
+            this.eliminarImpresion();
               axios.put('/persona/registrarImpresion',{
                     'idsacra':this.id_sacramento,
                     'idperso':this.idperso,
@@ -405,31 +409,13 @@
                     'conceptoim':this.conceptoim,
               }) .then(function (response) {
                     me.listarPersona();
-                    me.cerrarModal4();
+                    me.mientras();
                 }) .catch(function (error) {
-                 
                 });
         },
-
-        imprimirConstancia(){
-           if(this.validarModal4()){
-                return;
-            }
-            
-            axios.put('/persona/certificadoPrimeraComunion',{
-                'id': this. id_sacramento,
-                'id_madre':this.id_madre,
-                'id_padre':this.id_padre,
-            }).then(function (response) { 
-                    me.listarPersona();
-                    me.cerrarModal4();
-                }) .catch(function (error) {
-                    console.log(error);
-                });
-                 let me=this;
-                 this.registrarImpresion();
-                 this.pdfConstacia(me.id_sacramento, me.id_padre,me.id_madre);
-                 this.eliminarImpresion();
+        mientras(){  
+            let me=this;
+                this.pdfConstacia(me.id_sacramento, me.id_padre,me.id_madre);
         },
 
        validarModal4(){
@@ -460,12 +446,12 @@
                     id_madre=0;
               }
             window.open('http://127.0.0.1:8000/persona/certificadoPrimeraComunion/'+ id_sacramento+'/'+id_padre+ '/'+id_madre);
+            this.cerrarModal4();
         },
 
         eliminarImpresion(){
               let me=this;
               axios.put('/persona/eliminarDatosImpresion',{
-                  'id':this.id_impresion,
               }) .then(function (response) {
                 })
                 .catch(function (error) {

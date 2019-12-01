@@ -672,7 +672,11 @@
 
         },
 
-        registrarImpresion(){  /////////AQUI
+        imprimirConstancia(){
+            if(this.validarModal4()){
+                return;
+            }
+            this.eliminarImpresion();
             let me=this;
               axios.put('/persona/registrarImpresion',{
                     'idsacra':this.sacramento_id,
@@ -681,38 +685,26 @@
                     'conceptoim':this.conceptoim,
               }) .then(function (response) {
                     me.listarMatrimonio1();
-                    me.cerrarModal4();
+                      me.mientras();
                 }) .catch(function (error) {
-                 
                 });
         },
-
-        imprimirConstancia(){
-            if(this.validarModal4()){
-                return;
-            }
-            axios.put('/persona/certificadoMatri',{
-                    'id':this.sacramento_id,
-                }).then(function (response) { 
-                    me.listarMatrimonio1();
-                    me.cerrarModal4();
-                }) .catch(function (error) {
-                    console.log(error);
-                });
-                 let me=this;
-                 this.registrarImpresion();
-                 this.pdfConstacia(me.sacramento_id);
-                 this.eliminarImpresion();
+        mientras(){  
+            let me=this;
+                this.pdfConstacia(me.sacramento_id);
+                
         },
 
         pdfConstacia(sacramento_id){
             window.open('http://127.0.0.1:8000/persona/certificadoMatri/'+ sacramento_id);
+            this.cerrarModal4();
+            
         },
 
         eliminarImpresion(){
               let me=this;
               axios.put('/persona/eliminarDatosImpresion',{
-                  'id':this.id_impresion,
+                
               }) .then(function (response) {
                 })
                 .catch(function (error) {
@@ -1543,7 +1535,7 @@
             this.conceptoim;
             this.montoConstancia;
 
-            if(this.cobrado!=true)this.errorMostrarMsjModal4.push("Debe cobrar la solicitud de la constancia de confirma");
+            //if(this.cobrado!=true)this.errorMostrarMsjModal4.push("Debe cobrar la solicitud de la constancia de confirma");
             if(this.conceptoim=='')this.errorMostrarMsjModal4.push("El campo de motivo de la constancia no puede estar vacio");
             if(this.idperso=='')this.errorMostrarMsjModal4.push("Debe elegir al Padre que firmará la constancia");
             if(this.cargoim=='')this.errorMostrarMsjModal4.push("Debe elegir el cargo del padre que firmará la constancia");

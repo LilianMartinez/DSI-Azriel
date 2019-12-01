@@ -550,7 +550,19 @@
                     this.modal=0;
                    
             },
-            
+            llenadolistas(){
+             this.arraycargo= new Array('DIACONO','PADRE','ARZOBISPO','CARDENAL','NUNCIO APOSTOLICO','MONSEÑOR');
+                let me=this;
+                var url='/persona/buscarsacerdote3';
+                axios.get(url) .then(function (response) {
+                    me.arraysacerdote=response.data.sacerdote;
+                    me.arraycategorias=response.data.categorias;
+                    me.arrayiglesias=response.data.iglesia;
+                })
+                .catch(function (error) {
+                    console.log(error);
+                });
+            },
             
             //Mostrar datos para confirmar el ingreso
             abrirmodal(){
@@ -600,6 +612,7 @@
             //autocompletar sacerdotes
             llenadolistas(){
                 let me=this;
+                this.arraycargo= new Array('DIACONO','PADRE','ARZOBISPO','CARDENAL','NUNCIO APOSTOLICO','MONSEÑOR');
                 var url='/persona/buscarsacerdote3';
                 axios.get(url) .then(function (response) {
                      me.arraysacerdote=response.data.sacerdote;

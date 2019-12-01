@@ -50,14 +50,23 @@ class PersonaController extends Controller
         $categoriaResumen = CategoriaResumen::where('estado','=','1')
        ->select('id','nombre_categoria','descripcion_categoria')->get();
        $envio['categorias']=$categoriaResumen;
-       $iglesia = Iglesia::where('estado','=','1')->where('nombre_iglesia','like', '%'. 'PARROQUIA' .'%')
+       $iglesia = Iglesia::where('estado','=','1')
        ->get();
        $envio['iglesia']=$iglesia;
         
-
-
-
         return $envio;
+    }
+    }
+    public function buscarsacerdoteG(Request $request)
+    {
+        
+
+        if(!$request->ajax()) return redirect('/');{
+        $persona = DB::table('personas')->where('tipo_persona',1)->get();
+
+        
+        
+        return $persona;
     }
     }
     public function realizante(Request $request)

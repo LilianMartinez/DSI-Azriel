@@ -364,7 +364,7 @@ class PersonaController2 extends Controller
         $impresion->save();
 
     }
-    public function eliminarDatosImpresion(Request $request)
+    public function eliminarDatosImpresion()
     {
         $impresiones = DB::table('impresiones')->delete();
         return;

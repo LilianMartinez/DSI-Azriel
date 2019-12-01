@@ -15185,8 +15185,12 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       });
     },
     //////////Impresion
-    registrarImpresion: function registrarImpresion() {
-      /////////AQUI
+    imprimirConstancia: function imprimirConstancia() {
+      if (this.validarModal4()) {
+        return;
+      }
+
+      this.eliminarImpresion();
       var me = this;
       axios.put('/persona/registrarImpresion', {
         'idsacra': this.id_sacramento,
@@ -15195,29 +15199,12 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         'conceptoim': this.conceptoim
       }).then(function (response) {
         me.listarActasBautizo();
-        me.cerrarModal4();
-        console.log(response);
+        me.mientras();
       })["catch"](function (error) {});
     },
-    imprimirConstancia: function imprimirConstancia() {
-      if (this.validarModal4()) {
-        return;
-      }
-
-      axios.put('/persona/certificadoBautizo', {
-        'id': this.id_sacramento,
-        'id_madre': this.id_madre,
-        'id_padre': this.id_padre
-      }).then(function (response) {
-        me.listarActasBautizo();
-        me.cerrarModal4();
-      })["catch"](function (error) {
-        console.log(error);
-      });
+    mientras: function mientras() {
       var me = this;
-      this.registrarImpresion();
       this.pdfConstacia(me.id_sacramento, me.id_padre, me.id_madre);
-      this.eliminarImpresion();
     },
     validarModal4: function validarModal4() {
       this.errorModal4 = 0;
@@ -15248,6 +15235,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       }
 
       window.open('http://127.0.0.1:8000/persona/certificadoBautizo/' + id_sacramento + '/' + id_padre + '/' + id_madre);
+      this.cerrarModal4();
     },
     eliminarImpresion: function eliminarImpresion() {
       var me = this;
@@ -19013,7 +19001,12 @@ __webpack_require__.r(__webpack_exports__);
       });
     },
     //////////Impresion
-    registrarImpresion: function registrarImpresion() {
+    imprimirConstancia: function imprimirConstancia() {
+      if (this.validarModal4()) {
+        return;
+      }
+
+      this.eliminarImpresion();
       var me = this;
       axios.put('/persona/registrarImpresion', {
         'idsacra': this.id_sacramento,
@@ -19022,30 +19015,12 @@ __webpack_require__.r(__webpack_exports__);
         'conceptoim': this.conceptoim
       }).then(function (response) {
         me.listarPersona();
-        me.cerrarModal4();
-        console.log(response);
+        me.mientras();
       })["catch"](function (error) {});
     },
-    imprimirConstancia: function imprimirConstancia() {
-      if (this.validarModal4()) {
-        return;
-      }
-
-      axios.put('/persona/certificadoConfirma', {
-        'id': this.id_sacramento,
-        'id_madre': this.id_madre,
-        'id_padre': this.id_padre,
-        'id_realizante1': this.id_realizante1
-      }).then(function (response) {
-        me.listarPersona();
-        me.cerrarModal4();
-      })["catch"](function (error) {
-        console.log(error);
-      });
+    mientras: function mientras() {
       var me = this;
-      this.registrarImpresion();
       this.pdfConstacia(me.id_sacramento, me.id_padre, me.id_madre, me.id_realizante1);
-      this.eliminarImpresion();
     },
     validarModal4: function validarModal4() {
       this.errorModal4 = 0;
@@ -19076,12 +19051,11 @@ __webpack_require__.r(__webpack_exports__);
       }
 
       window.open('http://127.0.0.1:8000/persona/certificadoConfirma/' + id_sacramento + '/' + id_padre + '/' + id_madre + '/' + id_realizante1);
+      this.cerrarModal4();
     },
     eliminarImpresion: function eliminarImpresion() {
       var me = this;
-      axios.put('/persona/eliminarDatosImpresion', {
-        'id': this.id_impresion
-      }).then(function (response) {})["catch"](function (error) {
+      axios.put('/persona/eliminarDatosImpresion', {}).then(function (response) {})["catch"](function (error) {
         // handle error
         console.log(error);
       });
@@ -19762,8 +19736,14 @@ __webpack_require__.r(__webpack_exports__);
       });
     },
     //////////Impresion
-    registrarImpresion: function registrarImpresion() {
+    imprimirConstancia: function imprimirConstancia() {
       var me = this;
+
+      if (this.validarModal4()) {
+        return;
+      }
+
+      this.eliminarImpresion();
       axios.put('/persona/registrarImpresion', {
         'idsacra': this.id_sacramento,
         'idperso': this.idperso,
@@ -19771,28 +19751,12 @@ __webpack_require__.r(__webpack_exports__);
         'conceptoim': this.conceptoim
       }).then(function (response) {
         me.listarPersona();
-        me.cerrarModal4();
+        me.mientras();
       })["catch"](function (error) {});
     },
-    imprimirConstancia: function imprimirConstancia() {
-      if (this.validarModal4()) {
-        return;
-      }
-
-      axios.put('/persona/certificadoPrimeraComunion', {
-        'id': this.id_sacramento,
-        'id_madre': this.id_madre,
-        'id_padre': this.id_padre
-      }).then(function (response) {
-        me.listarPersona();
-        me.cerrarModal4();
-      })["catch"](function (error) {
-        console.log(error);
-      });
+    mientras: function mientras() {
       var me = this;
-      this.registrarImpresion();
       this.pdfConstacia(me.id_sacramento, me.id_padre, me.id_madre);
-      this.eliminarImpresion();
     },
     validarModal4: function validarModal4() {
       this.errorModal4 = 0;
@@ -19823,12 +19787,11 @@ __webpack_require__.r(__webpack_exports__);
       }
 
       window.open('http://127.0.0.1:8000/persona/certificadoPrimeraComunion/' + id_sacramento + '/' + id_padre + '/' + id_madre);
+      this.cerrarModal4();
     },
     eliminarImpresion: function eliminarImpresion() {
       var me = this;
-      axios.put('/persona/eliminarDatosImpresion', {
-        'id': this.id_impresion
-      }).then(function (response) {})["catch"](function (error) {
+      axios.put('/persona/eliminarDatosImpresion', {}).then(function (response) {})["catch"](function (error) {
         // handle error
         console.log(error);
       });
@@ -22647,8 +22610,12 @@ __webpack_require__.r(__webpack_exports__);
     cobrar: function cobrar() {
       this.cobrado = true; //AQUÍ AGREGAR EL DESABILITAR COBRAR1
     },
-    registrarImpresion: function registrarImpresion() {
-      /////////AQUI
+    imprimirConstancia: function imprimirConstancia() {
+      if (this.validarModal4()) {
+        return;
+      }
+
+      this.eliminarImpresion();
       var me = this;
       axios.put('/persona/registrarImpresion', {
         'idsacra': this.sacramento_id,
@@ -22657,35 +22624,20 @@ __webpack_require__.r(__webpack_exports__);
         'conceptoim': this.conceptoim
       }).then(function (response) {
         me.listarMatrimonio1();
-        me.cerrarModal4();
+        me.mientras();
       })["catch"](function (error) {});
     },
-    imprimirConstancia: function imprimirConstancia() {
-      if (this.validarModal4()) {
-        return;
-      }
-
-      axios.put('/persona/certificadoMatri', {
-        'id': this.sacramento_id
-      }).then(function (response) {
-        me.listarMatrimonio1();
-        me.cerrarModal4();
-      })["catch"](function (error) {
-        console.log(error);
-      });
+    mientras: function mientras() {
       var me = this;
-      this.registrarImpresion();
       this.pdfConstacia(me.sacramento_id);
-      this.eliminarImpresion();
     },
     pdfConstacia: function pdfConstacia(sacramento_id) {
       window.open('http://127.0.0.1:8000/persona/certificadoMatri/' + sacramento_id);
+      this.cerrarModal4();
     },
     eliminarImpresion: function eliminarImpresion() {
       var me = this;
-      axios.put('/persona/eliminarDatosImpresion', {
-        'id': this.id_impresion
-      }).then(function (response) {})["catch"](function (error) {
+      axios.put('/persona/eliminarDatosImpresion', {}).then(function (response) {})["catch"](function (error) {
         // handle error
         console.log(error);
       });
@@ -23507,8 +23459,8 @@ __webpack_require__.r(__webpack_exports__);
       this.errorMostrarMsjModal4 = [];
       var RE = /^\d*(\.\d{1})?\d{0,1}$/;
       this.conceptoim;
-      this.montoConstancia;
-      if (this.cobrado != true) this.errorMostrarMsjModal4.push("Debe cobrar la solicitud de la constancia de confirma");
+      this.montoConstancia; //if(this.cobrado!=true)this.errorMostrarMsjModal4.push("Debe cobrar la solicitud de la constancia de confirma");
+
       if (this.conceptoim == '') this.errorMostrarMsjModal4.push("El campo de motivo de la constancia no puede estar vacio");
       if (this.idperso == '') this.errorMostrarMsjModal4.push("Debe elegir al Padre que firmará la constancia");
       if (this.cargoim == '') this.errorMostrarMsjModal4.push("Debe elegir el cargo del padre que firmará la constancia");
@@ -28456,6 +28408,10 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+var _methods;
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 //
 //
 //
@@ -28825,7 +28781,7 @@ __webpack_require__.r(__webpack_exports__);
       errorMostrarMsj: []
     };
   },
-  methods: {
+  methods: (_methods = {
     //Mt. para calcular edad y ver si se muestra o no el div que contiene el dui del realizante
     cambiar: function cambiar() {
       var values = this.fechana.split("-");
@@ -29000,6 +28956,18 @@ __webpack_require__.r(__webpack_exports__);
     cerrarmodal: function cerrarmodal() {
       this.modal = 0;
     },
+    llenadolistas: function llenadolistas() {
+      this.arraycargo = new Array('DIACONO', 'PADRE', 'ARZOBISPO', 'CARDENAL', 'NUNCIO APOSTOLICO', 'MONSEÑOR');
+      var me = this;
+      var url = '/persona/buscarsacerdote3';
+      axios.get(url).then(function (response) {
+        me.arraysacerdote = response.data.sacerdote;
+        me.arraycategorias = response.data.categorias;
+        me.arrayiglesias = response.data.iglesia;
+      })["catch"](function (error) {
+        console.log(error);
+      });
+    },
     //Mostrar datos para confirmar el ingreso
     abrirmodal: function abrirmodal() {
       this.validarvalores('17');
@@ -29043,557 +29011,523 @@ __webpack_require__.r(__webpack_exports__);
           this.accion = 3;
         }
       }
-    },
-    //autocompletar sacerdotes
-    llenadolistas: function llenadolistas() {
-      var me = this;
-      var url = '/persona/buscarsacerdote3';
-      axios.get(url).then(function (response) {
-        me.arraysacerdote = response.data.sacerdote;
-        me.arraycategorias = response.data.categorias;
-      })["catch"](function (error) {
-        console.log(error);
-      });
-    },
-    abrirmodal2: function abrirmodal2() {
-      this.modal = 1;
-      this.tituloModal = 'Confirmar datos';
-      this.accionbotones = 1; //Si es F o M
+    }
+  }, _defineProperty(_methods, "llenadolistas", function llenadolistas() {
+    var me = this;
+    this.arraycargo = new Array('DIACONO', 'PADRE', 'ARZOBISPO', 'CARDENAL', 'NUNCIO APOSTOLICO', 'MONSEÑOR');
+    var url = '/persona/buscarsacerdote3';
+    axios.get(url).then(function (response) {
+      me.arraysacerdote = response.data.sacerdote;
+      me.arraycategorias = response.data.categorias;
+    })["catch"](function (error) {
+      console.log(error);
+    });
+  }), _defineProperty(_methods, "abrirmodal2", function abrirmodal2() {
+    this.modal = 1;
+    this.tituloModal = 'Confirmar datos';
+    this.accionbotones = 1; //Si es F o M
 
-      if (this.sexo == 'M') {
-        this.accionsexo = 1;
+    if (this.sexo == 'M') {
+      this.accionsexo = 1;
+    }
+
+    if (this.sexo == 'F') {
+      this.accionsexo = 0;
+    } //Si no tiene datos del padre
+
+
+    if (this.nombrepadre == '') {
+      this.accion = 1;
+    } //Si no tiene datos de la madre
+
+
+    if (this.nombremadre == '') {
+      this.accion = 2;
+    }
+
+    if (this.nombremadre == '' && this.nombrepadre == '') {
+      this.accion = 3;
+    }
+  }), _defineProperty(_methods, "llenarcamposm", function llenarcamposm() {
+    var data = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];
+    this.nombremadre = data['nombre_persona'];
+    this.apellidomadre = data['apellido_persona'];
+    this.idmadre = data['id'];
+  }), _defineProperty(_methods, "llenarcamposp", function llenarcamposp() {
+    var data = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];
+    this.nombrepadre = data['nombre_persona'];
+    this.apellidopadre = data['apellido_persona'];
+    this.idpadre = data['id'];
+  }), _defineProperty(_methods, "llenarmodal", function llenarmodal(id) {
+    var me = this;
+    var url = '/persona/obtener?id=' + id;
+    axios.get(url).then(function (response) {
+      var d = response.data.solo;
+
+      if (d == 1) {
+        response.data.realizante.forEach(function (element) {
+          var texto = element.fecha_nacimiento;
+          element.fecha_nacimiento = texto.replace(/^(\d{4})-(\d{2})-(\d{2})$/g, '$3/$2/$1');
+        });
+        me.nombrerealizante = response.data.realizante.nombre_persona;
+        me.apellidorealizante = response.data.realizante.apellido_persona;
+        me.sexo = response.data.realizante.sexo;
+        me.fechanaes = response.data.realizante.fecha_nacimiento;
       }
 
-      if (this.sexo == 'F') {
-        this.accionsexo = 0;
-      } //Si no tiene datos del padre
-
-
-      if (this.nombrepadre == '') {
-        this.accion = 1;
-      } //Si no tiene datos de la madre
-
-
-      if (this.nombremadre == '') {
-        this.accion = 2;
+      if (d == 2) {
+        response.data.realizante.forEach(function (element) {
+          var texto = element.fecha_nacimiento;
+          element.fecha_nacimiento = texto.replace(/^(\d{4})-(\d{2})-(\d{2})$/g, '$3/$2/$1');
+        });
+        me.nombrepadre = response.data.padre.nombre_persona;
+        me.apellidopadre = response.data.padre.apellido_persona;
+        me.nombrerealizante = response.data.realizante.nombre_persona;
+        me.apellidorealizante = response.data.realizante.apellido_persona;
+        me.sexo = response.data.realizante.sexo;
+        me.fechanaes = response.data.realizante.fecha_nacimiento;
       }
 
-      if (this.nombremadre == '' && this.nombrepadre == '') {
-        this.accion = 3;
+      if (d == 3) {
+        response.data.realizante.forEach(function (element) {
+          var texto = element.fecha_nacimiento;
+          element.fecha_nacimiento = texto.replace(/^(\d{4})-(\d{2})-(\d{2})$/g, '$3/$2/$1');
+        });
+        me.nombremadre = response.data.madre.nombre_persona;
+        me.apellidomadre = response.data.madre.apellido_persona;
+        me.nombrerealizante = response.data.realizante.nombre_persona;
+        me.apellidorealizante = response.data.realizante.apellido_persona;
+        me.sexo = response.data.realizante.sexo;
+        me.fechanaes = response.data.realizante.fecha_nacimiento;
       }
-    },
-    llenarcamposm: function llenarcamposm() {
-      var data = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];
-      this.nombremadre = data['nombre_persona'];
-      this.apellidomadre = data['apellido_persona'];
-      this.idmadre = data['id'];
-    },
-    llenarcamposp: function llenarcamposp() {
-      var data = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];
-      this.nombrepadre = data['nombre_persona'];
-      this.apellidopadre = data['apellido_persona'];
-      this.idpadre = data['id'];
-    },
-    llenarmodal: function llenarmodal(id) {
-      var me = this;
-      var url = '/persona/obtener?id=' + id;
-      axios.get(url).then(function (response) {
-        var d = response.data.solo;
 
-        if (d == 1) {
-          response.data.realizante.forEach(function (element) {
-            var texto = element.fecha_nacimiento;
-            element.fecha_nacimiento = texto.replace(/^(\d{4})-(\d{2})-(\d{2})$/g, '$3/$2/$1');
-          });
-          me.nombrerealizante = response.data.realizante.nombre_persona;
-          me.apellidorealizante = response.data.realizante.apellido_persona;
-          me.sexo = response.data.realizante.sexo;
-          me.fechanaes = response.data.realizante.fecha_nacimiento;
-        }
-
-        if (d == 2) {
-          response.data.realizante.forEach(function (element) {
-            var texto = element.fecha_nacimiento;
-            element.fecha_nacimiento = texto.replace(/^(\d{4})-(\d{2})-(\d{2})$/g, '$3/$2/$1');
-          });
-          me.nombrepadre = response.data.padre.nombre_persona;
-          me.apellidopadre = response.data.padre.apellido_persona;
-          me.nombrerealizante = response.data.realizante.nombre_persona;
-          me.apellidorealizante = response.data.realizante.apellido_persona;
-          me.sexo = response.data.realizante.sexo;
-          me.fechanaes = response.data.realizante.fecha_nacimiento;
-        }
-
-        if (d == 3) {
-          response.data.realizante.forEach(function (element) {
-            var texto = element.fecha_nacimiento;
-            element.fecha_nacimiento = texto.replace(/^(\d{4})-(\d{2})-(\d{2})$/g, '$3/$2/$1');
-          });
-          me.nombremadre = response.data.madre.nombre_persona;
-          me.apellidomadre = response.data.madre.apellido_persona;
-          me.nombrerealizante = response.data.realizante.nombre_persona;
-          me.apellidorealizante = response.data.realizante.apellido_persona;
-          me.sexo = response.data.realizante.sexo;
-          me.fechanaes = response.data.realizante.fecha_nacimiento;
-        }
-
-        if (d == 4) {
-          response.data.realizante.forEach(function (element) {
-            var texto = element.fecha_nacimiento;
-            element.fecha_nacimiento = texto.replace(/^(\d{4})-(\d{2})-(\d{2})$/g, '$3/$2/$1');
-          });
-          me.nombrepadre = response.data.padre.nombre_persona;
-          me.apellidopadre = response.data.padre.apellido_persona;
-          me.nombremadre = response.data.madre.nombre_persona;
-          me.apellidomadre = response.data.madre.apellido_persona;
-          me.nombrerealizante = response.data.realizante.nombre_persona;
-          me.apellidorealizante = response.data.realizante.apellido_persona;
-          me.sexo = response.data.realizante.sexo;
-          me.fechanaes = response.data.realizante.fecha_nacimiento;
-        }
-
-        me.verificacion = 1;
-        me.abrirmodal2();
-      })["catch"](function (error) {
-        console.log(error);
-      });
-    },
-    //Validar datos
-    validarvalores: function validarvalores(d) {
-      this.errorDatos = 0;
-      this.errorMostrarMsj = [];
-      var RE = /^([0-9])*$/;
-      var patron = /^[a-zA-ZÑñÁáÉéÍíÓóÚúÜü\s]+$/; /////ESTOOOOOOOO
-
-      var anio = /^\d{4}$/;
-      var patrondui = /^\d{9}$/;
-      var fecha = new Date();
-      var anioac = fecha.getFullYear();
-      var mesac = fecha.getMonth();
-
-      switch (d) {
-        case '1':
-          {
-            var Min_Length = 5;
-            var lengthmin = this.alcaldia.length;
-            if (lengthmin < Min_Length) this.errorMostrarMsj.push("La alcaldía debe tener más de 5 letras");
-            if (!patron.test(this.alcaldia)) this.errorMostrarMsj.push("La alcaldía solo debe tener letras");
-            if (this.errorMostrarMsj.length) this.errorDatos = 1;
-            return this.errorDatos;
-            break;
-          }
-
-        case '2':
-          {
-            var Min_Length = 5;
-            var lengthmin = this.alcaldia.length;
-            if (lengthmin < Min_Length) this.errorMostrarMsj.push("La alcaldía debe tener más de 5 letras");
-            if (!patron.test(this.alcaldia)) this.errorMostrarMsj.push("La alcaldía solo debe tener letras");
-            if (!this.libro) this.errorMostrarMsj.push("El número de libro no puede estar vacío");
-            if (this.libro == '0') this.errorMostrarMsj.push("El número de libro debe ser distinto a 0");
-            if (!RE.test(this.libro)) this.errorMostrarMsj.push("El número de libro debe ser un numero entero");
-            if (this.errorMostrarMsj.length) this.errorDatos = 1;
-            return this.errorDatos;
-            break;
-          }
-
-        case '3':
-          {
-            var Min_Length = 5;
-            var lengthmin = this.alcaldia.length;
-            if (lengthmin < Min_Length) this.errorMostrarMsj.push("La alcaldía debe tener más de 5 letras");
-            if (!patron.test(this.alcaldia)) this.errorMostrarMsj.push("La alcaldía solo debe tener letras");
-            if (!this.libro) this.errorMostrarMsj.push("El número de libro no puede estar vacío");
-            if (!RE.test(this.libro)) this.errorMostrarMsj.push("El número de libro debe ser un numero entero");
-            if (this.libro == '0') this.errorMostrarMsj.push("El número de libro debe ser distinto a 0");
-            if (!this.partida) this.errorMostrarMsj.push("En número de partida no puede estar vacío");
-            if (!RE.test(this.partida)) this.errorMostrarMsj.push("El número de partida debe ser un numero entero");
-            if (this.partida == '0') this.errorMostrarMsj.push("El número de partida debe ser distinto a 0");
-            if (this.errorMostrarMsj.length) this.errorDatos = 1;
-            return this.errorDatos;
-            break;
-          }
-
-        case '4':
-          {
-            var Min_Length = 5;
-            var lengthmin = this.alcaldia.length;
-            if (lengthmin < Min_Length) this.errorMostrarMsj.push("La alcaldía debe tener más de 5 letras");
-            if (!patron.test(this.alcaldia)) this.errorMostrarMsj.push("La alcaldía solo debe tener letras");
-            if (!this.libro) this.errorMostrarMsj.push("El número de libro no puede estar vacío");
-            if (!RE.test(this.libro)) this.errorMostrarMsj.push("El número de libro debe ser un numero entero");
-            if (this.libro == '0') this.errorMostrarMsj.push("El número de libro debe ser distinto a 0");
-            if (!this.partida) this.errorMostrarMsj.push("En número de partida no puede estar vacío");
-            if (!RE.test(this.partida)) this.errorMostrarMsj.push("El número de partida debe ser un numero entero");
-            if (this.partida == '0') this.errorMostrarMsj.push("El número de partida debe ser distinto a 0");
-            if (!this.folio) this.errorMostrarMsj.push("El número de folio no puede estar vacío");
-            if (!RE.test(this.folio)) this.errorMostrarMsj.push("El número de folio debe ser un numero entero");
-            if (this.folio == '0') this.errorMostrarMsj.push("El número de folio debe ser distinto a 0");
-            if (this.errorMostrarMsj.length) this.errorDatos = 1;
-            return this.errorDatos;
-            break;
-          }
-
-        case '5':
-          {
-            var Min_Length = 5;
-            var lengthmin = this.alcaldia.length;
-            if (lengthmin < Min_Length) this.errorMostrarMsj.push("La alcaldía debe tener más de 5 letras");
-            if (!patron.test(this.alcaldia)) this.errorMostrarMsj.push("La alcaldía solo debe tener letras");
-            if (!this.libro) this.errorMostrarMsj.push("El numero de libro no puede estar vacío");
-            if (!RE.test(this.libro)) this.errorMostrarMsj.push("El número de libro debe ser un numero entero");
-            if (this.libro == '0') this.errorMostrarMsj.push("El número de libro debe ser distinto a 0");
-            if (!this.partida) this.errorMostrarMsj.push("En número de partida no puede estar vacío");
-            if (!RE.test(this.partida)) this.errorMostrarMsj.push("El número de partida debe ser un numero entero");
-            if (this.partida == '0') this.errorMostrarMsj.push("El número de partida debe ser distinto a 0");
-            if (!this.folio) this.errorMostrarMsj.push("El número de folio no puede estar vacío");
-            if (!RE.test(this.folio)) this.errorMostrarMsj.push("El número de folio debe ser un numero entero");
-            if (this.folio == '0') this.errorMostrarMsj.push("El número de folio debe ser distinto a 0");
-            if (!this.ano) this.errorMostrarMsj.push("El año no puede estar vacío");
-            if (!RE.test(this.ano)) this.errorMostrarMsj.push("El año debe ser un numero entero");
-            if (this.ano < '1900') this.errorMostrarMsj.push("El año debe ser un año mayor a 1900");
-            if (this.ano > anioac) this.errorMostrarMsj.push("El año debe ser igual o menor al actual");
-            if (!anio.test(this.ano)) this.errorMostrarMsj.push("El año debe ser de cuatro digitos");
-            if (this.errorMostrarMsj.length) this.errorDatos = 1;
-            return this.errorDatos;
-            break;
-          }
-
-        case '6':
-          {
-            this.errorMostrarMsj.push("Esta persona ya realizo este sacramento, favor verificar datos");
-            if (this.errorMostrarMsj.length) this.errorDatos = 1;
-            break;
-          }
-
-        case '7':
-          {
-            var Min_Length = 3;
-            var lengthmin = this.nombrerealizante.length;
-            if (lengthmin < Min_Length) this.errorMostrarMsj.push("El nombre debe tener mas de tres letras");
-            if (!patron.test(this.nombrerealizante)) this.errorMostrarMsj.push("El nombre solo debe tener letras");
-            if (this.errorMostrarMsj.length) this.errorDatos = 1;
-            return this.errorDatos;
-            break;
-          }
-
-        case '8':
-          {
-            var Min_Length = 3;
-            var lengthmin = this.nombrerealizante.length;
-            if (lengthmin < Min_Length) this.errorMostrarMsj.push("El nombre debe tener mas de tres letras");
-            if (!patron.test(this.nombrerealizante)) this.errorMostrarMsj.push("El nombre solo debe tener letras");
-            var lengthmin2 = this.apellidorealizante.length;
-            if (lengthmin2 < Min_Length) this.errorMostrarMsj.push("El apellido debe tener mas de tres letras");
-            if (!patron.test(this.apellidorealizante)) this.errorMostrarMsj.push("El apellido solo debe tener letras");
-            if (this.errorMostrarMsj.length) this.errorDatos = 1;
-            return this.errorDatos;
-            break;
-          }
-
-        case '11':
-          {
-            var Min_Length = 3;
-            var lengthmin = this.nombrerealizante.length;
-            if (lengthmin < Min_Length) this.errorMostrarMsj.push("El nombre debe tener mas de tres letras");
-            if (!patron.test(this.nombrerealizante)) this.errorMostrarMsj.push("El nombre solo debe tener letras");
-            var lengthmin2 = this.apellidorealizante.length;
-            if (lengthmin2 < Min_Length) this.errorMostrarMsj.push("El apellido debe tener mas de tres letras");
-            if (!patron.test(this.apellidorealizante)) this.errorMostrarMsj.push("El apellido solo debe tener letras");
-            if (!patrondui.test(this.dui)) this.errorMostrarMsj.push("El DUI debe ser de nueve digitos");
-            if (this.errorMostrarMsj.length) this.errorDatos = 1;
-            return this.errorDatos;
-            break;
-          }
-
-        case '12':
-          {
-            var Min_Length = 3;
-            var lengthmin = this.nombrerealizante.length;
-            if (lengthmin < Min_Length) this.errorMostrarMsj.push("El nombre debe tener mas de tres letras");
-            if (!patron.test(this.nombrerealizante)) this.errorMostrarMsj.push("El nombre solo debe tener letras");
-            var lengthmin2 = this.apellidorealizante.length;
-            if (lengthmin2 < Min_Length) this.errorMostrarMsj.push("El apellido debe tener mas de tres letras");
-            if (!patron.test(this.apellidorealizante)) this.errorMostrarMsj.push("El apellido solo debe tener letras");
-            if (!patrondui.test(this.dui) && this.Acciondui == 1) this.errorMostrarMsj.push("El DUI debe ser de nueve digitos");
-            if (!this.fechana) this.errorMostrarMsj.push("La fecha de nacimiento no puede estar vacia");
-            if (!this.sexo) this.errorMostrarMsj.push("El sexo no puede estar vacio");
-            var values = this.fechana.split("-");
-            var dia = values[2];
-            var mes = values[1];
-            var ano = values[0];
-            if (ano < 1900) this.errorMostrarMsj.push("El año debe ser mayor a 1990");
-
-            if (anioac < ano) {
-              this.errorMostrarMsj.push("El año debe ser menor o igual al actual");
-            }
-
-            if (mesac < mes && ano == anioac) {
-              this.errorMostrarMsj.push("El mes debe ser menor al actual");
-            }
-
-            if (this.errorMostrarMsj.length) this.errorDatos = 1;
-            return this.errorDatos;
-          }
-
-        case '13':
-          {
-            var values = this.fechana.split("-");
-            var dia = values[2];
-            var mes = values[1];
-            var ano = values[0];
-            if (ano < 1900) this.errorMostrarMsj.push("El año debe ser mayor a 1990");
-
-            if (anioac < ano) {
-              this.errorMostrarMsj.push("El año debe ser menor o igual al actual");
-            }
-
-            if (mesac < mes && ano == anioac) {
-              this.errorMostrarMsj.push("El mes debe ser menor al actual");
-            }
-
-            if (this.errorMostrarMsj.length) this.errorDatos = 1;
-            return this.errorDatos;
-            break;
-          }
-
-        case '14':
-          {
-            if (this.nombremadre != '' && !patron.test(this.nombremadre)) this.errorMostrarMsj.push("El nombre de la madre solo debe tener letras");
-            if (this.apellidomadre != '' && !patron.test(this.apellidomadre)) this.errorMostrarMsj.push("El apellido de la madre solo debe tener letras");
-            if (this.nombrepadre != '' && !patron.test(this.nombrepadre)) this.errorMostrarMsj.push("El nombre del padre solo debe tener letras");
-            if (this.apellidopadre != '' && !patron.test(this.apellidopadre)) this.errorMostrarMsj.push("El apellido del padre solo debe tener letras");
-            if (this.duimadre != '' && !patrondui.test(this.duimadre)) this.errorMostrarMsj.push("El DUI de la madre debe ser de nueve digitos");
-            if (this.duipadre != '' && !patrondui.test(this.duipadre)) this.errorMostrarMsj.push("El DUI del padre debe ser de nueve digitos");
-            if (this.errorMostrarMsj.length) this.errorDatos = 1;
-            return this.errorDatos;
-            break;
-          }
-
-        case '15':
-          {
-            var RE = /^\d*(\.\d{1})?\d{0,1}$/;
-            if (!RE.test(this.monto)) this.errorMostrarMsj.push("El monto solo pueden ser decimales");
-            if (this.errorMostrarMsj.length) this.errorDatos = 1;
-            return this.errorDatos;
-            break;
-          }
-
-        case '16':
-          {
-            var RE = /^\d*(\.\d{1})?\d{0,1}$/;
-            if (!RE.test(this.monto)) this.errorMostrarMsj.push("El monto solo pueden ser decimales");
-            var values = this.fecharealizacion.split("-");
-            var ano = values[0];
-            if (ano < 1989) this.errorMostrarMsj.push("El año debe ser mayor a 1989");
-            if (anioac < ano) this.errorMostrarMsj.push("El año debe ser menor o igual al actual");
-            if (this.errorMostrarMsj.length) this.errorDatos = 1;
-            return this.errorDatos;
-            break;
-          }
-
-        case '17':
-          {
-            var RE = /^\d*(\.\d{1})?\d{0,1}$/;
-            if (!RE.test(this.monto)) this.errorMostrarMsj.push("El monto solo pueden ser decimales");
-            var values = this.fecharealizacion.split("-");
-            var ano = values[0];
-            if (this.idsacerdote == '') this.errorMostrarMsj.push("Debe de seleccionar un sacerdote");
-            if (this.cargosacerdote == '') this.errorMostrarMsj.push("Debe de asignar un cargo al sacerdote");
-            if (this.idcare == '') this.errorMostrarMsj.push("Debe de seleccionar una categoria");
-            if (ano < 1989) this.errorMostrarMsj.push("El año debe ser mayor a 1989");
-            if (anioac < ano) this.errorMostrarMsj.push("El año debe ser menor o igual al actual");
-            if (this.errorMostrarMsj.length) this.errorDatos = 1;
-            return this.errorDatos;
-            break;
-          }
+      if (d == 4) {
+        response.data.realizante.forEach(function (element) {
+          var texto = element.fecha_nacimiento;
+          element.fecha_nacimiento = texto.replace(/^(\d{4})-(\d{2})-(\d{2})$/g, '$3/$2/$1');
+        });
+        me.nombrepadre = response.data.padre.nombre_persona;
+        me.apellidopadre = response.data.padre.apellido_persona;
+        me.nombremadre = response.data.madre.nombre_persona;
+        me.apellidomadre = response.data.madre.apellido_persona;
+        me.nombrerealizante = response.data.realizante.nombre_persona;
+        me.apellidorealizante = response.data.realizante.apellido_persona;
+        me.sexo = response.data.realizante.sexo;
+        me.fechanaes = response.data.realizante.fecha_nacimiento;
       }
-    },
-    //Buscar si ya hay datos del realizante
-    verificarpersona: function verificarpersona() {
-      var me = this;
-      var alcaldia = this.alcaldia.toUpperCase();
-      var libro = this.libro;
-      var partida = this.partida;
-      var folio = this.folio;
-      var ano = this.ano;
-      var url = '/partida/busqueda?alcaldia=' + alcaldia + '&libro=' + libro + '&partida=' + partida + '&folio=' + folio + '&ano=' + ano;
+
+      me.verificacion = 1;
+      me.abrirmodal2();
+    })["catch"](function (error) {
+      console.log(error);
+    });
+  }), _defineProperty(_methods, "validarvalores", function validarvalores(d) {
+    this.errorDatos = 0;
+    this.errorMostrarMsj = [];
+    var RE = /^([0-9])*$/;
+    var patron = /^[a-zA-ZÑñÁáÉéÍíÓóÚúÜü\s]+$/; /////ESTOOOOOOOO
+
+    var anio = /^\d{4}$/;
+    var patrondui = /^\d{9}$/;
+    var fecha = new Date();
+    var anioac = fecha.getFullYear();
+    var mesac = fecha.getMonth();
+
+    switch (d) {
+      case '1':
+        {
+          var Min_Length = 5;
+          var lengthmin = this.alcaldia.length;
+          if (lengthmin < Min_Length) this.errorMostrarMsj.push("La alcaldía debe tener más de 5 letras");
+          if (!patron.test(this.alcaldia)) this.errorMostrarMsj.push("La alcaldía solo debe tener letras");
+          if (this.errorMostrarMsj.length) this.errorDatos = 1;
+          return this.errorDatos;
+          break;
+        }
+
+      case '2':
+        {
+          var Min_Length = 5;
+          var lengthmin = this.alcaldia.length;
+          if (lengthmin < Min_Length) this.errorMostrarMsj.push("La alcaldía debe tener más de 5 letras");
+          if (!patron.test(this.alcaldia)) this.errorMostrarMsj.push("La alcaldía solo debe tener letras");
+          if (!this.libro) this.errorMostrarMsj.push("El número de libro no puede estar vacío");
+          if (this.libro == '0') this.errorMostrarMsj.push("El número de libro debe ser distinto a 0");
+          if (!RE.test(this.libro)) this.errorMostrarMsj.push("El número de libro debe ser un numero entero");
+          if (this.errorMostrarMsj.length) this.errorDatos = 1;
+          return this.errorDatos;
+          break;
+        }
+
+      case '3':
+        {
+          var Min_Length = 5;
+          var lengthmin = this.alcaldia.length;
+          if (lengthmin < Min_Length) this.errorMostrarMsj.push("La alcaldía debe tener más de 5 letras");
+          if (!patron.test(this.alcaldia)) this.errorMostrarMsj.push("La alcaldía solo debe tener letras");
+          if (!this.libro) this.errorMostrarMsj.push("El número de libro no puede estar vacío");
+          if (!RE.test(this.libro)) this.errorMostrarMsj.push("El número de libro debe ser un numero entero");
+          if (this.libro == '0') this.errorMostrarMsj.push("El número de libro debe ser distinto a 0");
+          if (!this.partida) this.errorMostrarMsj.push("En número de partida no puede estar vacío");
+          if (!RE.test(this.partida)) this.errorMostrarMsj.push("El número de partida debe ser un numero entero");
+          if (this.partida == '0') this.errorMostrarMsj.push("El número de partida debe ser distinto a 0");
+          if (this.errorMostrarMsj.length) this.errorDatos = 1;
+          return this.errorDatos;
+          break;
+        }
+
+      case '4':
+        {
+          var Min_Length = 5;
+          var lengthmin = this.alcaldia.length;
+          if (lengthmin < Min_Length) this.errorMostrarMsj.push("La alcaldía debe tener más de 5 letras");
+          if (!patron.test(this.alcaldia)) this.errorMostrarMsj.push("La alcaldía solo debe tener letras");
+          if (!this.libro) this.errorMostrarMsj.push("El número de libro no puede estar vacío");
+          if (!RE.test(this.libro)) this.errorMostrarMsj.push("El número de libro debe ser un numero entero");
+          if (this.libro == '0') this.errorMostrarMsj.push("El número de libro debe ser distinto a 0");
+          if (!this.partida) this.errorMostrarMsj.push("En número de partida no puede estar vacío");
+          if (!RE.test(this.partida)) this.errorMostrarMsj.push("El número de partida debe ser un numero entero");
+          if (this.partida == '0') this.errorMostrarMsj.push("El número de partida debe ser distinto a 0");
+          if (!this.folio) this.errorMostrarMsj.push("El número de folio no puede estar vacío");
+          if (!RE.test(this.folio)) this.errorMostrarMsj.push("El número de folio debe ser un numero entero");
+          if (this.folio == '0') this.errorMostrarMsj.push("El número de folio debe ser distinto a 0");
+          if (this.errorMostrarMsj.length) this.errorDatos = 1;
+          return this.errorDatos;
+          break;
+        }
+
+      case '5':
+        {
+          var Min_Length = 5;
+          var lengthmin = this.alcaldia.length;
+          if (lengthmin < Min_Length) this.errorMostrarMsj.push("La alcaldía debe tener más de 5 letras");
+          if (!patron.test(this.alcaldia)) this.errorMostrarMsj.push("La alcaldía solo debe tener letras");
+          if (!this.libro) this.errorMostrarMsj.push("El numero de libro no puede estar vacío");
+          if (!RE.test(this.libro)) this.errorMostrarMsj.push("El número de libro debe ser un numero entero");
+          if (this.libro == '0') this.errorMostrarMsj.push("El número de libro debe ser distinto a 0");
+          if (!this.partida) this.errorMostrarMsj.push("En número de partida no puede estar vacío");
+          if (!RE.test(this.partida)) this.errorMostrarMsj.push("El número de partida debe ser un numero entero");
+          if (this.partida == '0') this.errorMostrarMsj.push("El número de partida debe ser distinto a 0");
+          if (!this.folio) this.errorMostrarMsj.push("El número de folio no puede estar vacío");
+          if (!RE.test(this.folio)) this.errorMostrarMsj.push("El número de folio debe ser un numero entero");
+          if (this.folio == '0') this.errorMostrarMsj.push("El número de folio debe ser distinto a 0");
+          if (!this.ano) this.errorMostrarMsj.push("El año no puede estar vacío");
+          if (!RE.test(this.ano)) this.errorMostrarMsj.push("El año debe ser un numero entero");
+          if (this.ano < '1900') this.errorMostrarMsj.push("El año debe ser un año mayor a 1900");
+          if (this.ano > anioac) this.errorMostrarMsj.push("El año debe ser igual o menor al actual");
+          if (!anio.test(this.ano)) this.errorMostrarMsj.push("El año debe ser de cuatro digitos");
+          if (this.errorMostrarMsj.length) this.errorDatos = 1;
+          return this.errorDatos;
+          break;
+        }
+
+      case '6':
+        {
+          this.errorMostrarMsj.push("Esta persona ya realizo este sacramento, favor verificar datos");
+          if (this.errorMostrarMsj.length) this.errorDatos = 1;
+          break;
+        }
+
+      case '7':
+        {
+          var Min_Length = 3;
+          var lengthmin = this.nombrerealizante.length;
+          if (lengthmin < Min_Length) this.errorMostrarMsj.push("El nombre debe tener mas de tres letras");
+          if (!patron.test(this.nombrerealizante)) this.errorMostrarMsj.push("El nombre solo debe tener letras");
+          if (this.errorMostrarMsj.length) this.errorDatos = 1;
+          return this.errorDatos;
+          break;
+        }
+
+      case '8':
+        {
+          var Min_Length = 3;
+          var lengthmin = this.nombrerealizante.length;
+          if (lengthmin < Min_Length) this.errorMostrarMsj.push("El nombre debe tener mas de tres letras");
+          if (!patron.test(this.nombrerealizante)) this.errorMostrarMsj.push("El nombre solo debe tener letras");
+          var lengthmin2 = this.apellidorealizante.length;
+          if (lengthmin2 < Min_Length) this.errorMostrarMsj.push("El apellido debe tener mas de tres letras");
+          if (!patron.test(this.apellidorealizante)) this.errorMostrarMsj.push("El apellido solo debe tener letras");
+          if (this.errorMostrarMsj.length) this.errorDatos = 1;
+          return this.errorDatos;
+          break;
+        }
+
+      case '11':
+        {
+          var Min_Length = 3;
+          var lengthmin = this.nombrerealizante.length;
+          if (lengthmin < Min_Length) this.errorMostrarMsj.push("El nombre debe tener mas de tres letras");
+          if (!patron.test(this.nombrerealizante)) this.errorMostrarMsj.push("El nombre solo debe tener letras");
+          var lengthmin2 = this.apellidorealizante.length;
+          if (lengthmin2 < Min_Length) this.errorMostrarMsj.push("El apellido debe tener mas de tres letras");
+          if (!patron.test(this.apellidorealizante)) this.errorMostrarMsj.push("El apellido solo debe tener letras");
+          if (!patrondui.test(this.dui)) this.errorMostrarMsj.push("El DUI debe ser de nueve digitos");
+          if (this.errorMostrarMsj.length) this.errorDatos = 1;
+          return this.errorDatos;
+          break;
+        }
+
+      case '12':
+        {
+          var Min_Length = 3;
+          var lengthmin = this.nombrerealizante.length;
+          if (lengthmin < Min_Length) this.errorMostrarMsj.push("El nombre debe tener mas de tres letras");
+          if (!patron.test(this.nombrerealizante)) this.errorMostrarMsj.push("El nombre solo debe tener letras");
+          var lengthmin2 = this.apellidorealizante.length;
+          if (lengthmin2 < Min_Length) this.errorMostrarMsj.push("El apellido debe tener mas de tres letras");
+          if (!patron.test(this.apellidorealizante)) this.errorMostrarMsj.push("El apellido solo debe tener letras");
+          if (!patrondui.test(this.dui) && this.Acciondui == 1) this.errorMostrarMsj.push("El DUI debe ser de nueve digitos");
+          if (!this.fechana) this.errorMostrarMsj.push("La fecha de nacimiento no puede estar vacia");
+          if (!this.sexo) this.errorMostrarMsj.push("El sexo no puede estar vacio");
+          var values = this.fechana.split("-");
+          var dia = values[2];
+          var mes = values[1];
+          var ano = values[0];
+          if (ano < 1900) this.errorMostrarMsj.push("El año debe ser mayor a 1990");
+
+          if (anioac < ano) {
+            this.errorMostrarMsj.push("El año debe ser menor o igual al actual");
+          }
+
+          if (mesac < mes && ano == anioac) {
+            this.errorMostrarMsj.push("El mes debe ser menor al actual");
+          }
+
+          if (this.errorMostrarMsj.length) this.errorDatos = 1;
+          return this.errorDatos;
+        }
+
+      case '13':
+        {
+          var values = this.fechana.split("-");
+          var dia = values[2];
+          var mes = values[1];
+          var ano = values[0];
+          if (ano < 1900) this.errorMostrarMsj.push("El año debe ser mayor a 1990");
+
+          if (anioac < ano) {
+            this.errorMostrarMsj.push("El año debe ser menor o igual al actual");
+          }
+
+          if (mesac < mes && ano == anioac) {
+            this.errorMostrarMsj.push("El mes debe ser menor al actual");
+          }
+
+          if (this.errorMostrarMsj.length) this.errorDatos = 1;
+          return this.errorDatos;
+          break;
+        }
+
+      case '14':
+        {
+          if (this.nombremadre != '' && !patron.test(this.nombremadre)) this.errorMostrarMsj.push("El nombre de la madre solo debe tener letras");
+          if (this.apellidomadre != '' && !patron.test(this.apellidomadre)) this.errorMostrarMsj.push("El apellido de la madre solo debe tener letras");
+          if (this.nombrepadre != '' && !patron.test(this.nombrepadre)) this.errorMostrarMsj.push("El nombre del padre solo debe tener letras");
+          if (this.apellidopadre != '' && !patron.test(this.apellidopadre)) this.errorMostrarMsj.push("El apellido del padre solo debe tener letras");
+          if (this.duimadre != '' && !patrondui.test(this.duimadre)) this.errorMostrarMsj.push("El DUI de la madre debe ser de nueve digitos");
+          if (this.duipadre != '' && !patrondui.test(this.duipadre)) this.errorMostrarMsj.push("El DUI del padre debe ser de nueve digitos");
+          if (this.errorMostrarMsj.length) this.errorDatos = 1;
+          return this.errorDatos;
+          break;
+        }
+
+      case '15':
+        {
+          var RE = /^\d*(\.\d{1})?\d{0,1}$/;
+          if (!RE.test(this.monto)) this.errorMostrarMsj.push("El monto solo pueden ser decimales");
+          if (this.errorMostrarMsj.length) this.errorDatos = 1;
+          return this.errorDatos;
+          break;
+        }
+
+      case '16':
+        {
+          var RE = /^\d*(\.\d{1})?\d{0,1}$/;
+          if (!RE.test(this.monto)) this.errorMostrarMsj.push("El monto solo pueden ser decimales");
+          var values = this.fecharealizacion.split("-");
+          var ano = values[0];
+          if (ano < 1989) this.errorMostrarMsj.push("El año debe ser mayor a 1989");
+          if (anioac < ano) this.errorMostrarMsj.push("El año debe ser menor o igual al actual");
+          if (this.errorMostrarMsj.length) this.errorDatos = 1;
+          return this.errorDatos;
+          break;
+        }
+
+      case '17':
+        {
+          var RE = /^\d*(\.\d{1})?\d{0,1}$/;
+          if (!RE.test(this.monto)) this.errorMostrarMsj.push("El monto solo pueden ser decimales");
+          var values = this.fecharealizacion.split("-");
+          var ano = values[0];
+          if (this.idsacerdote == '') this.errorMostrarMsj.push("Debe de seleccionar un sacerdote");
+          if (this.cargosacerdote == '') this.errorMostrarMsj.push("Debe de asignar un cargo al sacerdote");
+          if (this.idcare == '') this.errorMostrarMsj.push("Debe de seleccionar una categoria");
+          if (ano < 1989) this.errorMostrarMsj.push("El año debe ser mayor a 1989");
+          if (anioac < ano) this.errorMostrarMsj.push("El año debe ser menor o igual al actual");
+          if (this.errorMostrarMsj.length) this.errorDatos = 1;
+          return this.errorDatos;
+          break;
+        }
+    }
+  }), _defineProperty(_methods, "verificarpersona", function verificarpersona() {
+    var me = this;
+    var alcaldia = this.alcaldia.toUpperCase();
+    var libro = this.libro;
+    var partida = this.partida;
+    var folio = this.folio;
+    var ano = this.ano;
+    var url = '/partida/busqueda?alcaldia=' + alcaldia + '&libro=' + libro + '&partida=' + partida + '&folio=' + folio + '&ano=' + ano;
+    axios.get(url).then(function (response) {
+      var respuesta = response.data.solo;
+
+      if (respuesta == 1) {
+        me.id = response.data.realizante.idpersona;
+        me.llenarmodal(me.id);
+      }
+
+      if (respuesta == 0) {
+        me.cambiarm = 1;
+        me.cambiarmb = 1;
+      }
+
+      if (respuesta == 2) {
+        me.validarvalores('6');
+      }
+    })["catch"](function (error) {
+      console.log(error);
+    });
+  }), _defineProperty(_methods, "duim", function duim() {
+    var me = this;
+    var d = this.duimadre;
+
+    if (d != '') {
+      var url = '/persona/duis?dui=' + d;
       axios.get(url).then(function (response) {
         var respuesta = response.data.solo;
-
-        if (respuesta == 1) {
-          me.id = response.data.realizante.idpersona;
-          me.llenarmodal(me.id);
-        }
-
-        if (respuesta == 0) {
-          me.cambiarm = 1;
-          me.cambiarmb = 1;
-        }
+        var datos = response.data.persona;
 
         if (respuesta == 2) {
-          me.validarvalores('6');
+          me.llenarcamposm(datos);
+        } else {
+          me.idmadre = '';
         }
       })["catch"](function (error) {
         console.log(error);
       });
-    },
-    duim: function duim() {
-      var me = this;
-      var d = this.duimadre;
+    }
+  }), _defineProperty(_methods, "duip", function duip() {
+    var me = this;
+    var d = this.duipadre;
 
-      if (d != '') {
-        var url = '/persona/duis?dui=' + d;
-        axios.get(url).then(function (response) {
-          var respuesta = response.data.solo;
-          var datos = response.data.persona;
-
-          if (respuesta == 2) {
-            me.llenarcamposm(datos);
-          } else {
-            me.idmadre = '';
-          }
-        })["catch"](function (error) {
-          console.log(error);
-        });
-      }
-    },
-    duip: function duip() {
-      var me = this;
-      var d = this.duipadre;
-
-      if (d != '') {
-        var url = '/persona/duis?dui=' + d;
-        axios.get(url).then(function (response) {
-          var respuesta = response.data.solo;
-          var datos = response.data.persona;
-
-          if (respuesta == 2) {
-            me.llenarcamposp(datos);
-          } else {
-            me.idpadre = '';
-          }
-        })["catch"](function (error) {
-          console.log(error);
-        });
-      }
-    },
-    selectCategoria: function selectCategoria() {
-      var me = this;
-      var url = '/categoriaresumen/selectCategoriaRe';
+    if (d != '') {
+      var url = '/persona/duis?dui=' + d;
       axios.get(url).then(function (response) {
-        // handle success
-        var respuesta = response.data;
-        me.arraycategorias = respuesta.categorias;
+        var respuesta = response.data.solo;
+        var datos = response.data.persona;
+
+        if (respuesta == 2) {
+          me.llenarcamposp(datos);
+        } else {
+          me.idpadre = '';
+        }
       })["catch"](function (error) {
-        // handle error
         console.log(error);
       });
-    },
-    registrar: function registrar() {
-      var me = this;
-      var tamaño = 0;
-      var length1 = this.id.length;
-      var m = this.idmadre;
-      var p = this.idpadre;
-      var duim = this.duimadre;
-      var duip = this.duipadre;
-      var nomm = this.nombremadre;
-      var nomp = this.nombrepadre;
+    }
+  }), _defineProperty(_methods, "selectCategoria", function selectCategoria() {
+    var me = this;
+    var url = '/categoriaresumen/selectCategoriaRe';
+    axios.get(url).then(function (response) {
+      // handle success
+      var respuesta = response.data;
+      me.arraycategorias = respuesta.categorias;
+    })["catch"](function (error) {
+      // handle error
+      console.log(error);
+    });
+  }), _defineProperty(_methods, "registrar", function registrar() {
+    var me = this;
+    var tamaño = 0;
+    var length1 = this.id.length;
+    var m = this.idmadre;
+    var p = this.idpadre;
+    var duim = this.duimadre;
+    var duip = this.duipadre;
+    var nomm = this.nombremadre;
+    var nomp = this.nombrepadre;
 
-      if (length1 == tamaño) {
-        if (m != '' && p != '') {
-          //introduje ambos duis
-          this.tipo = 1;
-        }
-
-        if (m == '' && p != '' && duim != '') {
-          //introduje ambos duis pero el de mama no esta
-          this.tipo = 2;
-        }
-
-        if (p == '' && m != '' && duip != '') {
-          //introduje ambos duis pero el de papa no esta
-          this.tipo = 3;
-        }
-
-        if (m == '' && p == '') {
-          //introduje ambos duis y ninguno esta
-          this.tipo = 4;
-        }
-
-        if (p != '' && duim == '') {
-          // solo introduje el dui del papa y no hay datos de mama
-          this.tipo = 5;
-        }
-
-        if (m != '' && duip == '') {
-          // solo introduje el dui de la mama y no hay datos de papa
-          this.tipo = 6;
-        }
-
-        if (duip == '' && duim == '') {
-          //no hay datos de ambos
-          this.tipo = 7;
-        }
-
-        if (duim != '' && m == '' && duip == '') {
-          // es nueva mama, no tiene papa
-          this.tipo = 8;
-        }
-
-        if (duip != '' && p == '' && duim == '') {
-          // es nuevo papa, no tiene mama
-          this.tipo = 9;
-        }
-
-        console.log(this.tipo, m, p);
-        axios.put('/persona/registrar', {
-          'tipo': this.tipo,
-          'nombre_m': this.nombremadre.toUpperCase(),
-          'apellido_m': this.apellidomadre.toUpperCase(),
-          'dui_m': this.duimadre,
-          'id_m': this.idmadre,
-          'nombre_p': this.nombrepadre.toUpperCase(),
-          'apellido_p': this.apellidopadre.toUpperCase(),
-          'dui_p': this.duipadre,
-          'id_p': this.idpadre,
-          'nombre_reali': this.nombrerealizante.toUpperCase(),
-          'apellido_reali': this.apellidorealizante.toUpperCase(),
-          'dui_reali': this.dui,
-          'sexo': this.sexo,
-          'nacimiento': this.fechana,
-          'alcaldia': this.alcaldia.toUpperCase(),
-          'libro': this.libro,
-          'partida': this.partida,
-          'folio': this.folio,
-          'ano': this.ano,
-          'monto': this.monto,
-          'idcate': this.idcare,
-          'sacerdote': this.idsacerdote,
-          'fecha': this.fecharealizacion,
-          'titulo': this.cargosacerdote
-        }).then(function (response) {
-          me.modal = 0;
-          me.cambiarm = 0;
-          me.cerrarm();
-        })["catch"](function (error) {
-          console.log(error);
-        });
-      } else {
-        me.guardarsacramento();
+    if (length1 == tamaño) {
+      if (m != '' && p != '') {
+        //introduje ambos duis
+        this.tipo = 1;
       }
-    },
-    guardarsacramento: function guardarsacramento() {
-      var me = this;
-      var tamaño = 0;
-      var length1 = this.id.length;
-      axios.put('/sacramento/registrar', {
-        'fecha': this.fecharealizacion,
-        'realizante': this.id,
-        'sacerdote': this.idsacerdote,
+
+      if (m == '' && p != '' && duim != '') {
+        //introduje ambos duis pero el de mama no esta
+        this.tipo = 2;
+      }
+
+      if (p == '' && m != '' && duip != '') {
+        //introduje ambos duis pero el de papa no esta
+        this.tipo = 3;
+      }
+
+      if (m == '' && p == '') {
+        //introduje ambos duis y ninguno esta
+        this.tipo = 4;
+      }
+
+      if (p != '' && duim == '') {
+        // solo introduje el dui del papa y no hay datos de mama
+        this.tipo = 5;
+      }
+
+      if (m != '' && duip == '') {
+        // solo introduje el dui de la mama y no hay datos de papa
+        this.tipo = 6;
+      }
+
+      if (duip == '' && duim == '') {
+        //no hay datos de ambos
+        this.tipo = 7;
+      }
+
+      if (duim != '' && m == '' && duip == '') {
+        // es nueva mama, no tiene papa
+        this.tipo = 8;
+      }
+
+      if (duip != '' && p == '' && duim == '') {
+        // es nuevo papa, no tiene mama
+        this.tipo = 9;
+      }
+
+      console.log(this.tipo, m, p);
+      axios.put('/persona/registrar', {
+        'tipo': this.tipo,
+        'nombre_m': this.nombremadre.toUpperCase(),
+        'apellido_m': this.apellidomadre.toUpperCase(),
+        'dui_m': this.duimadre,
+        'id_m': this.idmadre,
+        'nombre_p': this.nombrepadre.toUpperCase(),
+        'apellido_p': this.apellidopadre.toUpperCase(),
+        'dui_p': this.duipadre,
+        'id_p': this.idpadre,
+        'nombre_reali': this.nombrerealizante.toUpperCase(),
+        'apellido_reali': this.apellidorealizante.toUpperCase(),
+        'dui_reali': this.dui,
+        'sexo': this.sexo,
+        'nacimiento': this.fechana,
+        'alcaldia': this.alcaldia.toUpperCase(),
+        'libro': this.libro,
+        'partida': this.partida,
+        'folio': this.folio,
+        'ano': this.ano,
         'monto': this.monto,
         'idcate': this.idcare,
+        'sacerdote': this.idsacerdote,
+        'fecha': this.fecharealizacion,
         'titulo': this.cargosacerdote
       }).then(function (response) {
         me.modal = 0;
@@ -29602,8 +29536,28 @@ __webpack_require__.r(__webpack_exports__);
       })["catch"](function (error) {
         console.log(error);
       });
+    } else {
+      me.guardarsacramento();
     }
-  },
+  }), _defineProperty(_methods, "guardarsacramento", function guardarsacramento() {
+    var me = this;
+    var tamaño = 0;
+    var length1 = this.id.length;
+    axios.put('/sacramento/registrar', {
+      'fecha': this.fecharealizacion,
+      'realizante': this.id,
+      'sacerdote': this.idsacerdote,
+      'monto': this.monto,
+      'idcate': this.idcare,
+      'titulo': this.cargosacerdote
+    }).then(function (response) {
+      me.modal = 0;
+      me.cambiarm = 0;
+      me.cerrarm();
+    })["catch"](function (error) {
+      console.log(error);
+    });
+  }), _methods),
   mounted: function mounted() {
     this.llenadolistas();
   }
@@ -33904,7 +33858,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n/*Aquí ya comienza el CSS, ke kreisi */\n.modal-content{\n       width: 100% !important;\n       position: absolute !important\n}\n.mostrar{\n       display: list-item !important;\n       opacity: 1 !important;\n       position: absolute !important;\n       background-color: #3c29297a !important;\n}\n.div-error{ /* estos dos estilos son para validación */\n       display: flex;\n       justify-content: center;\n}\n.text-error{\n       color: red !important;\n       font-weight: bold;\n}\n.margen{\n       margin-bottom: 10px;\n}\n   \n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n/*Aquí ya comienza el CSS, ke kreisi */\n.modal-content{\n       width: 100% !important;\n       position: absolute !important\n}\n.mostrar{\n       display: list-item !important;\n       opacity: 1 !important;\n       position: absolute !important;\n       background-color: #3c29297a !important;\n}\n.div-error{ /* estos dos estilos son para validación */\n       display: flex;\n       justify-content: center;\n}\n.text-error{\n       color: red !important;\n       font-weight: bold;\n}\n.margen{\n       margin-bottom: 10px;\n}\n   \n", ""]);
 
 // exports
 

@@ -389,7 +389,11 @@
                 });
             },
             //////////Impresion
-            registrarImpresion(){  
+            imprimirConstancia(){  
+                if(this.validarModal4()){
+                return;
+            }
+            this.eliminarImpresion();
             let me=this;
               axios.put('/persona/registrarImpresion',{
                     'idsacra':this.id_sacramento,
@@ -398,34 +402,16 @@
                     'conceptoim':this.conceptoim,
               }) .then(function (response) {
                     me.listarPersona();
-                    me.cerrarModal4();
-                    console.log(response);
+                     me.mientras();
                 }) .catch(function (error) {
-                 
                 });
         },
-
-        imprimirConstancia(){
-            if(this.validarModal4()){
-                return;
-            }
-            
-            axios.put('/persona/certificadoConfirma',{
-                'id': this. id_sacramento,
-                'id_madre':this.id_madre,
-                'id_padre':this.id_padre,
-                'id_realizante1':this.id_realizante1,
-            }).then(function (response) { 
-                    me.listarPersona();
-                    me.cerrarModal4();
-                }) .catch(function (error) {
-                    console.log(error);
-                });
-                 let me=this;
-                 this.registrarImpresion();
-                 this.pdfConstacia(me.id_sacramento, me.id_padre,me.id_madre,me.id_realizante1);
-                 this.eliminarImpresion();
+        mientras(){  
+            let me=this;
+                this.pdfConstacia(me.id_sacramento, me.id_padre,me.id_madre,me.id_realizante1);
+                
         },
+        
 
          validarModal4(){
             this.errorModal4=0;
@@ -455,12 +441,13 @@
                     id_madre=0;
               }
             window.open('http://127.0.0.1:8000/persona/certificadoConfirma/'+ id_sacramento+'/'+id_padre+ '/'+id_madre+ '/'+id_realizante1);
+            this.cerrarModal4();
         },
 
         eliminarImpresion(){
               let me=this;
               axios.put('/persona/eliminarDatosImpresion',{
-                  'id':this.id_impresion,
+            
               }) .then(function (response) {
                 })
                 .catch(function (error) {
