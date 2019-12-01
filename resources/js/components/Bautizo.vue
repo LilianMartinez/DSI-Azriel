@@ -94,14 +94,13 @@
                                         
                                     </div>
                                 </div>
-                                
-                                <div v-show="errorDatos" class="form-group row div-error">
-                                    <div class="text-center text-error">
-                                        <div v-for="error in errorMostrarMjs" :key="error" v-text="error">
-
-                                        </div>
+                                 <div v-show="errorDatos" class="form-group row div-error">
+                                <div class="text-center text-error">
+                                    <div v-for="error in errorMostrarMjs" :key="error" v-text="error">
                                     </div>
                                 </div>
+                            </div>
+                                
 
                             </form>
                         </div>
@@ -509,11 +508,12 @@ export default {
     
             validarmarginacion(){
                 this.errorDatos=0;
-                this.errorMostrarMsj=[];
+                this.errorMostrarMjs=[];
                 var patron =/^[a-zA-ZÑñÁáÉéÍíÓóÚúÜü\s]+$/;
 
-                if(!patron.test(this.nota)) this.errorMostrarMsj.push("La nota solo debe tener letras");
-                if(this.errorMostrarMsj.length) this.errorDatos=1;
+                if(this.nota =='') this.errorMostrarMjs.push("El campo nota no debe de estar vacia");
+                if(!patron.test(this.nota)) this.errorMostrarMjs.push("La nota solo debe tener letras");
+                if(this.errorMostrarMjs.length) this.errorDatos=1;
                 return this.errorDatos;
             },
 

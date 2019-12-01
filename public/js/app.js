@@ -15014,7 +15014,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     var _ref;
@@ -15300,10 +15299,11 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     },
     validarmarginacion: function validarmarginacion() {
       this.errorDatos = 0;
-      this.errorMostrarMsj = [];
+      this.errorMostrarMjs = [];
       var patron = /^[a-zA-ZÑñÁáÉéÍíÓóÚúÜü\s]+$/;
-      if (!patron.test(this.nota)) this.errorMostrarMsj.push("La nota solo debe tener letras");
-      if (this.errorMostrarMsj.length) this.errorDatos = 1;
+      if (this.nota == '') this.errorMostrarMjs.push("El campo nota no debe de estar vacia");
+      if (!patron.test(this.nota)) this.errorMostrarMjs.push("La nota solo debe tener letras");
+      if (this.errorMostrarMjs.length) this.errorDatos = 1;
       return this.errorDatos;
     },
     marginar: function marginar() {
