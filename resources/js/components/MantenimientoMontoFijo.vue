@@ -30,7 +30,7 @@
                             <thead>
                                 <tr>
                                     <th>Nombre de monto fijo</th>
-                                    <th>Precio </th>
+                                    <th>Precio ($)</th>
                                     <th>Opcion</th>
                                 </tr>
                             </thead>

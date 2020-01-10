@@ -44,14 +44,14 @@ class ProductoController extends Controller
         if ($buscar == ''){
             $productos = Producto::join('detalle_entrada','producto.id','=','detalle_entrada.id_producto')
             ->join('existencias','detalle_entrada.id','=','existencias.id_entrada')
-            ->select('detalle_entrada.fecha','producto.nombre_producto','producto.id','existencias.precio_venta','existencias.cantidad','existencias.id as exi')
+            ->select('detalle_entrada.fecha','producto.nombre_producto','producto.unidad_medida','producto.id','existencias.precio_venta','existencias.cantidad','existencias.id as exi')
             ->where('existencias.cantidad','>','0')
             ->where('detalle_entrada.tipo','2')
             ->orderby('producto.id', 'asc')->paginate(3);
         } else {
             $productos = Producto::join('detalle_entrada','producto.id','=','detalle_entrada.id_producto')
             ->join('existencias','detalle_entrada.id','=','existencias.id_entrada')
-            ->select('detalle_entrada.fecha','producto.nombre_producto','producto.id','existencias.precio_venta','existencias.cantidad','existencias.id as exi')
+            ->select('detalle_entrada.fecha','producto.nombre_producto','producto.unidad_medida','producto.id','existencias.precio_venta','existencias.cantidad','existencias.id as exi')
             ->where('existencias.cantidad','>','0')
             ->where('detalle_entrada.tipo','2')
             ->where('producto.nombre_producto', 'like','%' . $buscar .'%')
