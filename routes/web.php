@@ -60,6 +60,13 @@ Route::group(['middleware'=>['auth']],function(){
                             Route::put('/montofijo/actualizar','MontoFijoController@update');
                             Route::put('/montofijo/eliminar','MontoFijoController@eliminar');
 
+                             //TABLA Unidad medida
+                             Route::get('/unidad','UnidadMedidaController@index');
+                             Route::put('/unidad/registrar','UnidadMedidaController@store');
+                             Route::post('/unidad/buscarmf','UnidadMedidaController@buscar');
+                             Route::put('/unidad/actualizar','UnidadMedidaController@update');
+                             Route::put('/unidad/eliminar','UnidadMedidaController@eliminar');
+
                             //TABLA BAUTIZO
                             Route::get('/bautizo','BautizoController@index');
                             Route::put('/bautizo/registrar','BautizoController@store');
@@ -140,7 +147,7 @@ Route::group(['middleware'=>['auth']],function(){
                             Route::get('/producto','ProductoController@index');
                             Route::get('/productos/v','ProductoController@indexv');
                             Route::get('/productos/venta','ProductoController@venta');
-                            Route::get('/producto/seleccionar','ProductoController@seleccionarProducto');
+                            Route::get('/producto/seleccionar','ProductoController@seleccionarProducto'); //Para compras
                             Route::get('/producto/canasta','ProductoController@seleccionarProductoCanasta');
                             Route::put('/producto/registrar','ProductoController@store');
                             Route::put('/venta/registrar','ProductoController@guardarventa');

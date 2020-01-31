@@ -96,6 +96,9 @@
                             <li @click="menu=26" class="nav-item">
                                 <a class="nav-link" href="#"><i class="icon-wallet"></i>Categorias para inventario</a>
                             </li>
+                            <li @click="menu=35" class="nav-item">
+                                <a class="nav-link" href="#"><i class="icon-wallet"></i>Unidad medida</a>
+                            </li>
                         </ul>
                     </li>
                     <li class="nav-item nav-dropdown">

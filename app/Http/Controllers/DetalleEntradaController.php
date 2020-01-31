@@ -19,26 +19,30 @@ class DetalleEntradaController extends Controller
          
         if ($buscar==''){
             $ingresos = Producto::join('detalle_entrada','producto.id','=','detalle_entrada.id_producto')
-            ->select('producto.id','producto.nombre_producto',
+            ->select('producto.id','producto.nombre_producto', 'producto.unidad_medida',
             'detalle_entrada.cantidad','detalle_entrada.fecha','detalle_entrada.precio_compra')
-            ->orderBy('detalle_entrada.fecha', 'desc')->paginate(3);
+            ->orderBy('detalle_entrada.fecha', 'desc')->paginate(15);
         }
         else{
             if ($criterio=='producto'){
                 $ingresos = Producto::join('detalle_entrada','producto.id','=','detalle_entrada.id_producto')
                 ->where('producto.nombre_producto','like','%' . $buscar .'%')
-                ->select('producto.id','producto.nombre_producto',
+                ->select('producto.id','producto.nombre_producto','producto.unidad_medida',
                 'detalle_entrada.cantidad','detalle_entrada.fecha','detalle_entrada.precio_compra')
-                ->orderBy('detalle_entrada.fecha', 'desc')->paginate(3);
+                ->orderBy('detalle_entrada.fecha', 'desc')->paginate(15);
             }
             else{
                 $ingresos = Producto::join('detalle_entrada','producto.id','=','detalle_entrada.id_producto')
                 ->where('detalle_entrada.fecha','like','%' . $buscar .'%')
-                ->select('producto.id','producto.nombre_producto',
+                ->select('producto.id','producto.nombre_producto','producto.unidad_medida',
                 'detalle_entrada.cantidad','detalle_entrada.fecha','detalle_entrada.precio_compra')
-                ->orderBy('detalle_entrada.fecha', 'desc')->paginate(3);
+                ->orderBy('detalle_entrada.fecha', 'desc')->paginate(15);
            
         }
+    }
+    $numero = count($ingresos); 
+    for ($i = 0; $i < $numero; $i++) {
+        $ingresos[$i]['idc']=$i;
     }
          
         return [
