@@ -20,7 +20,7 @@
                                     <select class="form-control col-md-3" v-model="criterio">
                                       <option value="nombre_persona">Nombre</option>
                                       <option value="apellido_persona">Apellido</option>
-                                      <option value="dui_pasaporte">Dui o Pasaporte</option>
+                                      <option value="dui_pasaporte">Documento de Identidad</option>
                                     </select>
                                     <input type="text"  v-model="buscar" @keyup.enter="listarreligiosos(buscar,criterio)" class="form-control" placeholder="Texto a buscar">
                                     <button type="submit" @click="listarreligiosos(buscar,criterio) " class="btn btn-primary"><i class="fa fa-search"></i> Buscar</button>
@@ -32,7 +32,7 @@
                                 <tr>
                                     <th>Nombre</th>
                                     <th>Apellido </th>
-                                    <th>Dui o Pasaporte</th>
+                                    <th>Documento de Identidad</th>
                                     <th>Opcion</th>
                                 </tr>
                             </thead>
@@ -80,7 +80,7 @@
                                     </div>
                                 </div>
                                  <div class="form-group row">
-                                    <label class="col-md-3 form-control-label" for="text-input">Dui o Pasaporte</label>
+                                    <label class="col-md-3 form-control-label" for="text-input">Documento de Identidad</label>
                                     <div class="col-md-5">
                                         <input type="text" tabindexgt="0" v-model="dui_pasaporte" class="form-control" placeholder="00000000-0">
                                     </div>
@@ -124,7 +124,7 @@
                                     <b class="alerta"> <label class="col-md-3 form-control-label" for="text-input">{{apellido_persona}}</label></b>   
                                 </div>
                                 <div class="form-group row">
-                                   <b class="alerta"> <label class="col-md-1 form-control-label" for="text-input">Dui o Pasaporte</label></b>
+                                   <b class="alerta"> <label class="col-md-1 form-control-label" for="text-input">Documento de Identidad</label></b>
                                         <b class="alerta"><label class="col-md-3 form-control-label" for="text-input">{{dui_pasaporte}}</label></b>   
                                 </div>
                                 
@@ -197,7 +197,7 @@
                 if (lengthmin < Min_Length)this.errorMostrarMsj.push("El nombre debe tener más 3 letras");
                 if (!lengthmax2 > Max_Length)this.errorMostrarMsj.push("El apellido debe tener menos de 70 caracteres");
                 if (lengthmin2 < Min_Length)this.errorMostrarMsj.push("El apellido debe tener más 3 letras");
-                if (lengthmaxDUIPA > Max_Length_DuiPasa)this.errorMostrarMsj.push("El Dui o Pasaporte debe tener menos de 9 caracteres");
+                if (lengthmaxDUIPA > Max_Length_DuiPasa)this.errorMostrarMsj.push("El Documento de Identidad debe tener menos de 9 caracteres");
                 if(this.errorMostrarMsj.length) this.errorDatos=1;
             
 

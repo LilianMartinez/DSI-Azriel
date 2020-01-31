@@ -15014,7 +15014,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     var _ref;
@@ -15300,10 +15299,11 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     },
     validarmarginacion: function validarmarginacion() {
       this.errorDatos = 0;
-      this.errorMostrarMsj = [];
+      this.errorMostrarMjs = [];
       var patron = /^[a-zA-ZÑñÁáÉéÍíÓóÚúÜü\s]+$/;
-      if (!patron.test(this.nota)) this.errorMostrarMsj.push("La nota solo debe tener letras");
-      if (this.errorMostrarMsj.length) this.errorDatos = 1;
+      if (this.nota == '') this.errorMostrarMjs.push("El campo nota no debe de estar vacia");
+      if (!patron.test(this.nota)) this.errorMostrarMjs.push("La nota solo debe tener letras");
+      if (this.errorMostrarMjs.length) this.errorDatos = 1;
       return this.errorDatos;
     },
     marginar: function marginar() {
@@ -15582,7 +15582,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
           if (mes1 < actualMes + 1 && anio1 == actualYear) {
             this.errorMostrarMsjModal.push("Mes malo - No se puede iniciar un evento de días anteriores");
           } else {
-            if (dia1 < actualDay && mes1 == actualMes + 1 && anio1 == actualYear) {
+            if (dia1 < actualDay + 1 && mes1 == actualMes + 1 && anio1 == actualYear) {
               this.errorMostrarMsjModal.push("Día malo - No se puede iniciar un evento de días anteriores");
             }
           }
@@ -15964,6 +15964,7 @@ __webpack_require__.r(__webpack_exports__);
       tipo: '',
       total: 0.0,
       totalP: 0.0,
+      resultado: 0.0,
       arrayCanasta: [],
       arrayDetalle: [],
       arrayProducto: [],
@@ -16096,7 +16097,7 @@ __webpack_require__.r(__webpack_exports__);
       var va;
 
       for (var i = 0; i < me.existenciasC.length; i++) {
-        resultado = resultado + parseInt(me.existenciasC[i].cantidad);
+        me.resultado = me.resultado + parseInt(me.existenciasC[i].cantidad);
       }
 
       inter = parseInt(me.cantidad);
@@ -16104,7 +16105,7 @@ __webpack_require__.r(__webpack_exports__);
       me.cantidadT = inter * inter2;
       va = me.cantidadT;
 
-      if (me.cantidadT <= resultado) {
+      if (me.cantidadT <= me.resultado) {
         //Guarda sin penas
         for (var i = 0; i < this.existenciasC.length; i++) {
           if (me.cantidadT != 0) {
@@ -16201,6 +16202,7 @@ __webpack_require__.r(__webpack_exports__);
 
           me.id_producto = 0;
           me.producto = '';
+          me.existenciasC = '';
         }
       }
     },
@@ -17122,6 +17124,12 @@ __webpack_require__.r(__webpack_exports__);
       axios.post('/sectorial/buscarIglesiaFeligreses', {
         'id': this.idiglesia
       }).then(function (response) {
+        /*response.data.forEach(function(element) {
+              if(element.fecha_nacimiento != null){
+              var texto = element.fecha_nacimiento;
+              element.fecha_nacimiento= texto.replace(/^(\d{4})-(\d{2})-(\d{2})$/g,'$3/$2/$1');
+              }
+          });*/
         arrayiglesiaFeligre = response.data;
         me.llenar2(arrayiglesiaFeligre);
       })["catch"](function (error) {
@@ -17143,15 +17151,15 @@ __webpack_require__.r(__webpack_exports__);
 
       var url = '/feligreses?page=' + page + '&buscar=' + buscar2 + '&criterio=' + criterio;
       axios.get(url).then(function (response) {
-        response.data.feligres.data.forEach(function (element) {
-          if (element.fecha_nacimiento != null) {
-            var texto = element.fecha_nacimiento;
-            element.fecha_nacimiento = texto.replace(/^(\d{4})-(\d{2})-(\d{2})$/g, '$3/$2/$1');
-          }
-        });
+        /*  response.data.feligres.data.forEach(function(element) {
+              if(element.fecha_nacimiento != null){
+              var texto = element.fecha_nacimiento;
+              element.fecha_nacimiento= texto.replace(/^(\d{4})-(\d{2})-(\d{2})$/g,'$3/$2/$1');
+              }
+          });*/
         var respuesta = response.data;
         me.arrayfeligres = respuesta.feligres.data;
-        me.pagination = respuesta.pagination;
+        me.pagination = respuesta.pagination; //me.cerrarmodal2();
       })["catch"](function (error) {
         console.log(error);
       });
@@ -17235,6 +17243,12 @@ __webpack_require__.r(__webpack_exports__);
       this.idiglesia = '';
       this.criterio = 'nombre_iglesia';
       this.idzona = '';
+      this.errorDatos = 0;
+      this.errorMostrarMsj = [];
+    },
+    cerrarmodal2: function cerrarmodal2() {
+      this.arrayzona = [];
+      this.arrayiglesia = [];
     },
     actualizarfeligreses: function actualizarfeligreses() {
       if (this.validarvalores()) {
@@ -17262,10 +17276,13 @@ __webpack_require__.r(__webpack_exports__);
     },
     eliminar: function eliminar() {
       var me = this;
+      var buscar = '';
+      var criterio = 'nombre_persona';
       axios.put('/feligreses/eliminar', {
         'id': this.feligreses_id
       }).then(function (response) {
-        me.cerrarModal();
+        me.cerrarModal(); // me.mensajeExito();
+
         me.listarFeligresesBuscar(1, buscar, criterio);
       })["catch"](function (error) {
         // handle error
@@ -17343,8 +17360,6 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-//
-//
 //
 //
 //
@@ -17995,6 +18010,8 @@ __webpack_require__.r(__webpack_exports__);
       this.idiglesia = '';
       this.criterio = 'nombre_producto';
       this.idzona = '';
+      this.errorDatos = 0;
+      this.errorMostrarMsj = [];
     },
     actualizarProductoInv: function actualizarProductoInv() {
       if (this.validarvalores2()) {
@@ -21617,7 +21634,7 @@ __webpack_require__.r(__webpack_exports__);
       if (lengthmin < Min_Length) this.errorMostrarMsj.push("El nombre debe tener más 3 letras");
       if (!lengthmax2 > Max_Length) this.errorMostrarMsj.push("El apellido debe tener menos de 70 caracteres");
       if (lengthmin2 < Min_Length) this.errorMostrarMsj.push("El apellido debe tener más 3 letras");
-      if (lengthmaxDUIPA > Max_Length_DuiPasa) this.errorMostrarMsj.push("El Dui o Pasaporte debe tener menos de 9 caracteres");
+      if (lengthmaxDUIPA > Max_Length_DuiPasa) this.errorMostrarMsj.push("El Documento de Identidad debe tener menos de 9 caracteres");
       if (this.errorMostrarMsj.length) this.errorDatos = 1;
       return this.errorDatos;
     },
@@ -30844,7 +30861,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -30987,11 +31003,11 @@ __webpack_require__.r(__webpack_exports__);
     },
     validarPersona: function validarPersona() {
       this.errorPersona = 0;
-      this.errorMostrarMsjPersona = [];
-      var RE = /^[a-zA-Z]+( [a-zA-z]+)*$/; ///^[A-Z]+$/i
+      this.errorMostrarMsjPersona = []; //var RE =/^[a-zA-Z]+( [a-zA-z]+)*$/;  ///^[A-Z]+$/i
 
-      var max_length = 6;
-      var min_length = 6;
+      var RE = /^\d*(\.\d{1})?\d{0,1}$/;
+      var max_length = 20;
+      var min_length = 3;
       var min_length_contra = 9;
       var lengthMax = this.usuario.length;
       var lengthMin = this.usuario.length;
@@ -30999,13 +31015,13 @@ __webpack_require__.r(__webpack_exports__);
       if (!this.nombre_persona) this.errorMostrarMsjPersona.push("El campo nombre no puede estar vacio");
       if (!this.apellido_persona) this.errorMostrarMsjPersona.push("El campo apellido no debe estar vacio");
       if (!this.usuario) this.errorMostrarMsjPersona.push("El campo usuario no debe estar vacio");
-      if (lengthMax > max_length) this.errorMostrarMsjPersona.push("El nombre de usuario no debe ser mayor a 6 letras");
-      if (lengthMin < min_length) this.errorMostrarMsjPersona.push("El nombre de usuario no debe ser menor a 6 letras");
+      if (lengthMax > max_length) this.errorMostrarMsjPersona.push("El nombre de usuario no debe ser mayor a 20 letras");
+      if (lengthMin < min_length) this.errorMostrarMsjPersona.push("El nombre de usuario no debe ser menor a 3 letras");
       if (!this.password) this.errorMostrarMsjPersona.push("El campo password no puede estar vacío");
       if (lengthMin_contra < min_length_contra) this.errorMostrarMsjPersona.push("El password no debe ser menor a 9 digitos");
       if (this.idrol == 0) this.errorMostrarMsjPersona.push("Debe seleccionar un rol para el usuario");
-      if (!RE.test(this.nombre_persona)) this.errorMostrarMsjPersona.push("No pueden ir números en el nombre");
-      if (!RE.test(this.apellido_persona)) this.errorMostrarMsjPersona.push("No pueden ir números en el apellido");
+      if (RE.test(this.nombre_persona)) this.errorMostrarMsjPersona.push("No pueden ir números en el nombre");
+      if (RE.test(this.apellido_persona)) this.errorMostrarMsjPersona.push("No pueden ir números en el apellido");
       if (this.errorMostrarMsjPersona.length) this.errorPersona = 1;
       return this.errorPersona;
     },
@@ -74687,7 +74703,7 @@ var render = function() {
                   [
                     _c("div", { staticClass: "form-group" }, [
                       _c("label", { attrs: { for: "event_name" } }, [
-                        _vm._v("Nombre del evento")
+                        _vm._v("Nombre")
                       ]),
                       _vm._v(" "),
                       _c("input", {
@@ -74719,7 +74735,7 @@ var render = function() {
                     _vm._v(" "),
                     _c("div", { staticClass: "form-group" }, [
                       _c("label", { attrs: { for: "event_description" } }, [
-                        _vm._v("Descripción del evento")
+                        _vm._v("Descripción")
                       ]),
                       _vm._v(" "),
                       _c("div", { staticClass: "fb-quotable" }, [
@@ -78307,7 +78323,7 @@ var render = function() {
                     _c("div", { staticClass: "form-group row" }, [
                       _vm._m(2),
                       _vm._v(" "),
-                      _c("div", { staticClass: "col-md-5" }, [
+                      _c("div", { staticClass: "col-md-4" }, [
                         _c(
                           "select",
                           {
@@ -78356,13 +78372,11 @@ var render = function() {
                           ],
                           2
                         )
-                      ])
-                    ]),
-                    _vm._v(" "),
-                    _c("div", { staticClass: "form-group row" }, [
+                      ]),
+                      _vm._v(" "),
                       _vm._m(3),
                       _vm._v(" "),
-                      _c("div", { staticClass: "col-md-5" }, [
+                      _c("div", { staticClass: "col-md-4" }, [
                         _c("input", {
                           directives: [
                             {
@@ -78395,13 +78409,52 @@ var render = function() {
                       _c(
                         "label",
                         {
-                          staticClass: "col-md-3 form-control-label",
+                          staticClass: "col-md-2 form-control-label",
+                          attrs: { for: "text-input" }
+                        },
+                        [_vm._v("Descripción:")]
+                      ),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "col-md-4" }, [
+                        _c("textarea", {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: _vm.descripcion,
+                              expression: "descripcion"
+                            }
+                          ],
+                          attrs: {
+                            rows: "4",
+                            tabindexgt: "-1",
+                            cols: "75",
+                            placeholder: "color, forma, textura, etc."
+                          },
+                          domProps: { value: _vm.descripcion },
+                          on: {
+                            input: function($event) {
+                              if ($event.target.composing) {
+                                return
+                              }
+                              _vm.descripcion = $event.target.value
+                            }
+                          }
+                        })
+                      ])
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "form-group row" }, [
+                      _c(
+                        "label",
+                        {
+                          staticClass: "col-md-2 form-control-label",
                           attrs: { for: "text-input" }
                         },
                         [_vm._v("Marca:")]
                       ),
                       _vm._v(" "),
-                      _c("div", { staticClass: "col-md-5" }, [
+                      _c("div", { staticClass: "col-md-4" }, [
                         _c("input", {
                           directives: [
                             {
@@ -78427,52 +78480,11 @@ var render = function() {
                             }
                           }
                         })
-                      ])
-                    ]),
-                    _vm._v(" "),
-                    _c("div", { staticClass: "form-group row" }, [
-                      _c(
-                        "label",
-                        {
-                          staticClass: "col-md-3 form-control-label",
-                          attrs: { for: "text-input" }
-                        },
-                        [_vm._v("Descripción:")]
-                      ),
+                      ]),
                       _vm._v(" "),
-                      _c("div", { staticClass: "col-md-5" }, [
-                        _c("textarea", {
-                          directives: [
-                            {
-                              name: "model",
-                              rawName: "v-model",
-                              value: _vm.descripcion,
-                              expression: "descripcion"
-                            }
-                          ],
-                          attrs: {
-                            rows: "8",
-                            tabindexgt: "-1",
-                            cols: "45",
-                            placeholder: "color, forma, textura, etc."
-                          },
-                          domProps: { value: _vm.descripcion },
-                          on: {
-                            input: function($event) {
-                              if ($event.target.composing) {
-                                return
-                              }
-                              _vm.descripcion = $event.target.value
-                            }
-                          }
-                        })
-                      ])
-                    ]),
-                    _vm._v(" "),
-                    _c("div", { staticClass: "form-group row" }, [
                       _vm._m(4),
                       _vm._v(" "),
-                      _c("div", { staticClass: "col-md-5" }, [
+                      _c("div", { staticClass: "col-md-4" }, [
                         _c("input", {
                           directives: [
                             {
@@ -78505,7 +78517,7 @@ var render = function() {
                       _c(
                         "label",
                         {
-                          staticClass: "col-md-3 form-control-label",
+                          staticClass: "col-md-2 form-control-label",
                           attrs: { for: "text-input" }
                         },
                         [_vm._v("Fecha adquirido:")]
@@ -78533,20 +78545,18 @@ var render = function() {
                             }
                           }
                         })
-                      ])
-                    ]),
-                    _vm._v(" "),
-                    _c("div", { staticClass: "form-group row" }, [
+                      ]),
+                      _vm._v(" "),
                       _c(
                         "label",
                         {
-                          staticClass: "col-md-3 form-control-label",
+                          staticClass: "col-md-2 form-control-label",
                           attrs: { for: "text-input" }
                         },
                         [_vm._v("Costo de la compra:")]
                       ),
                       _vm._v(" "),
-                      _c("div", { staticClass: "col-md-5" }, [
+                      _c("div", { staticClass: "col-md-4" }, [
                         _c("input", {
                           directives: [
                             {
@@ -78560,7 +78570,7 @@ var render = function() {
                           attrs: {
                             type: "text",
                             tabindexgt: "0",
-                            placeholder: "Cantidad de la compra total"
+                            placeholder: "Costo total de la compra total"
                           },
                           domProps: { value: _vm.costocompra },
                           on: {
@@ -78578,7 +78588,7 @@ var render = function() {
                     _c("div", { staticClass: "form-group row" }, [
                       _vm._m(5),
                       _vm._v(" "),
-                      _c("div", { staticClass: "col-md-5" }, [
+                      _c("div", { staticClass: "col-md-4" }, [
                         _c(
                           "select",
                           {
@@ -78627,13 +78637,11 @@ var render = function() {
                           ],
                           2
                         )
-                      ])
-                    ]),
-                    _vm._v(" "),
-                    _c("div", { staticClass: "form-group row" }, [
+                      ]),
+                      _vm._v(" "),
                       _vm._m(6),
                       _vm._v(" "),
-                      _c("div", { staticClass: "col-md-5" }, [
+                      _c("div", { staticClass: "col-md-4" }, [
                         _c(
                           "select",
                           {
@@ -79319,7 +79327,7 @@ var staticRenderFns = [
     return _c(
       "label",
       {
-        staticClass: "col-md-3 form-control-label",
+        staticClass: "col-md-2 form-control-label",
         attrs: { for: "text-input" }
       },
       [_vm._v("Categoria:"), _c("b", { staticClass: "alerta" }, [_vm._v("*")])]
@@ -79332,7 +79340,7 @@ var staticRenderFns = [
     return _c(
       "label",
       {
-        staticClass: "col-md-3 form-control-label",
+        staticClass: "col-md-2 form-control-label",
         attrs: { for: "text-input" }
       },
       [_vm._v("Producto:"), _c("b", { staticClass: "alerta" }, [_vm._v("*")])]
@@ -79345,7 +79353,7 @@ var staticRenderFns = [
     return _c(
       "label",
       {
-        staticClass: "col-md-3 form-control-label",
+        staticClass: "col-md-2 form-control-label",
         attrs: { for: "text-input" }
       },
       [_vm._v("Cantidad"), _c("b", { staticClass: "alerta" }, [_vm._v("*")])]
@@ -79358,7 +79366,7 @@ var staticRenderFns = [
     return _c(
       "label",
       {
-        staticClass: "col-md-3 form-control-label",
+        staticClass: "col-md-2 form-control-label",
         attrs: { for: "text-input" }
       },
       [_vm._v("Zona:"), _c("b", { staticClass: "alerta" }, [_vm._v("*")])]
@@ -79371,7 +79379,7 @@ var staticRenderFns = [
     return _c(
       "label",
       {
-        staticClass: "col-md-3 form-control-label",
+        staticClass: "col-md-2 form-control-label",
         attrs: { for: "text-input" }
       },
       [_vm._v("Iglesia:"), _c("b", { staticClass: "alerta" }, [_vm._v("*")])]
@@ -84916,7 +84924,7 @@ var staticRenderFns = [
       _c("tr", [
         _c("th", [_vm._v("Nombre de monto fijo")]),
         _vm._v(" "),
-        _c("th", [_vm._v("Precio ")]),
+        _c("th", [_vm._v("Precio ($)")]),
         _vm._v(" "),
         _c("th", [_vm._v("Opcion")])
       ])
@@ -85066,7 +85074,7 @@ var render = function() {
                     ]),
                     _vm._v(" "),
                     _c("option", { attrs: { value: "dui_pasaporte" } }, [
-                      _vm._v("Dui o Pasaporte")
+                      _vm._v("Documento de Identidad")
                     ])
                   ]
                 ),
@@ -85321,7 +85329,7 @@ var render = function() {
                           staticClass: "col-md-3 form-control-label",
                           attrs: { for: "text-input" }
                         },
-                        [_vm._v("Dui o Pasaporte")]
+                        [_vm._v("Documento de Identidad")]
                       ),
                       _vm._v(" "),
                       _c("div", { staticClass: "col-md-5" }, [
@@ -85588,7 +85596,7 @@ var staticRenderFns = [
         _vm._v(" "),
         _c("th", [_vm._v("Apellido ")]),
         _vm._v(" "),
-        _c("th", [_vm._v("Dui o Pasaporte")]),
+        _c("th", [_vm._v("Documento de Identidad")]),
         _vm._v(" "),
         _c("th", [_vm._v("Opcion")])
       ])
@@ -85661,7 +85669,7 @@ var staticRenderFns = [
           staticClass: "col-md-1 form-control-label",
           attrs: { for: "text-input" }
         },
-        [_vm._v("Dui o Pasaporte")]
+        [_vm._v("Documento de Identidad")]
       )
     ])
   }
@@ -102383,11 +102391,9 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("main", { staticClass: "main" }, [
-    _vm._m(0),
-    _vm._v(" "),
     _c("div", { staticClass: "container-fluid" }, [
       _c("div", { staticClass: "card" }, [
-        _vm._m(1),
+        _vm._m(0),
         _vm._v(" "),
         _c("div", { staticClass: "card-body" }, [
           _c("div", { staticClass: "input-group margen" }, [
@@ -102507,7 +102513,7 @@ var render = function() {
             "table",
             { staticClass: "table table-bordered table-striped table-sm" },
             [
-              _vm._m(2),
+              _vm._m(1),
               _vm._v(" "),
               _c(
                 "tbody",
@@ -102555,6 +102561,9 @@ var render = function() {
                       _vm._v("  \n                                     "),
                       persona.condicion
                         ? [
+                            _vm._v(
+                              "\n                                          \n                                         "
+                            ),
                             _c(
                               "button",
                               {
@@ -102566,10 +102575,18 @@ var render = function() {
                                   }
                                 }
                               },
-                              [_c("i", { staticClass: "icon-trash" })]
+                              [
+                                _c("i", { staticClass: "icon-trash" }),
+                                _vm._v(
+                                  " Desactivar Usuario\n                                         "
+                                )
+                              ]
                             )
                           ]
                         : [
+                            _vm._v(
+                              "\n                                          \n                                         "
+                            ),
                             _c(
                               "button",
                               {
@@ -102581,7 +102598,12 @@ var render = function() {
                                   }
                                 }
                               },
-                              [_c("i", { staticClass: "icon-check" })]
+                              [
+                                _c("i", { staticClass: "icon-check" }),
+                                _vm._v(
+                                  " Activar Usuario \n                                         "
+                                )
+                              ]
                             )
                           ]
                     ],
@@ -102739,14 +102761,7 @@ var render = function() {
                   },
                   [
                     _c("div", { staticClass: "form-group row" }, [
-                      _c(
-                        "label",
-                        {
-                          staticClass: "col-md-3 form-control-label",
-                          attrs: { for: "text-input" }
-                        },
-                        [_vm._v("Nombre*")]
-                      ),
+                      _vm._m(2),
                       _vm._v(" "),
                       _c("div", { staticClass: "col-md-9" }, [
                         _c("input", {
@@ -102777,14 +102792,7 @@ var render = function() {
                     ]),
                     _vm._v(" "),
                     _c("div", { staticClass: "form-group row" }, [
-                      _c(
-                        "label",
-                        {
-                          staticClass: "col-md-3 form-control-label",
-                          attrs: { for: "email-input" }
-                        },
-                        [_vm._v("Apellido*")]
-                      ),
+                      _vm._m(3),
                       _vm._v(" "),
                       _c("div", { staticClass: "col-md-9" }, [
                         _c("input", {
@@ -102815,14 +102823,7 @@ var render = function() {
                     ]),
                     _vm._v(" "),
                     _c("div", { staticClass: "form-group row" }, [
-                      _c(
-                        "label",
-                        {
-                          staticClass: "col-md-3 form-control-label",
-                          attrs: { for: "email-input" }
-                        },
-                        [_vm._v("Rol*")]
-                      ),
+                      _vm._m(4),
                       _vm._v(" "),
                       _c("div", { staticClass: "col-md-9" }, [
                         _c(
@@ -102874,14 +102875,7 @@ var render = function() {
                     ]),
                     _vm._v(" "),
                     _c("div", { staticClass: "form-group row" }, [
-                      _c(
-                        "label",
-                        {
-                          staticClass: "col-md-3 form-control-label",
-                          attrs: { for: "email-input" }
-                        },
-                        [_vm._v("Usuario*")]
-                      ),
+                      _vm._m(5),
                       _vm._v(" "),
                       _c("div", { staticClass: "col-md-9" }, [
                         _c("input", {
@@ -102894,11 +102888,7 @@ var render = function() {
                             }
                           ],
                           staticClass: "form-control",
-                          attrs: {
-                            type: "text",
-                            placeholder:
-                              "Ej.AA01##   (01->parroco 02->secretaria)"
-                          },
+                          attrs: { type: "text" },
                           domProps: { value: _vm.usuario },
                           on: {
                             input: function($event) {
@@ -102913,14 +102903,7 @@ var render = function() {
                     ]),
                     _vm._v(" "),
                     _c("div", { staticClass: "form-group row" }, [
-                      _c(
-                        "label",
-                        {
-                          staticClass: "col-md-3 form-control-label",
-                          attrs: { for: "email-input" }
-                        },
-                        [_vm._v("Password*")]
-                      ),
+                      _vm._m(6),
                       _vm._v(" "),
                       _c("div", { staticClass: "col-md-9" }, [
                         _c("input", {
@@ -103042,16 +103025,6 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("ol", { staticClass: "breadcrumb" }, [
-      _c("li", { staticClass: "breadcrumb-item" }, [
-        _c("a", { attrs: { href: "#" } }, [_vm._v("Admin")])
-      ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
     return _c("div", { staticClass: "card-header" }, [
       _c("label", { staticClass: "titulo-encabezados" }, [
         _vm._v("Usuarios de la aplicación")
@@ -103075,6 +103048,71 @@ var staticRenderFns = [
         _c("th", [_vm._v("Opciones")])
       ])
     ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "label",
+      {
+        staticClass: "col-md-3 form-control-label",
+        attrs: { for: "text-input" }
+      },
+      [_vm._v("Nombre"), _c("b", { staticClass: "alerta" }, [_vm._v("*")])]
+    )
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "label",
+      {
+        staticClass: "col-md-3 form-control-label",
+        attrs: { for: "email-input" }
+      },
+      [_vm._v("Apellido"), _c("b", { staticClass: "alerta" }, [_vm._v("*")])]
+    )
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "label",
+      {
+        staticClass: "col-md-3 form-control-label",
+        attrs: { for: "email-input" }
+      },
+      [_vm._v("Rol"), _c("b", { staticClass: "alerta" }, [_vm._v("*")])]
+    )
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "label",
+      {
+        staticClass: "col-md-3 form-control-label",
+        attrs: { for: "email-input" }
+      },
+      [_vm._v("Usuario"), _c("b", { staticClass: "alerta" }, [_vm._v("*")])]
+    )
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "label",
+      {
+        staticClass: "col-md-3 form-control-label",
+        attrs: { for: "email-input" }
+      },
+      [_vm._v("Password"), _c("b", { staticClass: "alerta" }, [_vm._v("*")])]
+    )
   }
 ]
 render._withStripped = true

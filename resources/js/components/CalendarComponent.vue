@@ -53,11 +53,11 @@
 
         <form @submit.prevent>
           <div class="form-group">
-            <label for="event_name">Nombre del evento</label>
+            <label for="event_name">Nombre</label>
             <input type="text" id="event_name" class="form-control" v-model="newEvent.event_name">
           </div>
           <div class="form-group">
-            <label for="event_description">Descripción del evento</label>
+            <label for="event_description">Descripción</label>
             <div class="fb-quotable"> <!-- plugin de facebook de lo que esta dentro del modal -->
             <textarea id="event_description" rows="5" class="form-control" v-model="newEvent.event_description"></textarea>
             <div class="fb-quote"></div>
@@ -241,7 +241,7 @@ export default {
                 if(mes1 < actualMes+1 && anio1 == actualYear){
                   this.errorMostrarMsjModal.push("Mes malo - No se puede iniciar un evento de días anteriores");
                 }else{
-                  if(dia1 < actualDay && mes1 == actualMes+1 && anio1 == actualYear){
+                  if(dia1 < actualDay+1 && mes1 == actualMes+1 && anio1 == actualYear){
                     this.errorMostrarMsjModal.push("Día malo - No se puede iniciar un evento de días anteriores");
                   }
                 }

@@ -239,6 +239,7 @@
                 tipo:'',
                 total:0.0,
                 totalP:0.0,
+                resultado:0.0,
                 arrayCanasta : [],
                 arrayDetalle : [],
                 arrayProducto : [],
@@ -377,13 +378,13 @@
                 var va;
             
                 for(var i=0;i<me.existenciasC.length;i++){
-                    resultado=resultado+ parseInt(me.existenciasC[i].cantidad);
+                    me.resultado=me.resultado+ parseInt(me.existenciasC[i].cantidad);
                 }
                 inter=parseInt(me.cantidad);
                 inter2=parseInt(me.cantidad_canasta);
                 me.cantidadT=inter*inter2;
                va=me.cantidadT;
-                if(me.cantidadT<=resultado){
+                if(me.cantidadT<=me.resultado){
                     
                      
                         //Guarda sin penas
@@ -484,7 +485,7 @@
                         
                         me.id_producto=0;
                         me.producto='';
-                        
+                        me.existenciasC='';
     
                     }
                     

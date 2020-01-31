@@ -119,7 +119,7 @@
                             </div>
                               <div class="form-group row">
                                 <label class="col-md-3 form-control-label" for="text-input">Fecha de Nacimiento</label>
-                                <div class="col-md-4">
+                               <div class="col-md-4">
                                     <input type="date" class="form-control datepicker" name="date" v-model="fechana">
                                 </div>
                             </div>
@@ -330,8 +330,15 @@
              axios.post('/sectorial/buscarIglesiaFeligreses',{
                'id':this.idiglesia}) 
               .then(function (response) { 
+                  /*response.data.forEach(function(element) {
+                        if(element.fecha_nacimiento != null){
+                        var texto = element.fecha_nacimiento;
+                        element.fecha_nacimiento= texto.replace(/^(\d{4})-(\d{2})-(\d{2})$/g,'$3/$2/$1');
+                        }
+                    });*/
                 arrayiglesiaFeligre = response.data;     
                 me.llenar2(arrayiglesiaFeligre);  
+                
                 })
                 .catch(function (error) {
                     // handle error
@@ -353,16 +360,16 @@
                  buscar2=this.buscar;
                 var url='/feligreses?page='+ page + '&buscar=' + buscar2 + '&criterio=' + criterio;
                 axios.get(url) .then(function (response) {
-                    response.data.feligres.data.forEach(function(element) {
+                  /*  response.data.feligres.data.forEach(function(element) {
                         if(element.fecha_nacimiento != null){
                         var texto = element.fecha_nacimiento;
                         element.fecha_nacimiento= texto.replace(/^(\d{4})-(\d{2})-(\d{2})$/g,'$3/$2/$1');
                         }
-                    });
+                    });*/
                     var respuesta= response.data;
                     me.arrayfeligres=respuesta.feligres.data;
                     me.pagination= respuesta.pagination;
-
+                    //me.cerrarmodal2();
                     
                 })
                 .catch(function (error) {
@@ -458,7 +465,13 @@
                 this.idiglesia='';
                 this.criterio='nombre_iglesia';
                 this.idzona='';
+                this.errorDatos=0;
+                this.errorMostrarMsj=[];
             
+            },
+            cerrarmodal2(){
+                this.arrayzona=[];
+                this.arrayiglesia=[];
             },
 
             actualizarfeligreses(){
@@ -488,10 +501,13 @@
             },
              eliminar(){
                 let me=this;
+                var buscar='';
+                var criterio='nombre_persona';
                 axios.put('/feligreses/eliminar',{
                   'id':this.feligreses_id,
                     }) .then(function (response) {
                      me.cerrarModal();
+                    // me.mensajeExito();
                      me.listarFeligresesBuscar(1,buscar,criterio);
                 })
                 .catch(function (error) {
@@ -521,7 +537,7 @@
                             }
                              case 'actualizar':
                             {
-                                 this.modal=1;
+                                this.modal=1;
                                 this.tituloModal='Modificar Feligres';
                                 this.tipoAccion=2;
                                 this.nombre_persona=data['nombre_persona'];
