@@ -15612,6 +15612,22 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       if (this.errorMostrarMsjModal.length) this.errorModal = 1;
       return this.errorModal;
     },
+    msjExito: function msjExito() {
+      swal({
+        type: 'success',
+        title: 'Evento guardado con éxito',
+        showConfirmButton: false,
+        timer: 1500
+      });
+    },
+    msjExito2: function msjExito2() {
+      swal({
+        type: 'success',
+        title: 'Evento actualizado con éxito',
+        showConfirmButton: false,
+        timer: 1500
+      });
+    },
     addNewEvent: function addNewEvent() {
       var _this = this;
 
@@ -15627,6 +15643,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
 
         _this.cerrarModal();
+
+        _this.msjExito();
       })["catch"](function (err) {
         return console.log("Unable to add new event!", err.response.data);
       });
@@ -15667,6 +15685,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         _this2.addingMode = !_this2.addingMode;
 
         _this2.cerrarModal();
+
+        _this2.msjExito2();
       })["catch"](function (err) {
         return console.log("Unable to update event!", err.response.data);
       });
@@ -15674,16 +15694,36 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     deleteEvent: function deleteEvent() {
       var _this3 = this;
 
-      axios__WEBPACK_IMPORTED_MODULE_3___default.a["delete"]("/api/calendar/" + this.indexToUpdate).then(function (resp) {
-        _this3.resetForm();
+      swal({
+        title: '¿Esta seguro de eliminar este evento?',
+        type: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Aceptar!',
+        cancelButtonText: 'Cancelar',
+        confirmButtonClass: 'btn btn-success',
+        cancelButtonClass: 'btn btn-danger',
+        buttonsStyling: false,
+        reverseButtons: true
+      }).then(function (result) {
+        if (result.value) {
+          var me = _this3;
+          axios__WEBPACK_IMPORTED_MODULE_3___default.a["delete"]("/api/calendar/" + _this3.indexToUpdate).then(function (resp) {
+            _this3.resetForm();
 
-        _this3.getEvents();
+            _this3.getEvents();
 
-        _this3.addingMode = !_this3.addingMode;
+            _this3.addingMode = !_this3.addingMode;
 
-        _this3.cerrarModal();
-      })["catch"](function (err) {
-        return console.log("Unable to delete event!", err.response.data);
+            _this3.cerrarModal();
+
+            swal('Eliminado!', 'El evento ha sido eliminado con éxito.', 'success');
+          })["catch"](function (err) {
+            return console.log("Unable to delete event!", err.response.data);
+          });
+        } else if ( // Read more about handling dismissals
+        result.dismiss === swal.DismissReason.cancel) {}
       });
     },
     getEvents: function getEvents() {
