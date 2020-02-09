@@ -369,7 +369,7 @@
                     var respuesta= response.data;
                     me.arrayfeligres=respuesta.feligres.data;
                     me.pagination= respuesta.pagination;
-                    //me.cerrarmodal2();
+                    me.cerrarmodal2();
                     
                 })
                 .catch(function (error) {
@@ -405,7 +405,7 @@
                     {
                             var values = this.fechana.split("-");
                             var anio = values[0];
-                            if(anio < 1989)this.errorMostrarMsj.push("El año debe de ser mayor a 1989");
+                            if(anio < 1800)this.errorMostrarMsj.push("El año debe de ser mayor a 1800");
                             if((actualYear)<anio)this.errorMostrarMsj.push("El año debe ser menor o igual al " + (actualYear));
                         
                     };
@@ -430,12 +430,13 @@
                   'nombre_persona': this.nombre_persona.toUpperCase(),
                   'apellido_persona': this.apellido_persona.toUpperCase(),
                   'fecha_nacimiento':this.fechana,
+                  'idzonaa':this.idzona,
                   'idiglesia':this.idiglesia,
               }) .then(function (response) {
                     me.mensajeExito();
                     me.cerrarModal();
                     me.listarFeligresesBuscar(1,buscar,criterio);
-                    console.log(response);
+                    //console.log(response);
                 }) .catch(function (error) {
                  
                 });
@@ -472,6 +473,10 @@
             cerrarmodal2(){
                 this.arrayzona=[];
                 this.arrayiglesia=[];
+                this.idzona=0;
+                this.idiglesia=0;
+                this.llenadolistazona();
+                this.iglesias();
             },
 
             actualizarfeligreses(){
@@ -487,7 +492,7 @@
                   'apellido_persona':this.apellido_persona.toUpperCase(),
                   'fecha_nacimiento':this.fechana,
                   'idiglesia':this.idiglesia,
-                  'idzona':this.idzona,
+                  'idzonaa':this.idzona,
                   'id':this.feligreses_id,
                     }) .then(function (response) {
                     me.cerrarModal();
@@ -540,13 +545,18 @@
                                 this.modal=1;
                                 this.tituloModal='Modificar Feligres';
                                 this.tipoAccion=2;
+                                this.feligreses_id=data['id'];
                                 this.nombre_persona=data['nombre_persona'];
                                 this.apellido_persona=data['apellido_persona'];
                                 this.fechana=data['fecha_nacimiento'];
-                                this.idiglesia=data['idiglesia'];
                                 this.idzona=data['idzona'];
-                                this.feligreses_id=data['id'];
                                 this.nombre_zona=data['nombre_zona'];
+
+                                if(this.idzona){
+                                this.iglesias(this.idzona);
+                                this.idiglesia=data['idiglesia'];
+                                this.nombre_iglesia=data['nombre_iglesia'];
+                                }
                                break;
                             }
                              case 'eliminar':

@@ -72,6 +72,7 @@ class FeligresController extends Controller
         $feligres->nombre_persona= $request->nombre_persona;
         $feligres->apellido_persona= $request->apellido_persona;
         $feligres->fecha_nacimiento=$request->fecha_nacimiento;
+        $feligres->idzonaa= $request->idzonaa;
         $feligres->idiglesia= $request->idiglesia;
         $feligres->estado=1;
         $feligres->save();
@@ -92,7 +93,7 @@ class FeligresController extends Controller
          $feligres->apellido_persona= $request->apellido_persona;
          $feligres->fecha_nacimiento= $request->fecha_nacimiento;
          $feligres->idiglesia= $request->idiglesia;
-         //$feligres->idzona= $request->idzona;
+         $feligres->idzonaa= $request->idzonaa;
          $feligres->save();
     }
 

@@ -274,6 +274,8 @@
                 this.dui_pasaporte='';
                 this.buscar='';
                 this.criterio='nombre_persona';
+                this.errorDatos=0;
+                this.errorMostrarMsj='';
             
             },
     

@@ -28,7 +28,10 @@ class PersonaController extends Controller
         $envio=array();
 
         if(!$request->ajax()) return redirect('/');
-        $persona = DB::table('personas')->where('dui_pasaporte', $buscar )->first();
+       // $persona = DB::table('personas')->where('dui_pasaporte', $buscar )->first();
+        $persona = Persona::join('zonas','personas.idzonaa','=','zonas.id')
+                       ->join('iglesias','personas.idiglesia','=','iglesias.id')
+                       ->where('dui_pasaporte', $buscar )->first();   
 
         if(empty($persona)){
                 $envio['solo']=1;
@@ -345,6 +348,9 @@ class PersonaController extends Controller
                 $personareali->dui_pasaporte=$request->dui_reali;
                 $personareali->sexo=$request->sexo;
                 $personareali->fecha_nacimiento=$request->nacimiento;
+                $personareali->idzonaa=$request->idzona; //zona realizante
+                $personareali->idiglesia=$request->idiglesia; //iglesia realizante
+                $personareali->estado=1; //estado
                 $personareali->id_madre=$request->id_m;
                 $personareali->id_padre=$request->id_p;
                 $personareali->save();
@@ -397,6 +403,9 @@ class PersonaController extends Controller
                         $personap->nombre_persona= $request->nombre_m;
                         $personap->apellido_persona=$request->apellido_m;
                         $personap->dui_pasaporte=$request->dui_m;
+                        $personap->idzonaa=$request->idzonam;  //zona madre
+                        $personap->idiglesia=$request->idiglesiam; //iglesia madre
+                        $personap->estado=1; //estado
                         $personap->save();
         
                         $personareali = new Persona();
@@ -406,6 +415,9 @@ class PersonaController extends Controller
                         $personareali->dui_pasaporte=$request->dui_reali;
                         $personareali->sexo=$request->sexo;
                         $personareali->fecha_nacimiento=$request->nacimiento;
+                        $personareali->idzonaa=$request->idzona;  //zona realizante
+                        $personareali->idiglesia=$request->idiglesia; //zona realizante
+                        $personareali->estado=1; //estado
                         $personareali->id_madre=$idm;
                         $personareali->id_padre=$request->id_p;
                         $personareali->save();
@@ -458,6 +470,9 @@ class PersonaController extends Controller
                         $personap->nombre_persona= $request->nombre_p;
                         $personap->apellido_persona=$request->apellido_p;
                         $personap->dui_pasaporte=$request->dui_p;
+                        $personap->idzonaa=$request->idzonap;  //zona padre
+                        $personap->idiglesia=$request->idiglesiap; //iglesia padre
+                        $personap->estado=1; //estado
                         $personap->save();
         
                         $personareali = new Persona();
@@ -467,6 +482,9 @@ class PersonaController extends Controller
                         $personareali->dui_pasaporte=$request->dui_reali;
                         $personareali->sexo=$request->sexo;
                         $personareali->fecha_nacimiento=$request->nacimiento;
+                        $personareali->idzonaa=$request->idzona;  //zona realizante
+                        $personareali->idiglesia=$request->idiglesia; //zona realizante
+                        $personareali->estado=1; //estado
                         $personareali->id_padre=$idp;
                         $personareali->id_madre=$request->id_m;
                         $personareali->save();
@@ -520,6 +538,9 @@ class PersonaController extends Controller
                         $personap->nombre_persona= $request->nombre_p;
                         $personap->apellido_persona=$request->apellido_p;
                         $personap->dui_pasaporte=$request->dui_p;
+                        $personap->idzonaa=$request->idzonap;  //zona padre
+                        $personap->idiglesia=$request->idiglesiap; //iglesia padre
+                        $personap->estado=1; //estado
                         $personap->save();
 
                         $personap = new Persona();
@@ -527,6 +548,9 @@ class PersonaController extends Controller
                         $personap->nombre_persona= $request->nombre_m;
                         $personap->apellido_persona=$request->apellido_m;
                         $personap->dui_pasaporte=$request->dui_m;
+                        $personap->idzonaa=$request->idzonam;  //zona madre
+                        $personap->idiglesia=$request->idiglesiam; //iglesia madre
+                        $personap->estado=1; //estado
                         $personap->save();
         
                         $personareali = new Persona();
@@ -536,6 +560,9 @@ class PersonaController extends Controller
                         $personareali->dui_pasaporte=$request->dui_reali;
                         $personareali->sexo=$request->sexo;
                         $personareali->fecha_nacimiento=$request->nacimiento;
+                        $personareali->idzonaa=$request->idzona;  //zona realizante
+                        $personareali->idiglesia=$request->idiglesia; //zona realizante
+                        $personareali->estado=1; //estado
                         $personareali->id_madre=$idm;
                         $personareali->id_padre=$idp;
                         $personareali->save();
@@ -589,6 +616,9 @@ class PersonaController extends Controller
                         $personareali->dui_pasaporte=$request->dui_reali;
                         $personareali->sexo=$request->sexo;
                         $personareali->fecha_nacimiento=$request->nacimiento;
+                        $personareali->idzonaa=$request->idzona;  //zona realizante
+                        $personareali->idiglesia=$request->idiglesia; //zona realizante
+                        $personareali->estado=1; //estado
                         $personareali->id_padre=$request->id_p;
                         $personareali->save();
         
@@ -639,6 +669,9 @@ class PersonaController extends Controller
                         $personareali->dui_pasaporte=$request->dui_reali;
                         $personareali->sexo=$request->sexo;
                         $personareali->fecha_nacimiento=$request->nacimiento;
+                        $personareali->idzonaa=$request->idzona;  //zona realizante
+                        $personareali->idiglesia=$request->idiglesia; //zona realizante
+                        $personareali->estado=1; //estado
                         $personareali->id_madre=$request->id_m;
                         $personareali->save();
         
@@ -690,6 +723,9 @@ class PersonaController extends Controller
                         $personareali->dui_pasaporte=$request->dui_reali;
                         $personareali->sexo=$request->sexo;
                         $personareali->fecha_nacimiento=$request->nacimiento;
+                        $personareali->idzonaa=$request->idzona;  //zona realizante
+                        $personareali->idiglesia=$request->idiglesia; //zona realizante
+                        $personareali->estado=1; //estado
                         $personareali->save();
         
                         $partida = new PartidaNacimiento();
@@ -739,6 +775,9 @@ class PersonaController extends Controller
                 $personap->nombre_persona= $request->nombre_m;
                 $personap->apellido_persona=$request->apellido_m;
                 $personap->dui_pasaporte=$request->dui_m;
+                $personap->idzonaa=$request->idzonam;  //zona madre
+                $personap->idiglesia=$request->idiglesiam; //iglesia madre
+                $personap->estado=1; //estado
                 $personap->save();
 
                 $personareali = new Persona();
@@ -799,6 +838,9 @@ class PersonaController extends Controller
                 $personap->nombre_persona= $request->nombre_p;
                 $personap->apellido_persona=$request->apellido_p;
                 $personap->dui_pasaporte=$request->dui_p;
+                $personap->idzonaa=$request->idzonap;  //zona padre
+                $personap->idiglesia=$request->idiglesiap; //iglesia padre
+                $personap->estado=1; //estado
                 $personap->save();
 
                 $personareali = new Persona();
@@ -808,6 +850,9 @@ class PersonaController extends Controller
                 $personareali->dui_pasaporte=$request->dui_reali;
                 $personareali->sexo=$request->sexo;
                 $personareali->fecha_nacimiento=$request->nacimiento;
+                $personareali->idzonaa=$request->idzona;  //zona realizante
+                $personareali->idiglesia=$request->idiglesia; //zona realizante
+                $personareali->estado=1; //estado
                 $personareali->id_padre=$idp;
                 $personareali->save();
 

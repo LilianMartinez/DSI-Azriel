@@ -986,7 +986,6 @@ export default {
                 //Si es F o M
                 if (this.sexo == 'M')   {
                     this.accionsexo=1;
-                    var_dump(sexo);
                 }
                 if (this.sexo == 'F')   {
                     this.accionsexo=0;
@@ -1013,10 +1012,10 @@ export default {
                     axios.get(url) .then(function (response) {
                         var d = response.data.solo;            
                         if(d==1){
-                             response.data.realizante.forEach(function(element) {
+                           /*  response.data.realizante.forEach(function(element) {
                             var texto = element.fecha_nacimiento;
                             element.fecha_nacimiento= texto.replace(/^(\d{4})-(\d{2})-(\d{2})$/g,'$3/$2/$1');
-                            });
+                            });*/
                             me.nombrerealizante= response.data.realizante.nombre_persona;
                             me.apellidorealizante=response.data.realizante.apellido_persona;
                             me.sexo=response.data.realizante.sexo;
@@ -1276,9 +1275,9 @@ export default {
             var libro= this.libro;
             var partida= this.partida;
             var folio= this.folio;
-            var anio= this.anio;
+            var ano= this.ano;
 
-            var url='/partida/busqueda?alcaldia=' + alcaldia + '&libro=' + libro + '&partida=' + partida + '&folio=' + folio + '&anio=' + anio;
+            var url='/partida/busqueda?alcaldia=' + alcaldia + '&libro=' + libro + '&partida=' + partida + '&folio=' + folio + '&ano=' + ano;
             axios.get(url) .then(function (response) {
                 var respuesta=response.data.solo;
                 if(respuesta==1){

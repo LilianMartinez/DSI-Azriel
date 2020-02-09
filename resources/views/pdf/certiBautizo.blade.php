@@ -568,7 +568,7 @@
                  CERTIFICADO DE BAUTISMO
                  </p>
                  <p id="parrafo">
-                 El infrascrito Párroco de la Parroquia de San Luís Gonzaga en Mariona de  la Ciudad Cuscatancingo, CERTIFICA QUE:
+                 El infrascrito Párroco de la Parroquia de San Luis Gonzaga en Mariona de  la Ciudad Cuscatancingo, CERTIFICA QUE:
                  @foreach ($bautizado as $b)
                  <br><b>En el Libro No. {{$b->libro}}, Folio No. {{$b->folio}}, Asiento No. {{$b->asiento}}</b> 
                  </p>
@@ -628,7 +628,7 @@
                  @foreach($sacerFirma as $sf)           
                     <br>Es copia conforme al original y para efectos de <b>{{$sf->conceptoim}}</b>
                 @endforeach   
-                     se exitende la presente certificación en San Luis Mariona
+                     se extiende la presente certificación en San Luis Mariona
                      Cuscatancingo el día {{$diaA}} de {{$mesA}} del año {{$anioAL}} 
 
                  </p>
