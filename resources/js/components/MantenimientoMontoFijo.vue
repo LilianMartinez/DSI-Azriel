@@ -252,6 +252,8 @@
                 this.nombremf='';
                 this.buscar='';
                 this.criterio='nombremf';
+                this.errorDatos=0;
+                this.errorMostrarMsj='';
             
             },
     

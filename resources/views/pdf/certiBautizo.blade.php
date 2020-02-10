@@ -164,6 +164,20 @@
     <body>
         <?php
 
+             //DIVIDIR EL SPRINT NOMBRE
+             foreach($bautizado as &$b1){
+                $nombreBa= $b1->nomrea;
+                $nombreBa2=array();
+                $nombreBa2=explode(' ', trim($nombreBa));
+            }
+
+            //DIVIDIR EL SPRINT APELLIDO
+            foreach($bautizado as &$b2){
+                $aplledidoBa= $b2->apelrea;
+                $apellidoBa2=array();
+                $apellidoBa2=explode(' ', trim($aplledidoBa));
+            }
+
             //FECHA ACTUAL
             $diaA=date("d");
             $anioA=date("Y");
@@ -568,16 +582,26 @@
                  CERTIFICADO DE BAUTISMO
                  </p>
                  <p id="parrafo">
-                 El infrascrito Párroco de la Parroquia de San Luís Gonzaga en Mariona de  la Ciudad Cuscatancingo, CERTIFICA QUE:
+                 El infrascrito Párroco de la Parroquia de San Luis Gonzaga en Mariona de  la Ciudad Cuscatancingo, CERTIFICA QUE:
+                 @foreach ($bautizado as $b)
+                 <br><b>En el Libro No. {{$b->libro}}, Folio No. {{$b->folio}}, Asiento No. {{$b->asiento}}</b> 
+                 </p>
+                 <!--
+                 <p id="parrafo">
+                 El infrascrito Párroco de la Parroquia de San Luis Gonzaga en Mariona de  la Ciudad Cuscatancingo, CERTIFICA QUE:
                  @foreach ($bautizado as $b)
                  <br><b>En el Libro No. {{$b->libro}}, Folio No. {{$b->folio}}, Asiento No. {{$b->asiento}}</b> 
                  </p>
                  <p id="parrafo3">
-                 <b>{{$b->nomrea}} {{$b->apelrea}}</b>
+                 <b>{{$nombreBa2[0]}} {{$apellidoBa2[0]}}</b>
+                 @endforeach
+                 </p>-->
+                 <p id="parrafo3">
+                 <b>{{$b->nomrea}}</b>
                  @endforeach
                  </p>
                 <p id="parrafo">
-                <br>{{$sexoPersona1}}: 
+                {{$sexoPersona1}}: 
                 @if($idpapa != 0 and $idmama == 0)
                         @foreach ($papa as $p)
                             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{$p->nompapa}} {{$p->apelpapa}}
@@ -609,7 +633,7 @@
 
                  <p id="parrafo">
                  <!-- modificar -->
-                 <br>Siendo sus padrinos: 
+                 Siendo sus padrinos: 
                  @foreach ($p1 as $pa1)
                     <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{$pa1->nompad1}} {{$pa1->apelpad1}}
                  @endforeach
@@ -626,17 +650,20 @@
 
                  <p id="parrafo">  
                  @foreach($sacerFirma as $sf)           
-                    <br>Es copia conforme al original y para efectos de <b>{{$sf->conceptoim}}</b>
+                    Es copia conforme al original y para efectos de <b>{{$sf->conceptoim}}</b>
                 @endforeach   
-                     se exitende la presente certificación en San Luis Mariona
+                     se extiende la presente certificación en San Luis Mariona
                      Cuscatancingo el día {{$diaA}} de {{$mesA}} del año {{$anioAL}} 
-
                  </p>
-                 <br>
+                 <p id="parrafo">  
+                 @foreach($bautizado as $bb)           
+                    <b>NOTAS MARGINALES:<b> 
+                    <br><b>{{$bb->apelrea}},{{$bb->nomrea}}</b>
+                @endforeach   
+                 </p>
                  <p id="parrafo">
-                    <br>Fraternalmente,
+                    Fraternalmente,
                  </p>
-                 <br>
                  <p id="parrafo2">  
                  @foreach($sacerFirma as $ss)      
                   <br>{{$ss->sacerFirmN}} {{$ss->sacerFirmA}}, MSC

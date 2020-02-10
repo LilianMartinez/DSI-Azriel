@@ -259,6 +259,8 @@
                 this.nombre_categoria='';
                 this.buscar='';
                 this.criterio='nombre_categoria';
+                this.errorDatos=0;
+                this.errorMostrarMsj='';
             
             },
     

@@ -501,7 +501,7 @@
                  <br>
                  <br>
                  <p id="parrafo">
-                 <br>El infrascrito Párroco de la Parroquia de San Luís Gonzaga en Mariona de ciudad Cuscatancingo, CERTIFICA QUE:
+                 <br>El infrascrito Párroco de la Parroquia de San Luis Gonzaga en Mariona de ciudad Cuscatancingo, CERTIFICA QUE:
                  @foreach ($sacraIgle as $s)
                  <br><b>En el Libro No. {{$s->libro}} Expediente Matrimonial {{$s->num_expediente}}</b> 
                  @endforeach
@@ -539,7 +539,7 @@
 
                  <p id="parrafo">  
                  @foreach($sacerFirma as $ss)           
-                    <br>Es copia conforme al original y para efectos de <b>{{$ss->conceptoim}}</b> se exitende la presente certificación, en Cuscatancingo a los
+                    <br>Es copia conforme al original y para efectos de <b>{{$ss->conceptoim}}</b> se extiende la presente certificación, en Cuscatancingo a los
                      {{$diaA}} días del mes de {{$mesA}} del año {{$anioAL}}
                  @endforeach  
                  </p>

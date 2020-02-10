@@ -145,7 +145,6 @@
                  buscar2=this.buscar;
                 var url='/zona?buscar=' + buscar2 + '&criterio=' + criterio;
                 axios.get(url) .then(function (response) {
-                    console.log(response);
                     me.arrayzonas=response.data;
                 })
                 .catch(function (error) {
@@ -231,6 +230,8 @@
                 this.nombre_zona='';
                 this.buscar='';
                 this.criterio='nombre_zona';
+                this.errorDatos=0;
+                this.errorMostrarMsj='';
             
             },
     

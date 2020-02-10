@@ -145,7 +145,7 @@
                                             <input v-show="detalle.tipo==2" v-model="detalle.precio_venta" type="number" value="2" class="form-control">
                                             </td>
                                         </tr>
-                                        <tr v-show="ti==2"style="background-color: #CEECF5;">
+                                        <tr v-show="ti==2" style="background-color: #CEECF5;">
                                             <td colspan="4" align="right"><strong>Total:</strong></td>
                                             <td>$ {{total=calcularTotal}}</td>
                                         </tr>

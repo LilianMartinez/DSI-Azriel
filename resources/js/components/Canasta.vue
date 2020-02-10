@@ -523,9 +523,6 @@
                 });
             },
             venderCanasta(){
-               /* if (this.validarCompra()){
-                    return;
-                }*/
                 
                 let me = this;
 

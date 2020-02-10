@@ -64,37 +64,35 @@ Route::group(['middleware'=>['auth']],function(){
                             Route::get('/bautizo','BautizoController@index');
                             Route::put('/bautizo/registrar','BautizoController@store');
                             Route::put('/nota/marginaracta','BautizoController@marginar');
-                           
-                            //TABLA NOTA MARGINAL
-                            
+                          
 
-                            //TABLA confirma
+                            //TABLA PARTIDA NACIMIENTO
+                            Route::get('/partida/busqueda','PartidaNacimientoController@realizante');//Buscar partida nacimiento- PRIMERA COMUNIÓN
+                            Route::get('/partida/busquedaConfirma','PartidaNacimientoController2@realizante'); //Buscar partida nacimiento-modulo confirma
+
+                            //TABLA PERSONA
+                            Route::get('/persona/obtener','PersonaController@realizante'); //PRIMERA COMUNIÓN 
+                            Route::get('/persona/buscarsacerdote3','PersonaController@buscarsacerdote'); //primera comunión-confirma-??
+                            Route::get('/persona/buscarsacerdote','PersonaController@buscarsacerdoteG'); //para TODOS~
+                            Route::get('/persona/duis','PersonaController@buscarduis');//primera comunión - confirma
+                            Route::get('/persona/pan','PersonaController@show'); // ????
+                            Route::put('/persona/registrar','PersonaController@store'); //PRIMERA COMUNIÓN
+                            
+                            Route::get('/persona/obtenerConfirma','PersonaController3@realizante'); //CONFIRMA 
+                            //Route::get('/persona/duis','PersonaController3@buscarduis'); //Es el mismo que el de primera comunión
+                            Route::get('/persona/pan','PersonaController3@show'); //????
+                            Route::put('/persona/registrar','PersonaController3@store');
+                            //Route::get('/persona/listar','PersonaController3@lista');
+
+                                                 //TABLA confirma
                             Route::put('/confirma/registrar','ConfirmaController@store');
                             Route::put('/confirma/marginaracta','BautizoController@marginacionacta');
 
-
-                            //TABLA PERSONA
-                            Route::get('/persona/obtener','PersonaController3@realizante');
-                            Route::get('/persona/duis','PersonaController3@buscarduis');
-                            Route::get('/persona/pan','PersonaController3@show');
-                            Route::put('/persona/registrar','PersonaController3@store');
-                            Route::get('/persona/listar','PersonaController3@lista');
-                            
-
-                            //TABLA PARTIDA NACIMIENTO
-                            Route::get('/partida/busqueda','PartidaNacimientoController2@realizante');
-
-                            //TABLA PERSONA
-                            Route::get('/persona/obtenerB','PersonaController@realizante');
-                            Route::get('/persona/buscarsacerdote3','PersonaController@buscarsacerdote');
-                            Route::get('/persona/buscarsacerdote','PersonaController@buscarsacerdoteG');
-                            Route::get('/persona/duisB','PersonaController@buscarduis');
-                            //Route::get('/persona/pan','PersonaController@show');
-                            //Route::put('/persona/registrar','PersonaController@store'); 
-                            Route::get('/persona/listarcomuniones','PersonaController@listaPC');//para el realizante
-                            Route::get('/persona/listarconfirmaciones','PersonaController@listaC');//para el realizante
+                            Route::get('/persona/listarcomuniones','PersonaController@listaPC');//para el realizante PRIMERA COMUNIÓN
+                            Route::get('/persona/listarconfirmaciones','PersonaController@listaC');//para el realizante CONFIRMA
                             Route::get('/persona/listarsupletorias','PersonaController@listaS');//para el realizante
 
+                                        //MATRIMONIO
                             Route::get('/persona/duihombre','PersonaController2@buscarduihombre');//este se utiliza para novio, padrinos y sacerdote
                             Route::get('/persona/duimujer','PersonaController2@buscarduimujer');//este se utiliza para novia y madrinas
                             Route::put('/persona/registrar2','PersonaController2@store');//Modificado para poder registrar nuevo expediente matrimonial
@@ -108,8 +106,28 @@ Route::group(['middleware'=>['auth']],function(){
                                            Route::put('/religioso/actualizar','PersonaController@updateReli');
                                            Route::put('/religioso/eliminar','PersonaController@eliminarReli');
 
-                            //TABLA Partida
-                            Route::get('/partida/busqueda','PartidaNacimientoController@realizante');
+
+                                //Certificados
+                                Route::put('/persona/registrarImpresion','PersonaController2@registrarImpresion');
+                                Route::put('/persona/eliminarDatosImpresion','PersonaController2@eliminarDatosImpresion');
+                                        //Matrimonio
+                                Route::get('/persona/certificadoMatri/{id}','PersonaController2@certificadoMatri')->name('matrimonio_pdf');
+                                Route::put('/persona/certificadoMatri','PersonaController2@certificadoMatri');
+
+                                        //Bautizo
+                                Route::get('/persona/certificadoBautizo/{id}/{id_padre}/{id_madre}','PersonaController2@certificadoBautizo')->name('bautizo_pdf');
+                                Route::put('/persona/certificadoBautizo','PersonaController2@certificadoBautizo');
+
+                                        //Primera Comunion
+                                Route::get('/persona/certificadoPrimeraComunion/{id}/{id_padre}/{id_madre}','PersonaController2@certificadoPrimeraComunion')->name('primeracomunion_pdf');
+                                Route::put('/persona/certificadoPrimeraComunion','PersonaController2@certificadoPrimeraComunion');
+
+                                        //Confirma
+                                Route::get('/persona/certificadoConfirma/{id}/{id_padre}/{id_madre}/{id_realizante1}','PersonaController2@certificadoConfirma')->name('confirma_pdf');
+                                Route::put('/persona/certificadoConfirma','PersonaController2@certificadoConfirma');
+
+                        
+                           
 
 
                             //TABLA sacramentos
@@ -172,25 +190,7 @@ Route::group(['middleware'=>['auth']],function(){
                             Route::put('/sacramento/desactivarexpediente','SacramentoController@desactivarexpediente');
                             //Route::put('/sacramento/finalizarexpediente','SacramentoController@finalizarexpediente');
 
-                            //Certificados
-                            Route::put('/persona/registrarImpresion','PersonaController2@registrarImpresion');
-                            Route::put('/persona/eliminarDatosImpresion','PersonaController2@eliminarDatosImpresion');
-                                    //Matrimonio
-                            Route::get('/persona/certificadoMatri/{id}','PersonaController2@certificadoMatri')->name('matrimonio_pdf');
-                            Route::put('/persona/certificadoMatri','PersonaController2@certificadoMatri');
-
-                                    //Bautizo
-                            Route::get('/persona/certificadoBautizo/{id}/{id_padre}/{id_madre}','PersonaController2@certificadoBautizo')->name('bautizo_pdf');
-                            Route::put('/persona/certificadoBautizo','PersonaController2@certificadoBautizo');
-
-                                    //Primera Comunion
-                            Route::get('/persona/certificadoPrimeraComunion/{id}/{id_padre}/{id_madre}','PersonaController2@certificadoPrimeraComunion')->name('primeracomunion_pdf');
-                            Route::put('/persona/certificadoPrimeraComunion','PersonaController2@certificadoPrimeraComunion');
-
-                                    //Confirma
-                            Route::get('/persona/certificadoConfirma/{id}/{id_padre}/{id_madre}/{id_realizante1}','PersonaController2@certificadoConfirma')->name('confirma_pdf');
-                            Route::put('/persona/certificadoConfirma','PersonaController2@certificadoConfirma');
-
+                        
                             //TABLA ZONAS
                             Route::get('/zona','ZonaController@index');
                             Route::put('/zona/registrar','ZonaController@store');

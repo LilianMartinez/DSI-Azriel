@@ -568,7 +568,7 @@
                  CERTIFICADO DE PRIMERA COMUNIÓN
                  </p>
                  <p id="parrafo">
-                 El suscrito Párroco de la Parroquia de San Luís Gonzaga en Mariona <b>HACE CONSTAR</b> que:
+                 El suscrito Párroco de la Parroquia de San Luis Gonzaga en Mariona <b>HACE CONSTAR</b> que:
                  <br>En el registro que nuestra parroquia lleva, se encuentra registrado:
                  </p>
                  <p id="parrafo3">

@@ -15212,8 +15212,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         'monto': this.montoConstancia,
         'tipo': tip
       }).then(function (response) {
-        me.cerrarModal();
-        me.listarEfectivo(1, '', 'num_recibo', 1);
+        me.cerrarModal(); //me.listarEfectivo(1,'','num_recibo',1);
+
         me.sumat();
       })["catch"](function (error) {
         // handle error
@@ -16274,9 +16274,6 @@ __webpack_require__.r(__webpack_exports__);
       });
     },
     venderCanasta: function venderCanasta() {
-      /* if (this.validarCompra()){
-           return;
-       }*/
       var me = this;
       axios.put('/canastas/vender', {
         'id': me.po
@@ -17154,7 +17151,8 @@ __webpack_require__.r(__webpack_exports__);
           });*/
         var respuesta = response.data;
         me.arrayfeligres = respuesta.feligres.data;
-        me.pagination = respuesta.pagination; //me.cerrarmodal2();
+        me.pagination = respuesta.pagination;
+        me.cerrarmodal2();
       })["catch"](function (error) {
         console.log(error);
       });
@@ -17183,7 +17181,7 @@ __webpack_require__.r(__webpack_exports__);
       if (this.fechana != null) {
         var values = this.fechana.split("-");
         var anio = values[0];
-        if (anio < 1989) this.errorMostrarMsj.push("El año debe de ser mayor a 1989");
+        if (anio < 1800) this.errorMostrarMsj.push("El año debe de ser mayor a 1800");
         if (actualYear < anio) this.errorMostrarMsj.push("El año debe ser menor o igual al " + actualYear);
       }
 
@@ -17205,12 +17203,12 @@ __webpack_require__.r(__webpack_exports__);
         'nombre_persona': this.nombre_persona.toUpperCase(),
         'apellido_persona': this.apellido_persona.toUpperCase(),
         'fecha_nacimiento': this.fechana,
+        'idzonaa': this.idzona,
         'idiglesia': this.idiglesia
       }).then(function (response) {
         me.mensajeExito();
         me.cerrarModal();
-        me.listarFeligresesBuscar(1, buscar, criterio);
-        console.log(response);
+        me.listarFeligresesBuscar(1, buscar, criterio); //console.log(response);
       })["catch"](function (error) {});
     },
     mensajeExito: function mensajeExito() {
@@ -17244,6 +17242,10 @@ __webpack_require__.r(__webpack_exports__);
     cerrarmodal2: function cerrarmodal2() {
       this.arrayzona = [];
       this.arrayiglesia = [];
+      this.idzona = 0;
+      this.idiglesia = 0;
+      this.llenadolistazona();
+      this.iglesias();
     },
     actualizarfeligreses: function actualizarfeligreses() {
       if (this.validarvalores()) {
@@ -17258,7 +17260,7 @@ __webpack_require__.r(__webpack_exports__);
         'apellido_persona': this.apellido_persona.toUpperCase(),
         'fecha_nacimiento': this.fechana,
         'idiglesia': this.idiglesia,
-        'idzona': this.idzona,
+        'idzonaa': this.idzona,
         'id': this.feligreses_id
       }).then(function (response) {
         me.cerrarModal();
@@ -17309,13 +17311,19 @@ __webpack_require__.r(__webpack_exports__);
                   this.modal = 1;
                   this.tituloModal = 'Modificar Feligres';
                   this.tipoAccion = 2;
+                  this.feligreses_id = data['id'];
                   this.nombre_persona = data['nombre_persona'];
                   this.apellido_persona = data['apellido_persona'];
                   this.fechana = data['fecha_nacimiento'];
-                  this.idiglesia = data['idiglesia'];
                   this.idzona = data['idzona'];
-                  this.feligreses_id = data['id'];
                   this.nombre_zona = data['nombre_zona'];
+
+                  if (this.idzona) {
+                    this.iglesias(this.idzona);
+                    this.idiglesia = data['idiglesia'];
+                    this.nombre_iglesia = data['nombre_iglesia'];
+                  }
+
                   break;
                 }
 
@@ -17851,9 +17859,18 @@ __webpack_require__.r(__webpack_exports__);
         var respuesta = response.data;
         me.arrayinventario = respuesta.proinventarioIgle.data;
         me.pagination = respuesta.pagination;
+        me.cerrarmodal2();
       })["catch"](function (error) {
         console.log(error);
       });
+    },
+    cerrarmodal2: function cerrarmodal2() {
+      this.arrayzona = [];
+      this.arrayiglesia = [];
+      this.idzona = 0;
+      this.idiglesia = 0;
+      this.llenadolistazona();
+      this.iglesias();
     },
     validarvalores: function validarvalores() {
       this.errorDatos = 0;
@@ -20447,6 +20464,8 @@ __webpack_require__.r(__webpack_exports__);
       this.descripcion_categoriainv = '';
       this.buscar = '';
       this.criterio = 'nombre_categoriainv';
+      this.errorDatos = 0;
+      this.errorMostrarMsj = '';
     },
     abrirModal: function abrirModal(modelo, accion) {
       var data = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : [];
@@ -20749,6 +20768,8 @@ __webpack_require__.r(__webpack_exports__);
       this.nombre_categoria = '';
       this.buscar = '';
       this.criterio = 'nombre_categoria';
+      this.errorDatos = 0;
+      this.errorMostrarMsj = '';
     },
     abrirModal: function abrirModal(modelo, accion) {
       var data = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : [];
@@ -20999,7 +21020,6 @@ __webpack_require__.r(__webpack_exports__);
         var respuesta = response.data;
         me.arrayiglesiasZ = respuesta.iglesiasZ;
         me.arrayiglesias = respuesta.iglesias;
-        console.log(response);
       })["catch"](function (error) {
         console.log(error);
       });
@@ -21077,6 +21097,8 @@ __webpack_require__.r(__webpack_exports__);
       this.buscar = '';
       this.criterio = 'nombre_iglesia';
       this.idzona = '';
+      this.errorDatos = 0;
+      this.errorMostrarMsj = '';
     },
     abrirModal: function abrirModal(modelo, accion) {
       var data = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : [];
@@ -21376,6 +21398,8 @@ __webpack_require__.r(__webpack_exports__);
       this.nombremf = '';
       this.buscar = '';
       this.criterio = 'nombremf';
+      this.errorDatos = 0;
+      this.errorMostrarMsj = '';
     },
     abrirModal: function abrirModal(modelo, accion) {
       var data = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : [];
@@ -21695,6 +21719,8 @@ __webpack_require__.r(__webpack_exports__);
       this.dui_pasaporte = '';
       this.buscar = '';
       this.criterio = 'nombre_persona';
+      this.errorDatos = 0;
+      this.errorMostrarMsj = '';
     },
     abrirModal: function abrirModal(modelo, accion) {
       var data = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : [];
@@ -21902,7 +21928,6 @@ __webpack_require__.r(__webpack_exports__);
 
       var url = '/zona?buscar=' + buscar2 + '&criterio=' + criterio;
       axios.get(url).then(function (response) {
-        console.log(response);
         me.arrayzonas = response.data;
       })["catch"](function (error) {
         console.log(error);
@@ -21977,6 +22002,8 @@ __webpack_require__.r(__webpack_exports__);
       this.nombre_zona = '';
       this.buscar = '';
       this.criterio = 'nombre_zona';
+      this.errorDatos = 0;
+      this.errorMostrarMsj = '';
     },
     abrirModal: function abrirModal(modelo, accion) {
       var data = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : [];
@@ -25456,11 +25483,38 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     var _ref;
 
     return _ref = {
+      idzona: '',
+      idiglesia: '',
+      zona: '',
+      iglesia: '',
+      nombre_zona: '',
+      nombre_iglesia: '',
+      arrayzona: [],
+      arrayiglesia: [],
+      arrayiglesiaID: [],
       id: '',
       tipo: '',
       folio: '',
@@ -25483,6 +25537,33 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     }, _defineProperty(_ref, "tipo", ''), _defineProperty(_ref, "idsacerdote", ''), _defineProperty(_ref, "nombresacerdote", ''), _defineProperty(_ref, "apellidosacerdote", ''), _defineProperty(_ref, "cargosacerdote", ''), _defineProperty(_ref, "arraysacerdote", []), _defineProperty(_ref, "arraycategorias", []), _defineProperty(_ref, "arraycargo", []), _defineProperty(_ref, "sexo", ''), _defineProperty(_ref, "fechana", ''), _defineProperty(_ref, "idpd1", ''), _defineProperty(_ref, "idpd2", ''), _defineProperty(_ref, "idpd3", ''), _defineProperty(_ref, "idpd4", ''), _defineProperty(_ref, "duipd1", ''), _defineProperty(_ref, "duipd2", ''), _defineProperty(_ref, "duipd3", ''), _defineProperty(_ref, "duipd4", ''), _defineProperty(_ref, "nombrepd1", ''), _defineProperty(_ref, "apellidopd1", ''), _defineProperty(_ref, "idcare", ''), _defineProperty(_ref, "Acciondui", 0), _defineProperty(_ref, "accion", 0), _defineProperty(_ref, "accionp", 0), _defineProperty(_ref, "accionsexo", 0), _defineProperty(_ref, "cambiarm", 0), _defineProperty(_ref, "cambiarmb", 0), _defineProperty(_ref, "monto", 0), _defineProperty(_ref, "arraybautizo", []), _defineProperty(_ref, "nombrepd2", ''), _defineProperty(_ref, "apellidopd2", ''), _defineProperty(_ref, "nombrepd3", ''), _defineProperty(_ref, "apellidopd3", ''), _defineProperty(_ref, "nombrepd4", ''), _defineProperty(_ref, "apellidopd4", ''), _defineProperty(_ref, "precio", 0), _defineProperty(_ref, "modal", 0), _defineProperty(_ref, "tituloModal", ''), _defineProperty(_ref, "partida", ''), _defineProperty(_ref, "tipoAccion", 0), _defineProperty(_ref, "errorDatos", 0), _defineProperty(_ref, "errorMostrarMsj", []), _defineProperty(_ref, "anio", ''), _defineProperty(_ref, "verificacion", 0), _defineProperty(_ref, "accionbotones", 0), _defineProperty(_ref, "fechana2", ''), _defineProperty(_ref, "alcaldia", ''), _defineProperty(_ref, "id_realizante", ''), _defineProperty(_ref, "sexopd1", ''), _defineProperty(_ref, "sexopd2", ''), _defineProperty(_ref, "sexopd3", ''), _defineProperty(_ref, "sexopd4", ''), _ref;
   },
   methods: {
+    //Para lo de zonas e iglesias
+    llenadolistazona: function llenadolistazona() {
+      var me = this;
+      var url = '/zona/buscarZona';
+      axios.get(url).then(function (response) {
+        me.arrayzona = response.data;
+      })["catch"](function (error) {
+        console.log(error);
+      });
+    },
+    iglesias: function iglesias(idzona) {
+      var me = this;
+      var arrayiglesiaID = [];
+      axios.post('/feligreses/buscarIglesia', {
+        'id': this.idzona
+      }).then(function (response) {
+        arrayiglesiaID = response.data;
+        me.llenar(arrayiglesiaID);
+      })["catch"](function (error) {
+        // handle error
+        console.log(error);
+      });
+    },
+    llenar: function llenar() {
+      var d = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];
+      this.arrayiglesia = d;
+    },
     //Mt. para calcular edad y ver si se muestra o no el div que contiene el dui del realizante
     cambiar: function cambiar() {
       var values = this.fechana.split("-");
@@ -25695,6 +25776,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       this.sexopd4 = '';
       this.monto = '';
       this.asiento = '';
+      this.idiglesia = '';
     },
     cerrarm: function cerrarm() {
       //botones cancelat
@@ -25750,6 +25832,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       this.sexopd4 = '';
       this.asiento = '';
       this.monto = '';
+      this.idiglesia = '';
     },
     //Mt. cuando le da modificar en el modal
     cerrarmodal: function cerrarmodal() {
@@ -25896,174 +25979,151 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       });
     },
     validarvalores: function validarvalores(d) {
-      this.errorDatos = 0;
-      this.errorMostrarMsj = [];
-      var RE = /^([0-9])*$/;
-      var patron = /^[a-zA-ZÑñÁáÉéÍíÓóÚúÜü\s]+$/;
-      var anioc = /^\d{4}$/;
-      var patrondui = /^\d{9}$/;
-      var fecha = new Date();
-      var anioac = fecha.getFullYear();
-      var mesac = fecha.getMonth();
-
-      switch (d) {
-        case '1':
-          {
-            var Min_Length = 5;
-            var lengthmin = this.alcaldia.length;
-            if (lengthmin < Min_Length) this.errorMostrarMsj.push("La alcaldía debe tener más de 5 letras");
-            if (RE.test(this.alcaldia)) this.errorMostrarMsj.push("La alcaldia solo debe de tener letras");
-            if (!this.libro) this.errorMostrarMsj.push("El numero de libro no puede estar vacío");
-            if (this.libro == 0) this.errorMostrarMsj.push("El numero de libro no puede ser 0");
-            if (!RE.test(this.libro)) this.errorMostrarMsj.push("El numero de libro debe ser un numero entero");
-            if (!this.partida) this.errorMostrarMsj.push("El numero de la partida no puede estar vacío");
-            if (this.partida == 0) this.errorMostrarMsj.push("El numero de la partida no puede ser 0");
-            if (!RE.test(this.partida)) this.errorMostrarMsj.push("El numero de la partida debe ser un numero entero");
-            if (!this.folio) this.errorMostrarMsj.push("El numero de folio no puede estar vacío");
-            if (this.folio == 0) this.errorMostrarMsj.push("El numero de folio no puede ser 0");
-            if (!RE.test(this.folio)) this.errorMostrarMsj.push("El numero de folio debe ser un numero entero");
-            if (!this.anio) this.errorMostrarMsj.push("El año no puede estar vacío");
-            if (!anioc.test(this.anio)) this.errorMostrarMsj.push("El año debe tener 4 numeros enteros");
-            if (this.anio < 1900) this.errorMostrarMsj.push("El año debe ser mayor a 1990");
-            if (anioac < this.anio) this.errorMostrarMsj.push("El año debe ser menor o igual al actual");
-            if (this.errorMostrarMsj.length) this.errorDatos = 1;
-            return this.errorDatos;
-            break;
-          }
-
-        case '2':
-          {
-            this.errorMostrarMsj.push("Esta persona ya realizo este sacramento. Por favor verificar datos");
-            if (this.errorMostrarMsj.length) this.errorDatos = 1;
-            return this.errorDatos;
-            break;
-          }
-
-        case '3':
-          {
-            var values = this.fechana.split("-");
-            var diana = values[2];
-            var mesna = values[1];
-            var aniona = values[0];
-
-            if (this.Acciondui == 1) {
-              if (!patrondui.test(this.dui)) this.errorMostrarMsj.push("El dui debe de tener 9 numeros");
-            }
-
-            if (!this.nombrerealizante) this.errorMostrarMsj.push("El nombre del realizante no puede estar vacio");
-            if (!patron.test(this.nombrerealizante)) this.errorMostrarMsj.push("El nombre del realizante solo debe de tener letras");
-            if (!this.apellidorealizante) this.errorMostrarMsj.push("El apellido del realizante no puede estar vacio");
-            if (!patron.test(this.apellidorealizante)) this.errorMostrarMsj.push("El apellido del realizante solo debe de tener letras");
-            if (!this.sexo) this.errorMostrarMsj.push("El sexo no puede estar vacio");
-            if (aniona < 1900) this.errorMostrarMsj.push("El año debe de ser mayor a 1990");
-            if (anioac < aniona) this.errorMostrarMsj.push("El año debe ser menor o igual al actual");
-            if (mesac < mesna && aniona == anioac) this.errorMostrarMsj.push("El mes debe ser menor al actual");
-            if (this.errorMostrarMsj.length) this.errorDatos = 1;
-            return this.errorDatos;
-            break;
-          }
-
-        case '4':
-          {
-            if (!(!this.duimadre && !this.nombremadre && !this.apellidomadre)) {
-              if (!patrondui.test(this.duimadre)) this.errorMostrarMsj.push("El dui de la madre debe de tener 9 numeros");
-              if (!patron.test(this.nombremadre)) this.errorMostrarMsj.push("El nombre de la madre solo debe de tener letras");
-              if (!patron.test(this.apellidomadre)) this.errorMostrarMsj.push("El apellido de la madre solo debe de tener letras");
-              if (this.errorMostrarMsj.length) this.errorDatos = 1;
-              return this.errorDatos;
-            }
-
-            if (!(!this.duipadre && !this.nombrepadre && !this.apellidopadre)) {
-              if (!patrondui.test(this.duipadre)) this.errorMostrarMsj.push("El dui del padre debe de tener 9 numeros");
-              if (!patron.test(this.nombrepadre)) this.errorMostrarMsj.push("El nombre del padre solo debe de tener letras");
-              if (!patron.test(this.apellidopadre)) this.errorMostrarMsj.push("El apellido del padre solo debe de tener letras");
-              if (this.errorMostrarMsj.length) this.errorDatos = 1;
-              return this.errorDatos;
-            }
-
-            break;
-          }
-
-        case '5':
-          {
-            if (!(!this.duipd1 && !this.nombrepd1 && !this.apellidopd1 && !this.sexopd1)) {
-              if (!patrondui.test(this.duipd1)) this.errorMostrarMsj.push("El dui del padrino 1 debe de tener 9 numeros");
-              if (!patron.test(this.nombrepd1)) this.errorMostrarMsj.push("El nombre del padrino 1 solo debe de tener letras");
-              if (!patron.test(this.apellidopd1)) this.errorMostrarMsj.push("El apellido del padrino 1 solo debe de tener letras");
-              if (!this.sexopd1) this.errorMostrarMsj.push("El sexo no puede estar vacio");
-              if (this.errorMostrarMsj.length) this.errorDatos = 1;
-              return this.errorDatos;
-            }
-
-            break;
-          }
-
-        case '6':
-          {
-            if (!(!this.duipd2 && !this.nombrepd2 && !this.apellidopd2 && !this.sexopd2)) {
-              if (!patrondui.test(this.duipd2)) this.errorMostrarMsj.push("El dui del padrino 2 debe de tener 9 numeros");
-              if (!patron.test(this.nombrepd2)) this.errorMostrarMsj.push("El nombre del padrino 2 solo debe de tener letras");
-              if (!patron.test(this.apellidopd2)) this.errorMostrarMsj.push("El apellido del padrino 2 solo debe de tener letras");
-              if (!this.sexopd2) this.errorMostrarMsj.push("El sexo no puede estar vacio");
-              if (this.errorMostrarMsj.length) this.errorDatos = 1;
-              return this.errorDatos;
-            }
-
-            break;
-          }
-
-        case '7':
-          {
-            if (!(!this.duipd3 && !this.nombrepd3 && !this.apellidopd3 && !this.sexopd3)) {
-              if (!patrondui.test(this.duipd3)) this.errorMostrarMsj.push("El dui del padrino 3 debe de tener 9 numeros");
-              if (!patron.test(this.nombrepd3)) this.errorMostrarMsj.push("El nombre del padrino 3 solo debe de tener letras");
-              if (!patron.test(this.apellidopd3)) this.errorMostrarMsj.push("El apellido del padrino 3 solo debe de tener letras");
-              if (!this.sexopd3) this.errorMostrarMsj.push("El sexo no puede estar vacio");
-              if (this.errorMostrarMsj.length) this.errorDatos = 1;
-              return this.errorDatos;
-            }
-
-            break;
-          }
-
-        case '8':
-          {
-            if (!(!this.duipd4 && !this.nombrepd4 && !this.apellidopd4 && !this.sexopd4)) {
-              if (!patrondui.test(this.duipd4)) this.errorMostrarMsj.push("El dui del padrino 4 debe de tener 9 numeros");
-              if (!patron.test(this.nombrepd4)) this.errorMostrarMsj.push("El nombre del padrino 4 solo debe de tener letras");
-              if (!patron.test(this.apellidopd4)) this.errorMostrarMsj.push("El apellido del padrino 4 solo debe de tener letras");
-              if (!this.sexopd4) this.errorMostrarMsj.push("El sexo no puede estar vacio");
-              if (this.errorMostrarMsj.length) this.errorDatos = 1;
-              return this.errorDatos;
-            }
-
-            break;
-          }
-
-        case '9':
-          {
-            var RED = /^\d*(\.\d{1})?\d{0,1}$/;
-            if (!this.librob) this.errorMostrarMsj.push("El numero de libro no puede estar vacio");
-            if (this.librob == 0) this.errorMostrarMsj.push("No puede tener el valor 0");
-            if (!RE.test(this.librob)) this.errorMostrarMsj.push("El numero de libro debe de tener numeros enteros");
-            if (!this.foliob) this.errorMostrarMsj.push("El numero de folio no puede estar vacio");
-            if (this.foliob == 0) this.errorMostrarMsj.push("No puede tener el valor 0");
-            if (!RE.test(this.foliob)) this.errorMostrarMsj.push("El numero de folio debe de tener numeros enteros");
-            if (!this.asiento) this.errorMostrarMsj.push("El numero de asiento no puede estar vacio");
-            if (this.asiento == 0) this.errorMostrarMsj.push("El numero de asiento no debe ser 0");
-            if (!RE.test(this.asiento)) this.errorMostrarMsj.push("El numero de asiento debe de tener numeros enteros");
-            if (!this.monto) this.errorMostrarMsj.push("El numero de la ofrenda no puede estar vacio");
-            if (!RED.test(this.monto)) this.errorMostrarMsj.push("El monto debe de tener solo decimales");
-            var values = this.fecharealizacion.split("-");
-            var aniore = values[0];
-            if (aniore < 1989) this.errorMostrarMsj.push("El año debe ser mayor a 1989");
-            if (anioac < aniore) this.errorMostrarMsj.push("El año debe ser menor al actual");
-            if (!this.idcare) this.errorMostrarMsj.push("La categoria no puede estar vacia");
-            if (this.errorMostrarMsj.length) this.errorDatos = 1;
-            return this.errorDatos;
-            break;
-          }
-      }
+      /*      this.errorDatos=0;
+            this.errorMostrarMsj=[];
+            var RE = /^([0-9])*$/;
+            var patron =/^[a-zA-ZÑñÁáÉéÍíÓóÚúÜü\s]+$/;
+            var anioc = /^\d{4}$/;
+            var patrondui= /^\d{9}$/;
+            var fecha = new Date();
+            var anioac = fecha.getFullYear();
+            var mesac = fecha.getMonth();
+            
+           switch(d){
+               case '1':{
+                    var Min_Length = 5;
+                    var lengthmin = this.alcaldia.length;
+                    if (lengthmin < Min_Length)this.errorMostrarMsj.push("La alcaldía debe tener más de 5 letras");
+                    if(RE.test(this.alcaldia))this.errorMostrarMsj.push("La alcaldia solo debe de tener letras");
+                    if(!this.libro) this.errorMostrarMsj.push("El numero de libro no puede estar vacío");
+                    if(this.libro == 0) this.errorMostrarMsj.push("El numero de libro no puede ser 0");
+                    if (!RE.test(this.libro))  this.errorMostrarMsj.push("El numero de libro debe ser un numero entero");
+                    if(!this.partida) this.errorMostrarMsj.push("El numero de la partida no puede estar vacío");
+                    if(this.partida == 0) this.errorMostrarMsj.push("El numero de la partida no puede ser 0");
+                    if (!RE.test(this.partida))  this.errorMostrarMsj.push("El numero de la partida debe ser un numero entero");
+                    if(!this.folio) this.errorMostrarMsj.push("El numero de folio no puede estar vacío");
+                    if(this.folio == 0) this.errorMostrarMsj.push("El numero de folio no puede ser 0");
+                    if (!RE.test(this.folio))  this.errorMostrarMsj.push("El numero de folio debe ser un numero entero");
+                    if(!this.anio) this.errorMostrarMsj.push("El año no puede estar vacío");
+                    if (!anioc.test(this.anio))  this.errorMostrarMsj.push("El año debe tener 4 numeros enteros");
+                    if(this.anio < 1900) this.errorMostrarMsj.push("El año debe ser mayor a 1990");
+                    if(anioac<this.anio) this.errorMostrarMsj.push("El año debe ser menor o igual al actual");
+                    if(this.errorMostrarMsj.length) this.errorDatos=1;
+                    return this.errorDatos;
+                    break;
+               }
+               case '2':{
+                    this.errorMostrarMsj.push("Esta persona ya realizo este sacramento. Por favor verificar datos");
+                    if(this.errorMostrarMsj.length) this.errorDatos=1;
+                    return this.errorDatos;
+                    break;
+               }
+               case '3':{
+                   var values = this.fechana.split("-");
+                   var diana = values[2];
+                   var mesna = values[1];
+                   var aniona = values[0];
+                   if(this.Acciondui==1){
+                       if(!patrondui.test(this.dui)) this.errorMostrarMsj.push("El dui debe de tener 9 numeros");
+                   }
+                    if(!this.nombrerealizante) this.errorMostrarMsj.push("El nombre del realizante no puede estar vacio");
+                    if(!patron.test(this.nombrerealizante)) this.errorMostrarMsj.push("El nombre del realizante solo debe de tener letras");
+                    if(!this.apellidorealizante) this.errorMostrarMsj.push("El apellido del realizante no puede estar vacio");
+                    if(!patron.test(this.apellidorealizante)) this.errorMostrarMsj.push("El apellido del realizante solo debe de tener letras");
+                    if(!this.sexo) this.errorMostrarMsj.push("El sexo no puede estar vacio");
+                    if(aniona < 1900) this.errorMostrarMsj.push("El año debe de ser mayor a 1990");
+                    if(anioac < aniona) this.errorMostrarMsj.push("El año debe ser menor o igual al actual");
+                    if(mesac<mesna && aniona==anioac) this.errorMostrarMsj.push("El mes debe ser menor al actual");
+                    if(this.errorMostrarMsj.length) this.errorDatos=1;
+                    return this.errorDatos;
+                    break;
+               }
+               case '4':{
+                   if(!(!this.duimadre && !this.nombremadre && !this.apellidomadre)){
+                       if(!patrondui.test(this.duimadre)) this.errorMostrarMsj.push("El dui de la madre debe de tener 9 numeros");
+                        if(!patron.test(this.nombremadre)) this.errorMostrarMsj.push("El nombre de la madre solo debe de tener letras");
+                        if(!patron.test(this.apellidomadre)) this.errorMostrarMsj.push("El apellido de la madre solo debe de tener letras");
+                        if(this.errorMostrarMsj.length) this.errorDatos=1;
+                        return this.errorDatos;
+                   }
+                   if(!(!this.duipadre && !this.nombrepadre && !this.apellidopadre)){
+                        if(!patrondui.test(this.duipadre)) this.errorMostrarMsj.push("El dui del padre debe de tener 9 numeros");
+                        if(!patron.test(this.nombrepadre)) this.errorMostrarMsj.push("El nombre del padre solo debe de tener letras");
+                        if(!patron.test(this.apellidopadre)) this.errorMostrarMsj.push("El apellido del padre solo debe de tener letras");
+                        if(this.errorMostrarMsj.length) this.errorDatos=1;
+                        return this.errorDatos;
+                   }
+                    
+                    break;
+               }
+               case '5':{
+                   if(!(!this.duipd1 && !this.nombrepd1 && !this.apellidopd1 && !this.sexopd1)){
+                       if(!patrondui.test(this.duipd1)) this.errorMostrarMsj.push("El dui del padrino 1 debe de tener 9 numeros");
+                        if(!patron.test(this.nombrepd1)) this.errorMostrarMsj.push("El nombre del padrino 1 solo debe de tener letras");
+                        if(!patron.test(this.apellidopd1)) this.errorMostrarMsj.push("El apellido del padrino 1 solo debe de tener letras");
+                        if(!this.sexopd1) this.errorMostrarMsj.push("El sexo no puede estar vacio");
+                        if(this.errorMostrarMsj.length) this.errorDatos=1;
+                        return this.errorDatos;
+                   }
+                    
+                    break;
+               }
+               case '6':{
+                   if(!(!this.duipd2 && !this.nombrepd2 && !this.apellidopd2 && !this.sexopd2)){
+                       if(!patrondui.test(this.duipd2)) this.errorMostrarMsj.push("El dui del padrino 2 debe de tener 9 numeros");
+                        if(!patron.test(this.nombrepd2)) this.errorMostrarMsj.push("El nombre del padrino 2 solo debe de tener letras");
+                        if(!patron.test(this.apellidopd2)) this.errorMostrarMsj.push("El apellido del padrino 2 solo debe de tener letras");
+                        if(!this.sexopd2) this.errorMostrarMsj.push("El sexo no puede estar vacio");
+                        if(this.errorMostrarMsj.length) this.errorDatos=1;
+                        return this.errorDatos;
+                   }
+                    break;
+               }
+               case '7':{
+                    if(!(!this.duipd3 && !this.nombrepd3 && !this.apellidopd3 && !this.sexopd3)){
+                       if(!patrondui.test(this.duipd3)) this.errorMostrarMsj.push("El dui del padrino 3 debe de tener 9 numeros");
+                        if(!patron.test(this.nombrepd3)) this.errorMostrarMsj.push("El nombre del padrino 3 solo debe de tener letras");
+                        if(!patron.test(this.apellidopd3)) this.errorMostrarMsj.push("El apellido del padrino 3 solo debe de tener letras");
+                        if(!this.sexopd3) this.errorMostrarMsj.push("El sexo no puede estar vacio");
+                        if(this.errorMostrarMsj.length) this.errorDatos=1;
+                        return this.errorDatos;
+                   }
+                    break;
+               }
+               case '8':{
+                    if(!(!this.duipd4 && !this.nombrepd4 && !this.apellidopd4 && !this.sexopd4)){
+                       if(!patrondui.test(this.duipd4)) this.errorMostrarMsj.push("El dui del padrino 4 debe de tener 9 numeros");
+                        if(!patron.test(this.nombrepd4)) this.errorMostrarMsj.push("El nombre del padrino 4 solo debe de tener letras");
+                        if(!patron.test(this.apellidopd4)) this.errorMostrarMsj.push("El apellido del padrino 4 solo debe de tener letras");
+                        if(!this.sexopd4) this.errorMostrarMsj.push("El sexo no puede estar vacio");
+                        if(this.errorMostrarMsj.length) this.errorDatos=1;
+                        return this.errorDatos;
+                   }
+                    break;
+               }
+               case '9':{
+                    var RED = /^\d*(\.\d{1})?\d{0,1}$/;
+                    if(!this.librob) this.errorMostrarMsj.push("El numero de libro no puede estar vacio");
+                    if(this.librob == 0) this.errorMostrarMsj.push("No puede tener el valor 0");
+                    if(!RE.test(this.librob)) this.errorMostrarMsj.push("El numero de libro debe de tener numeros enteros");
+                    if(!this.foliob) this.errorMostrarMsj.push("El numero de folio no puede estar vacio");
+                    if(this.foliob == 0) this.errorMostrarMsj.push("No puede tener el valor 0");
+                    if(!RE.test(this.foliob)) this.errorMostrarMsj.push("El numero de folio debe de tener numeros enteros");
+                    if(!this.asiento) this.errorMostrarMsj.push("El numero de asiento no puede estar vacio");
+                    if(this.asiento == 0) this.errorMostrarMsj.push("El numero de asiento no debe ser 0");
+                    if(!RE.test(this.asiento)) this.errorMostrarMsj.push("El numero de asiento debe de tener numeros enteros");
+                    if(!this.monto) this.errorMostrarMsj.push("El numero de la ofrenda no puede estar vacio");
+                    if(!RED.test(this.monto)) this.errorMostrarMsj.push("El monto debe de tener solo decimales");
+                    var values = this.fecharealizacion.split("-");
+                    var aniore = values[0];
+                    if(aniore < 1989) this.errorMostrarMsj.push("El año debe ser mayor a 1989");
+                    if(anioac < aniore) this.errorMostrarMsj.push("El año debe ser menor al actual");
+                    if(!this.idcare) this.errorMostrarMsj.push("La categoria no puede estar vacia");
+                    if(this.errorMostrarMsj.length) this.errorDatos=1;
+                    return this.errorDatos;
+                    break;
+               }
+           }*/
     },
     selectCategoria: function selectCategoria() {
       var me = this;
@@ -26519,6 +26579,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     this.llenadoarray();
     this.selectCategoria();
     this.llenadolista("", "");
+    this.llenadolistazona('', '');
   }
 });
 
@@ -26533,6 +26594,16 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -27257,6 +27328,7 @@ __webpack_require__.r(__webpack_exports__);
               this.cambiarm = 3; //padrino 1
             }
 
+            this.modal = 0;
             break;
           }
 
@@ -27309,7 +27381,6 @@ __webpack_require__.r(__webpack_exports__);
               this.cambiarm = 7; //datos de la celebracion
             }
 
-            this.modal = 0;
             break;
           }
 
@@ -27414,12 +27485,19 @@ __webpack_require__.r(__webpack_exports__);
       this.cambiarm = 0;
       this.cambiarmb = 0;
       this.alcaldia = '';
+      this.alcaldia = '';
+      this.libro = '';
+      this.partida = '';
+      this.folio = '';
+      this.ano = '';
       this.libroc = '';
       this.folioc = '';
       this.sexopd1 = '';
       this.sexopd2 = '';
       this.sexopd3 = '';
       this.sexopd4 = '';
+      this.errorDatos = 0;
+      this.errorMostrarMsj = [];
     },
     cerrarm: function cerrarm() {
       //botones cancelat
@@ -27457,6 +27535,7 @@ __webpack_require__.r(__webpack_exports__);
       this.libro = '';
       this.partida = '';
       this.folio = '';
+      this.ano = '';
       this.anio = '';
       this.idpadre = '';
       this.idmadre = '';
@@ -27469,6 +27548,8 @@ __webpack_require__.r(__webpack_exports__);
       this.sexopd2 = '';
       this.sexopd3 = '';
       this.sexopd4 = '';
+      this.errorDatos = 0;
+      this.errorMostrarMsj = [];
     },
     //Mt. cuando le da modificar en el modal
     cerrarmodal: function cerrarmodal() {
@@ -27552,7 +27633,6 @@ __webpack_require__.r(__webpack_exports__);
 
       if (this.sexo == 'M') {
         this.accionsexo = 1;
-        var_dump(sexo);
       }
 
       if (this.sexo == 'F') {
@@ -27575,15 +27655,15 @@ __webpack_require__.r(__webpack_exports__);
     },
     llenarmodal: function llenarmodal(id) {
       var me = this;
-      var url = '/persona/obtener?id=' + id;
+      var url = '/persona/obtenerConfirma?id=' + id;
       axios.get(url).then(function (response) {
         var d = response.data.solo;
 
         if (d == 1) {
-          response.data.realizante.forEach(function (element) {
-            var texto = element.fecha_nacimiento;
-            element.fecha_nacimiento = texto.replace(/^(\d{4})-(\d{2})-(\d{2})$/g, '$3/$2/$1');
-          });
+          /*  response.data.realizante.forEach(function(element) {
+           var texto = element.fecha_nacimiento;
+           element.fecha_nacimiento= texto.replace(/^(\d{4})-(\d{2})-(\d{2})$/g,'$3/$2/$1');
+           });*/
           me.nombrerealizante = response.data.realizante.nombre_persona;
           me.apellidorealizante = response.data.realizante.apellido_persona;
           me.sexo = response.data.realizante.sexo;
@@ -27591,10 +27671,10 @@ __webpack_require__.r(__webpack_exports__);
         }
 
         if (d == 2) {
-          response.data.realizante.forEach(function (element) {
-            var texto = element.fecha_nacimiento;
-            element.fecha_nacimiento = texto.replace(/^(\d{4})-(\d{2})-(\d{2})$/g, '$3/$2/$1');
-          });
+          /* response.data.realizante.forEach(function(element) {
+          var texto = element.fecha_nacimiento;
+          element.fecha_nacimiento= texto.replace(/^(\d{4})-(\d{2})-(\d{2})$/g,'$3/$2/$1');
+          });*/
           me.nombrepadre = response.data.padre.nombre_persona;
           me.apellidopadre = response.data.padre.apellido_persona;
           me.nombrerealizante = response.data.realizante.nombre_persona;
@@ -27604,10 +27684,10 @@ __webpack_require__.r(__webpack_exports__);
         }
 
         if (d == 3) {
-          response.data.realizante.forEach(function (element) {
-            var texto = element.fecha_nacimiento;
-            element.fecha_nacimiento = texto.replace(/^(\d{4})-(\d{2})-(\d{2})$/g, '$3/$2/$1');
-          });
+          /*response.data.realizante.forEach(function(element) {
+          var texto = element.fecha_nacimiento;
+          element.fecha_nacimiento= texto.replace(/^(\d{4})-(\d{2})-(\d{2})$/g,'$3/$2/$1');
+          });*/
           me.nombremadre = response.data.madre.nombre_persona;
           me.apellidomadre = response.data.madre.apellido_persona;
           me.nombrerealizante = response.data.realizante.nombre_persona;
@@ -27617,10 +27697,10 @@ __webpack_require__.r(__webpack_exports__);
         }
 
         if (d == 4) {
-          response.data.realizante.forEach(function (element) {
-            var texto = element.fecha_nacimiento;
-            element.fecha_nacimiento = texto.replace(/^(\d{4})-(\d{2})-(\d{2})$/g, '$3/$2/$1');
-          });
+          /*response.data.realizante.forEach(function(element) {
+          var texto = element.fecha_nacimiento;
+          element.fecha_nacimiento= texto.replace(/^(\d{4})-(\d{2})-(\d{2})$/g,'$3/$2/$1');
+          });*/
           me.nombrepadre = response.data.padre.nombre_persona;
           me.apellidopadre = response.data.padre.apellido_persona;
           me.nombremadre = response.data.madre.nombre_persona;
@@ -27916,17 +27996,31 @@ __webpack_require__.r(__webpack_exports__);
       var libro = this.libro;
       var partida = this.partida;
       var folio = this.folio;
-      var anio = this.anio;
-      var url = '/partida/busqueda?alcaldia=' + alcaldia + '&libro=' + libro + '&partida=' + partida + '&folio=' + folio + '&anio=' + anio;
+      var ano = this.ano;
+      var url = '/partida/busquedaConfirma?alcaldia=' + alcaldia + '&libro=' + libro + '&partida=' + partida + '&folio=' + folio + '&ano=' + ano;
       axios.get(url).then(function (response) {
         var respuesta = response.data.solo;
+        /* if(respuesta==1){
+             me.id=response.data.realizante.idpersona;
+             me.llenarmodal(me.id);
+         }else{
+             me.cambiarm=1;
+             me.cambiarmb=1;
+         }*/
 
         if (respuesta == 1) {
           me.id = response.data.realizante.idpersona;
           me.llenarmodal(me.id);
-        } else {
+          me.cambiarmb = 0;
+        }
+
+        if (respuesta == 0) {
           me.cambiarm = 1;
           me.cambiarmb = 1;
+        }
+
+        if (respuesta == 2) {
+          me.validarvalores('6');
         }
       })["catch"](function (error) {
         console.log(error);
@@ -28126,318 +28220,293 @@ __webpack_require__.r(__webpack_exports__);
     },
     //Validar datos
     validarvalores: function validarvalores(d) {
-      this.errorDatos = 0;
-      this.errorMostrarMsj = [];
-      var RE = /^([0-9])*$/;
-      var patron = /^[a-zA-ZÑñÁáÉéÍíÓóÚúÜü\s]+$/; /////ESTOOOOOOOO
-
-      var anio = /^\d{4}$/;
-      var patrondui = /^\d{9}$/;
-      var fecha = new Date();
-      var anioac = fecha.getFullYear();
-      var mesac = fecha.getMonth();
-
-      switch (d) {
-        case '1':
-          {
-            var Min_Length = 5;
-            var lengthmin = this.alcaldia.length;
-            if (lengthmin < Min_Length) this.errorMostrarMsj.push("La alcaldía debe tener más de 5 letras");
-            if (!patron.test(this.alcaldia)) this.errorMostrarMsj.push("La alcaldía solo debe tener letras");
-            if (this.errorMostrarMsj.length) this.errorDatos = 1;
-            return this.errorDatos;
-            break;
-          }
-
-        case '2':
-          {
-            var Min_Length = 5;
-            var lengthmin = this.alcaldia.length;
-            if (lengthmin < Min_Length) this.errorMostrarMsj.push("La alcaldía debe tener más de 5 letras");
-            if (!patron.test(this.alcaldia)) this.errorMostrarMsj.push("La alcaldía solo debe tener letras");
-            if (!this.libro) this.errorMostrarMsj.push("El número de libro no puede estar vacío");
-            if (this.libro == '0') this.errorMostrarMsj.push("El número de libro debe ser distinto a 0");
-            if (!RE.test(this.libro)) this.errorMostrarMsj.push("El número de libro debe ser un numero entero");
-            if (this.errorMostrarMsj.length) this.errorDatos = 1;
-            return this.errorDatos;
-            break;
-          }
-
-        case '3':
-          {
-            var Min_Length = 5;
-            var lengthmin = this.alcaldia.length;
-            if (lengthmin < Min_Length) this.errorMostrarMsj.push("La alcaldía debe tener más de 5 letras");
-            if (!patron.test(this.alcaldia)) this.errorMostrarMsj.push("La alcaldía solo debe tener letras");
-            if (!this.libro) this.errorMostrarMsj.push("El número de libro no puede estar vacío");
-            if (!RE.test(this.libro)) this.errorMostrarMsj.push("El número de libro debe ser un numero entero");
-            if (this.libro == '0') this.errorMostrarMsj.push("El número de libro debe ser distinto a 0");
-            if (!this.partida) this.errorMostrarMsj.push("En número de partida no puede estar vacío");
-            if (!RE.test(this.partida)) this.errorMostrarMsj.push("El número de partida debe ser un numero entero");
-            if (this.partida == '0') this.errorMostrarMsj.push("El número de partida debe ser distinto a 0");
-            if (this.errorMostrarMsj.length) this.errorDatos = 1;
-            return this.errorDatos;
-            break;
-          }
-
-        case '4':
-          {
-            var Min_Length = 5;
-            var lengthmin = this.alcaldia.length;
-            if (lengthmin < Min_Length) this.errorMostrarMsj.push("La alcaldía debe tener más de 5 letras");
-            if (!patron.test(this.alcaldia)) this.errorMostrarMsj.push("La alcaldía solo debe tener letras");
-            if (!this.libro) this.errorMostrarMsj.push("El número de libro no puede estar vacío");
-            if (!RE.test(this.libro)) this.errorMostrarMsj.push("El número de libro debe ser un numero entero");
-            if (this.libro == '0') this.errorMostrarMsj.push("El número de libro debe ser distinto a 0");
-            if (!this.partida) this.errorMostrarMsj.push("En número de partida no puede estar vacío");
-            if (!RE.test(this.partida)) this.errorMostrarMsj.push("El número de partida debe ser un numero entero");
-            if (this.partida == '0') this.errorMostrarMsj.push("El número de partida debe ser distinto a 0");
-            if (!this.folio) this.errorMostrarMsj.push("El número de folio no puede estar vacío");
-            if (!RE.test(this.folio)) this.errorMostrarMsj.push("El número de folio debe ser un numero entero");
-            if (this.folio == '0') this.errorMostrarMsj.push("El número de folio debe ser distinto a 0");
-            if (this.errorMostrarMsj.length) this.errorDatos = 1;
-            return this.errorDatos;
-            break;
-          }
-
-        case '5':
-          {
-            var Min_Length = 5;
-            var lengthmin = this.alcaldia.length;
-            if (lengthmin < Min_Length) this.errorMostrarMsj.push("La alcaldía debe tener más de 5 letras");
-            if (!patron.test(this.alcaldia)) this.errorMostrarMsj.push("La alcaldía solo debe tener letras");
-            if (!this.libro) this.errorMostrarMsj.push("El numero de libro no puede estar vacío");
-            if (!RE.test(this.libro)) this.errorMostrarMsj.push("El número de libro debe ser un numero entero");
-            if (this.libro == '0') this.errorMostrarMsj.push("El número de libro debe ser distinto a 0");
-            if (!this.partida) this.errorMostrarMsj.push("En número de partida no puede estar vacío");
-            if (!RE.test(this.partida)) this.errorMostrarMsj.push("El número de partida debe ser un numero entero");
-            if (this.partida == '0') this.errorMostrarMsj.push("El número de partida debe ser distinto a 0");
-            if (!this.folio) this.errorMostrarMsj.push("El número de folio no puede estar vacío");
-            if (!RE.test(this.folio)) this.errorMostrarMsj.push("El número de folio debe ser un numero entero");
-            if (this.folio == '0') this.errorMostrarMsj.push("El número de folio debe ser distinto a 0");
-            if (!this.ano) this.errorMostrarMsj.push("El año no puede estar vacío");
-            if (!RE.test(this.ano)) this.errorMostrarMsj.push("El año debe ser un numero entero");
-            if (this.ano < '1900') this.errorMostrarMsj.push("El año debe ser un año mayor a 1900");
-            if (this.ano > anioac) this.errorMostrarMsj.push("El año debe ser igual o menor al actual");
-            if (!anio.test(this.ano)) this.errorMostrarMsj.push("El año debe ser de cuatro digitos");
-            if (this.errorMostrarMsj.length) this.errorDatos = 1;
-            return this.errorDatos;
-            break;
-          }
-
-        case '6':
-          {
-            this.errorMostrarMsj.push("Esta persona ya realizo este sacramento, favor verificar datos");
-            if (this.errorMostrarMsj.length) this.errorDatos = 1;
-            break;
-          }
-
-        case '7':
-          {
-            var Min_Length = 3;
-            var lengthmin = this.nombrerealizante.length;
-            if (lengthmin < Min_Length) this.errorMostrarMsj.push("El nombre debe tener mas de tres letras");
-            if (!patron.test(this.nombrerealizante)) this.errorMostrarMsj.push("El nombre solo debe tener letras");
-            if (this.errorMostrarMsj.length) this.errorDatos = 1;
-            return this.errorDatos;
-            break;
-          }
-
-        case '8':
-          {
-            var Min_Length = 3;
-            var lengthmin = this.nombrerealizante.length;
-            if (lengthmin < Min_Length) this.errorMostrarMsj.push("El nombre debe tener mas de tres letras");
-            if (!patron.test(this.nombrerealizante)) this.errorMostrarMsj.push("El nombre solo debe tener letras");
-            var lengthmin2 = this.apellidorealizante.length;
-            if (lengthmin2 < Min_Length) this.errorMostrarMsj.push("El apellido debe tener mas de tres letras");
-            if (!patron.test(this.apellidorealizante)) this.errorMostrarMsj.push("El apellido solo debe tener letras");
-            if (this.errorMostrarMsj.length) this.errorDatos = 1;
-            return this.errorDatos;
-            break;
-          }
-
-        case '11':
-          {
-            var Min_Length = 3;
-            var lengthmin = this.nombrerealizante.length;
-            if (lengthmin < Min_Length) this.errorMostrarMsj.push("El nombre debe tener mas de tres letras");
-            if (!patron.test(this.nombrerealizante)) this.errorMostrarMsj.push("El nombre solo debe tener letras");
-            var lengthmin2 = this.apellidorealizante.length;
-            if (lengthmin2 < Min_Length) this.errorMostrarMsj.push("El apellido debe tener mas de tres letras");
-            if (!patron.test(this.apellidorealizante)) this.errorMostrarMsj.push("El apellido solo debe tener letras");
-            if (!patrondui.test(this.dui)) this.errorMostrarMsj.push("El DUI debe ser de nueve digitos");
-            if (this.errorMostrarMsj.length) this.errorDatos = 1;
-            return this.errorDatos;
-            break;
-          }
-
-        case '12':
-          {
-            var Min_Length = 3;
-            var lengthmin = this.nombrerealizante.length;
-            if (lengthmin < Min_Length) this.errorMostrarMsj.push("El nombre debe tener mas de tres letras");
-            if (!patron.test(this.nombrerealizante)) this.errorMostrarMsj.push("El nombre solo debe tener letras");
-            var lengthmin2 = this.apellidorealizante.length;
-            if (lengthmin2 < Min_Length) this.errorMostrarMsj.push("El apellido debe tener mas de tres letras");
-            if (!patron.test(this.apellidorealizante)) this.errorMostrarMsj.push("El apellido solo debe tener letras");
-            if (!patrondui.test(this.dui) && this.Acciondui == 1) this.errorMostrarMsj.push("El DUI debe ser de nueve digitos");
-            if (!this.fechana) this.errorMostrarMsj.push("La fecha de nacimiento no puede estar vacia");
-            if (!this.sexo) this.errorMostrarMsj.push("El sexo no puede estar vacio");
-            var values = this.fechana.split("-");
-            var dia = values[2];
-            var mes = values[1];
-            var ano = values[0];
-            if (ano < 1900) this.errorMostrarMsj.push("El año debe ser mayor a 1990");
-
-            if (anioac < ano) {
-              this.errorMostrarMsj.push("El año debe ser menor o igual al actual");
-            }
-
-            if (mesac < mes && ano == anioac) {
-              this.errorMostrarMsj.push("El mes debe ser menor al actual");
-            }
-
-            if (this.errorMostrarMsj.length) this.errorDatos = 1;
-            return this.errorDatos;
-          }
-
-        case '13':
-          {
-            var values = this.fechana.split("-");
-            var dia = values[2];
-            var mes = values[1];
-            var ano = values[0];
-            if (ano < 1900) this.errorMostrarMsj.push("El año debe ser mayor a 1990");
-
-            if (anioac < ano) {
-              this.errorMostrarMsj.push("El año debe ser menor o igual al actual");
-            }
-
-            if (mesac < mes && ano == anioac) {
-              this.errorMostrarMsj.push("El mes debe ser menor al actual");
-            }
-
-            if (this.errorMostrarMsj.length) this.errorDatos = 1;
-            return this.errorDatos;
-            break;
-          }
-
-        case '14':
-          {
-            if (this.nombremadre != '' && !patron.test(this.nombremadre)) this.errorMostrarMsj.push("El nombre de la madre solo debe tener letras");
-            if (this.apellidomadre != '' && !patron.test(this.apellidomadre)) this.errorMostrarMsj.push("El apellido de la madre solo debe tener letras");
-            if (this.nombrepadre != '' && !patron.test(this.nombrepadre)) this.errorMostrarMsj.push("El nombre del padre solo debe tener letras");
-            if (this.apellidopadre != '' && !patron.test(this.apellidopadre)) this.errorMostrarMsj.push("El apellido del padre solo debe tener letras");
-            if (this.duimadre != '' && !patrondui.test(this.duimadre)) this.errorMostrarMsj.push("El DUI de la madre debe ser de nueve digitos");
-            if (this.duipadre != '' && !patrondui.test(this.duipadre)) this.errorMostrarMsj.push("El DUI del padre debe ser de nueve digitos");
-            if (this.errorMostrarMsj.length) this.errorDatos = 1;
-            return this.errorDatos;
-            break;
-          }
-
-        case '15':
-          {
-            var RE = /^\d*(\.\d{1})?\d{0,1}$/;
-            if (!RE.test(this.monto)) this.errorMostrarMsj.push("El monto solo pueden ser decimales");
-            if (this.errorMostrarMsj.length) this.errorDatos = 1;
-            return this.errorDatos;
-            break;
-          }
-
-        case '16':
-          {
-            var RE = /^\d*(\.\d{1})?\d{0,1}$/;
-            if (!RE.test(this.monto)) this.errorMostrarMsj.push("El monto solo pueden ser decimales");
-            var values = this.fecharealizacion.split("-");
-            var ano = values[0];
-            if (ano < 1989) this.errorMostrarMsj.push("El año debe ser mayor a 1989");
-            if (anioac < ano) this.errorMostrarMsj.push("El año debe ser menor o igual al actual");
-            if (this.errorMostrarMsj.length) this.errorDatos = 1;
-            return this.errorDatos;
-            break;
-          }
-
-        case '17':
-          {
-            if (this.nombrepd1 != '' && !patron.test(this.nombrepd1)) this.errorMostrarMsj.push("El nombre del padrino solo debe tener letras");
-            if (this.apellidopd1 != '' && !patron.test(this.apellidopd1)) this.errorMostrarMsj.push("El apellido del padrino solo debe tener letras");
-            if (this.duipd1 != '' && !patrondui.test(this.duipd1)) this.errorMostrarMsj.push("El DUI del padrino debe ser de nueve digitos");
-            if (this.nombrepd2 != '' && !patron.test(this.nombrepd2)) this.errorMostrarMsj.push("El nombre del segundo padrino solo debe tener letras");
-            if (this.apellidopd2 != '' && !patron.test(this.apellidopd2)) this.errorMostrarMsj.push("El apellido del segundo padrino solo debe tener letras");
-            if (this.duipd2 != '' && !patrondui.test(this.duipd2)) this.errorMostrarMsj.push("El DUI del segundo padrino debe ser de nueve digitos");
-            if (this.nombrepd3 != '' && !patron.test(this.nombrepd3)) this.errorMostrarMsj.push("El nombre del tercer padrino solo debe tener letras");
-            if (this.apellidopd3 != '' && !patron.test(this.apellidopd3)) this.errorMostrarMsj.push("El apellido del tercer padrino solo debe tener letras");
-            if (this.duipd3 != '' && !patrondui.test(this.duipd3)) this.errorMostrarMsj.push("El DUI del tercer padrino debe ser de nueve digitos");
-            if (this.nombrepd4 != '' && !patron.test(this.nombrepd4)) this.errorMostrarMsj.push("El nombre del cuarto padrino solo debe tener letras");
-            if (this.apellidopd4 != '' && !patron.test(this.apellidopd4)) this.errorMostrarMsj.push("El apellido del cuarto padrino solo debe tener letras");
-            if (this.duipd4 != '' && !patrondui.test(this.duipd4)) this.errorMostrarMsj.push("El DUI del cuarto padrino debe ser de nueve digitos");
-            if (this.errorMostrarMsj.length) this.errorDatos = 1;
-            return this.errorDatos;
-            break;
-          }
-
-        case '18':
-          {
-            var RE = /^\d*(\.\d{1})?\d{0,1}$/;
-            if (!RE.test(this.monto)) this.errorMostrarMsj.push("El monto solo pueden ser decimales");
-            var values = this.fecharealizacion.split("-");
-            var ano = values[0];
-            if (this.idsacerdote == '') this.errorMostrarMsj.push("Debe de seleccionar un sacerdote");
-            if (this.cargosacerdote == '') this.errorMostrarMsj.push("Debe de asignar un cargo al sacerdote");
-            if (this.idcare == '') this.errorMostrarMsj.push("Debe de seleccionar una categoria");
-            if (this.idiglesia == '') this.errorMostrarMsj.push("Debe de seleccionar una iglesia");
-            if (ano < 1989) this.errorMostrarMsj.push("El año debe ser mayor a 1989");
-            if (anioac < ano) this.errorMostrarMsj.push("El año debe ser menor o igual al actual");
-            if (this.errorMostrarMsj.length) this.errorDatos = 1;
-            return this.errorDatos;
-            break;
-          }
-
-        case '19':
-          {
-            if (!patron.test(this.nombrepd1)) this.errorMostrarMsj.push("El nombre del padrino solo debe tener letras");
-            if (!patron.test(this.apellidopd1)) this.errorMostrarMsj.push("El apellido del padrino solo debe tener letras");
-            if (this.duipd1 != '' && !patrondui.test(this.duipd1)) this.errorMostrarMsj.push("El DUI del padrino debe ser de nueve digitos");
-            if (!this.sexopd1) this.errorMostrarMsj.push("El sexo no puede estar vacio");
-            if (this.errorMostrarMsj.length) this.errorDatos = 1;
-            return this.errorDatos;
-            break;
-          }
-
-        case '20':
-          {
-            if (!patron.test(this.nombrepd2)) this.errorMostrarMsj.push("El nombre del segundo padrino solo debe tener letras");
-            if (!patron.test(this.apellidopd2)) this.errorMostrarMsj.push("El apellido del segundo padrino solo debe tener letras");
-            if (this.duipd2 != '' && !patrondui.test(this.duipd2)) this.errorMostrarMsj.push("El DUI del segundo padrino debe ser de nueve digitos");
-            if (!this.sexopd2) this.errorMostrarMsj.push("El sexo no puede estar vacio");
-            if (this.errorMostrarMsj.length) this.errorDatos = 1;
-            return this.errorDatos;
-            break;
-          }
-
-        case '21':
-          {
-            if (!patron.test(this.nombrepd3)) this.errorMostrarMsj.push("El nombre del tercer padrino solo debe tener letras");
-            if (!patron.test(this.apellidopd3)) this.errorMostrarMsj.push("El apellido del tercer padrino solo debe tener letras");
-            if (this.duipd3 != '' && !patrondui.test(this.duipd3)) this.errorMostrarMsj.push("El DUI del tercer padrino debe ser de nueve digitos");
-            if (!this.sexopd3) this.errorMostrarMsj.push("El sexo no puede estar vacio");
-            if (this.errorMostrarMsj.length) this.errorDatos = 1;
-            return this.errorDatos;
-            break;
-          }
-
-        case '22':
-          {
-            if (!patron.test(this.nombrepd4)) this.errorMostrarMsj.push("El nombre del cuarto padrino solo debe tener letras");
-            if (!patron.test(this.apellidopd4)) this.errorMostrarMsj.push("El apellido del cuarto padrino solo debe tener letras");
-            if (this.duipd4 != '' && !patrondui.test(this.duipd4)) this.errorMostrarMsj.push("El DUI del cuarto padrino debe ser de nueve digitos");
-            if (!this.sexopd4) this.errorMostrarMsj.push("El sexo no puede estar vacio");
-            if (this.errorMostrarMsj.length) this.errorDatos = 1;
-            return this.errorDatos;
-            break;
-          }
-      }
+      /* this.errorDatos=0;
+       this.errorMostrarMsj=[];
+       var RE = /^([0-9])*$/;
+       var patron =/^[a-zA-ZÑñÁáÉéÍíÓóÚúÜü\s]+$/; /////ESTOOOOOOOO
+       var anio= /^\d{4}$/;
+       var patrondui= /^\d{9}$/;
+       var fecha = new Date();
+       var anioac= fecha.getFullYear();
+       var mesac= fecha.getMonth();
+       switch(d){
+           case '1':
+               {
+                   var Min_Length = 5;
+                   var lengthmin = this.alcaldia.length;
+                   if (lengthmin < Min_Length )this.errorMostrarMsj.push("La alcaldía debe tener más de 5 letras");
+                   if (!patron.test(this.alcaldia))this.errorMostrarMsj.push("La alcaldía solo debe tener letras");
+                   if(this.errorMostrarMsj.length) this.errorDatos=1;
+                   return this.errorDatos;
+                   break;
+               }
+           case '2':
+               {
+                   var Min_Length = 5;
+                   var lengthmin = this.alcaldia.length;
+                   if (lengthmin < Min_Length)this.errorMostrarMsj.push("La alcaldía debe tener más de 5 letras");
+                   if (!patron.test(this.alcaldia))this.errorMostrarMsj.push("La alcaldía solo debe tener letras");
+                   if(!this.libro) this.errorMostrarMsj.push("El número de libro no puede estar vacío");
+                   if(this.libro=='0') this.errorMostrarMsj.push("El número de libro debe ser distinto a 0");
+                   if (!RE.test(this.libro))  this.errorMostrarMsj.push("El número de libro debe ser un numero entero");
+                   if(this.errorMostrarMsj.length) this.errorDatos=1;
+                   return this.errorDatos;
+                   break;
+               }
+           case '3':
+               {
+                   var Min_Length = 5;
+                   var lengthmin = this.alcaldia.length;
+                   if (lengthmin < Min_Length)this.errorMostrarMsj.push("La alcaldía debe tener más de 5 letras");
+                   if (!patron.test(this.alcaldia))this.errorMostrarMsj.push("La alcaldía solo debe tener letras");
+                   if(!this.libro) this.errorMostrarMsj.push("El número de libro no puede estar vacío");
+                   if (!RE.test(this.libro))  this.errorMostrarMsj.push("El número de libro debe ser un numero entero");
+                   if(this.libro=='0') this.errorMostrarMsj.push("El número de libro debe ser distinto a 0");
+                   if(!this.partida) this.errorMostrarMsj.push("En número de partida no puede estar vacío");
+                   if (!RE.test(this.partida))  this.errorMostrarMsj.push("El número de partida debe ser un numero entero");
+                   if(this.partida=='0') this.errorMostrarMsj.push("El número de partida debe ser distinto a 0");
+                   if(this.errorMostrarMsj.length) this.errorDatos=1;
+                   return this.errorDatos;
+                   break;
+               }
+           case '4':
+               {
+                   var Min_Length = 5;
+                   var lengthmin = this.alcaldia.length;
+                   if (lengthmin < Min_Length)this.errorMostrarMsj.push("La alcaldía debe tener más de 5 letras");
+                   if (!patron.test(this.alcaldia))this.errorMostrarMsj.push("La alcaldía solo debe tener letras");
+                   if(!this.libro) this.errorMostrarMsj.push("El número de libro no puede estar vacío");
+                   if (!RE.test(this.libro))  this.errorMostrarMsj.push("El número de libro debe ser un numero entero");
+                   if(this.libro=='0') this.errorMostrarMsj.push("El número de libro debe ser distinto a 0");
+                   if(!this.partida) this.errorMostrarMsj.push("En número de partida no puede estar vacío");
+                   if (!RE.test(this.partida))  this.errorMostrarMsj.push("El número de partida debe ser un numero entero");
+                   if(this.partida=='0') this.errorMostrarMsj.push("El número de partida debe ser distinto a 0");
+                   if(!this.folio) this.errorMostrarMsj.push("El número de folio no puede estar vacío");
+                   if (!RE.test(this.folio))  this.errorMostrarMsj.push("El número de folio debe ser un numero entero");
+                   if(this.folio=='0') this.errorMostrarMsj.push("El número de folio debe ser distinto a 0");
+                   if(this.errorMostrarMsj.length) this.errorDatos=1;
+                   return this.errorDatos;
+                   break;
+               }
+           case '5':
+               {
+                   var Min_Length = 5;
+                   var lengthmin = this.alcaldia.length;
+                   if (lengthmin < Min_Length)this.errorMostrarMsj.push("La alcaldía debe tener más de 5 letras");
+                   if (!patron.test(this.alcaldia))this.errorMostrarMsj.push("La alcaldía solo debe tener letras");
+                   if(!this.libro) this.errorMostrarMsj.push("El numero de libro no puede estar vacío");
+                   if (!RE.test(this.libro))  this.errorMostrarMsj.push("El número de libro debe ser un numero entero");
+                   if(this.libro=='0') this.errorMostrarMsj.push("El número de libro debe ser distinto a 0");
+                   if(!this.partida) this.errorMostrarMsj.push("En número de partida no puede estar vacío");
+                   if (!RE.test(this.partida))  this.errorMostrarMsj.push("El número de partida debe ser un numero entero");
+                   if(this.partida=='0') this.errorMostrarMsj.push("El número de partida debe ser distinto a 0");
+                   if(!this.folio) this.errorMostrarMsj.push("El número de folio no puede estar vacío");
+                   if (!RE.test(this.folio))  this.errorMostrarMsj.push("El número de folio debe ser un numero entero");
+                   if(this.folio=='0') this.errorMostrarMsj.push("El número de folio debe ser distinto a 0");
+                   if(!this.ano) this.errorMostrarMsj.push("El año no puede estar vacío");
+                   if (!RE.test(this.ano))  this.errorMostrarMsj.push("El año debe ser un numero entero");
+                   if(this.ano<'1900') this.errorMostrarMsj.push("El año debe ser un año mayor a 1900");
+                   if(this.ano>anioac) this.errorMostrarMsj.push("El año debe ser igual o menor al actual");
+                   if (!anio.test(this.ano))  this.errorMostrarMsj.push("El año debe ser de cuatro digitos");
+                   if(this.errorMostrarMsj.length) this.errorDatos=1;
+                   return this.errorDatos;
+                   break;
+               }
+               case '6':
+                   {
+                   this.errorMostrarMsj.push("Esta persona ya realizo este sacramento, favor verificar datos");
+                   if(this.errorMostrarMsj.length) this.errorDatos=1;
+                   break;
+                   }
+               case '7':
+                   {
+                   var Min_Length = 3;
+                   var lengthmin = this.nombrerealizante.length;
+                   if (lengthmin < Min_Length)this.errorMostrarMsj.push("El nombre debe tener mas de tres letras");
+                   if (!patron.test(this.nombrerealizante))this.errorMostrarMsj.push("El nombre solo debe tener letras");
+                   if(this.errorMostrarMsj.length) this.errorDatos=1;
+                   return this.errorDatos;
+                   break;
+                   }
+               case '8':
+                   {
+                   var Min_Length = 3;
+                   var lengthmin = this.nombrerealizante.length;
+                   if (lengthmin < Min_Length)this.errorMostrarMsj.push("El nombre debe tener mas de tres letras");
+                   if (!patron.test(this.nombrerealizante))this.errorMostrarMsj.push("El nombre solo debe tener letras");
+                   var lengthmin2 = this.apellidorealizante.length;
+                   if (lengthmin2 < Min_Length)this.errorMostrarMsj.push("El apellido debe tener mas de tres letras");
+                   if (!patron.test(this.apellidorealizante))this.errorMostrarMsj.push("El apellido solo debe tener letras");
+                   if(this.errorMostrarMsj.length) this.errorDatos=1;
+                   return this.errorDatos;
+                   break;
+                   }
+               case '11':
+                   {
+                   var Min_Length = 3;
+                   var lengthmin = this.nombrerealizante.length;
+                   if (lengthmin < Min_Length)this.errorMostrarMsj.push("El nombre debe tener mas de tres letras");
+                   if (!patron.test(this.nombrerealizante))this.errorMostrarMsj.push("El nombre solo debe tener letras");
+                   var lengthmin2 = this.apellidorealizante.length;
+                   if (lengthmin2 < Min_Length)this.errorMostrarMsj.push("El apellido debe tener mas de tres letras");
+                   if (!patron.test(this.apellidorealizante))this.errorMostrarMsj.push("El apellido solo debe tener letras");
+                   if (!patrondui.test(this.dui))  this.errorMostrarMsj.push("El DUI debe ser de nueve digitos");
+                   if(this.errorMostrarMsj.length) this.errorDatos=1;
+                   return this.errorDatos;
+                   break;
+                   }
+               case '12':
+                   {
+                   var Min_Length = 3;
+                   var lengthmin = this.nombrerealizante.length;
+                   if (lengthmin < Min_Length)this.errorMostrarMsj.push("El nombre debe tener mas de tres letras");
+                   if (!patron.test(this.nombrerealizante))this.errorMostrarMsj.push("El nombre solo debe tener letras");
+                   var lengthmin2 = this.apellidorealizante.length;
+                   if (lengthmin2 < Min_Length)this.errorMostrarMsj.push("El apellido debe tener mas de tres letras");
+                   if (!patron.test(this.apellidorealizante))this.errorMostrarMsj.push("El apellido solo debe tener letras");
+                   if (!patrondui.test(this.dui) && this.Acciondui==1)  this.errorMostrarMsj.push("El DUI debe ser de nueve digitos");
+                   if(!this.fechana) this.errorMostrarMsj.push("La fecha de nacimiento no puede estar vacia");
+                   if(!this.sexo)this.errorMostrarMsj.push("El sexo no puede estar vacio");
+                   var values=this.fechana.split("-");
+                   var dia = values[2];
+                   var mes = values[1];
+                   var ano = values[0];
+                   if (ano < 1900)this.errorMostrarMsj.push("El año debe ser mayor a 1990");
+                   if(anioac<ano) {
+                       this.errorMostrarMsj.push("El año debe ser menor o igual al actual");
+                       
+                   }
+                   if(mesac<mes && ano==anioac) {
+                           this.errorMostrarMsj.push("El mes debe ser menor al actual");
+                           }
+                   if(this.errorMostrarMsj.length) this.errorDatos=1;
+                   return this.errorDatos;
+                   }
+               case '13':
+                   {
+                   var values=this.fechana.split("-");
+                   var dia = values[2];
+                   var mes = values[1];
+                   var ano = values[0];
+                   if (ano < 1900)this.errorMostrarMsj.push("El año debe ser mayor a 1990");
+                   if(anioac<ano) {
+                       this.errorMostrarMsj.push("El año debe ser menor o igual al actual");
+                       
+                   }
+                   if(mesac<mes && ano==anioac) {
+                           this.errorMostrarMsj.push("El mes debe ser menor al actual");
+                           }
+                   if(this.errorMostrarMsj.length) this.errorDatos=1;
+                   return this.errorDatos;
+                   break;
+                   }
+               case '14':
+               {
+                   if (this.nombremadre!='' && !patron.test(this.nombremadre))this.errorMostrarMsj.push("El nombre de la madre solo debe tener letras");
+                   if (this.apellidomadre!='' && !patron.test(this.apellidomadre))this.errorMostrarMsj.push("El apellido de la madre solo debe tener letras");
+                   if (this.nombrepadre!='' && !patron.test(this.nombrepadre))this.errorMostrarMsj.push("El nombre del padre solo debe tener letras");
+                   if (this.apellidopadre!='' && !patron.test(this.apellidopadre))this.errorMostrarMsj.push("El apellido del padre solo debe tener letras");
+                   if (this.duimadre!='' && !patrondui.test(this.duimadre))this.errorMostrarMsj.push("El DUI de la madre debe ser de nueve digitos");                     
+                   if (this.duipadre!='' && !patrondui.test(this.duipadre))this.errorMostrarMsj.push("El DUI del padre debe ser de nueve digitos");
+                   if(this.errorMostrarMsj.length) this.errorDatos=1;
+                   return this.errorDatos;
+                   break;
+               }
+               case '15':
+                   {
+                       var RE = /^\d*(\.\d{1})?\d{0,1}$/;
+                       if (!RE.test(this.monto))  this.errorMostrarMsj.push("El monto solo pueden ser decimales");
+                       if(this.errorMostrarMsj.length) this.errorDatos=1;
+                       return this.errorDatos;
+                       break;
+                   }
+               case '16':
+                   {
+                       var RE = /^\d*(\.\d{1})?\d{0,1}$/;
+                       if (!RE.test(this.monto))  this.errorMostrarMsj.push("El monto solo pueden ser decimales");
+                       var values=this.fecharealizacion.split("-");
+                       var ano = values[0];
+                       if (ano < 1989)this.errorMostrarMsj.push("El año debe ser mayor a 1989");
+                       if(anioac<ano)this.errorMostrarMsj.push("El año debe ser menor o igual al actual");
+                       if(this.errorMostrarMsj.length) this.errorDatos=1;
+                       return this.errorDatos;
+                       break;
+                     }
+               case '17':
+                   {
+                       if (this.nombrepd1!='' && !patron.test(this.nombrepd1))this.errorMostrarMsj.push("El nombre del padrino solo debe tener letras");
+                       if (this.apellidopd1!='' && !patron.test(this.apellidopd1))this.errorMostrarMsj.push("El apellido del padrino solo debe tener letras");                     
+                       if (this.duipd1!='' && !patrondui.test(this.duipd1))this.errorMostrarMsj.push("El DUI del padrino debe ser de nueve digitos");
+                       if (this.nombrepd2!='' && !patron.test(this.nombrepd2))this.errorMostrarMsj.push("El nombre del segundo padrino solo debe tener letras");
+                       if (this.apellidopd2!='' && !patron.test(this.apellidopd2))this.errorMostrarMsj.push("El apellido del segundo padrino solo debe tener letras");                     
+                       if (this.duipd2!='' && !patrondui.test(this.duipd2))this.errorMostrarMsj.push("El DUI del segundo padrino debe ser de nueve digitos");
+                       if (this.nombrepd3!='' && !patron.test(this.nombrepd3))this.errorMostrarMsj.push("El nombre del tercer padrino solo debe tener letras");
+                       if (this.apellidopd3!='' && !patron.test(this.apellidopd3))this.errorMostrarMsj.push("El apellido del tercer padrino solo debe tener letras");                     
+                       if (this.duipd3!='' && !patrondui.test(this.duipd3))this.errorMostrarMsj.push("El DUI del tercer padrino debe ser de nueve digitos");
+                       if (this.nombrepd4!='' && !patron.test(this.nombrepd4))this.errorMostrarMsj.push("El nombre del cuarto padrino solo debe tener letras");
+                       if (this.apellidopd4!='' && !patron.test(this.apellidopd4))this.errorMostrarMsj.push("El apellido del cuarto padrino solo debe tener letras");                     
+                       if (this.duipd4!='' && !patrondui.test(this.duipd4))this.errorMostrarMsj.push("El DUI del cuarto padrino debe ser de nueve digitos");
+                       if(this.errorMostrarMsj.length) this.errorDatos=1;
+                       return this.errorDatos;
+                       break;   
+                   }
+                    case '18':
+                   {
+                       var RE = /^\d*(\.\d{1})?\d{0,1}$/;
+                       if (!RE.test(this.monto))  this.errorMostrarMsj.push("El monto solo pueden ser decimales");
+                       var values=this.fecharealizacion.split("-");
+                       var ano = values[0];
+                       if(this.idsacerdote=='') this.errorMostrarMsj.push("Debe de seleccionar un sacerdote");
+                       if(this.cargosacerdote=='') this.errorMostrarMsj.push("Debe de asignar un cargo al sacerdote");
+                       if(this.idcare=='') this.errorMostrarMsj.push("Debe de seleccionar una categoria");
+                       if(this.idiglesia=='')this.errorMostrarMsj.push("Debe de seleccionar una iglesia");
+                       if (ano < 1989)this.errorMostrarMsj.push("El año debe ser mayor a 1989");
+                       if(anioac<ano)this.errorMostrarMsj.push("El año debe ser menor o igual al actual");
+                       if(this.errorMostrarMsj.length) this.errorDatos=1;
+                       return this.errorDatos;
+                       break;
+                     }
+                   case '19':
+                   {
+                       if (!patron.test(this.nombrepd1))this.errorMostrarMsj.push("El nombre del padrino solo debe tener letras");
+                       if (!patron.test(this.apellidopd1))this.errorMostrarMsj.push("El apellido del padrino solo debe tener letras");                     
+                       if (this.duipd1!='' && !patrondui.test(this.duipd1))this.errorMostrarMsj.push("El DUI del padrino debe ser de nueve digitos");
+                       if(!this.sexopd1)this.errorMostrarMsj.push("El sexo no puede estar vacio");
+                       if(this.errorMostrarMsj.length) this.errorDatos=1;
+                       return this.errorDatos;
+                       break;   
+                   }
+                   case '20':
+                   {
+                       if (!patron.test(this.nombrepd2))this.errorMostrarMsj.push("El nombre del segundo padrino solo debe tener letras");
+                       if (!patron.test(this.apellidopd2))this.errorMostrarMsj.push("El apellido del segundo padrino solo debe tener letras");                     
+                       if (this.duipd2!='' && !patrondui.test(this.duipd2))this.errorMostrarMsj.push("El DUI del segundo padrino debe ser de nueve digitos");
+                       if(!this.sexopd2)this.errorMostrarMsj.push("El sexo no puede estar vacio");
+                       if(this.errorMostrarMsj.length) this.errorDatos=1;
+                       return this.errorDatos;
+                       break;   
+                   }
+                   case '21':
+                   {
+                       if (!patron.test(this.nombrepd3))this.errorMostrarMsj.push("El nombre del tercer padrino solo debe tener letras");
+                       if (!patron.test(this.apellidopd3))this.errorMostrarMsj.push("El apellido del tercer padrino solo debe tener letras");                     
+                       if (this.duipd3!='' && !patrondui.test(this.duipd3))this.errorMostrarMsj.push("El DUI del tercer padrino debe ser de nueve digitos");
+                       if(!this.sexopd3)this.errorMostrarMsj.push("El sexo no puede estar vacio");
+                       if(this.errorMostrarMsj.length) this.errorDatos=1;
+                       return this.errorDatos;
+                       break;   
+                   }
+                   case '22':
+                   {
+                       if (!patron.test(this.nombrepd4))this.errorMostrarMsj.push("El nombre del cuarto padrino solo debe tener letras");
+                       if (!patron.test(this.apellidopd4))this.errorMostrarMsj.push("El apellido del cuarto padrino solo debe tener letras");                     
+                       if (this.duipd4!='' && !patrondui.test(this.duipd4))this.errorMostrarMsj.push("El DUI del cuarto padrino debe ser de nueve digitos");
+                       if(!this.sexopd4)this.errorMostrarMsj.push("El sexo no puede estar vacio");
+                       if(this.errorMostrarMsj.length) this.errorDatos=1;
+                       return this.errorDatos;
+                       break;   
+                   }
+         }*/
     }
   },
   mounted: function mounted() {
@@ -28781,9 +28850,84 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
+      idzona: '',
+      idiglesia: '',
+      zona: '',
+      iglesia: '',
+      nombre_zona: '',
+      nombre_iglesia: '',
+      arrayzona: [],
+      arrayiglesia: [],
+      arrayiglesiaID: [],
+      idzonam: '',
+      idiglesiam: '',
+      iglesiam: '',
+      nombre_iglesiam: '',
+      arrayiglesiam: [],
+      arrayiglesiaIDm: [],
+      idzonap: '',
+      idiglesiap: '',
+      iglesiap: '',
+      nombre_iglesiap: '',
+      arrayiglesiap: [],
+      arrayiglesiaIDp: [],
       tipo: '',
       monto: 0,
       nombrerealizante: '',
@@ -28830,6 +28974,70 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     };
   },
   methods: (_methods = {
+    //Para lo de zonas e iglesias
+    llenadolistazona: function llenadolistazona() {
+      var me = this;
+      var url = '/zona/buscarZona';
+      axios.get(url).then(function (response) {
+        me.arrayzona = response.data;
+      })["catch"](function (error) {
+        console.log(error);
+      });
+    },
+    iglesias: function iglesias(idzona) {
+      //realizante
+      var me = this;
+      var arrayiglesiaID = [];
+      axios.post('/feligreses/buscarIglesia', {
+        'id': this.idzona
+      }).then(function (response) {
+        arrayiglesiaID = response.data;
+        me.llenar(arrayiglesiaID);
+      })["catch"](function (error) {
+        // handle error
+        console.log(error);
+      });
+    },
+    llenar: function llenar() {
+      var d = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];
+      this.arrayiglesia = d;
+    },
+    iglesiasm: function iglesiasm(idzonam) {
+      //mamá
+      var me = this;
+      var arrayiglesiaIDm = [];
+      axios.post('/feligreses/buscarIglesia', {
+        'id': this.idzonam
+      }).then(function (response) {
+        arrayiglesiaIDm = response.data;
+        me.llenarm(arrayiglesiaIDm);
+      })["catch"](function (error) {
+        // handle error
+        console.log(error);
+      });
+    },
+    llenarm: function llenarm() {
+      var d = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];
+      this.arrayiglesiam = d;
+    },
+    iglesiasp: function iglesiasp(idzonap) {
+      //papa
+      var me = this;
+      var arrayiglesiaIDp = [];
+      axios.post('/feligreses/buscarIglesia', {
+        'id': this.idzonap
+      }).then(function (response) {
+        arrayiglesiaIDp = response.data;
+        me.llenarp(arrayiglesiaIDp);
+      })["catch"](function (error) {
+        // handle error
+        console.log(error);
+      });
+    },
+    llenarp: function llenarp() {
+      var d = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];
+      this.arrayiglesiap = d;
+    },
     //Mt. para calcular edad y ver si se muestra o no el div que contiene el dui del realizante
     cambiar: function cambiar() {
       var values = this.fechana.split("-");
@@ -28964,6 +29172,15 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       this.verificacion = 0;
       this.cambiarm = 0;
       this.cambiarmb = 0;
+      this.idzona = 0; //zona realizante
+
+      this.idiglesia = 0;
+      this.idzonam = 0; //zona madre
+
+      this.idiglesiam = 0;
+      this.idzonap = 0; //zona padre
+
+      this.idiglesiap = 0;
     },
     cerrarm: function cerrarm() {
       //botones cancelat
@@ -28999,6 +29216,15 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       this.verificacion = 0;
       this.cambiarm = 0;
       this.cambiarmb = 0;
+      this.idzona = 0; //zona realizante
+
+      this.idiglesia = 0;
+      this.idzonam = 0; //zona madre
+
+      this.idiglesiam = 0;
+      this.idzonap = 0; //zona padre
+
+      this.idiglesiap = 0;
     },
     //Mt. cuando le da modificar en el modal
     cerrarmodal: function cerrarmodal() {
@@ -29101,11 +29327,27 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     this.nombremadre = data['nombre_persona'];
     this.apellidomadre = data['apellido_persona'];
     this.idmadre = data['id'];
+    this.idzonam = data['idzonaa'];
+    this.llenadolistazona();
+
+    if (this.idzonam) {
+      this.iglesiasm(this.idzonam);
+      this.idiglesiam = data['idiglesia'];
+      this.nombre_iglesia = data['nombre_iglesia'];
+    }
   }), _defineProperty(_methods, "llenarcamposp", function llenarcamposp() {
     var data = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];
     this.nombrepadre = data['nombre_persona'];
     this.apellidopadre = data['apellido_persona'];
     this.idpadre = data['id'];
+    this.idzonap = data['idzonaa'];
+    this.llenadolistazona();
+
+    if (this.idzonap) {
+      this.iglesiasm(this.idzonap);
+      this.idiglesiap = data['idiglesia'];
+      this.nombre_iglesia = data['nombre_iglesia'];
+    }
   }), _defineProperty(_methods, "llenarmodal", function llenarmodal(id) {
     var me = this;
     var url = '/persona/obtener?id=' + id;
@@ -29113,47 +29355,47 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       var d = response.data.solo;
 
       if (d == 1) {
-        response.data.realizante.forEach(function (element) {
-          var texto = element.fecha_nacimiento;
-          element.fecha_nacimiento = texto.replace(/^(\d{4})-(\d{2})-(\d{2})$/g, '$3/$2/$1');
-        });
+        /* response.data.realizante.forEach(function(element) {
+         var texto = element.fecha_nacimiento;
+         element.fecha_nacimiento= texto.replace(/^(\d{4})-(\d{2})-(\d{2})$/g,'$3/$2/$1');
+         });*/
         me.nombrerealizante = response.data.realizante.nombre_persona;
         me.apellidorealizante = response.data.realizante.apellido_persona;
         me.sexo = response.data.realizante.sexo;
-        me.fechanaes = response.data.realizante.fecha_nacimiento;
+        me.fechana = response.data.realizante.fecha_nacimiento; //me.fechanaes=response.data.realizante.fecha_nacimiento;
       }
 
       if (d == 2) {
-        response.data.realizante.forEach(function (element) {
-          var texto = element.fecha_nacimiento;
-          element.fecha_nacimiento = texto.replace(/^(\d{4})-(\d{2})-(\d{2})$/g, '$3/$2/$1');
-        });
+        /* response.data.realizante.forEach(function(element) {
+         var texto = element.fecha_nacimiento;
+         element.fecha_nacimiento= texto.replace(/^(\d{4})-(\d{2})-(\d{2})$/g,'$3/$2/$1');
+         });*/
         me.nombrepadre = response.data.padre.nombre_persona;
         me.apellidopadre = response.data.padre.apellido_persona;
         me.nombrerealizante = response.data.realizante.nombre_persona;
         me.apellidorealizante = response.data.realizante.apellido_persona;
         me.sexo = response.data.realizante.sexo;
-        me.fechanaes = response.data.realizante.fecha_nacimiento;
+        me.fechana = response.data.realizante.fecha_nacimiento; //me.fechanaes=response.data.realizante.fecha_nacimiento;
       }
 
       if (d == 3) {
-        response.data.realizante.forEach(function (element) {
-          var texto = element.fecha_nacimiento;
-          element.fecha_nacimiento = texto.replace(/^(\d{4})-(\d{2})-(\d{2})$/g, '$3/$2/$1');
-        });
+        /*response.data.realizante.forEach(function(element) {
+        var texto = element.fecha_nacimiento;
+        element.fecha_nacimiento= texto.replace(/^(\d{4})-(\d{2})-(\d{2})$/g,'$3/$2/$1');
+        });*/
         me.nombremadre = response.data.madre.nombre_persona;
         me.apellidomadre = response.data.madre.apellido_persona;
         me.nombrerealizante = response.data.realizante.nombre_persona;
         me.apellidorealizante = response.data.realizante.apellido_persona;
         me.sexo = response.data.realizante.sexo;
-        me.fechanaes = response.data.realizante.fecha_nacimiento;
+        me.fechana = response.data.realizante.fecha_nacimiento; //me.fechanaes=response.data.realizante.fecha_nacimiento;
       }
 
       if (d == 4) {
-        response.data.realizante.forEach(function (element) {
-          var texto = element.fecha_nacimiento;
-          element.fecha_nacimiento = texto.replace(/^(\d{4})-(\d{2})-(\d{2})$/g, '$3/$2/$1');
-        });
+        /*response.data.realizante.forEach(function(element) {
+        var texto = element.fecha_nacimiento;
+        element.fecha_nacimiento= texto.replace(/^(\d{4})-(\d{2})-(\d{2})$/g,'$3/$2/$1');
+        });*/
         me.nombrepadre = response.data.padre.nombre_persona;
         me.apellidopadre = response.data.padre.apellido_persona;
         me.nombremadre = response.data.madre.nombre_persona;
@@ -29161,7 +29403,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         me.nombrerealizante = response.data.realizante.nombre_persona;
         me.apellidorealizante = response.data.realizante.apellido_persona;
         me.sexo = response.data.realizante.sexo;
-        me.fechanaes = response.data.realizante.fecha_nacimiento;
+        me.fechana = response.data.realizante.fecha_nacimiento; //me.fechanaes=response.data.realizante.fecha_nacimiento;
       }
 
       me.verificacion = 1;
@@ -29170,254 +29412,234 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       console.log(error);
     });
   }), _defineProperty(_methods, "validarvalores", function validarvalores(d) {
-    this.errorDatos = 0;
-    this.errorMostrarMsj = [];
-    var RE = /^([0-9])*$/;
-    var patron = /^[a-zA-ZÑñÁáÉéÍíÓóÚúÜü\s]+$/; /////ESTOOOOOOOO
-
-    var anio = /^\d{4}$/;
-    var patrondui = /^\d{9}$/;
-    var fecha = new Date();
-    var anioac = fecha.getFullYear();
-    var mesac = fecha.getMonth();
-
-    switch (d) {
-      case '1':
-        {
-          var Min_Length = 5;
-          var lengthmin = this.alcaldia.length;
-          if (lengthmin < Min_Length) this.errorMostrarMsj.push("La alcaldía debe tener más de 5 letras");
-          if (!patron.test(this.alcaldia)) this.errorMostrarMsj.push("La alcaldía solo debe tener letras");
-          if (this.errorMostrarMsj.length) this.errorDatos = 1;
-          return this.errorDatos;
-          break;
-        }
-
-      case '2':
-        {
-          var Min_Length = 5;
-          var lengthmin = this.alcaldia.length;
-          if (lengthmin < Min_Length) this.errorMostrarMsj.push("La alcaldía debe tener más de 5 letras");
-          if (!patron.test(this.alcaldia)) this.errorMostrarMsj.push("La alcaldía solo debe tener letras");
-          if (!this.libro) this.errorMostrarMsj.push("El número de libro no puede estar vacío");
-          if (this.libro == '0') this.errorMostrarMsj.push("El número de libro debe ser distinto a 0");
-          if (!RE.test(this.libro)) this.errorMostrarMsj.push("El número de libro debe ser un numero entero");
-          if (this.errorMostrarMsj.length) this.errorDatos = 1;
-          return this.errorDatos;
-          break;
-        }
-
-      case '3':
-        {
-          var Min_Length = 5;
-          var lengthmin = this.alcaldia.length;
-          if (lengthmin < Min_Length) this.errorMostrarMsj.push("La alcaldía debe tener más de 5 letras");
-          if (!patron.test(this.alcaldia)) this.errorMostrarMsj.push("La alcaldía solo debe tener letras");
-          if (!this.libro) this.errorMostrarMsj.push("El número de libro no puede estar vacío");
-          if (!RE.test(this.libro)) this.errorMostrarMsj.push("El número de libro debe ser un numero entero");
-          if (this.libro == '0') this.errorMostrarMsj.push("El número de libro debe ser distinto a 0");
-          if (!this.partida) this.errorMostrarMsj.push("En número de partida no puede estar vacío");
-          if (!RE.test(this.partida)) this.errorMostrarMsj.push("El número de partida debe ser un numero entero");
-          if (this.partida == '0') this.errorMostrarMsj.push("El número de partida debe ser distinto a 0");
-          if (this.errorMostrarMsj.length) this.errorDatos = 1;
-          return this.errorDatos;
-          break;
-        }
-
-      case '4':
-        {
-          var Min_Length = 5;
-          var lengthmin = this.alcaldia.length;
-          if (lengthmin < Min_Length) this.errorMostrarMsj.push("La alcaldía debe tener más de 5 letras");
-          if (!patron.test(this.alcaldia)) this.errorMostrarMsj.push("La alcaldía solo debe tener letras");
-          if (!this.libro) this.errorMostrarMsj.push("El número de libro no puede estar vacío");
-          if (!RE.test(this.libro)) this.errorMostrarMsj.push("El número de libro debe ser un numero entero");
-          if (this.libro == '0') this.errorMostrarMsj.push("El número de libro debe ser distinto a 0");
-          if (!this.partida) this.errorMostrarMsj.push("En número de partida no puede estar vacío");
-          if (!RE.test(this.partida)) this.errorMostrarMsj.push("El número de partida debe ser un numero entero");
-          if (this.partida == '0') this.errorMostrarMsj.push("El número de partida debe ser distinto a 0");
-          if (!this.folio) this.errorMostrarMsj.push("El número de folio no puede estar vacío");
-          if (!RE.test(this.folio)) this.errorMostrarMsj.push("El número de folio debe ser un numero entero");
-          if (this.folio == '0') this.errorMostrarMsj.push("El número de folio debe ser distinto a 0");
-          if (this.errorMostrarMsj.length) this.errorDatos = 1;
-          return this.errorDatos;
-          break;
-        }
-
-      case '5':
-        {
-          var Min_Length = 5;
-          var lengthmin = this.alcaldia.length;
-          if (lengthmin < Min_Length) this.errorMostrarMsj.push("La alcaldía debe tener más de 5 letras");
-          if (!patron.test(this.alcaldia)) this.errorMostrarMsj.push("La alcaldía solo debe tener letras");
-          if (!this.libro) this.errorMostrarMsj.push("El numero de libro no puede estar vacío");
-          if (!RE.test(this.libro)) this.errorMostrarMsj.push("El número de libro debe ser un numero entero");
-          if (this.libro == '0') this.errorMostrarMsj.push("El número de libro debe ser distinto a 0");
-          if (!this.partida) this.errorMostrarMsj.push("En número de partida no puede estar vacío");
-          if (!RE.test(this.partida)) this.errorMostrarMsj.push("El número de partida debe ser un numero entero");
-          if (this.partida == '0') this.errorMostrarMsj.push("El número de partida debe ser distinto a 0");
-          if (!this.folio) this.errorMostrarMsj.push("El número de folio no puede estar vacío");
-          if (!RE.test(this.folio)) this.errorMostrarMsj.push("El número de folio debe ser un numero entero");
-          if (this.folio == '0') this.errorMostrarMsj.push("El número de folio debe ser distinto a 0");
-          if (!this.ano) this.errorMostrarMsj.push("El año no puede estar vacío");
-          if (!RE.test(this.ano)) this.errorMostrarMsj.push("El año debe ser un numero entero");
-          if (this.ano < '1900') this.errorMostrarMsj.push("El año debe ser un año mayor a 1900");
-          if (this.ano > anioac) this.errorMostrarMsj.push("El año debe ser igual o menor al actual");
-          if (!anio.test(this.ano)) this.errorMostrarMsj.push("El año debe ser de cuatro digitos");
-          if (this.errorMostrarMsj.length) this.errorDatos = 1;
-          return this.errorDatos;
-          break;
-        }
-
-      case '6':
-        {
-          this.errorMostrarMsj.push("Esta persona ya realizo este sacramento, favor verificar datos");
-          if (this.errorMostrarMsj.length) this.errorDatos = 1;
-          break;
-        }
-
-      case '7':
-        {
-          var Min_Length = 3;
-          var lengthmin = this.nombrerealizante.length;
-          if (lengthmin < Min_Length) this.errorMostrarMsj.push("El nombre debe tener mas de tres letras");
-          if (!patron.test(this.nombrerealizante)) this.errorMostrarMsj.push("El nombre solo debe tener letras");
-          if (this.errorMostrarMsj.length) this.errorDatos = 1;
-          return this.errorDatos;
-          break;
-        }
-
-      case '8':
-        {
-          var Min_Length = 3;
-          var lengthmin = this.nombrerealizante.length;
-          if (lengthmin < Min_Length) this.errorMostrarMsj.push("El nombre debe tener mas de tres letras");
-          if (!patron.test(this.nombrerealizante)) this.errorMostrarMsj.push("El nombre solo debe tener letras");
-          var lengthmin2 = this.apellidorealizante.length;
-          if (lengthmin2 < Min_Length) this.errorMostrarMsj.push("El apellido debe tener mas de tres letras");
-          if (!patron.test(this.apellidorealizante)) this.errorMostrarMsj.push("El apellido solo debe tener letras");
-          if (this.errorMostrarMsj.length) this.errorDatos = 1;
-          return this.errorDatos;
-          break;
-        }
-
-      case '11':
-        {
-          var Min_Length = 3;
-          var lengthmin = this.nombrerealizante.length;
-          if (lengthmin < Min_Length) this.errorMostrarMsj.push("El nombre debe tener mas de tres letras");
-          if (!patron.test(this.nombrerealizante)) this.errorMostrarMsj.push("El nombre solo debe tener letras");
-          var lengthmin2 = this.apellidorealizante.length;
-          if (lengthmin2 < Min_Length) this.errorMostrarMsj.push("El apellido debe tener mas de tres letras");
-          if (!patron.test(this.apellidorealizante)) this.errorMostrarMsj.push("El apellido solo debe tener letras");
-          if (!patrondui.test(this.dui)) this.errorMostrarMsj.push("El DUI debe ser de nueve digitos");
-          if (this.errorMostrarMsj.length) this.errorDatos = 1;
-          return this.errorDatos;
-          break;
-        }
-
-      case '12':
-        {
-          var Min_Length = 3;
-          var lengthmin = this.nombrerealizante.length;
-          if (lengthmin < Min_Length) this.errorMostrarMsj.push("El nombre debe tener mas de tres letras");
-          if (!patron.test(this.nombrerealizante)) this.errorMostrarMsj.push("El nombre solo debe tener letras");
-          var lengthmin2 = this.apellidorealizante.length;
-          if (lengthmin2 < Min_Length) this.errorMostrarMsj.push("El apellido debe tener mas de tres letras");
-          if (!patron.test(this.apellidorealizante)) this.errorMostrarMsj.push("El apellido solo debe tener letras");
-          if (!patrondui.test(this.dui) && this.Acciondui == 1) this.errorMostrarMsj.push("El DUI debe ser de nueve digitos");
-          if (!this.fechana) this.errorMostrarMsj.push("La fecha de nacimiento no puede estar vacia");
-          if (!this.sexo) this.errorMostrarMsj.push("El sexo no puede estar vacio");
-          var values = this.fechana.split("-");
-          var dia = values[2];
-          var mes = values[1];
-          var ano = values[0];
-          if (ano < 1900) this.errorMostrarMsj.push("El año debe ser mayor a 1990");
-
-          if (anioac < ano) {
-            this.errorMostrarMsj.push("El año debe ser menor o igual al actual");
-          }
-
-          if (mesac < mes && ano == anioac) {
-            this.errorMostrarMsj.push("El mes debe ser menor al actual");
-          }
-
-          if (this.errorMostrarMsj.length) this.errorDatos = 1;
-          return this.errorDatos;
-        }
-
-      case '13':
-        {
-          var values = this.fechana.split("-");
-          var dia = values[2];
-          var mes = values[1];
-          var ano = values[0];
-          if (ano < 1900) this.errorMostrarMsj.push("El año debe ser mayor a 1990");
-
-          if (anioac < ano) {
-            this.errorMostrarMsj.push("El año debe ser menor o igual al actual");
-          }
-
-          if (mesac < mes && ano == anioac) {
-            this.errorMostrarMsj.push("El mes debe ser menor al actual");
-          }
-
-          if (this.errorMostrarMsj.length) this.errorDatos = 1;
-          return this.errorDatos;
-          break;
-        }
-
-      case '14':
-        {
-          if (this.nombremadre != '' && !patron.test(this.nombremadre)) this.errorMostrarMsj.push("El nombre de la madre solo debe tener letras");
-          if (this.apellidomadre != '' && !patron.test(this.apellidomadre)) this.errorMostrarMsj.push("El apellido de la madre solo debe tener letras");
-          if (this.nombrepadre != '' && !patron.test(this.nombrepadre)) this.errorMostrarMsj.push("El nombre del padre solo debe tener letras");
-          if (this.apellidopadre != '' && !patron.test(this.apellidopadre)) this.errorMostrarMsj.push("El apellido del padre solo debe tener letras");
-          if (this.duimadre != '' && !patrondui.test(this.duimadre)) this.errorMostrarMsj.push("El DUI de la madre debe ser de nueve digitos");
-          if (this.duipadre != '' && !patrondui.test(this.duipadre)) this.errorMostrarMsj.push("El DUI del padre debe ser de nueve digitos");
-          if (this.errorMostrarMsj.length) this.errorDatos = 1;
-          return this.errorDatos;
-          break;
-        }
-
-      case '15':
-        {
-          var RE = /^\d*(\.\d{1})?\d{0,1}$/;
-          if (!RE.test(this.monto)) this.errorMostrarMsj.push("El monto solo pueden ser decimales");
-          if (this.errorMostrarMsj.length) this.errorDatos = 1;
-          return this.errorDatos;
-          break;
-        }
-
-      case '16':
-        {
-          var RE = /^\d*(\.\d{1})?\d{0,1}$/;
-          if (!RE.test(this.monto)) this.errorMostrarMsj.push("El monto solo pueden ser decimales");
-          var values = this.fecharealizacion.split("-");
-          var ano = values[0];
-          if (ano < 1989) this.errorMostrarMsj.push("El año debe ser mayor a 1989");
-          if (anioac < ano) this.errorMostrarMsj.push("El año debe ser menor o igual al actual");
-          if (this.errorMostrarMsj.length) this.errorDatos = 1;
-          return this.errorDatos;
-          break;
-        }
-
-      case '17':
-        {
-          var RE = /^\d*(\.\d{1})?\d{0,1}$/;
-          if (!RE.test(this.monto)) this.errorMostrarMsj.push("El monto solo pueden ser decimales");
-          var values = this.fecharealizacion.split("-");
-          var ano = values[0];
-          if (this.idsacerdote == '') this.errorMostrarMsj.push("Debe de seleccionar un sacerdote");
-          if (this.cargosacerdote == '') this.errorMostrarMsj.push("Debe de asignar un cargo al sacerdote");
-          if (this.idcare == '') this.errorMostrarMsj.push("Debe de seleccionar una categoria");
-          if (ano < 1989) this.errorMostrarMsj.push("El año debe ser mayor a 1989");
-          if (anioac < ano) this.errorMostrarMsj.push("El año debe ser menor o igual al actual");
-          if (this.errorMostrarMsj.length) this.errorDatos = 1;
-          return this.errorDatos;
-          break;
-        }
-    }
+    /*  this.errorDatos=0;
+      this.errorMostrarMsj=[];
+      var RE = /^([0-9])*$/;
+      var patron =/^[a-zA-ZÑñÁáÉéÍíÓóÚúÜü\s]+$/; /////ESTOOOOOOOO
+      var anio= /^\d{4}$/;
+      var patrondui= /^\d{9}$/;
+      var fecha = new Date();
+      var anioac= fecha.getFullYear();
+      var mesac= fecha.getMonth();
+      switch(d){
+          case '1':
+              {
+                  var Min_Length = 5;
+                  var lengthmin = this.alcaldia.length;
+                  if (lengthmin < Min_Length )this.errorMostrarMsj.push("La alcaldía debe tener más de 5 letras");
+                  if (!patron.test(this.alcaldia))this.errorMostrarMsj.push("La alcaldía solo debe tener letras");
+                  if(this.errorMostrarMsj.length) this.errorDatos=1;
+                  return this.errorDatos;
+                  break;
+              }
+          case '2':
+              {
+                  var Min_Length = 5;
+                  var lengthmin = this.alcaldia.length;
+                  if (lengthmin < Min_Length)this.errorMostrarMsj.push("La alcaldía debe tener más de 5 letras");
+                  if (!patron.test(this.alcaldia))this.errorMostrarMsj.push("La alcaldía solo debe tener letras");
+                  if(!this.libro) this.errorMostrarMsj.push("El número de libro no puede estar vacío");
+                  if(this.libro=='0') this.errorMostrarMsj.push("El número de libro debe ser distinto a 0");
+                  if (!RE.test(this.libro))  this.errorMostrarMsj.push("El número de libro debe ser un numero entero");
+                  if(this.errorMostrarMsj.length) this.errorDatos=1;
+                  return this.errorDatos;
+                  break;
+              }
+          case '3':
+              {
+                  var Min_Length = 5;
+                  var lengthmin = this.alcaldia.length;
+                  if (lengthmin < Min_Length)this.errorMostrarMsj.push("La alcaldía debe tener más de 5 letras");
+                  if (!patron.test(this.alcaldia))this.errorMostrarMsj.push("La alcaldía solo debe tener letras");
+                  if(!this.libro) this.errorMostrarMsj.push("El número de libro no puede estar vacío");
+                  if (!RE.test(this.libro))  this.errorMostrarMsj.push("El número de libro debe ser un numero entero");
+                  if(this.libro=='0') this.errorMostrarMsj.push("El número de libro debe ser distinto a 0");
+                  if(!this.partida) this.errorMostrarMsj.push("En número de partida no puede estar vacío");
+                  if (!RE.test(this.partida))  this.errorMostrarMsj.push("El número de partida debe ser un numero entero");
+                  if(this.partida=='0') this.errorMostrarMsj.push("El número de partida debe ser distinto a 0");
+                  if(this.errorMostrarMsj.length) this.errorDatos=1;
+                  return this.errorDatos;
+                  break;
+              }
+          case '4':
+              {
+                  var Min_Length = 5;
+                  var lengthmin = this.alcaldia.length;
+                  if (lengthmin < Min_Length)this.errorMostrarMsj.push("La alcaldía debe tener más de 5 letras");
+                  if (!patron.test(this.alcaldia))this.errorMostrarMsj.push("La alcaldía solo debe tener letras");
+                  if(!this.libro) this.errorMostrarMsj.push("El número de libro no puede estar vacío");
+                  if (!RE.test(this.libro))  this.errorMostrarMsj.push("El número de libro debe ser un numero entero");
+                  if(this.libro=='0') this.errorMostrarMsj.push("El número de libro debe ser distinto a 0");
+                  if(!this.partida) this.errorMostrarMsj.push("En número de partida no puede estar vacío");
+                  if (!RE.test(this.partida))  this.errorMostrarMsj.push("El número de partida debe ser un numero entero");
+                  if(this.partida=='0') this.errorMostrarMsj.push("El número de partida debe ser distinto a 0");
+                  if(!this.folio) this.errorMostrarMsj.push("El número de folio no puede estar vacío");
+                  if (!RE.test(this.folio))  this.errorMostrarMsj.push("El número de folio debe ser un numero entero");
+                  if(this.folio=='0') this.errorMostrarMsj.push("El número de folio debe ser distinto a 0");
+                  if(this.errorMostrarMsj.length) this.errorDatos=1;
+                  return this.errorDatos;
+                  break;
+              }
+          case '5':
+              {
+                  var Min_Length = 5;
+                  var lengthmin = this.alcaldia.length;
+                  if (lengthmin < Min_Length)this.errorMostrarMsj.push("La alcaldía debe tener más de 5 letras");
+                  if (!patron.test(this.alcaldia))this.errorMostrarMsj.push("La alcaldía solo debe tener letras");
+                  if(!this.libro) this.errorMostrarMsj.push("El numero de libro no puede estar vacío");
+                  if (!RE.test(this.libro))  this.errorMostrarMsj.push("El número de libro debe ser un numero entero");
+                  if(this.libro=='0') this.errorMostrarMsj.push("El número de libro debe ser distinto a 0");
+                  if(!this.partida) this.errorMostrarMsj.push("En número de partida no puede estar vacío");
+                  if (!RE.test(this.partida))  this.errorMostrarMsj.push("El número de partida debe ser un numero entero");
+                  if(this.partida=='0') this.errorMostrarMsj.push("El número de partida debe ser distinto a 0");
+                  if(!this.folio) this.errorMostrarMsj.push("El número de folio no puede estar vacío");
+                  if (!RE.test(this.folio))  this.errorMostrarMsj.push("El número de folio debe ser un numero entero");
+                  if(this.folio=='0') this.errorMostrarMsj.push("El número de folio debe ser distinto a 0");
+                  if(!this.ano) this.errorMostrarMsj.push("El año no puede estar vacío");
+                  if (!RE.test(this.ano))  this.errorMostrarMsj.push("El año debe ser un numero entero");
+                  if(this.ano<'1900') this.errorMostrarMsj.push("El año debe ser un año mayor a 1900");
+                  if(this.ano>anioac) this.errorMostrarMsj.push("El año debe ser igual o menor al actual");
+                  if (!anio.test(this.ano))  this.errorMostrarMsj.push("El año debe ser de cuatro digitos");
+                  if(this.errorMostrarMsj.length) this.errorDatos=1;
+                  return this.errorDatos;
+                  break;
+              }
+              case '6':
+                  {
+                  this.errorMostrarMsj.push("Esta persona ya realizo este sacramento, favor verificar datos");
+                  if(this.errorMostrarMsj.length) this.errorDatos=1;
+                  break;
+                  }
+              case '7':
+                  {
+                  var Min_Length = 3;
+                  var lengthmin = this.nombrerealizante.length;
+                  if (lengthmin < Min_Length)this.errorMostrarMsj.push("El nombre debe tener mas de tres letras");
+                  if (!patron.test(this.nombrerealizante))this.errorMostrarMsj.push("El nombre solo debe tener letras");
+                  if(this.errorMostrarMsj.length) this.errorDatos=1;
+                  return this.errorDatos;
+                  break;
+                  }
+              case '8':
+                  {
+                  var Min_Length = 3;
+                  var lengthmin = this.nombrerealizante.length;
+                  if (lengthmin < Min_Length)this.errorMostrarMsj.push("El nombre debe tener mas de tres letras");
+                  if (!patron.test(this.nombrerealizante))this.errorMostrarMsj.push("El nombre solo debe tener letras");
+                  var lengthmin2 = this.apellidorealizante.length;
+                  if (lengthmin2 < Min_Length)this.errorMostrarMsj.push("El apellido debe tener mas de tres letras");
+                  if (!patron.test(this.apellidorealizante))this.errorMostrarMsj.push("El apellido solo debe tener letras");
+                  if(this.errorMostrarMsj.length) this.errorDatos=1;
+                  return this.errorDatos;
+                  break;
+                  }
+              case '11':
+                  {
+                  var Min_Length = 3;
+                  var lengthmin = this.nombrerealizante.length;
+                  if (lengthmin < Min_Length)this.errorMostrarMsj.push("El nombre debe tener mas de tres letras");
+                  if (!patron.test(this.nombrerealizante))this.errorMostrarMsj.push("El nombre solo debe tener letras");
+                  var lengthmin2 = this.apellidorealizante.length;
+                  if (lengthmin2 < Min_Length)this.errorMostrarMsj.push("El apellido debe tener mas de tres letras");
+                  if (!patron.test(this.apellidorealizante))this.errorMostrarMsj.push("El apellido solo debe tener letras");
+                  if (!patrondui.test(this.dui))  this.errorMostrarMsj.push("El DUI debe ser de nueve digitos");
+                  if(this.errorMostrarMsj.length) this.errorDatos=1;
+                  return this.errorDatos;
+                  break;
+                  }
+              case '12':
+                  {
+                  var Min_Length = 3;
+                  var lengthmin = this.nombrerealizante.length;
+                  if (lengthmin < Min_Length)this.errorMostrarMsj.push("El nombre debe tener mas de tres letras");
+                  if (!patron.test(this.nombrerealizante))this.errorMostrarMsj.push("El nombre solo debe tener letras");
+                  var lengthmin2 = this.apellidorealizante.length;
+                  if (lengthmin2 < Min_Length)this.errorMostrarMsj.push("El apellido debe tener mas de tres letras");
+                  if (!patron.test(this.apellidorealizante))this.errorMostrarMsj.push("El apellido solo debe tener letras");
+                  if (!patrondui.test(this.dui) && this.Acciondui==1)  this.errorMostrarMsj.push("El DUI debe ser de nueve digitos");
+                  if(!this.fechana) this.errorMostrarMsj.push("La fecha de nacimiento no puede estar vacia");
+                  if(!this.sexo)this.errorMostrarMsj.push("El sexo no puede estar vacio");
+                  var values=this.fechana.split("-");
+                  var dia = values[2];
+                  var mes = values[1];
+                  var ano = values[0];
+                  if (ano < 1900)this.errorMostrarMsj.push("El año debe ser mayor a 1990");
+                  if(anioac<ano) {
+                      this.errorMostrarMsj.push("El año debe ser menor o igual al actual");
+                      
+                  }
+                  if(mesac<mes && ano==anioac) {
+                          this.errorMostrarMsj.push("El mes debe ser menor al actual");
+                          }
+                  if(this.errorMostrarMsj.length) this.errorDatos=1;
+                  return this.errorDatos;
+                  }
+              case '13':
+                  {
+                  var values=this.fechana.split("-");
+                  var dia = values[2];
+                  var mes = values[1];
+                  var ano = values[0];
+                  if (ano < 1900)this.errorMostrarMsj.push("El año debe ser mayor a 1990");
+                  if(anioac<ano) {
+                      this.errorMostrarMsj.push("El año debe ser menor o igual al actual");
+                      
+                  }
+                  if(mesac<mes && ano==anioac) {
+                          this.errorMostrarMsj.push("El mes debe ser menor al actual");
+                          }
+                  if(this.errorMostrarMsj.length) this.errorDatos=1;
+                  return this.errorDatos;
+                  break;
+                  }
+              case '14':
+              {
+                  if (this.nombremadre!='' && !patron.test(this.nombremadre))this.errorMostrarMsj.push("El nombre de la madre solo debe tener letras");
+                  if (this.apellidomadre!='' && !patron.test(this.apellidomadre))this.errorMostrarMsj.push("El apellido de la madre solo debe tener letras");
+                  if (this.nombrepadre!='' && !patron.test(this.nombrepadre))this.errorMostrarMsj.push("El nombre del padre solo debe tener letras");
+                  if (this.apellidopadre!='' && !patron.test(this.apellidopadre))this.errorMostrarMsj.push("El apellido del padre solo debe tener letras");
+                  if (this.duimadre!='' && !patrondui.test(this.duimadre))this.errorMostrarMsj.push("El DUI de la madre debe ser de nueve digitos");                     
+                  if (this.duipadre!='' && !patrondui.test(this.duipadre))this.errorMostrarMsj.push("El DUI del padre debe ser de nueve digitos");
+                  if(this.errorMostrarMsj.length) this.errorDatos=1;
+                  return this.errorDatos;
+                  break;
+              }
+              case '15':
+                  {
+                      var RE = /^\d*(\.\d{1})?\d{0,1}$/;
+                      if (!RE.test(this.monto))  this.errorMostrarMsj.push("El monto solo pueden ser decimales");
+                      if(this.errorMostrarMsj.length) this.errorDatos=1;
+                      return this.errorDatos;
+                      break;
+                  }
+              case '16':
+                  {
+                      var RE = /^\d*(\.\d{1})?\d{0,1}$/;
+                      if (!RE.test(this.monto))  this.errorMostrarMsj.push("El monto solo pueden ser decimales");
+                      var values=this.fecharealizacion.split("-");
+                      var ano = values[0];
+                      if (ano < 1989)this.errorMostrarMsj.push("El año debe ser mayor a 1989");
+                      if(anioac<ano)this.errorMostrarMsj.push("El año debe ser menor o igual al actual");
+                      if(this.errorMostrarMsj.length) this.errorDatos=1;
+                      return this.errorDatos;
+                      break;
+                   }
+                  case '17':
+                  {
+                      var RE = /^\d*(\.\d{1})?\d{0,1}$/;
+                      if (!RE.test(this.monto))  this.errorMostrarMsj.push("El monto solo pueden ser decimales");
+                      var values=this.fecharealizacion.split("-");
+                      var ano = values[0];
+                      if(this.idsacerdote=='') this.errorMostrarMsj.push("Debe de seleccionar un sacerdote");
+                      if(this.cargosacerdote=='') this.errorMostrarMsj.push("Debe de asignar un cargo al sacerdote");
+                      if(this.idcare=='') this.errorMostrarMsj.push("Debe de seleccionar una categoria");
+                      if (ano < 1989)this.errorMostrarMsj.push("El año debe ser mayor a 1989");
+                      if(anioac<ano)this.errorMostrarMsj.push("El año debe ser menor o igual al actual");
+                      if(this.errorMostrarMsj.length) this.errorDatos=1;
+                      return this.errorDatos;
+                      break;
+                   }
+       }  */
   }), _defineProperty(_methods, "verificarpersona", function verificarpersona() {
     var me = this;
     var alcaldia = this.alcaldia.toUpperCase();
@@ -29431,7 +29653,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
       if (respuesta == 1) {
         me.id = response.data.realizante.idpersona;
-        me.llenarmodal(me.id);
+        me.llenarmodal(me.id); //me.cambiarm=1;
       }
 
       if (respuesta == 0) {
@@ -29453,7 +29675,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       var url = '/persona/duis?dui=' + d;
       axios.get(url).then(function (response) {
         var respuesta = response.data.solo;
-        var datos = response.data.persona;
+        var datos = response.data.persona; //<---- aqui 
 
         if (respuesta == 2) {
           me.llenarcamposm(datos);
@@ -29576,7 +29798,19 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         'idcate': this.idcare,
         'sacerdote': this.idsacerdote,
         'fecha': this.fecharealizacion,
-        'titulo': this.cargosacerdote
+        'titulo': this.cargosacerdote,
+        'idzona': this.idzona,
+        //zona realizante
+        'idiglesia': this.idiglesia,
+        //iglesia realizante
+        'idzonam': this.idzonam,
+        //zona mamá
+        'idiglesiam': this.idiglesiam,
+        //iglesia mamá
+        'idzonap': this.idzonap,
+        //zona papá
+        'idiglesiap': this.idiglesiap //iglesia papá
+
       }).then(function (response) {
         me.modal = 0;
         me.cambiarm = 0;
@@ -29608,6 +29842,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   }), _methods),
   mounted: function mounted() {
     this.llenadolistas();
+    this.llenadolistazona('', '');
   }
 });
 
@@ -90895,6 +91130,123 @@ var render = function() {
                 ]
               ),
               _vm._v(" "),
+              _c("div", { staticClass: "form-group row" }, [
+                _c(
+                  "label",
+                  {
+                    staticClass: "col-md-3 form-control-label",
+                    attrs: { for: "text-input" }
+                  },
+                  [_vm._v("Zona:")]
+                ),
+                _vm._v(" "),
+                _c("div", { staticClass: "col-md-5" }, [
+                  _c(
+                    "select",
+                    {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.idzona,
+                          expression: "idzona"
+                        }
+                      ],
+                      staticClass: "form-control",
+                      on: {
+                        click: function($event) {
+                          return _vm.iglesias(_vm.idzona)
+                        },
+                        change: function($event) {
+                          var $$selectedVal = Array.prototype.filter
+                            .call($event.target.options, function(o) {
+                              return o.selected
+                            })
+                            .map(function(o) {
+                              var val = "_value" in o ? o._value : o.value
+                              return val
+                            })
+                          _vm.idzona = $event.target.multiple
+                            ? $$selectedVal
+                            : $$selectedVal[0]
+                        }
+                      }
+                    },
+                    [
+                      _c("option", { attrs: { value: "0", disabled: "" } }, [
+                        _vm._v("Seleccione")
+                      ]),
+                      _vm._v(" "),
+                      _vm._l(_vm.arrayzona, function(zona) {
+                        return _c(
+                          "option",
+                          { key: zona.id, domProps: { value: zona.id } },
+                          [_vm._v(_vm._s(zona.nombre_zona))]
+                        )
+                      })
+                    ],
+                    2
+                  )
+                ])
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "form-group row" }, [
+                _c(
+                  "label",
+                  {
+                    staticClass: "col-md-3 form-control-label",
+                    attrs: { for: "text-input" }
+                  },
+                  [_vm._v("Iglesia:")]
+                ),
+                _vm._v(" "),
+                _c("div", { staticClass: "col-md-5" }, [
+                  _c(
+                    "select",
+                    {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.idiglesia,
+                          expression: "idiglesia"
+                        }
+                      ],
+                      staticClass: "form-control",
+                      on: {
+                        change: function($event) {
+                          var $$selectedVal = Array.prototype.filter
+                            .call($event.target.options, function(o) {
+                              return o.selected
+                            })
+                            .map(function(o) {
+                              var val = "_value" in o ? o._value : o.value
+                              return val
+                            })
+                          _vm.idiglesia = $event.target.multiple
+                            ? $$selectedVal
+                            : $$selectedVal[0]
+                        }
+                      }
+                    },
+                    [
+                      _c("option", { attrs: { value: "0", disabled: "" } }, [
+                        _vm._v("Seleccione")
+                      ]),
+                      _vm._v(" "),
+                      _vm._l(_vm.arrayiglesia, function(iglesia) {
+                        return _c(
+                          "option",
+                          { key: iglesia.id, domProps: { value: iglesia.id } },
+                          [_vm._v(_vm._s(iglesia.nombre_iglesia))]
+                        )
+                      })
+                    ],
+                    2
+                  )
+                ])
+              ]),
+              _vm._v(" "),
               _c(
                 "div",
                 {
@@ -95544,49 +95896,109 @@ var render = function() {
                 ]
               ),
               _vm._v(" "),
-              _c("div", { staticClass: "col-md-5 modal-fo" }, [
-                _c(
-                  "button",
-                  {
-                    staticClass: "btn btn-secondary",
-                    attrs: { type: "button" },
-                    on: {
-                      click: function($event) {
-                        return _vm.siguiente("12")
-                      }
+              _c(
+                "div",
+                {
+                  directives: [
+                    {
+                      name: "show",
+                      rawName: "v-show",
+                      value: _vm.cambiarmb == 1,
+                      expression: "cambiarmb==1"
                     }
-                  },
-                  [_vm._v("Regresar")]
-                ),
-                _vm._v(" "),
-                _c(
-                  "button",
-                  {
-                    staticClass: "btn btn-primary",
-                    attrs: { type: "button" },
-                    on: {
-                      click: function($event) {
-                        return _vm.siguiente("4")
-                      }
+                  ]
+                },
+                [
+                  _c("div", { staticClass: "col-md-5 modal-fo" }, [
+                    _c(
+                      "button",
+                      {
+                        staticClass: "btn btn-secondary",
+                        attrs: { type: "button" },
+                        on: {
+                          click: function($event) {
+                            return _vm.siguiente("12")
+                          }
+                        }
+                      },
+                      [_vm._v("Regresar")]
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "button",
+                      {
+                        staticClass: "btn btn-primary",
+                        attrs: { type: "button" },
+                        on: {
+                          click: function($event) {
+                            return _vm.siguiente("4")
+                          }
+                        }
+                      },
+                      [_vm._v("Agregar otro padrino")]
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "button",
+                      {
+                        staticClass: "btn btn-primary",
+                        attrs: { type: "button" },
+                        on: {
+                          click: function($event) {
+                            return _vm.siguiente("7")
+                          }
+                        }
+                      },
+                      [_vm._v("Continuar")]
+                    )
+                  ])
+                ]
+              ),
+              _vm._v(" "),
+              _c(
+                "div",
+                {
+                  directives: [
+                    {
+                      name: "show",
+                      rawName: "v-show",
+                      value: _vm.cambiarmb == 0,
+                      expression: "cambiarmb==0"
                     }
-                  },
-                  [_vm._v("Agregar otro padrino")]
-                ),
-                _vm._v(" "),
-                _c(
-                  "button",
-                  {
-                    staticClass: "btn btn-primary",
-                    attrs: { type: "button" },
-                    on: {
-                      click: function($event) {
-                        return _vm.siguiente("7")
-                      }
-                    }
-                  },
-                  [_vm._v("Continuar")]
-                )
-              ])
+                  ]
+                },
+                [
+                  _c("div", { staticClass: "col-md-5 modal-fo" }, [
+                    _c(
+                      "button",
+                      {
+                        staticClass: "btn btn-primary",
+                        attrs: { type: "button" },
+                        on: {
+                          click: function($event) {
+                            return _vm.siguiente("4")
+                          }
+                        }
+                      },
+                      [_vm._v("Agregar otro padrino")]
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "button",
+                      {
+                        staticClass: "btn btn-primary",
+                        attrs: { type: "button" },
+                        on: {
+                          click: function($event) {
+                            return _vm.siguiente("7")
+                          }
+                        }
+                      },
+                      [_vm._v("Continuar")]
+                    )
+                  ])
+                ]
+              )
             ]
           ),
           _vm._v(" "),
@@ -96844,109 +97256,51 @@ var render = function() {
                 ]
               ),
               _vm._v(" "),
-              _c(
-                "div",
-                {
-                  directives: [
+              _c("div", [
+                _c("div", { staticClass: "col-md-6" }, [
+                  _c(
+                    "button",
                     {
-                      name: "show",
-                      rawName: "v-show",
-                      value: _vm.cambiarmb == 1,
-                      expression: "cambiarmb==1"
-                    }
-                  ]
-                },
-                [
-                  _c("div", { staticClass: "col-md-6" }, [
-                    _c(
-                      "button",
-                      {
-                        staticClass: "btn btn-secondary",
-                        attrs: { type: "button" },
-                        on: {
-                          click: function($event) {
-                            return _vm.siguiente("8")
-                          }
+                      staticClass: "btn btn-secondary",
+                      attrs: { type: "button" },
+                      on: {
+                        click: function($event) {
+                          return _vm.siguiente("8")
                         }
-                      },
-                      [_vm._v("Regresar")]
-                    ),
-                    _vm._v(" "),
-                    _c(
-                      "button",
-                      {
-                        staticClass: "btn btn-secondary",
-                        attrs: { type: "button" },
-                        on: {
-                          click: function($event) {
-                            return _vm.cerrarm()
-                          }
-                        }
-                      },
-                      [_vm._v("Cancelar")]
-                    ),
-                    _vm._v(" "),
-                    _c(
-                      "button",
-                      {
-                        staticClass: "btn btn-primary",
-                        attrs: { type: "submit" },
-                        on: {
-                          click: function($event) {
-                            return _vm.abrirmodal()
-                          }
-                        }
-                      },
-                      [_vm._v("Guardar")]
-                    )
-                  ])
-                ]
-              ),
-              _vm._v(" "),
-              _c(
-                "div",
-                {
-                  directives: [
+                      }
+                    },
+                    [_vm._v("Regresar")]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "button",
                     {
-                      name: "show",
-                      rawName: "v-show",
-                      value: _vm.cambiarmb == 0,
-                      expression: "cambiarmb==0"
-                    }
-                  ]
-                },
-                [
-                  _c("div", { staticClass: "col-md-6" }, [
-                    _c(
-                      "button",
-                      {
-                        staticClass: "btn btn-secondary",
-                        attrs: { type: "button" },
-                        on: {
-                          click: function($event) {
-                            return _vm.cerrarm()
-                          }
+                      staticClass: "btn btn-secondary",
+                      attrs: { type: "button" },
+                      on: {
+                        click: function($event) {
+                          return _vm.cerrarm()
                         }
-                      },
-                      [_vm._v("Cancelar")]
-                    ),
-                    _vm._v(" "),
-                    _c(
-                      "button",
-                      {
-                        staticClass: "btn btn-primary",
-                        attrs: { type: "submit" },
-                        on: {
-                          click: function($event) {
-                            return _vm.abrirmodal()
-                          }
+                      }
+                    },
+                    [_vm._v("Cancelar")]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "button",
+                    {
+                      staticClass: "btn btn-primary",
+                      attrs: { type: "submit" },
+                      on: {
+                        click: function($event) {
+                          return _vm.abrirmodal()
                         }
-                      },
-                      [_vm._v("Guardar")]
-                    )
-                  ])
-                ]
-              )
+                      }
+                    },
+                    [_vm._v("Guardar")]
+                  )
+                ])
+              ])
             ]
           )
         ])
@@ -97367,26 +97721,41 @@ var render = function() {
                         _c(
                           "label",
                           { staticClass: "col-md-6 form-control-label" },
-                          [_vm._v(_vm._s(_vm.fechanaes))]
+                          [_vm._v(_vm._s(_vm.fechana))]
                         )
                       ]),
                       _vm._v(" "),
-                      _c("div", { staticClass: "form-group row" }, [
-                        _c(
-                          "label",
-                          {
-                            staticClass: "col-md-4 form-control-label",
-                            attrs: { for: "text-input" }
-                          },
-                          [_vm._v("Fue confirmado:")]
-                        ),
-                        _vm._v(" "),
-                        _c(
-                          "label",
-                          { staticClass: "col-md-6 form-control-label" },
-                          [_vm._v(_vm._s(_vm.fecharealizaciones))]
-                        )
-                      ])
+                      _c(
+                        "div",
+                        {
+                          directives: [
+                            {
+                              name: "show",
+                              rawName: "v-show",
+                              value: _vm.accionbotones == 2,
+                              expression: "accionbotones==2"
+                            }
+                          ]
+                        },
+                        [
+                          _c("div", { staticClass: "form-group row" }, [
+                            _c(
+                              "label",
+                              {
+                                staticClass: "col-md-4 form-control-label",
+                                attrs: { for: "text-input" }
+                              },
+                              [_vm._v("Fue confirmado:")]
+                            ),
+                            _vm._v(" "),
+                            _c(
+                              "label",
+                              { staticClass: "col-md-6 form-control-label" },
+                              [_vm._v(_vm._s(_vm.fecharealizaciones))]
+                            )
+                          ])
+                        ]
+                      )
                     ]
                   ),
                   _vm._v(" "),
@@ -97760,7 +98129,7 @@ var render = function() {
                             attrs: { type: "submit" },
                             on: {
                               click: function($event) {
-                                return _vm.siguiente("7")
+                                return _vm.siguiente("3")
                               }
                             }
                           },
@@ -98754,6 +99123,123 @@ var render = function() {
                 ]
               ),
               _vm._v(" "),
+              _c("div", { staticClass: "form-group row" }, [
+                _c(
+                  "label",
+                  {
+                    staticClass: "col-md-3 form-control-label",
+                    attrs: { for: "text-input" }
+                  },
+                  [_vm._v("Zona:")]
+                ),
+                _vm._v(" "),
+                _c("div", { staticClass: "col-md-5" }, [
+                  _c(
+                    "select",
+                    {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.idzona,
+                          expression: "idzona"
+                        }
+                      ],
+                      staticClass: "form-control",
+                      on: {
+                        click: function($event) {
+                          return _vm.iglesias(_vm.idzona)
+                        },
+                        change: function($event) {
+                          var $$selectedVal = Array.prototype.filter
+                            .call($event.target.options, function(o) {
+                              return o.selected
+                            })
+                            .map(function(o) {
+                              var val = "_value" in o ? o._value : o.value
+                              return val
+                            })
+                          _vm.idzona = $event.target.multiple
+                            ? $$selectedVal
+                            : $$selectedVal[0]
+                        }
+                      }
+                    },
+                    [
+                      _c("option", { attrs: { value: "0", disabled: "" } }, [
+                        _vm._v("Seleccione")
+                      ]),
+                      _vm._v(" "),
+                      _vm._l(_vm.arrayzona, function(zona) {
+                        return _c(
+                          "option",
+                          { key: zona.id, domProps: { value: zona.id } },
+                          [_vm._v(_vm._s(zona.nombre_zona))]
+                        )
+                      })
+                    ],
+                    2
+                  )
+                ])
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "form-group row" }, [
+                _c(
+                  "label",
+                  {
+                    staticClass: "col-md-3 form-control-label",
+                    attrs: { for: "text-input" }
+                  },
+                  [_vm._v("Iglesia:")]
+                ),
+                _vm._v(" "),
+                _c("div", { staticClass: "col-md-5" }, [
+                  _c(
+                    "select",
+                    {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.idiglesia,
+                          expression: "idiglesia"
+                        }
+                      ],
+                      staticClass: "form-control",
+                      on: {
+                        change: function($event) {
+                          var $$selectedVal = Array.prototype.filter
+                            .call($event.target.options, function(o) {
+                              return o.selected
+                            })
+                            .map(function(o) {
+                              var val = "_value" in o ? o._value : o.value
+                              return val
+                            })
+                          _vm.idiglesia = $event.target.multiple
+                            ? $$selectedVal
+                            : $$selectedVal[0]
+                        }
+                      }
+                    },
+                    [
+                      _c("option", { attrs: { value: "0", disabled: "" } }, [
+                        _vm._v("Seleccione")
+                      ]),
+                      _vm._v(" "),
+                      _vm._l(_vm.arrayiglesia, function(iglesia) {
+                        return _c(
+                          "option",
+                          { key: iglesia.id, domProps: { value: iglesia.id } },
+                          [_vm._v(_vm._s(iglesia.nombre_iglesia))]
+                        )
+                      })
+                    ],
+                    2
+                  )
+                ])
+              ]),
+              _vm._v(" "),
               _c(
                 "div",
                 {
@@ -98953,6 +99439,126 @@ var render = function() {
                 ])
               ]),
               _vm._v(" "),
+              _c("div", { staticClass: "form-group row" }, [
+                _c(
+                  "label",
+                  {
+                    staticClass: "col-md-3 form-control-label",
+                    attrs: { for: "text-input" }
+                  },
+                  [_vm._v("Zona:")]
+                ),
+                _vm._v(" "),
+                _c("div", { staticClass: "col-md-5" }, [
+                  _c(
+                    "select",
+                    {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.idzonam,
+                          expression: "idzonam"
+                        }
+                      ],
+                      staticClass: "form-control",
+                      on: {
+                        click: function($event) {
+                          return _vm.iglesiasm(_vm.idzona)
+                        },
+                        change: function($event) {
+                          var $$selectedVal = Array.prototype.filter
+                            .call($event.target.options, function(o) {
+                              return o.selected
+                            })
+                            .map(function(o) {
+                              var val = "_value" in o ? o._value : o.value
+                              return val
+                            })
+                          _vm.idzonam = $event.target.multiple
+                            ? $$selectedVal
+                            : $$selectedVal[0]
+                        }
+                      }
+                    },
+                    [
+                      _c("option", { attrs: { value: "0", disabled: "" } }, [
+                        _vm._v("Seleccione")
+                      ]),
+                      _vm._v(" "),
+                      _vm._l(_vm.arrayzona, function(zona) {
+                        return _c(
+                          "option",
+                          { key: zona.id, domProps: { value: zona.id } },
+                          [_vm._v(_vm._s(zona.nombre_zona))]
+                        )
+                      })
+                    ],
+                    2
+                  )
+                ])
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "form-group row" }, [
+                _c(
+                  "label",
+                  {
+                    staticClass: "col-md-3 form-control-label",
+                    attrs: { for: "text-input" }
+                  },
+                  [_vm._v("Iglesia:")]
+                ),
+                _vm._v(" "),
+                _c("div", { staticClass: "col-md-5" }, [
+                  _c(
+                    "select",
+                    {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.idiglesiam,
+                          expression: "idiglesiam"
+                        }
+                      ],
+                      staticClass: "form-control",
+                      on: {
+                        change: function($event) {
+                          var $$selectedVal = Array.prototype.filter
+                            .call($event.target.options, function(o) {
+                              return o.selected
+                            })
+                            .map(function(o) {
+                              var val = "_value" in o ? o._value : o.value
+                              return val
+                            })
+                          _vm.idiglesiam = $event.target.multiple
+                            ? $$selectedVal
+                            : $$selectedVal[0]
+                        }
+                      }
+                    },
+                    [
+                      _c("option", { attrs: { value: "0", disabled: "" } }, [
+                        _vm._v("Seleccione")
+                      ]),
+                      _vm._v(" "),
+                      _vm._l(_vm.arrayiglesiam, function(iglesiam) {
+                        return _c(
+                          "option",
+                          {
+                            key: iglesiam.id,
+                            domProps: { value: iglesiam.id }
+                          },
+                          [_vm._v(_vm._s(iglesiam.nombre_iglesia))]
+                        )
+                      })
+                    ],
+                    2
+                  )
+                ])
+              ]),
+              _vm._v(" "),
               _vm._m(14),
               _vm._v(" "),
               _c("div", { staticClass: "form-group row" }, [
@@ -99074,6 +99680,126 @@ var render = function() {
                       }
                     }
                   })
+                ])
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "form-group row" }, [
+                _c(
+                  "label",
+                  {
+                    staticClass: "col-md-3 form-control-label",
+                    attrs: { for: "text-input" }
+                  },
+                  [_vm._v("Zona:")]
+                ),
+                _vm._v(" "),
+                _c("div", { staticClass: "col-md-5" }, [
+                  _c(
+                    "select",
+                    {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.idzonap,
+                          expression: "idzonap"
+                        }
+                      ],
+                      staticClass: "form-control",
+                      on: {
+                        click: function($event) {
+                          return _vm.iglesiasp(_vm.idzona)
+                        },
+                        change: function($event) {
+                          var $$selectedVal = Array.prototype.filter
+                            .call($event.target.options, function(o) {
+                              return o.selected
+                            })
+                            .map(function(o) {
+                              var val = "_value" in o ? o._value : o.value
+                              return val
+                            })
+                          _vm.idzonap = $event.target.multiple
+                            ? $$selectedVal
+                            : $$selectedVal[0]
+                        }
+                      }
+                    },
+                    [
+                      _c("option", { attrs: { value: "0", disabled: "" } }, [
+                        _vm._v("Seleccione")
+                      ]),
+                      _vm._v(" "),
+                      _vm._l(_vm.arrayzona, function(zona) {
+                        return _c(
+                          "option",
+                          { key: zona.id, domProps: { value: zona.id } },
+                          [_vm._v(_vm._s(zona.nombre_zona))]
+                        )
+                      })
+                    ],
+                    2
+                  )
+                ])
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "form-group row" }, [
+                _c(
+                  "label",
+                  {
+                    staticClass: "col-md-3 form-control-label",
+                    attrs: { for: "text-input" }
+                  },
+                  [_vm._v("Iglesia:")]
+                ),
+                _vm._v(" "),
+                _c("div", { staticClass: "col-md-5" }, [
+                  _c(
+                    "select",
+                    {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.idiglesiap,
+                          expression: "idiglesiap"
+                        }
+                      ],
+                      staticClass: "form-control",
+                      on: {
+                        change: function($event) {
+                          var $$selectedVal = Array.prototype.filter
+                            .call($event.target.options, function(o) {
+                              return o.selected
+                            })
+                            .map(function(o) {
+                              var val = "_value" in o ? o._value : o.value
+                              return val
+                            })
+                          _vm.idiglesiap = $event.target.multiple
+                            ? $$selectedVal
+                            : $$selectedVal[0]
+                        }
+                      }
+                    },
+                    [
+                      _c("option", { attrs: { value: "0", disabled: "" } }, [
+                        _vm._v("Seleccione")
+                      ]),
+                      _vm._v(" "),
+                      _vm._l(_vm.arrayiglesiap, function(iglesiap) {
+                        return _c(
+                          "option",
+                          {
+                            key: iglesiap.id,
+                            domProps: { value: iglesiap.id }
+                          },
+                          [_vm._v(_vm._s(iglesiap.nombre_iglesia))]
+                        )
+                      })
+                    ],
+                    2
+                  )
                 ])
               ]),
               _vm._v(" "),
@@ -99917,7 +100643,7 @@ var render = function() {
                     _c(
                       "label",
                       { staticClass: "col-md-6 form-control-label" },
-                      [_vm._v(_vm._s(_vm.fechanaes))]
+                      [_vm._v(_vm._s(_vm.fechana))]
                     )
                   ]),
                   _vm._v(" "),
