@@ -85,12 +85,12 @@ Route::group(['middleware'=>['auth']],function(){
                             Route::get('/partida/busqueda','PartidaNacimientoController2@realizante');
 
                             //TABLA PERSONA
-                            Route::get('/persona/obtener','PersonaController@realizante');
+                            Route::get('/persona/obtenerB','PersonaController@realizante');
                             Route::get('/persona/buscarsacerdote3','PersonaController@buscarsacerdote');
                             Route::get('/persona/buscarsacerdote','PersonaController@buscarsacerdoteG');
-                            Route::get('/persona/duis','PersonaController@buscarduis');
-                            Route::get('/persona/pan','PersonaController@show');
-                            Route::put('/persona/registrar','PersonaController@store'); 
+                            Route::get('/persona/duisB','PersonaController@buscarduis');
+                            //Route::get('/persona/pan','PersonaController@show');
+                            //Route::put('/persona/registrar','PersonaController@store'); 
                             Route::get('/persona/listarcomuniones','PersonaController@listaPC');//para el realizante
                             Route::get('/persona/listarconfirmaciones','PersonaController@listaC');//para el realizante
                             Route::get('/persona/listarsupletorias','PersonaController@listaS');//para el realizante

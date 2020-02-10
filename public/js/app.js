@@ -25849,7 +25849,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     },
     llenarmodal: function llenarmodal(id) {
       var me = this;
-      var url = '/persona/obtener?id=' + id;
+      var url = '/persona/obtenerB?id=' + id;
       axios.get(url).then(function (response) {
         var d = response.data.solo;
 
@@ -26411,7 +26411,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       var d = this.duimadre;
 
       if (d != '') {
-        var url = '/persona/duis?dui=' + d;
+        var url = '/persona/duisB?dui=' + d;
         axios.get(url).then(function (response) {
           var respuesta = response.data.solo;
           var datos = response.data.persona;
@@ -26429,7 +26429,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       var d = this.duipadre;
 
       if (d != '') {
-        var url = '/persona/duis?dui=' + d;
+        var url = '/persona/duisB?dui=' + d;
         axios.get(url).then(function (response) {
           var respuesta = response.data.solo;
           var datos = response.data.persona;
@@ -26447,7 +26447,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       var d = this.duipd1;
 
       if (d != '') {
-        var url = '/persona/duis?dui=' + d;
+        var url = '/persona/duisB?dui=' + d;
         axios.get(url).then(function (response) {
           var respuesta = response.data.solo;
           var datos = response.data.persona;
@@ -26465,7 +26465,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       var d = this.duipd2;
 
       if (d != '') {
-        var url = '/persona/duis?dui=' + d;
+        var url = '/persona/duisB?dui=' + d;
         axios.get(url).then(function (response) {
           var respuesta = response.data.solo;
           var datos = response.data.persona;
@@ -26483,7 +26483,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       var d = this.duipd3;
 
       if (d != '') {
-        var url = '/persona/duis?dui=' + d;
+        var url = '/persona/duisB?dui=' + d;
         axios.get(url).then(function (response) {
           var respuesta = response.data.solo;
           var datos = response.data.persona;
@@ -26501,7 +26501,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       var d = this.duipd4;
 
       if (d != '') {
-        var url = '/persona/duis?dui=' + d;
+        var url = '/persona/duisB?dui=' + d;
         axios.get(url).then(function (response) {
           var respuesta = response.data.solo;
           var datos = response.data.persona;
