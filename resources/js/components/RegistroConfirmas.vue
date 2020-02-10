@@ -155,7 +155,7 @@
                                 <button type="button" class="btn btn-primary" @click="siguiente('3')">Siguiente</button>
                             </div> 
                         </div>
-                        <div v-show="cambiarm==3 || cambiarm==11">
+                        <div v-show="cambiarm==3 || cambiarm==11"> <!-- aqui-->
                             <div class="form-group row">
                                 <label class="col-md-3 form-control-label" for="text-input"><b>Datos del padrino 1</b></label>
                             </div>
@@ -191,10 +191,18 @@
                                     <div v-for="error in errorMostrarMsj" :key="error" v-text="error"></div>
                                 </div>
                             </div>
-                            <div class="col-md-5 modal-fo">
-                                <button type="button" class="btn btn-secondary" @click="siguiente('12')">Regresar</button>
-                                <button type="button" class="btn btn-primary" @click="siguiente('4')">Agregar otro padrino</button>
-                                <button type="button" class="btn btn-primary" @click="siguiente('7')">Continuar</button>
+                            <div v-show="cambiarmb==1">
+                                <div class="col-md-5 modal-fo">
+                                    <button type="button" class="btn btn-secondary" @click="siguiente('12')">Regresar</button> <!--aqui 3-->
+                                    <button type="button" class="btn btn-primary" @click="siguiente('4')">Agregar otro padrino</button>
+                                    <button type="button" class="btn btn-primary" @click="siguiente('7')">Continuar</button>
+                                </div>
+                            </div>
+                            <div v-show="cambiarmb==0">
+                                <div class="col-md-5 modal-fo">
+                                    <button type="button" class="btn btn-primary" @click="siguiente('4')">Agregar otro padrino</button>
+                                    <button type="button" class="btn btn-primary" @click="siguiente('7')">Continuar</button>
+                                </div>
                             </div>
                         </div>
                         <div v-show="cambiarm==4 || cambiarm==10">
@@ -397,19 +405,19 @@
                                     <div v-for="error in errorMostrarMsj" :key="error" v-text="error"></div>
                                 </div>
                             </div>
-                            <div v-show="cambiarmb==1">
+                            <div>
                                 <div class="col-md-6">
                                     <button type="button" class="btn btn-secondary" @click="siguiente('8')">Regresar</button>
                                     <button type="button" class="btn btn-secondary" @click="cerrarm()">Cancelar</button>
                                     <button type="submit"  class="btn btn-primary" @click="abrirmodal()">Guardar</button>
                                 </div>
                             </div>
-                            <div v-show="cambiarmb==0">
+                            <!--<div v-show="cambiarmb==0">
                                 <div class="col-md-6">
                                     <button type="button" class="btn btn-secondary" @click="cerrarm()">Cancelar</button>
                                     <button type="submit"  class="btn btn-primary" @click="abrirmodal()">Guardar</button>
                                 </div>
-                            </div>
+                            </div>-->
                         </div>
                     </div>
                 </div>
@@ -487,11 +495,13 @@
                                         </div>
                                         <div class="form-group row">
                                             <label class="col-md-4 form-control-label" for="text-input">Nacido el:</label>
-                                            <label class="col-md-6 form-control-label" >{{fechanaes}}</label>
+                                            <label class="col-md-6 form-control-label" >{{fechana}}</label>
                                         </div>
-                                        <div class="form-group row">
-                                            <label class="col-md-4 form-control-label" for="text-input">Fue confirmado:</label>
-                                            <label class="col-md-6 form-control-label" >{{fecharealizaciones}}</label>
+                                        <div v-show="accionbotones==2">
+                                            <div class="form-group row">
+                                                <label class="col-md-4 form-control-label" for="text-input">Fue confirmado:</label>
+                                                <label class="col-md-6 form-control-label" >{{fecharealizaciones}}</label>
+                                            </div> 
                                         </div>
                                     </div>
                                     <div v-show="accionbotones==2">
@@ -551,7 +561,7 @@
                                     <div v-show="accionbotones==1">
                                         <div class="col-md-4 modal-fo">
                                             <button type="button" class="btn btn-secondary" @click="cerrar()">Cancelar</button>
-                                            <button type="submit"  class="btn btn-primary" @click="siguiente('7')">Continuar</button>
+                                            <button type="submit"  class="btn btn-primary" @click="siguiente('3')">Continuar</button> <!--aqui2-->
                                         </div>
                                     </div>                         
                                 </div>
@@ -721,6 +731,7 @@ export default {
                         }else{
                             this.cambiarm=3;   //padrino 1
                         }
+                        this.modal=0;
                     break;
                 }
                 case '4':
@@ -761,7 +772,6 @@ export default {
                         }else{
                             this.cambiarm=7;   //datos de la celebracion
                         }
-                        this.modal=0;
                     break;
                 } 
                 case '8':
@@ -851,12 +861,19 @@ export default {
             this.cambiarm=0;
             this.cambiarmb=0;
             this.alcaldia='';
+            this.alcaldia='';
+            this.libro='';
+            this.partida='';
+            this.folio='';
+            this.ano='';
             this.libroc='';
             this.folioc='';
             this.sexopd1='';
             this.sexopd2='';
             this.sexopd3='';
-            this.sexopd4='';    
+            this.sexopd4='';
+            this.errorDatos=0;
+            this.errorMostrarMsj=[];    
 
         },
         cerrarm(){ //botones cancelat
@@ -894,6 +911,7 @@ export default {
             this.libro='';
             this.partida='';
             this.folio='';
+            this.ano='';
             this.anio='';
             this.idpadre='';
             this.idmadre='';
@@ -905,8 +923,9 @@ export default {
             this.sexopd1='';
             this.sexopd2='';
             this.sexopd3='';
-            this.sexopd4='';       
-
+            this.sexopd4='';
+            this.errorDatos=0;
+            this.errorMostrarMsj=[];       
         },
             //Mt. cuando le da modificar en el modal
         cerrarmodal(){
@@ -1008,7 +1027,7 @@ export default {
 
             llenarmodal(id){
                 let me=this;
-                var url='/persona/obtener?id=' + id;
+                var url='/persona/obtenerConfirma?id=' + id;
                     axios.get(url) .then(function (response) {
                         var d = response.data.solo;            
                         if(d==1){
@@ -1022,10 +1041,10 @@ export default {
                             me.fechana=response.data.realizante.fecha_nacimiento;
                         }
                         if(d==2){
-                             response.data.realizante.forEach(function(element) {
+                            /* response.data.realizante.forEach(function(element) {
                             var texto = element.fecha_nacimiento;
                             element.fecha_nacimiento= texto.replace(/^(\d{4})-(\d{2})-(\d{2})$/g,'$3/$2/$1');
-                            });
+                            });*/
                             me.nombrepadre= response.data.padre.nombre_persona;
                             me.apellidopadre=response.data.padre.apellido_persona;
                             me.nombrerealizante= response.data.realizante.nombre_persona;
@@ -1034,10 +1053,10 @@ export default {
                             me.fechana=response.data.realizante.fecha_nacimiento;
                         }
                         if(d==3){
-                             response.data.realizante.forEach(function(element) {
+                             /*response.data.realizante.forEach(function(element) {
                             var texto = element.fecha_nacimiento;
                             element.fecha_nacimiento= texto.replace(/^(\d{4})-(\d{2})-(\d{2})$/g,'$3/$2/$1');
-                            });
+                            });*/
                             me.nombremadre= response.data.madre.nombre_persona;
                             me.apellidomadre=response.data.madre.apellido_persona;
                             me.nombrerealizante= response.data.realizante.nombre_persona;
@@ -1046,10 +1065,10 @@ export default {
                             me.fechana=response.data.realizante.fecha_nacimiento;
                         }
                         if(d==4){
-                             response.data.realizante.forEach(function(element) {
+                             /*response.data.realizante.forEach(function(element) {
                             var texto = element.fecha_nacimiento;
                             element.fecha_nacimiento= texto.replace(/^(\d{4})-(\d{2})-(\d{2})$/g,'$3/$2/$1');
-                            });
+                            });*/
                             me.nombrepadre= response.data.padre.nombre_persona;
                             me.apellidopadre=response.data.padre.apellido_persona;
                             me.nombremadre= response.data.madre.nombre_persona;
@@ -1277,17 +1296,30 @@ export default {
             var folio= this.folio;
             var ano= this.ano;
 
-            var url='/partida/busqueda?alcaldia=' + alcaldia + '&libro=' + libro + '&partida=' + partida + '&folio=' + folio + '&ano=' + ano;
+            var url='/partida/busquedaConfirma?alcaldia=' + alcaldia + '&libro=' + libro + '&partida=' + partida + '&folio=' + folio + '&ano=' + ano;
             axios.get(url) .then(function (response) {
                 var respuesta=response.data.solo;
-                if(respuesta==1){
+               /* if(respuesta==1){
                     me.id=response.data.realizante.idpersona;
                     me.llenarmodal(me.id);
                 }else{
                     me.cambiarm=1;
                     me.cambiarmb=1;
-                }
-                     
+                }*/
+                if(respuesta==1){
+                        me.id=response.data.realizante.idpersona;
+                        me.llenarmodal(me.id);
+                        me.cambiarmb=0;
+                    }
+                    if(respuesta==0){
+                        me.cambiarm=1;
+                        me.cambiarmb=1;
+                    }
+                     if(respuesta==2){
+                         me.validarvalores('6');
+                        
+
+                     }                     
             }).catch(function (error) {
                 console.log(error);
             });
@@ -1475,7 +1507,7 @@ export default {
 
          //Validar datos
             validarvalores(d){
-                this.errorDatos=0;
+               /* this.errorDatos=0;
                 this.errorMostrarMsj=[];
                 var RE = /^([0-9])*$/;
                 var patron =/^[a-zA-ZÑñÁáÉéÍíÓóÚúÜü\s]+$/; /////ESTOOOOOOOO
@@ -1764,7 +1796,7 @@ export default {
                                 break;   
                             }
 
-                }
+                }*/
             }
                 
             },

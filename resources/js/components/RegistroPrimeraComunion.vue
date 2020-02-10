@@ -854,34 +854,36 @@
                             //me.fechanaes=response.data.realizante.fecha_nacimiento;
                         }
                         if(d==2){
-                            response.data.realizante.forEach(function(element) {
+                           /* response.data.realizante.forEach(function(element) {
                             var texto = element.fecha_nacimiento;
                             element.fecha_nacimiento= texto.replace(/^(\d{4})-(\d{2})-(\d{2})$/g,'$3/$2/$1');
-                            });
+                            });*/
                             me.nombrepadre= response.data.padre.nombre_persona;
                             me.apellidopadre=response.data.padre.apellido_persona;
                             me.nombrerealizante= response.data.realizante.nombre_persona;
                             me.apellidorealizante=response.data.realizante.apellido_persona;
                             me.sexo=response.data.realizante.sexo;
-                            me.fechanaes=response.data.realizante.fecha_nacimiento;
+                            me.fechana=response.data.realizante.fecha_nacimiento;
+                            //me.fechanaes=response.data.realizante.fecha_nacimiento;
                         }
                         if(d==3){
-                            response.data.realizante.forEach(function(element) {
+                            /*response.data.realizante.forEach(function(element) {
                             var texto = element.fecha_nacimiento;
                             element.fecha_nacimiento= texto.replace(/^(\d{4})-(\d{2})-(\d{2})$/g,'$3/$2/$1');
-                            });
+                            });*/
                             me.nombremadre= response.data.madre.nombre_persona;
                             me.apellidomadre=response.data.madre.apellido_persona;
                             me.nombrerealizante= response.data.realizante.nombre_persona;
                             me.apellidorealizante=response.data.realizante.apellido_persona;
                             me.sexo=response.data.realizante.sexo;
-                            me.fechanaes=response.data.realizante.fecha_nacimiento;
+                            me.fechana=response.data.realizante.fecha_nacimiento;
+                            //me.fechanaes=response.data.realizante.fecha_nacimiento;
                         }
                         if(d==4){
-                            response.data.realizante.forEach(function(element) {
+                            /*response.data.realizante.forEach(function(element) {
                             var texto = element.fecha_nacimiento;
                             element.fecha_nacimiento= texto.replace(/^(\d{4})-(\d{2})-(\d{2})$/g,'$3/$2/$1');
-                            });
+                            });*/
                             me.nombrepadre= response.data.padre.nombre_persona;
                             me.apellidopadre=response.data.padre.apellido_persona;
                             me.nombremadre= response.data.madre.nombre_persona;
@@ -889,7 +891,8 @@
                             me.nombrerealizante= response.data.realizante.nombre_persona;
                             me.apellidorealizante=response.data.realizante.apellido_persona;
                             me.sexo=response.data.realizante.sexo;
-                            me.fechanaes=response.data.realizante.fecha_nacimiento;
+                            me.fechana=response.data.realizante.fecha_nacimiento;
+                            //me.fechanaes=response.data.realizante.fecha_nacimiento;
                         }
                         me.verificacion=1;
                         me.abrirmodal2();
@@ -900,7 +903,7 @@
             },
             //Validar datos
             validarvalores(d){
-                this.errorDatos=0;
+              /*  this.errorDatos=0;
                 this.errorMostrarMsj=[];
                 var RE = /^([0-9])*$/;
                 var patron =/^[a-zA-ZÑñÁáÉéÍíÓóÚúÜü\s]+$/; /////ESTOOOOOOOO
@@ -1130,7 +1133,7 @@
 
                             }
 
-                }  
+                }  */
                 
             },
             //Buscar si ya hay datos del realizante

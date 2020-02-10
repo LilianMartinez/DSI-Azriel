@@ -419,7 +419,7 @@ export default {
                   'tipo':tip,
               }) .then(function (response) {
                     me.cerrarModal();
-                    me.listarEfectivo(1,'','num_recibo',1);
+                    //me.listarEfectivo(1,'','num_recibo',1);
                     me.sumat();
                 })
                 .catch(function (error) {
