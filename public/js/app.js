@@ -23463,113 +23463,111 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
     me.cerrarModal3();
   }), _defineProperty(_methods, "validarMatrimonio1", function validarMatrimonio1() {
-    this.errorMatrimonio1 = 0;
-    this.errorMostrarMsjMatrimonio1 = [];
-    var patron = /^[a-zA-ZÑñÁáÉéÍíÓóÚúÜü\s]+$/;
-    var patrondui = /^\d{9}$/;
-    var soloIntPositivo = /^\d*$/;
-    var decimales = /^\d+(\.\d{0,2})?$/; //Comprueba que las celdas no estén vacías
-
-    if (this.libro == '' || this.num_expediente == '' || this.novioD == '' || this.novioNom == '' || this.novioAp == '' || this.noviaD == '' || this.noviaNom == '' || this.noviaAp == '' || this.ofrendaExp == '') {
-      this.errorMostrarMsjMatrimonio1.push("Todos los datos son obligatorios");
-    } else {
-      if (!soloIntPositivo.test(this.libro) || !soloIntPositivo.test(this.num_expediente)) this.errorMostrarMsjMatrimonio1.push("En libro y número de expediente solo se permiten números enteros positivos"); //if(!patrondui.test(this.novioD) || !patrondui.test(this.noviaD))this.errorMostrarMsjMatrimonio1.push("Error, El dui debe contener 9 números");
-
-      if (!patron.test(this.novioNom) || !patron.test(this.novioAp)) this.errorMostrarMsjMatrimonio1.push("Los datos del novio deben contener letras solamente");
-      if (!patron.test(this.noviaNom) || !patron.test(this.noviaAp)) this.errorMostrarMsjMatrimonio1.push("Los datos de la novia debe contener letras solamente");
-      if (!decimales.test(this.ofrendaExp)) this.errorMostrarMsjMatrimonio1.push("La ofrenda debe de ser un número positivo");
-      if (this.idcare == 0) this.errorMostrarMsjMatrimonio1.push("Debe elegir una categoría");
-    }
-
-    if (this.errorMostrarMsjMatrimonio1.length) this.errorMatrimonio1 = 1;
-    return this.errorMatrimonio1;
-  }), _defineProperty(_methods, "validarModal2", function validarModal2() {
-    this.errorModal2 = 0;
-    this.errorMostrarMsjModal2 = [];
-    var fecha = new Date();
-    var actualYear = fecha.getFullYear();
-    var actualMes = fecha.getMonth();
-    var values = this.fecha_realizacion.split("-");
-    var anio = values[0];
-
-    if (!this.fecha_realizacion) {
-      this.errorMostrarMsjModal2.push("Seleccione la fecha de realización");
-    } else {
-      if (anio < 1989) this.errorMostrarMsjModal2.push("El año debe de ser mayor a 1989");
-      if (actualYear + 1 < anio) this.errorMostrarMsjModal2.push("El año debe ser menor o igual al " + (actualYear + 1));
-    }
-
-    if (this.id_iglesia == 0) this.errorMostrarMsjModal2.push("Seleccione una iglesia");
-    if (this.idsacerdote == 0) this.errorMostrarMsjModal2.push("Seleccione el encargado de la ceremonia");
-    if (this.cargosacerdote == 0) this.errorMostrarMsjModal2.push("Seleccione el cargo del encargado");
-    if (this.errorMostrarMsjModal2.length) this.errorModal2 = 1;
-    return this.errorModal2;
-  }), _defineProperty(_methods, "validarModal3", function validarModal3() {
-    this.errorModal3 = 0;
-    this.errorMostrarMsjModal3 = [];
-    var patron = /^[a-zA-ZÑñÁáÉéÍíÓóÚúÜü\s]+$/;
-    var patrondui = /^\d{9}$/; //var soloIntPositivo= /^\d*$/;
-
-    var decimales = /^\d+(\.\d{0,2})?$/; //Esta súpervalidación ayuda a que sea imposible para el usuario dejar "padrinos en blanco"... así solo podrá ingresarlos en orden
-
-    if (!this.pad1D || !this.pad1Nom || !this.pad1Ap || this.pad1Sexo == 0) {
-      this.errorMostrarMsjModal3.push("Complete los datos de la persona 1");
-    } else {
-      if (!patron.test(this.pad1Nom) || !patron.test(this.pad1Ap)) this.errorMostrarMsjModal3.push("Los datos de la persona 1 debe contener letras solamente"); //if(!patrondui.test(this.pad1D))this.errorMostrarMsjModal3.push("Error, El dui de la persona 1 debe contener 9 números");
-
-      if (!(!this.mad1D && !this.mad1Nom && !this.mad1Ap && this.mad1Sexo == 0 && !this.pad2D && !this.pad2Nom && !this.pad2Ap && this.pad2Sexo == 0 && !this.mad2D && !this.mad2Nom && !this.mad2Ap && this.mad2Sexo == 0)) {
-        if (!this.mad1D || !this.mad1Nom || !this.mad1Ap || this.mad1Sexo == 0) {
-          this.errorMostrarMsjModal3.push("Complete los datos de la persona 2");
-        } else {
-          if (!patron.test(this.mad1Nom) || !patron.test(this.mad1Ap)) this.errorMostrarMsjModal3.push("Los datos de la persona 2 debe contener letras solamente"); //if(!patrondui.test(this.mad1D))this.errorMostrarMsjModal3.push("Error, El dui de la persona 2 debe contener 9 números");
-
-          if (!(!this.pad2D && !this.pad2Nom && !this.pad2Ap && this.pad2Sexo == 0 && !this.mad2D && !this.mad2Nom && !this.mad2Ap && this.mad2Sexo == 0)) {
-            if (!this.pad2D || !this.pad2Nom || !this.pad2Ap || this.pad2Sexo == 0) {
-              this.errorMostrarMsjModal3.push("Complete los datos de la persona 3");
-            } else {
-              if (!patron.test(this.pad2Nom) || !patron.test(this.pad2Ap)) this.errorMostrarMsjModal3.push("Los datos de la persona 3 debe contener letras solamente"); //if(!patrondui.test(this.pad2D))this.errorMostrarMsjModal3.push("Error, El dui de la persona 3 debe contener 9 números");
-
-              if (!(!this.mad2D && !this.mad2Nom && !this.mad2Ap && this.mad2Sexo == 0)) {
-                if (!this.mad2D || !this.mad2Nom || !this.mad2Ap || this.mad2Sexo == 0) {
-                  this.errorMostrarMsjModal3.push("Complete los datos de la persona 4");
-                } else {
-                  if (!patron.test(this.mad2Nom) || !patron.test(this.mad2Ap)) this.errorMostrarMsjModal3.push("Los datos de la persona 4 debe contener letras solamente"); //if(!patrondui.test(this.mad2D))this.errorMostrarMsjModal3.push("Error, El dui de la persona 4 debe contener 9 números");
-                }
-              }
-            }
-          }
-        }
+    /*  this.errorMatrimonio1=0;
+      this.errorMostrarMsjMatrimonio1=[];
+      var patron =/^[a-zA-ZÑñÁáÉéÍíÓóÚúÜü\s]+$/;
+      var patrondui= /^\d{9}$/;
+      var soloIntPositivo= /^\d*$/;
+      var decimales= /^\d+(\.\d{0,2})?$/;
+      //Comprueba que las celdas no estén vacías
+       if (this.libro =='' || this.num_expediente =='' || this.novioD =='' || this.novioNom=='' || this.novioAp=='' || this.noviaD =='' || this.noviaNom=='' || this.noviaAp=='' || this.ofrendaExp==''){
+          this.errorMostrarMsjMatrimonio1.push("Todos los datos son obligatorios");
+      }else{
+          if(!soloIntPositivo.test(this.libro) || !soloIntPositivo.test(this.num_expediente))this.errorMostrarMsjMatrimonio1.push("En libro y número de expediente solo se permiten números enteros positivos");
+          //if(!patrondui.test(this.novioD) || !patrondui.test(this.noviaD))this.errorMostrarMsjMatrimonio1.push("Error, El dui debe contener 9 números");
+          if(!patron.test(this.novioNom) || !patron.test(this.novioAp))this.errorMostrarMsjMatrimonio1.push("Los datos del novio deben contener letras solamente");
+          if(!patron.test(this.noviaNom) || !patron.test(this.noviaAp))this.errorMostrarMsjMatrimonio1.push("Los datos de la novia debe contener letras solamente");
+          if(!decimales.test(this.ofrendaExp))this.errorMostrarMsjMatrimonio1.push("La ofrenda debe de ser un número positivo");
+          if(this.idcare==0)this.errorMostrarMsjMatrimonio1.push("Debe elegir una categoría");
       }
+       if (this.errorMostrarMsjMatrimonio1.length) this.errorMatrimonio1 = 1;
+       return this.errorMatrimonio1;*/
+  }), _defineProperty(_methods, "validarModal2", function validarModal2() {
+    /*   this.errorModal2=0;
+       this.errorMostrarMsjModal2=[];
+        var fecha = new Date();
+       var actualYear = fecha.getFullYear();
+       var actualMes = fecha.getMonth();
+       var values = this.fecha_realizacion.split("-");
+       var anio = values[0];
+        if(!this.fecha_realizacion){
+           this.errorMostrarMsjModal2.push("Seleccione la fecha de realización");
+       }else{
+           if(anio < 1989)this.errorMostrarMsjModal2.push("El año debe de ser mayor a 1989");
+           if((actualYear+1)<anio)this.errorMostrarMsjModal2.push("El año debe ser menor o igual al " + (actualYear+1));
+       }
+       if(this.id_iglesia==0) this.errorMostrarMsjModal2.push("Seleccione una iglesia");
+       if(this.idsacerdote==0) this.errorMostrarMsjModal2.push("Seleccione el encargado de la ceremonia");
+       if(this.cargosacerdote==0) this.errorMostrarMsjModal2.push("Seleccione el cargo del encargado");
+        if (this.errorMostrarMsjModal2.length) this.errorModal2 = 1;
+        return this.errorModal2;*/
+  }), _defineProperty(_methods, "validarModal3", function validarModal3() {
+    /*this.errorModal3=0;
+    this.errorMostrarMsjModal3=[];
+    var patron =/^[a-zA-ZÑñÁáÉéÍíÓóÚúÜü\s]+$/;
+    var patrondui= /^\d{9}$/;
+    //var soloIntPositivo= /^\d*$/;
+    var decimales= /^\d+(\.\d{0,2})?$/;
+     //Esta súpervalidación ayuda a que sea imposible para el usuario dejar "padrinos en blanco"... así solo podrá ingresarlos en orden
+    if(!this.pad1D || !this.pad1Nom || !this.pad1Ap || this.pad1Sexo==0){
+        this.errorMostrarMsjModal3.push("Complete los datos de la persona 1");
+    }else{
+        if(!patron.test(this.pad1Nom) || !patron.test(this.pad1Ap)) this.errorMostrarMsjModal3.push("Los datos de la persona 1 debe contener letras solamente");
+        //if(!patrondui.test(this.pad1D))this.errorMostrarMsjModal3.push("Error, El dui de la persona 1 debe contener 9 números");
+         if(!(!this.mad1D && !this.mad1Nom && !this.mad1Ap && this.mad1Sexo==0 &&
+           !this.pad2D && !this.pad2Nom && !this.pad2Ap && this.pad2Sexo==0 &&
+           !this.mad2D && !this.mad2Nom && !this.mad2Ap && this.mad2Sexo==0)){
+             if(!this.mad1D || !this.mad1Nom || !this.mad1Ap || this.mad1Sexo==0){
+                this.errorMostrarMsjModal3.push("Complete los datos de la persona 2");
+            }else{
+                if(!patron.test(this.mad1Nom) || !patron.test(this.mad1Ap)) this.errorMostrarMsjModal3.push("Los datos de la persona 2 debe contener letras solamente");
+                //if(!patrondui.test(this.mad1D))this.errorMostrarMsjModal3.push("Error, El dui de la persona 2 debe contener 9 números");
+                 if(!(!this.pad2D && !this.pad2Nom && !this.pad2Ap && this.pad2Sexo==0 &&
+                !this.mad2D && !this.mad2Nom && !this.mad2Ap && this.mad2Sexo==0)){
+                     if(!this.pad2D || !this.pad2Nom || !this.pad2Ap || this.pad2Sexo==0){
+                        this.errorMostrarMsjModal3.push("Complete los datos de la persona 3");
+                    }else{
+                        if(!patron.test(this.pad2Nom) || !patron.test(this.pad2Ap)) this.errorMostrarMsjModal3.push("Los datos de la persona 3 debe contener letras solamente");
+                        //if(!patrondui.test(this.pad2D))this.errorMostrarMsjModal3.push("Error, El dui de la persona 3 debe contener 9 números");
+                         if(!(!this.mad2D && !this.mad2Nom && !this.mad2Ap && this.mad2Sexo==0)){
+                            if(!this.mad2D || !this.mad2Nom || !this.mad2Ap || this.mad2Sexo==0){
+                                this.errorMostrarMsjModal3.push("Complete los datos de la persona 4");
+                            }else{
+                                if(!patron.test(this.mad2Nom) || !patron.test(this.mad2Ap)) this.errorMostrarMsjModal3.push("Los datos de la persona 4 debe contener letras solamente");
+                                //if(!patrondui.test(this.mad2D))this.errorMostrarMsjModal3.push("Error, El dui de la persona 4 debe contener 9 números");
+                            }
+                        }
+                    }
+                }
+            }
+        }
     }
-
-    if (this.monto == "") {
-      this.errorMostrarMsjModal3.push("Por favor ingrese la ofrenda por realización del matrimonio");
-    } else {
-      if (!decimales.test(this.monto)) this.errorMostrarMsjModal3.push("La ofrenda debe de ser un número positivo");
-      if (this.idcare == 0) this.errorMostrarMsjModal3.push("Seleccione una Categoría");
-    } //falta validar para que solo sean números
-
-
+    
+    if(this.monto==""){
+        this.errorMostrarMsjModal3.push("Por favor ingrese la ofrenda por realización del matrimonio");
+    }else{
+        if(!decimales.test(this.monto)) this.errorMostrarMsjModal3.push("La ofrenda debe de ser un número positivo");
+        
+        if(this.idcare==0) this.errorMostrarMsjModal3.push("Seleccione una Categoría");
+    }
+    //falta validar para que solo sean números
     if (this.errorMostrarMsjModal3.length) this.errorModal3 = 1;
-    return this.errorModal3;
+     return this.errorModal3;*/
   }), _defineProperty(_methods, "validarModal4", function validarModal4() {
-    this.errorModal4 = 0;
-    this.errorMostrarMsjModal4 = [];
-    var RE = /^\d*(\.\d{1})?\d{0,1}$/;
-    this.conceptoim;
-    this.montoConstancia; //if(this.cobrado!=true)this.errorMostrarMsjModal4.push("Debe cobrar la solicitud de la constancia de confirma");
-
-    if (this.conceptoim == '') this.errorMostrarMsjModal4.push("El campo de motivo de la constancia no puede estar vacio");
-    if (this.idperso == '') this.errorMostrarMsjModal4.push("Debe elegir al Padre que firmará la constancia");
-    if (this.cargoim == '') this.errorMostrarMsjModal4.push("Debe elegir el cargo del padre que firmará la constancia");
-
-    if (this.montoConstancia == '') {
-      this.errorMostrarMsjModal4.push("Debe cobrar la constancia");
-    }
-
-    if (!RE.test(this.montoConstancia)) this.errorMostrarMsjModal4.push("La ofrenda por constancias solo pueden ser decimales");
-    if (this.errorMostrarMsjModal4.length) this.errorModal4 = 1;
-    return this.errorModal4;
+    /* this.errorModal4=0;
+     this.errorMostrarMsjModal4=[];
+     var RE = /^\d*(\.\d{1})?\d{0,1}$/;
+     this.conceptoim;
+     this.montoConstancia;
+      //if(this.cobrado!=true)this.errorMostrarMsjModal4.push("Debe cobrar la solicitud de la constancia de confirma");
+     if(this.conceptoim=='')this.errorMostrarMsjModal4.push("El campo de motivo de la constancia no puede estar vacio");
+     if(this.idperso=='')this.errorMostrarMsjModal4.push("Debe elegir al Padre que firmará la constancia");
+     if(this.cargoim=='')this.errorMostrarMsjModal4.push("Debe elegir el cargo del padre que firmará la constancia");
+      if(this.montoConstancia ==''){
+             this.errorMostrarMsjModal4.push("Debe cobrar la constancia");
+         }if(!RE.test(this.montoConstancia))this.errorMostrarMsjModal4.push("La ofrenda por constancias solo pueden ser decimales");
+      if (this.errorMostrarMsjModal4.length) this.errorModal4 = 1;
+      return this.errorModal4;*/
   }), _defineProperty(_methods, "siguiente", function siguiente(d) {
     switch (d) {
       case '1':
@@ -29344,7 +29342,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     this.llenadolistazona();
 
     if (this.idzonap) {
-      this.iglesiasm(this.idzonap);
+      this.iglesiasp(this.idzonap);
       this.idiglesiap = data['idiglesia'];
       this.nombre_iglesia = data['nombre_iglesia'];
     }
@@ -29412,234 +29410,234 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       console.log(error);
     });
   }), _defineProperty(_methods, "validarvalores", function validarvalores(d) {
-    /*  this.errorDatos=0;
-      this.errorMostrarMsj=[];
-      var RE = /^([0-9])*$/;
-      var patron =/^[a-zA-ZÑñÁáÉéÍíÓóÚúÜü\s]+$/; /////ESTOOOOOOOO
-      var anio= /^\d{4}$/;
-      var patrondui= /^\d{9}$/;
-      var fecha = new Date();
-      var anioac= fecha.getFullYear();
-      var mesac= fecha.getMonth();
-      switch(d){
-          case '1':
-              {
-                  var Min_Length = 5;
-                  var lengthmin = this.alcaldia.length;
-                  if (lengthmin < Min_Length )this.errorMostrarMsj.push("La alcaldía debe tener más de 5 letras");
-                  if (!patron.test(this.alcaldia))this.errorMostrarMsj.push("La alcaldía solo debe tener letras");
-                  if(this.errorMostrarMsj.length) this.errorDatos=1;
-                  return this.errorDatos;
-                  break;
-              }
-          case '2':
-              {
-                  var Min_Length = 5;
-                  var lengthmin = this.alcaldia.length;
-                  if (lengthmin < Min_Length)this.errorMostrarMsj.push("La alcaldía debe tener más de 5 letras");
-                  if (!patron.test(this.alcaldia))this.errorMostrarMsj.push("La alcaldía solo debe tener letras");
-                  if(!this.libro) this.errorMostrarMsj.push("El número de libro no puede estar vacío");
-                  if(this.libro=='0') this.errorMostrarMsj.push("El número de libro debe ser distinto a 0");
-                  if (!RE.test(this.libro))  this.errorMostrarMsj.push("El número de libro debe ser un numero entero");
-                  if(this.errorMostrarMsj.length) this.errorDatos=1;
-                  return this.errorDatos;
-                  break;
-              }
-          case '3':
-              {
-                  var Min_Length = 5;
-                  var lengthmin = this.alcaldia.length;
-                  if (lengthmin < Min_Length)this.errorMostrarMsj.push("La alcaldía debe tener más de 5 letras");
-                  if (!patron.test(this.alcaldia))this.errorMostrarMsj.push("La alcaldía solo debe tener letras");
-                  if(!this.libro) this.errorMostrarMsj.push("El número de libro no puede estar vacío");
-                  if (!RE.test(this.libro))  this.errorMostrarMsj.push("El número de libro debe ser un numero entero");
-                  if(this.libro=='0') this.errorMostrarMsj.push("El número de libro debe ser distinto a 0");
-                  if(!this.partida) this.errorMostrarMsj.push("En número de partida no puede estar vacío");
-                  if (!RE.test(this.partida))  this.errorMostrarMsj.push("El número de partida debe ser un numero entero");
-                  if(this.partida=='0') this.errorMostrarMsj.push("El número de partida debe ser distinto a 0");
-                  if(this.errorMostrarMsj.length) this.errorDatos=1;
-                  return this.errorDatos;
-                  break;
-              }
-          case '4':
-              {
-                  var Min_Length = 5;
-                  var lengthmin = this.alcaldia.length;
-                  if (lengthmin < Min_Length)this.errorMostrarMsj.push("La alcaldía debe tener más de 5 letras");
-                  if (!patron.test(this.alcaldia))this.errorMostrarMsj.push("La alcaldía solo debe tener letras");
-                  if(!this.libro) this.errorMostrarMsj.push("El número de libro no puede estar vacío");
-                  if (!RE.test(this.libro))  this.errorMostrarMsj.push("El número de libro debe ser un numero entero");
-                  if(this.libro=='0') this.errorMostrarMsj.push("El número de libro debe ser distinto a 0");
-                  if(!this.partida) this.errorMostrarMsj.push("En número de partida no puede estar vacío");
-                  if (!RE.test(this.partida))  this.errorMostrarMsj.push("El número de partida debe ser un numero entero");
-                  if(this.partida=='0') this.errorMostrarMsj.push("El número de partida debe ser distinto a 0");
-                  if(!this.folio) this.errorMostrarMsj.push("El número de folio no puede estar vacío");
-                  if (!RE.test(this.folio))  this.errorMostrarMsj.push("El número de folio debe ser un numero entero");
-                  if(this.folio=='0') this.errorMostrarMsj.push("El número de folio debe ser distinto a 0");
-                  if(this.errorMostrarMsj.length) this.errorDatos=1;
-                  return this.errorDatos;
-                  break;
-              }
-          case '5':
-              {
-                  var Min_Length = 5;
-                  var lengthmin = this.alcaldia.length;
-                  if (lengthmin < Min_Length)this.errorMostrarMsj.push("La alcaldía debe tener más de 5 letras");
-                  if (!patron.test(this.alcaldia))this.errorMostrarMsj.push("La alcaldía solo debe tener letras");
-                  if(!this.libro) this.errorMostrarMsj.push("El numero de libro no puede estar vacío");
-                  if (!RE.test(this.libro))  this.errorMostrarMsj.push("El número de libro debe ser un numero entero");
-                  if(this.libro=='0') this.errorMostrarMsj.push("El número de libro debe ser distinto a 0");
-                  if(!this.partida) this.errorMostrarMsj.push("En número de partida no puede estar vacío");
-                  if (!RE.test(this.partida))  this.errorMostrarMsj.push("El número de partida debe ser un numero entero");
-                  if(this.partida=='0') this.errorMostrarMsj.push("El número de partida debe ser distinto a 0");
-                  if(!this.folio) this.errorMostrarMsj.push("El número de folio no puede estar vacío");
-                  if (!RE.test(this.folio))  this.errorMostrarMsj.push("El número de folio debe ser un numero entero");
-                  if(this.folio=='0') this.errorMostrarMsj.push("El número de folio debe ser distinto a 0");
-                  if(!this.ano) this.errorMostrarMsj.push("El año no puede estar vacío");
-                  if (!RE.test(this.ano))  this.errorMostrarMsj.push("El año debe ser un numero entero");
-                  if(this.ano<'1900') this.errorMostrarMsj.push("El año debe ser un año mayor a 1900");
-                  if(this.ano>anioac) this.errorMostrarMsj.push("El año debe ser igual o menor al actual");
-                  if (!anio.test(this.ano))  this.errorMostrarMsj.push("El año debe ser de cuatro digitos");
-                  if(this.errorMostrarMsj.length) this.errorDatos=1;
-                  return this.errorDatos;
-                  break;
-              }
-              case '6':
-                  {
-                  this.errorMostrarMsj.push("Esta persona ya realizo este sacramento, favor verificar datos");
-                  if(this.errorMostrarMsj.length) this.errorDatos=1;
-                  break;
-                  }
-              case '7':
-                  {
-                  var Min_Length = 3;
-                  var lengthmin = this.nombrerealizante.length;
-                  if (lengthmin < Min_Length)this.errorMostrarMsj.push("El nombre debe tener mas de tres letras");
-                  if (!patron.test(this.nombrerealizante))this.errorMostrarMsj.push("El nombre solo debe tener letras");
-                  if(this.errorMostrarMsj.length) this.errorDatos=1;
-                  return this.errorDatos;
-                  break;
-                  }
-              case '8':
-                  {
-                  var Min_Length = 3;
-                  var lengthmin = this.nombrerealizante.length;
-                  if (lengthmin < Min_Length)this.errorMostrarMsj.push("El nombre debe tener mas de tres letras");
-                  if (!patron.test(this.nombrerealizante))this.errorMostrarMsj.push("El nombre solo debe tener letras");
-                  var lengthmin2 = this.apellidorealizante.length;
-                  if (lengthmin2 < Min_Length)this.errorMostrarMsj.push("El apellido debe tener mas de tres letras");
-                  if (!patron.test(this.apellidorealizante))this.errorMostrarMsj.push("El apellido solo debe tener letras");
-                  if(this.errorMostrarMsj.length) this.errorDatos=1;
-                  return this.errorDatos;
-                  break;
-                  }
-              case '11':
-                  {
-                  var Min_Length = 3;
-                  var lengthmin = this.nombrerealizante.length;
-                  if (lengthmin < Min_Length)this.errorMostrarMsj.push("El nombre debe tener mas de tres letras");
-                  if (!patron.test(this.nombrerealizante))this.errorMostrarMsj.push("El nombre solo debe tener letras");
-                  var lengthmin2 = this.apellidorealizante.length;
-                  if (lengthmin2 < Min_Length)this.errorMostrarMsj.push("El apellido debe tener mas de tres letras");
-                  if (!patron.test(this.apellidorealizante))this.errorMostrarMsj.push("El apellido solo debe tener letras");
-                  if (!patrondui.test(this.dui))  this.errorMostrarMsj.push("El DUI debe ser de nueve digitos");
-                  if(this.errorMostrarMsj.length) this.errorDatos=1;
-                  return this.errorDatos;
-                  break;
-                  }
-              case '12':
-                  {
-                  var Min_Length = 3;
-                  var lengthmin = this.nombrerealizante.length;
-                  if (lengthmin < Min_Length)this.errorMostrarMsj.push("El nombre debe tener mas de tres letras");
-                  if (!patron.test(this.nombrerealizante))this.errorMostrarMsj.push("El nombre solo debe tener letras");
-                  var lengthmin2 = this.apellidorealizante.length;
-                  if (lengthmin2 < Min_Length)this.errorMostrarMsj.push("El apellido debe tener mas de tres letras");
-                  if (!patron.test(this.apellidorealizante))this.errorMostrarMsj.push("El apellido solo debe tener letras");
-                  if (!patrondui.test(this.dui) && this.Acciondui==1)  this.errorMostrarMsj.push("El DUI debe ser de nueve digitos");
-                  if(!this.fechana) this.errorMostrarMsj.push("La fecha de nacimiento no puede estar vacia");
-                  if(!this.sexo)this.errorMostrarMsj.push("El sexo no puede estar vacio");
-                  var values=this.fechana.split("-");
-                  var dia = values[2];
-                  var mes = values[1];
-                  var ano = values[0];
-                  if (ano < 1900)this.errorMostrarMsj.push("El año debe ser mayor a 1990");
-                  if(anioac<ano) {
-                      this.errorMostrarMsj.push("El año debe ser menor o igual al actual");
-                      
-                  }
-                  if(mesac<mes && ano==anioac) {
-                          this.errorMostrarMsj.push("El mes debe ser menor al actual");
-                          }
-                  if(this.errorMostrarMsj.length) this.errorDatos=1;
-                  return this.errorDatos;
-                  }
-              case '13':
-                  {
-                  var values=this.fechana.split("-");
-                  var dia = values[2];
-                  var mes = values[1];
-                  var ano = values[0];
-                  if (ano < 1900)this.errorMostrarMsj.push("El año debe ser mayor a 1990");
-                  if(anioac<ano) {
-                      this.errorMostrarMsj.push("El año debe ser menor o igual al actual");
-                      
-                  }
-                  if(mesac<mes && ano==anioac) {
-                          this.errorMostrarMsj.push("El mes debe ser menor al actual");
-                          }
-                  if(this.errorMostrarMsj.length) this.errorDatos=1;
-                  return this.errorDatos;
-                  break;
-                  }
-              case '14':
-              {
-                  if (this.nombremadre!='' && !patron.test(this.nombremadre))this.errorMostrarMsj.push("El nombre de la madre solo debe tener letras");
-                  if (this.apellidomadre!='' && !patron.test(this.apellidomadre))this.errorMostrarMsj.push("El apellido de la madre solo debe tener letras");
-                  if (this.nombrepadre!='' && !patron.test(this.nombrepadre))this.errorMostrarMsj.push("El nombre del padre solo debe tener letras");
-                  if (this.apellidopadre!='' && !patron.test(this.apellidopadre))this.errorMostrarMsj.push("El apellido del padre solo debe tener letras");
-                  if (this.duimadre!='' && !patrondui.test(this.duimadre))this.errorMostrarMsj.push("El DUI de la madre debe ser de nueve digitos");                     
-                  if (this.duipadre!='' && !patrondui.test(this.duipadre))this.errorMostrarMsj.push("El DUI del padre debe ser de nueve digitos");
-                  if(this.errorMostrarMsj.length) this.errorDatos=1;
-                  return this.errorDatos;
-                  break;
-              }
-              case '15':
-                  {
-                      var RE = /^\d*(\.\d{1})?\d{0,1}$/;
-                      if (!RE.test(this.monto))  this.errorMostrarMsj.push("El monto solo pueden ser decimales");
-                      if(this.errorMostrarMsj.length) this.errorDatos=1;
-                      return this.errorDatos;
-                      break;
-                  }
-              case '16':
-                  {
-                      var RE = /^\d*(\.\d{1})?\d{0,1}$/;
-                      if (!RE.test(this.monto))  this.errorMostrarMsj.push("El monto solo pueden ser decimales");
-                      var values=this.fecharealizacion.split("-");
-                      var ano = values[0];
-                      if (ano < 1989)this.errorMostrarMsj.push("El año debe ser mayor a 1989");
-                      if(anioac<ano)this.errorMostrarMsj.push("El año debe ser menor o igual al actual");
-                      if(this.errorMostrarMsj.length) this.errorDatos=1;
-                      return this.errorDatos;
-                      break;
-                   }
-                  case '17':
-                  {
-                      var RE = /^\d*(\.\d{1})?\d{0,1}$/;
-                      if (!RE.test(this.monto))  this.errorMostrarMsj.push("El monto solo pueden ser decimales");
-                      var values=this.fecharealizacion.split("-");
-                      var ano = values[0];
-                      if(this.idsacerdote=='') this.errorMostrarMsj.push("Debe de seleccionar un sacerdote");
-                      if(this.cargosacerdote=='') this.errorMostrarMsj.push("Debe de asignar un cargo al sacerdote");
-                      if(this.idcare=='') this.errorMostrarMsj.push("Debe de seleccionar una categoria");
-                      if (ano < 1989)this.errorMostrarMsj.push("El año debe ser mayor a 1989");
-                      if(anioac<ano)this.errorMostrarMsj.push("El año debe ser menor o igual al actual");
-                      if(this.errorMostrarMsj.length) this.errorDatos=1;
-                      return this.errorDatos;
-                      break;
-                   }
-       }  */
+    /*this.errorDatos=0;
+    this.errorMostrarMsj=[];
+    var RE = /^([0-9])*$/;
+    var patron =/^[a-zA-ZÑñÁáÉéÍíÓóÚúÜü\s]+$/; /////ESTOOOOOOOO
+    var anio= /^\d{4}$/;
+    var patrondui= /^\d{9}$/;
+    var fecha = new Date();
+    var anioac= fecha.getFullYear();
+    var mesac= fecha.getMonth();
+    switch(d){
+        case '1':
+            {
+                var Min_Length = 5;
+                var lengthmin = this.alcaldia.length;
+                if (lengthmin < Min_Length )this.errorMostrarMsj.push("La alcaldía debe tener más de 5 letras");
+                if (!patron.test(this.alcaldia))this.errorMostrarMsj.push("La alcaldía solo debe tener letras");
+                if(this.errorMostrarMsj.length) this.errorDatos=1;
+                return this.errorDatos;
+                break;
+            }
+        case '2':
+            {
+                var Min_Length = 5;
+                var lengthmin = this.alcaldia.length;
+                if (lengthmin < Min_Length)this.errorMostrarMsj.push("La alcaldía debe tener más de 5 letras");
+                if (!patron.test(this.alcaldia))this.errorMostrarMsj.push("La alcaldía solo debe tener letras");
+                if(!this.libro) this.errorMostrarMsj.push("El número de libro no puede estar vacío");
+                if(this.libro=='0') this.errorMostrarMsj.push("El número de libro debe ser distinto a 0");
+                if (!RE.test(this.libro))  this.errorMostrarMsj.push("El número de libro debe ser un numero entero");
+                if(this.errorMostrarMsj.length) this.errorDatos=1;
+                return this.errorDatos;
+                break;
+            }
+        case '3':
+            {
+                var Min_Length = 5;
+                var lengthmin = this.alcaldia.length;
+                if (lengthmin < Min_Length)this.errorMostrarMsj.push("La alcaldía debe tener más de 5 letras");
+                if (!patron.test(this.alcaldia))this.errorMostrarMsj.push("La alcaldía solo debe tener letras");
+                if(!this.libro) this.errorMostrarMsj.push("El número de libro no puede estar vacío");
+                if (!RE.test(this.libro))  this.errorMostrarMsj.push("El número de libro debe ser un numero entero");
+                if(this.libro=='0') this.errorMostrarMsj.push("El número de libro debe ser distinto a 0");
+                if(!this.partida) this.errorMostrarMsj.push("En número de partida no puede estar vacío");
+                if (!RE.test(this.partida))  this.errorMostrarMsj.push("El número de partida debe ser un numero entero");
+                if(this.partida=='0') this.errorMostrarMsj.push("El número de partida debe ser distinto a 0");
+                if(this.errorMostrarMsj.length) this.errorDatos=1;
+                return this.errorDatos;
+                break;
+            }
+        case '4':
+            {
+                var Min_Length = 5;
+                var lengthmin = this.alcaldia.length;
+                if (lengthmin < Min_Length)this.errorMostrarMsj.push("La alcaldía debe tener más de 5 letras");
+                if (!patron.test(this.alcaldia))this.errorMostrarMsj.push("La alcaldía solo debe tener letras");
+                if(!this.libro) this.errorMostrarMsj.push("El número de libro no puede estar vacío");
+                if (!RE.test(this.libro))  this.errorMostrarMsj.push("El número de libro debe ser un numero entero");
+                if(this.libro=='0') this.errorMostrarMsj.push("El número de libro debe ser distinto a 0");
+                if(!this.partida) this.errorMostrarMsj.push("En número de partida no puede estar vacío");
+                if (!RE.test(this.partida))  this.errorMostrarMsj.push("El número de partida debe ser un numero entero");
+                if(this.partida=='0') this.errorMostrarMsj.push("El número de partida debe ser distinto a 0");
+                if(!this.folio) this.errorMostrarMsj.push("El número de folio no puede estar vacío");
+                if (!RE.test(this.folio))  this.errorMostrarMsj.push("El número de folio debe ser un numero entero");
+                if(this.folio=='0') this.errorMostrarMsj.push("El número de folio debe ser distinto a 0");
+                if(this.errorMostrarMsj.length) this.errorDatos=1;
+                return this.errorDatos;
+                break;
+            }
+        case '5':
+            {
+                var Min_Length = 5;
+                var lengthmin = this.alcaldia.length;
+                if (lengthmin < Min_Length)this.errorMostrarMsj.push("La alcaldía debe tener más de 5 letras");
+                if (!patron.test(this.alcaldia))this.errorMostrarMsj.push("La alcaldía solo debe tener letras");
+                if(!this.libro) this.errorMostrarMsj.push("El numero de libro no puede estar vacío");
+                if (!RE.test(this.libro))  this.errorMostrarMsj.push("El número de libro debe ser un numero entero");
+                if(this.libro=='0') this.errorMostrarMsj.push("El número de libro debe ser distinto a 0");
+                if(!this.partida) this.errorMostrarMsj.push("En número de partida no puede estar vacío");
+                if (!RE.test(this.partida))  this.errorMostrarMsj.push("El número de partida debe ser un numero entero");
+                if(this.partida=='0') this.errorMostrarMsj.push("El número de partida debe ser distinto a 0");
+                if(!this.folio) this.errorMostrarMsj.push("El número de folio no puede estar vacío");
+                if (!RE.test(this.folio))  this.errorMostrarMsj.push("El número de folio debe ser un numero entero");
+                if(this.folio=='0') this.errorMostrarMsj.push("El número de folio debe ser distinto a 0");
+                if(!this.ano) this.errorMostrarMsj.push("El año no puede estar vacío");
+                if (!RE.test(this.ano))  this.errorMostrarMsj.push("El año debe ser un numero entero");
+                if(this.ano<'1900') this.errorMostrarMsj.push("El año debe ser un año mayor a 1900");
+                if(this.ano>anioac) this.errorMostrarMsj.push("El año debe ser igual o menor al actual");
+                if (!anio.test(this.ano))  this.errorMostrarMsj.push("El año debe ser de cuatro digitos");
+                if(this.errorMostrarMsj.length) this.errorDatos=1;
+                return this.errorDatos;
+                break;
+            }
+            case '6':
+                {
+                this.errorMostrarMsj.push("Esta persona ya realizo este sacramento, favor verificar datos");
+                if(this.errorMostrarMsj.length) this.errorDatos=1;
+                break;
+                }
+            case '7':
+                {
+                var Min_Length = 3;
+                var lengthmin = this.nombrerealizante.length;
+                if (lengthmin < Min_Length)this.errorMostrarMsj.push("El nombre debe tener mas de tres letras");
+                if (!patron.test(this.nombrerealizante))this.errorMostrarMsj.push("El nombre solo debe tener letras");
+                if(this.errorMostrarMsj.length) this.errorDatos=1;
+                return this.errorDatos;
+                break;
+                }
+            case '8':
+                {
+                var Min_Length = 3;
+                var lengthmin = this.nombrerealizante.length;
+                if (lengthmin < Min_Length)this.errorMostrarMsj.push("El nombre debe tener mas de tres letras");
+                if (!patron.test(this.nombrerealizante))this.errorMostrarMsj.push("El nombre solo debe tener letras");
+                var lengthmin2 = this.apellidorealizante.length;
+                if (lengthmin2 < Min_Length)this.errorMostrarMsj.push("El apellido debe tener mas de tres letras");
+                if (!patron.test(this.apellidorealizante))this.errorMostrarMsj.push("El apellido solo debe tener letras");
+                if(this.errorMostrarMsj.length) this.errorDatos=1;
+                return this.errorDatos;
+                break;
+                }
+            case '11':
+                {
+                var Min_Length = 3;
+                var lengthmin = this.nombrerealizante.length;
+                if (lengthmin < Min_Length)this.errorMostrarMsj.push("El nombre debe tener mas de tres letras");
+                if (!patron.test(this.nombrerealizante))this.errorMostrarMsj.push("El nombre solo debe tener letras");
+                var lengthmin2 = this.apellidorealizante.length;
+                if (lengthmin2 < Min_Length)this.errorMostrarMsj.push("El apellido debe tener mas de tres letras");
+                if (!patron.test(this.apellidorealizante))this.errorMostrarMsj.push("El apellido solo debe tener letras");
+                if (!patrondui.test(this.dui))  this.errorMostrarMsj.push("El DUI debe ser de nueve digitos");
+                if(this.errorMostrarMsj.length) this.errorDatos=1;
+                return this.errorDatos;
+                break;
+                }
+            case '12':
+                {
+                var Min_Length = 3;
+                var lengthmin = this.nombrerealizante.length;
+                if (lengthmin < Min_Length)this.errorMostrarMsj.push("El nombre debe tener mas de tres letras");
+                if (!patron.test(this.nombrerealizante))this.errorMostrarMsj.push("El nombre solo debe tener letras");
+                var lengthmin2 = this.apellidorealizante.length;
+                if (lengthmin2 < Min_Length)this.errorMostrarMsj.push("El apellido debe tener mas de tres letras");
+                if (!patron.test(this.apellidorealizante))this.errorMostrarMsj.push("El apellido solo debe tener letras");
+                if (!patrondui.test(this.dui) && this.Acciondui==1)  this.errorMostrarMsj.push("El DUI debe ser de nueve digitos");
+                if(!this.fechana) this.errorMostrarMsj.push("La fecha de nacimiento no puede estar vacia");
+                if(!this.sexo)this.errorMostrarMsj.push("El sexo no puede estar vacio");
+                var values=this.fechana.split("-");
+                var dia = values[2];
+                var mes = values[1];
+                var ano = values[0];
+                if (ano < 1900)this.errorMostrarMsj.push("El año debe ser mayor a 1990");
+                if(anioac<ano) {
+                    this.errorMostrarMsj.push("El año debe ser menor o igual al actual");
+                    
+                }
+                if(mesac<mes && ano==anioac) {
+                        this.errorMostrarMsj.push("El mes debe ser menor al actual");
+                        }
+                if(this.errorMostrarMsj.length) this.errorDatos=1;
+                return this.errorDatos;
+                }
+            case '13':
+                {
+                var values=this.fechana.split("-");
+                var dia = values[2];
+                var mes = values[1];
+                var ano = values[0];
+                if (ano < 1900)this.errorMostrarMsj.push("El año debe ser mayor a 1990");
+                if(anioac<ano) {
+                    this.errorMostrarMsj.push("El año debe ser menor o igual al actual");
+                    
+                }
+                if(mesac<mes && ano==anioac) {
+                        this.errorMostrarMsj.push("El mes debe ser menor al actual");
+                        }
+                if(this.errorMostrarMsj.length) this.errorDatos=1;
+                return this.errorDatos;
+                break;
+                }
+            case '14':
+            {
+                if (this.nombremadre!='' && !patron.test(this.nombremadre))this.errorMostrarMsj.push("El nombre de la madre solo debe tener letras");
+                if (this.apellidomadre!='' && !patron.test(this.apellidomadre))this.errorMostrarMsj.push("El apellido de la madre solo debe tener letras");
+                if (this.nombrepadre!='' && !patron.test(this.nombrepadre))this.errorMostrarMsj.push("El nombre del padre solo debe tener letras");
+                if (this.apellidopadre!='' && !patron.test(this.apellidopadre))this.errorMostrarMsj.push("El apellido del padre solo debe tener letras");
+                if (this.duimadre!='' && !patrondui.test(this.duimadre))this.errorMostrarMsj.push("El DUI de la madre debe ser de nueve digitos");                     
+                if (this.duipadre!='' && !patrondui.test(this.duipadre))this.errorMostrarMsj.push("El DUI del padre debe ser de nueve digitos");
+                if(this.errorMostrarMsj.length) this.errorDatos=1;
+                return this.errorDatos;
+                break;
+            }
+            case '15':
+                {
+                    var RE = /^\d*(\.\d{1})?\d{0,1}$/;
+                    if (!RE.test(this.monto))  this.errorMostrarMsj.push("El monto solo pueden ser decimales");
+                    if(this.errorMostrarMsj.length) this.errorDatos=1;
+                    return this.errorDatos;
+                    break;
+                }
+            case '16':
+                {
+                    var RE = /^\d*(\.\d{1})?\d{0,1}$/;
+                    if (!RE.test(this.monto))  this.errorMostrarMsj.push("El monto solo pueden ser decimales");
+                    var values=this.fecharealizacion.split("-");
+                    var ano = values[0];
+                    if (ano < 1989)this.errorMostrarMsj.push("El año debe ser mayor a 1989");
+                    if(anioac<ano)this.errorMostrarMsj.push("El año debe ser menor o igual al actual");
+                    if(this.errorMostrarMsj.length) this.errorDatos=1;
+                    return this.errorDatos;
+                    break;
+                 }
+                case '17':
+                {
+                    var RE = /^\d*(\.\d{1})?\d{0,1}$/;
+                    if (!RE.test(this.monto))  this.errorMostrarMsj.push("El monto solo pueden ser decimales");
+                    var values=this.fecharealizacion.split("-");
+                    var ano = values[0];
+                    if(this.idsacerdote=='') this.errorMostrarMsj.push("Debe de seleccionar un sacerdote");
+                    if(this.cargosacerdote=='') this.errorMostrarMsj.push("Debe de asignar un cargo al sacerdote");
+                    if(this.idcare=='') this.errorMostrarMsj.push("Debe de seleccionar una categoria");
+                    if (ano < 1989)this.errorMostrarMsj.push("El año debe ser mayor a 1989");
+                    if(anioac<ano)this.errorMostrarMsj.push("El año debe ser menor o igual al actual");
+                    if(this.errorMostrarMsj.length) this.errorDatos=1;
+                    return this.errorDatos;
+                    break;
+                 }
+     } */
   }), _defineProperty(_methods, "verificarpersona", function verificarpersona() {
     var me = this;
     var alcaldia = this.alcaldia.toUpperCase();
@@ -29729,47 +29727,47 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
     if (length1 == tamaño) {
       if (m != '' && p != '') {
-        //introduje ambos duis
+        //introduje ambos duis //existen datos de ambos
         this.tipo = 1;
       }
 
       if (m == '' && p != '' && duim != '') {
-        //introduje ambos duis pero el de mama no esta
+        //introduje ambos duis pero el de mama no esta //datos nuevos de la mama, existe datos de papa
         this.tipo = 2;
       }
 
       if (p == '' && m != '' && duip != '') {
-        //introduje ambos duis pero el de papa no esta
+        //introduje ambos duis pero el de papa no esta //datos nuevos del papa, existe datos de mama
         this.tipo = 3;
       }
 
       if (m == '' && p == '') {
-        //introduje ambos duis y ninguno esta
+        //introduje ambos duis y ninguno esta  //datos nuevos de ambos
         this.tipo = 4;
       }
 
       if (p != '' && duim == '') {
-        // solo introduje el dui del papa y no hay datos de mama
+        // solo introduje el dui del papa y no hay datos de mama //existen datos de papa y solo de papa
         this.tipo = 5;
       }
 
       if (m != '' && duip == '') {
-        // solo introduje el dui de la mama y no hay datos de papa
+        // solo introduje el dui de la mama y no hay datos de papa //existen datos de mama y solo de mama
         this.tipo = 6;
       }
 
       if (duip == '' && duim == '') {
-        //no hay datos de ambos
+        //no hay datos de ambos //no hay ni habra datos de papa y mama
         this.tipo = 7;
       }
 
       if (duim != '' && m == '' && duip == '') {
-        // es nueva mama, no tiene papa
+        // es nueva mama, no tiene papa //datos nuevos de mama, no hay papa
         this.tipo = 8;
       }
 
       if (duip != '' && p == '' && duim == '') {
-        // es nuevo papa, no tiene mama
+        // es nuevo papa, no tiene mama //datos nuevos de papa, no hay mama
         this.tipo = 9;
       }
 

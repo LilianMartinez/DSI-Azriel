@@ -96,6 +96,7 @@ class ConfirmaController extends Controller
                 $personap->nombre_persona= $request->nombre_m;
                 $personap->apellido_persona=$request->apellido_m;
                 $personap->dui_pasaporte=$request->dui_m;
+                $personap->sexo='F';
                 $personap->save();
 
                 $personareali = new Persona();
@@ -155,6 +156,7 @@ class ConfirmaController extends Controller
                 $personap->nombre_persona= $request->nombre_p;
                 $personap->apellido_persona=$request->apellido_p;
                 $personap->dui_pasaporte=$request->dui_p;
+                $personap->sexo='M';
                 $personap->save();
 
                 $personareali = new Persona();
@@ -215,6 +217,7 @@ class ConfirmaController extends Controller
                 $personap->nombre_persona= $request->nombre_p;
                 $personap->apellido_persona=$request->apellido_p;
                 $personap->dui_pasaporte=$request->dui_p;
+                $personap->sexo='M';
                 $personap->save();
 
                 $personap = new Persona();
@@ -222,6 +225,7 @@ class ConfirmaController extends Controller
                 $personap->nombre_persona= $request->nombre_m;
                 $personap->apellido_persona=$request->apellido_m;
                 $personap->dui_pasaporte=$request->dui_m;
+                $personap->sexo='F';
                 $personap->save();
 
                 $personareali = new Persona();
@@ -361,8 +365,8 @@ class ConfirmaController extends Controller
             case '7':{
                 $id_persona=Persona::max('id');
                 $idreali = $id_persona+1;
-                $idpartida = PartidaNacimiento::max('id');
-                $idp = $idpartida+1;
+                $idpartida_p = PartidaNacimiento::max('id');
+                $idpartida = $idpartida_p+1;
                 $monto_p= Efectivo::max('id');
                 $montos=$monto_p+1;
 
@@ -386,7 +390,7 @@ class ConfirmaController extends Controller
                 $personareali->save();
         
                 $partida = new PartidaNacimiento();
-                $partida->id=$idp;
+                $partida->id=$idpartida;
                 $partida->alcaldia= $request->alcaldia;
                 $partida->libro=$request->libro;
                 $partida->partida=$request->partida;
@@ -427,10 +431,11 @@ class ConfirmaController extends Controller
                 $efectivo->save();
 
                 $personap=new Persona();
-                $personap->id=$idpa;
-                $personap->nombre_persona=$request->nombre_p;
-                $personap->apellido_persona=$request->apellido_p;
-                $personap->dui_pasaporte=$request->dui_p;
+                $personap->id=$idm;
+                $personap->nombre_persona=$request->nombre_m; //revisar AQUIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII
+                $personap->apellido_persona=$request->apellido_m;
+                $personap->dui_pasaporte=$request->dui_m;
+                $personap->sexo='F';
                 $personap->save();
 
                 $persona_reali = new Persona();
@@ -445,7 +450,7 @@ class ConfirmaController extends Controller
                 $persona_reali->save();
 
                 $partida = new PartidaNacimiento();
-                $partida->id = $idp;
+                $partida->id = $idpartida;
                 $partida->alcaldia = $request->alcaldia;
                 $partida->libro = $request->libro;
                 $partida->partida = $request->partida;
@@ -492,6 +497,7 @@ class ConfirmaController extends Controller
                 $personap->nombre_persona= $request->nombre_p;
                 $personap->apellido_persona=$request->apellido_p;
                 $personap->dui_pasaporte=$request->dui_p;
+                $personap->sexo='M';
                 $personap->save();
 
                 $personareali = new Persona();
