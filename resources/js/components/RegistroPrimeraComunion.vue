@@ -832,7 +832,7 @@
                 this.llenadolistazona();
                 if(this.idzonap)
                     {
-                        this.iglesiasm(this.idzonap);
+                        this.iglesiasp(this.idzonap);
                         this.idiglesiap=data['idiglesia'];
                         this.nombre_iglesia=data['nombre_iglesia'];
                     }
@@ -903,7 +903,7 @@
             },
             //Validar datos
             validarvalores(d){
-              /*  this.errorDatos=0;
+                /*this.errorDatos=0;
                 this.errorMostrarMsj=[];
                 var RE = /^([0-9])*$/;
                 var patron =/^[a-zA-ZÑñÁáÉéÍíÓóÚúÜü\s]+$/; /////ESTOOOOOOOO
@@ -1133,7 +1133,7 @@
 
                             }
 
-                }  */
+                } */
                 
             },
             //Buscar si ya hay datos del realizante
@@ -1232,31 +1232,31 @@
                 var nomm=this.nombremadre;
                 var nomp=this.nombrepadre;
                 if(length1 == tamaño){
-                if(m!='' && p!=''){ //introduje ambos duis
+                if(m!='' && p!=''){ //introduje ambos duis //existen datos de ambos
                     this.tipo=1;
                 }
-                if(m=='' && p!='' && duim!=''){ //introduje ambos duis pero el de mama no esta
+                if(m=='' && p!='' && duim!=''){ //introduje ambos duis pero el de mama no esta //datos nuevos de la mama, existe datos de papa
                     this.tipo=2;
                 }
-                if(p=='' && m!='' && duip!=''){ //introduje ambos duis pero el de papa no esta
+                if(p=='' && m!='' && duip!=''){ //introduje ambos duis pero el de papa no esta //datos nuevos del papa, existe datos de mama
                     this.tipo=3;
                 }
-                if(m=='' && p==''){ //introduje ambos duis y ninguno esta
+                if(m=='' && p==''){ //introduje ambos duis y ninguno esta  //datos nuevos de ambos
                     this.tipo=4;
                 }
-                if(p!='' && duim==''){ // solo introduje el dui del papa y no hay datos de mama
+                if(p!='' && duim==''){ // solo introduje el dui del papa y no hay datos de mama //existen datos de papa y solo de papa
                     this.tipo=5;
                 }
-                if(m!='' && duip==''){ // solo introduje el dui de la mama y no hay datos de papa
+                if(m!='' && duip==''){ // solo introduje el dui de la mama y no hay datos de papa //existen datos de mama y solo de mama
                     this.tipo=6;
                 }
-                if(duip=='' && duim==''){ //no hay datos de ambos
+                if(duip=='' && duim==''){ //no hay datos de ambos //no hay ni habra datos de papa y mama
                     this.tipo=7;
                 }
-                if(duim!='' &&  m=='' && duip==''){ // es nueva mama, no tiene papa
+                if(duim!='' &&  m=='' && duip==''){ // es nueva mama, no tiene papa //datos nuevos de mama, no hay papa
                     this.tipo=8;
                 }
-                if(duip!='' &&  p=='' && duim==''){ // es nuevo papa, no tiene mama
+                if(duip!='' &&  p=='' && duim==''){ // es nuevo papa, no tiene mama //datos nuevos de papa, no hay mama
                     this.tipo=9;
                 }
                 console.log(this.tipo, m, p);
@@ -1319,8 +1319,8 @@
                 'titulo': this.cargosacerdote,
                 }) .then(function (response) {
                      me.modal=0;
-                    me.cambiarm=0;
-                    me.cerrarm();
+                     me.cambiarm=0;
+                     me.cerrarm();
                    
                     
                 })
@@ -1328,8 +1328,6 @@
                     console.log(error);
                 });
             } 
-
-
             },
             
         mounted() {

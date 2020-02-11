@@ -64,16 +64,19 @@ Route::group(['middleware'=>['auth']],function(){
                             Route::get('/bautizo','BautizoController@index');
                             Route::put('/bautizo/registrar','BautizoController@store');
                             Route::put('/nota/marginaracta','BautizoController@marginar');
+
+                            //TABLA sacramentos
+                            Route::put('/sacramento/registrar','Sacramentos3Controller@registro'); //PRIMERA COMUNIÓN
                           
 
                             //TABLA PARTIDA NACIMIENTO
                             Route::get('/partida/busqueda','PartidaNacimientoController@realizante');//Buscar partida nacimiento- PRIMERA COMUNIÓN
-                            Route::get('/partida/busquedaConfirma','PartidaNacimientoController2@realizante'); //Buscar partida nacimiento-modulo confirma
+                            Route::get('/partida/busquedaConfirma','PartidaNacimientoController2@realizante'); //Buscar partida nacimiento-CONFIRMA
 
                             //TABLA PERSONA
                             Route::get('/persona/obtener','PersonaController@realizante'); //PRIMERA COMUNIÓN 
-                            Route::get('/persona/buscarsacerdote3','PersonaController@buscarsacerdote'); //primera comunión-confirma-??
-                            Route::get('/persona/buscarsacerdote','PersonaController@buscarsacerdoteG'); //para TODOS~
+                            Route::get('/persona/buscarsacerdote3','PersonaController@buscarsacerdote'); //primera comunión-confirma - y quizas bautizo y matrimonio
+                            Route::get('/persona/buscarsacerdote','PersonaController@buscarsacerdoteG'); //MATRIMONIO
                             Route::get('/persona/duis','PersonaController@buscarduis');//primera comunión - confirma
                             Route::get('/persona/pan','PersonaController@show'); // ????
                             Route::put('/persona/registrar','PersonaController@store'); //PRIMERA COMUNIÓN
@@ -81,23 +84,23 @@ Route::group(['middleware'=>['auth']],function(){
                             Route::get('/persona/obtenerConfirma','PersonaController3@realizante'); //CONFIRMA 
                             //Route::get('/persona/duis','PersonaController3@buscarduis'); //Es el mismo que el de primera comunión
                             Route::get('/persona/pan','PersonaController3@show'); //????
-                            Route::put('/persona/registrar','PersonaController3@store');
-                            //Route::get('/persona/listar','PersonaController3@lista');
+                            //Route::put('/persona/registrar','PersonaController3@store'); //creo que no se ocupa
+                            //Route::get('/persona/listar','PersonaController3@lista'); //creo que no se ocupa
 
                                                  //TABLA confirma
-                            Route::put('/confirma/registrar','ConfirmaController@store');
-                            Route::put('/confirma/marginaracta','BautizoController@marginacionacta');
+                            Route::put('/confirma/registrar','ConfirmaController@store');//CONFIRMA
+                            //Route::put('/confirma/marginaracta','BautizoController@marginacionacta'); //aun no se para que es
 
                             Route::get('/persona/listarcomuniones','PersonaController@listaPC');//para el realizante PRIMERA COMUNIÓN
                             Route::get('/persona/listarconfirmaciones','PersonaController@listaC');//para el realizante CONFIRMA
-                            Route::get('/persona/listarsupletorias','PersonaController@listaS');//para el realizante
+                            Route::get('/persona/listarsupletorias','PersonaController@listaS');//para el realizante SUPLETORIA
 
                                         //MATRIMONIO
                             Route::get('/persona/duihombre','PersonaController2@buscarduihombre');//este se utiliza para novio, padrinos y sacerdote
                             Route::get('/persona/duimujer','PersonaController2@buscarduimujer');//este se utiliza para novia y madrinas
                             Route::put('/persona/registrar2','PersonaController2@store');//Modificado para poder registrar nuevo expediente matrimonial
-                            Route::put('/persona/actualizar2','PersonaController2@update');
-                            Route::get('persona/buscariglesia','PersonaController2@buscariglesia');
+                            Route::put('/persona/actualizar2','PersonaController2@update'); //MATRIMONIO
+                            Route::get('persona/buscariglesia','PersonaController2@buscariglesia'); //MATRIMONIO
 
                                            //MANTENIMIENTO PERSONAS RELIGIOSAS
                                            Route::get('/religioso/index','PersonaController@indexRel');
@@ -125,13 +128,6 @@ Route::group(['middleware'=>['auth']],function(){
                                         //Confirma
                                 Route::get('/persona/certificadoConfirma/{id}/{id_padre}/{id_madre}/{id_realizante1}','PersonaController2@certificadoConfirma')->name('confirma_pdf');
                                 Route::put('/persona/certificadoConfirma','PersonaController2@certificadoConfirma');
-
-                        
-                           
-
-
-                            //TABLA sacramentos
-                            Route::put('/sacramento/registrar','Sacramentos3Controller@registro');
                             
 
                             //TABLA DE CATEGORIA RESUMEN
@@ -144,7 +140,6 @@ Route::group(['middleware'=>['auth']],function(){
                             //TABLA DE RESUMEN ECONOMICO
                             Route::get('/resumeneconomico','ResumenEconomicoController@index');
                             Route::get('/resumeneconomico/buscarAM','ResumenEconomicoController@buscarAM');
-
                             
 
                             //TABLA IGLESIA
@@ -180,15 +175,15 @@ Route::group(['middleware'=>['auth']],function(){
                              
                             
                             //Tabla Sacramento
-                            Route::get('/sacramento','SacramentoController@index');
-                            Route::get('/sacramentoplus','SacramentoController@index'); //POR SI ACASO... LUEGO DEBEMOS CAMBIAR LA "BUSQUEDA" AL INDEX DE PERSONA
-                            Route::get('/sacramento/storematrimonio1','SacramentoController@storeMatrimonio1');// Metodo para guardar matrimonio paso1
-                            Route::post('/sacramento/registrar','SacramentoController@store');
-                            Route::put('/sacramento/registrarboda','SacramentoController@registrarboda');
-                            Route::put('/sacramento/actualizar','SacramentoController@update');
-                            Route::put('/sacramento/activarexpediente','SacramentoController@activarexpediente');
-                            Route::put('/sacramento/desactivarexpediente','SacramentoController@desactivarexpediente');
-                            //Route::put('/sacramento/finalizarexpediente','SacramentoController@finalizarexpediente');
+                            Route::get('/sacramento','SacramentoController@index'); //MATRIMONIO
+                            Route::get('/sacramentoplus','SacramentoController@index'); //MATRIMONIO - POR SI ACASO... LUEGO DEBEMOS CAMBIAR LA "BUSQUEDA" AL INDEX DE PERSONA 
+                            Route::get('/sacramento/storematrimonio1','SacramentoController@storeMatrimonio1');//MATRIMONIO- Metodo para guardar matrimonio paso1
+                            //Route::post('/sacramento/registrar','SacramentoController@store'); //no se ocupa era de matrimonio
+                            Route::put('/sacramento/registrarboda','SacramentoController@registrarboda'); //MATRIMONIO
+                            Route::put('/sacramento/actualizar','SacramentoController@update'); //MATRIMONIO
+                            Route::put('/sacramento/activarexpediente','SacramentoController@activarexpediente'); //MATROMINIO
+                            Route::put('/sacramento/desactivarexpediente','SacramentoController@desactivarexpediente'); //MATRIMONIO
+                            //Route::put('/sacramento/finalizarexpediente','SacramentoController@finalizarexpediente'); //MATROMONIO
 
                         
                             //TABLA ZONAS
