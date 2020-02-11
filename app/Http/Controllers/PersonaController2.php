@@ -131,6 +131,7 @@ class PersonaController2 extends Controller
                 $novio->apellido_persona=$request->novioAp;
                 $novio->dui_pasaporte=$request->novioD;
                 $novio->sexo='M';
+                $novio->estado=1;
                 $novio->save();
 
                 $novia = new Persona();
@@ -139,6 +140,7 @@ class PersonaController2 extends Controller
                 $novia->apellido_persona=$request->noviaAp;
                 $novia->dui_pasaporte=$request->noviaD;
                 $novia->sexo='F';
+                $novia->estado=1;
                 $novia->save();
         
                 //En esta etapa, solo se almacenan los datos para abrir un nuevo expediente (no hay datos de padrino y boda hasta la siguiente etapa en "actualizar")
@@ -179,6 +181,7 @@ class PersonaController2 extends Controller
                 $novio->apellido_persona=$request->novioAp;
                 $novio->dui_pasaporte=$request->novioD;
                 $novio->sexo='M';
+                $novio->estado=1;
                 $novio->save();
         
                 //En esta etapa, solo se almacenan los datos para abrir un nuevo expediente (no hay datos de padrino y boda hasta la siguiente etapa en "actualizar")
@@ -220,6 +223,7 @@ class PersonaController2 extends Controller
                 $novia->apellido_persona=$request->noviaAp;
                 $novia->dui_pasaporte=$request->noviaD;
                 $novia->sexo='F';
+                $novia->estado=1;
                 $novia->save();
         
                 //En esta etapa, solo se almacenan los datos para abrir un nuevo expediente (no hay datos de padrino y boda hasta la siguiente etapa en "actualizar")

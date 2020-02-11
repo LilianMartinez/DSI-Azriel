@@ -193,6 +193,7 @@ class SacramentoController extends Controller
                 $pad1->apellido_persona=$request->pad1Ap;
                 $pad1->dui_pasaporte=$request->pad1D;
                 $pad1->sexo=$request->pad1Sexo;
+                $pad1->estado=1;
                 $pad1->save();
         
                 $sacramento = Sacramento::findOrFail($request->id);
@@ -264,6 +265,7 @@ class SacramentoController extends Controller
                 $pad1->apellido_persona=$request->pad1Ap;
                 $pad1->dui_pasaporte=$request->pad1D;
                 $pad1->sexo=$request->pad1Sexo;
+                $pad1->estado=1;
                 $pad1->save();
 
                 $pad2 = new Persona();
@@ -272,6 +274,7 @@ class SacramentoController extends Controller
                 $pad2->apellido_persona=$request->mad1Ap;
                 $pad2->dui_pasaporte=$request->mad1D;
                 $pad2->sexo=$request->mad1Sexo;
+                $pad2->estado=1;
                 $pad2->save();
         
                 $sacramento = Sacramento::findOrFail($request->id);
@@ -313,6 +316,7 @@ class SacramentoController extends Controller
                 $pad2->apellido_persona=$request->mad1Ap;
                 $pad2->dui_pasaporte=$request->mad1D;
                 $pad2->sexo=$request->mad1Sexo;
+                $pad2->estado=1;
                 $pad2->save();
         
                 $sacramento = Sacramento::findOrFail($request->id);
@@ -354,6 +358,7 @@ class SacramentoController extends Controller
                 $pad1->apellido_persona=$request->pad1Ap;
                 $pad1->dui_pasaporte=$request->pad1D;
                 $pad1->sexo=$request->pad1Sexo;
+                $pad1->estado=1;
                 $pad1->save();
 
                 $sacramento = Sacramento::findOrFail($request->id);
@@ -431,6 +436,7 @@ class SacramentoController extends Controller
                 $pad1->apellido_persona=$request->pad1Ap;
                 $pad1->dui_pasaporte=$request->pad1D;
                 $pad1->sexo=$request->pad1Sexo;
+                $pad1->estado=1;
                 $pad1->save();
 
                 $pad2 = new Persona();
@@ -439,6 +445,7 @@ class SacramentoController extends Controller
                 $pad2->apellido_persona=$request->mad1Ap;
                 $pad2->dui_pasaporte=$request->mad1D;
                 $pad2->sexo=$request->mad1Sexo;
+                $pad2->estado=1;
                 $pad2->save();
 
                 $pad3 = new Persona();
@@ -447,6 +454,7 @@ class SacramentoController extends Controller
                 $pad3->apellido_persona=$request->pad2Ap;
                 $pad3->dui_pasaporte=$request->pad2D;
                 $pad3->sexo=$request->pad2Sexo;
+                $pad3->estado=1;
                 $pad3->save();
         
                 $sacramento = Sacramento::findOrFail($request->id);
@@ -490,6 +498,7 @@ class SacramentoController extends Controller
                 $pad2->apellido_persona=$request->mad1Ap;
                 $pad2->dui_pasaporte=$request->mad1D;
                 $pad2->sexo=$request->mad1Sexo;
+                $pad2->estado=1;
                 $pad2->save();
 
                 $pad3 = new Persona();
@@ -498,6 +507,7 @@ class SacramentoController extends Controller
                 $pad3->apellido_persona=$request->pad2Ap;
                 $pad3->dui_pasaporte=$request->pad2D;
                 $pad3->sexo=$request->pad2Sexo;
+                $pad3->estado=1;
                 $pad3->save();
 
                 $sacramento = Sacramento::findOrFail($request->id);
@@ -541,6 +551,7 @@ class SacramentoController extends Controller
                 $pad1->apellido_persona=$request->pad1Ap;
                 $pad1->dui_pasaporte=$request->pad1D;
                 $pad1->sexo=$request->pad1Sexo;
+                $pad1->estado=1;
                 $pad1->save();
 
                 $pad3 = new Persona();
@@ -549,6 +560,7 @@ class SacramentoController extends Controller
                 $pad3->apellido_persona=$request->pad2Ap;
                 $pad3->dui_pasaporte=$request->pad2D;
                 $pad3->sexo=$request->pad2Sexo;
+                $pad3->estado=1;
                 $pad3->save();
 
                 $sacramento = Sacramento::findOrFail($request->id);
@@ -592,6 +604,7 @@ class SacramentoController extends Controller
                 $pad3->apellido_persona=$request->pad2Ap;
                 $pad3->dui_pasaporte=$request->pad2D;
                 $pad3->sexo=$request->pad2Sexo;
+                $pad3->estado=1;
                 $pad3->save();
 
                 $sacramento = Sacramento::findOrFail($request->id);
@@ -635,6 +648,7 @@ class SacramentoController extends Controller
                 $pad1->apellido_persona=$request->pad1Ap;
                 $pad1->dui_pasaporte=$request->pad1D;
                 $pad1->sexo=$request->pad1Sexo;
+                $pad1->estado=1;
                 $pad1->save();
 
                 $pad2 = new Persona();
@@ -643,6 +657,7 @@ class SacramentoController extends Controller
                 $pad2->apellido_persona=$request->mad1Ap;
                 $pad2->dui_pasaporte=$request->mad1D;
                 $pad2->sexo=$request->mad1Sexo;
+                $pad2->estado=1;
                 $pad2->save();
 
                 $sacramento = Sacramento::findOrFail($request->id);
@@ -686,6 +701,7 @@ class SacramentoController extends Controller
                 $pad2->apellido_persona=$request->mad1Ap;
                 $pad2->dui_pasaporte=$request->mad1D;
                 $pad2->sexo=$request->mad1Sexo;
+                $pad2->estado=1;
                 $pad2->save();
 
                 $sacramento = Sacramento::findOrFail($request->id);
@@ -729,6 +745,7 @@ class SacramentoController extends Controller
                 $pad1->apellido_persona=$request->pad1Ap;
                 $pad1->dui_pasaporte=$request->pad1D;
                 $pad1->sexo=$request->pad1Sexo;
+                $pad1->estado=1;
                 $pad1->save();
 
                 $sacramento = Sacramento::findOrFail($request->id);
@@ -808,6 +825,7 @@ class SacramentoController extends Controller
                 $pad1->apellido_persona=$request->pad1Ap;
                 $pad1->dui_pasaporte=$request->pad1D;
                 $pad1->sexo=$request->pad1Sexo;
+                $pad1->estado=1;
                 $pad1->save();
 
                 $pad2 = new Persona();
@@ -816,6 +834,7 @@ class SacramentoController extends Controller
                 $pad2->apellido_persona=$request->mad1Ap;
                 $pad2->dui_pasaporte=$request->mad1D;
                 $pad2->sexo=$request->mad1Sexo;
+                $pad2->estado=1;
                 $pad2->save();
 
                 $pad3 = new Persona();
@@ -824,6 +843,7 @@ class SacramentoController extends Controller
                 $pad3->apellido_persona=$request->pad2Ap;
                 $pad3->dui_pasaporte=$request->pad2D;
                 $pad3->sexo=$request->pad2Sexo;
+                $pad3->estado=1;
                 $pad3->save();
 
                 $pad4 = new Persona();
@@ -832,6 +852,7 @@ class SacramentoController extends Controller
                 $pad4->apellido_persona=$request->mad2Ap;
                 $pad4->dui_pasaporte=$request->mad2D;
                 $pad4->sexo=$request->mad2Sexo;
+                $pad4->estado=1;
                 $pad4->save();
         
                 //En esta etapa, solo se almacenan los datos para abrir un nuevo expediente (no hay datos de padrino y boda hasta la siguiente etapa en "actualizar")
@@ -878,6 +899,7 @@ class SacramentoController extends Controller
                 $pad2->apellido_persona=$request->mad1Ap;
                 $pad2->dui_pasaporte=$request->mad1D;
                 $pad2->sexo=$request->mad1Sexo;
+                $pad2->estado=1;
                 $pad2->save();
 
                 $pad3 = new Persona();
@@ -886,6 +908,7 @@ class SacramentoController extends Controller
                 $pad3->apellido_persona=$request->pad2Ap;
                 $pad3->dui_pasaporte=$request->pad2D;
                 $pad3->sexo=$request->pad2Sexo;
+                $pad3->estado=1;
                 $pad3->save();
 
                 $pad4 = new Persona();
@@ -894,6 +917,7 @@ class SacramentoController extends Controller
                 $pad4->apellido_persona=$request->mad2Ap;
                 $pad4->dui_pasaporte=$request->mad2D;
                 $pad4->sexo=$request->mad2Sexo;
+                $pad4->estado=1;
                 $pad4->save();
         
                 //En esta etapa, solo se almacenan los datos para abrir un nuevo expediente (no hay datos de padrino y boda hasta la siguiente etapa en "actualizar")
@@ -941,6 +965,7 @@ class SacramentoController extends Controller
                 $pad1->apellido_persona=$request->pad1Ap;
                 $pad1->dui_pasaporte=$request->pad1D;
                 $pad1->sexo=$request->pad1Sexo;
+                $pad1->estado=1;
                 $pad1->save();
 
                 $pad3 = new Persona();
@@ -949,6 +974,7 @@ class SacramentoController extends Controller
                 $pad3->apellido_persona=$request->pad2Ap;
                 $pad3->dui_pasaporte=$request->pad2D;
                 $pad3->sexo=$request->pad2Sexo;
+                $pad3->estado=1;
                 $pad3->save();
 
                 $pad4 = new Persona();
@@ -957,6 +983,7 @@ class SacramentoController extends Controller
                 $pad4->apellido_persona=$request->mad2Ap;
                 $pad4->dui_pasaporte=$request->mad2D;
                 $pad4->sexo=$request->mad2Sexo;
+                $pad4->estado=1;
                 $pad4->save();
         
                 //Esta parte de Sacramento No cambiará en ningun de los otros casos
@@ -1003,6 +1030,7 @@ class SacramentoController extends Controller
                 $pad3->apellido_persona=$request->pad2Ap;
                 $pad3->dui_pasaporte=$request->pad2D;
                 $pad3->sexo=$request->pad2Sexo;
+                $pad3->estado=1;
                 $pad3->save();
 
                 $pad4 = new Persona();
@@ -1011,6 +1039,7 @@ class SacramentoController extends Controller
                 $pad4->apellido_persona=$request->mad2Ap;
                 $pad4->dui_pasaporte=$request->mad2D;
                 $pad4->sexo=$request->mad2Sexo;
+                $pad4->estado=1;
                 $pad4->save();
         
                 //Esta parte de Sacramento No cambiará en ningun de los otros casos
@@ -1057,6 +1086,7 @@ class SacramentoController extends Controller
                 $pad1->apellido_persona=$request->pad1Ap;
                 $pad1->dui_pasaporte=$request->pad1D;
                 $pad1->sexo=$request->pad1Sexo;
+                $pad1->estado=1;
                 $pad1->save();
 
                 $pad2 = new Persona();
@@ -1065,6 +1095,7 @@ class SacramentoController extends Controller
                 $pad2->apellido_persona=$request->mad1Ap;
                 $pad2->dui_pasaporte=$request->mad1D;
                 $pad2->sexo=$request->mad1Sexo;
+                $pad2->estado=1;
                 $pad2->save();
 
                 $pad4 = new Persona();
@@ -1073,6 +1104,7 @@ class SacramentoController extends Controller
                 $pad4->apellido_persona=$request->mad2Ap;
                 $pad4->dui_pasaporte=$request->mad2D;
                 $pad4->sexo=$request->mad2Sexo;
+                $pad4->estado=1;
                 $pad4->save();
         
                 //Esto no se cambia:
@@ -1119,6 +1151,7 @@ class SacramentoController extends Controller
                 $pad2->apellido_persona=$request->mad1Ap;
                 $pad2->dui_pasaporte=$request->mad1D;
                 $pad2->sexo=$request->mad1Sexo;
+                $pad2->estado=1;
                 $pad2->save();
 
                 $pad4 = new Persona();
@@ -1127,6 +1160,7 @@ class SacramentoController extends Controller
                 $pad4->apellido_persona=$request->mad2Ap;
                 $pad4->dui_pasaporte=$request->mad2D;
                 $pad4->sexo=$request->mad2Sexo;
+                $pad4->estado=1;
                 $pad4->save();
         
                 //Esta parte de Sacramento No cambiará en ningun de los otros casos
@@ -1173,6 +1207,7 @@ class SacramentoController extends Controller
                 $pad1->apellido_persona=$request->pad1Ap;
                 $pad1->dui_pasaporte=$request->pad1D;
                 $pad1->sexo=$request->pad1Sexo;
+                $pad1->estado=1;
                 $pad1->save();
 
                 $pad4 = new Persona();
@@ -1181,6 +1216,7 @@ class SacramentoController extends Controller
                 $pad4->apellido_persona=$request->mad2Ap;
                 $pad4->dui_pasaporte=$request->mad2D;
                 $pad4->sexo=$request->mad2Sexo;
+                $pad4->estado=1;
                 $pad4->save();
         
                 //Esta parte de Sacramento No cambiará en ningun de los otros casos
@@ -1227,6 +1263,7 @@ class SacramentoController extends Controller
                 $pad4->apellido_persona=$request->mad2Ap;
                 $pad4->dui_pasaporte=$request->mad2D;
                 $pad4->sexo=$request->mad2Sexo;
+                $pad4->estado=1;
                 $pad4->save();
         
                 //Esta parte de Sacramento No cambiará en ningun de los otros casos
@@ -1273,6 +1310,7 @@ class SacramentoController extends Controller
                 $pad1->apellido_persona=$request->pad1Ap;
                 $pad1->dui_pasaporte=$request->pad1D;
                 $pad1->sexo=$request->pad1Sexo;
+                $pad1->estado=1;
                 $pad1->save();
 
                 $pad2 = new Persona();
@@ -1281,6 +1319,7 @@ class SacramentoController extends Controller
                 $pad2->apellido_persona=$request->mad1Ap;
                 $pad2->dui_pasaporte=$request->mad1D;
                 $pad2->sexo=$request->mad1Sexo;
+                $pad2->estado=1;
                 $pad2->save();
 
                 $pad3 = new Persona();
@@ -1289,6 +1328,7 @@ class SacramentoController extends Controller
                 $pad3->apellido_persona=$request->pad2Ap;
                 $pad3->dui_pasaporte=$request->pad2D;
                 $pad3->sexo=$request->pad2Sexo;
+                $pad3->estado=1;
                 $pad3->save();
         
                 //Esto no se cambia:
@@ -1335,6 +1375,7 @@ class SacramentoController extends Controller
                 $pad2->apellido_persona=$request->mad1Ap;
                 $pad2->dui_pasaporte=$request->mad1D;
                 $pad2->sexo=$request->mad1Sexo;
+                $pad2->estado=1;
                 $pad2->save();
 
                 $pad3 = new Persona();
@@ -1343,6 +1384,7 @@ class SacramentoController extends Controller
                 $pad3->apellido_persona=$request->pad2Ap;
                 $pad3->dui_pasaporte=$request->pad2D;
                 $pad3->sexo=$request->pad2Sexo;
+                $pad3->estado=1;
                 $pad3->save();
         
                 //Esta parte de Sacramento No cambiará en ningun de los otros casos
@@ -1389,6 +1431,7 @@ class SacramentoController extends Controller
                 $pad1->apellido_persona=$request->pad1Ap;
                 $pad1->dui_pasaporte=$request->pad1D;
                 $pad1->sexo=$request->pad1Sexo;
+                $pad1->estado=1;
                 $pad1->save();
 
                 $pad3 = new Persona();
@@ -1397,6 +1440,7 @@ class SacramentoController extends Controller
                 $pad3->apellido_persona=$request->pad2Ap;
                 $pad3->dui_pasaporte=$request->pad2D;
                 $pad3->sexo=$request->pad2Sexo;
+                $pad3->estado=1;
                 $pad3->save();
         
                 //Esta parte de Sacramento No cambiará en ningun de los otros casos
@@ -1443,6 +1487,7 @@ class SacramentoController extends Controller
                 $pad3->apellido_persona=$request->pad2Ap;
                 $pad3->dui_pasaporte=$request->pad2D;
                 $pad3->sexo=$request->pad2Sexo;
+                $pad3->estado=1;
                 $pad3->save();
         
                 //Esta parte de Sacramento No cambiará en ningun de los otros casos
@@ -1489,6 +1534,7 @@ class SacramentoController extends Controller
                 $pad2->apellido_persona=$request->mad1Ap;
                 $pad2->dui_pasaporte=$request->mad1D;
                 $pad2->sexo=$request->mad1Sexo;
+                $pad2->estado=1;
                 $pad2->save();
 
                 $pad1 = new Persona();
@@ -1497,6 +1543,7 @@ class SacramentoController extends Controller
                 $pad1->apellido_persona=$request->pad1Ap;
                 $pad1->dui_pasaporte=$request->pad1D;
                 $pad1->sexo=$request->pad1Sexo;
+                $pad1->estado=1;
                 $pad1->save();
         
                 //Esta parte de Sacramento No cambiará en ningun de los otros casos
@@ -1543,6 +1590,7 @@ class SacramentoController extends Controller
                 $pad2->apellido_persona=$request->mad1Ap;
                 $pad2->dui_pasaporte=$request->mad1D;
                 $pad2->sexo=$request->mad1Sexo;
+                $pad2->estado=1;
                 $pad2->save();
         
                 //Esta parte de Sacramento No cambiará en ningun de los otros casos
@@ -1589,6 +1637,7 @@ class SacramentoController extends Controller
                 $pad1->apellido_persona=$request->pad1Ap;
                 $pad1->dui_pasaporte=$request->pad1D;
                 $pad1->sexo=$request->pad1Sexo;
+                $pad1->estado=1;
                 $pad1->save();
         
                 //Esta parte de Sacramento No cambiará en ningun de los otros casos
