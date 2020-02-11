@@ -408,7 +408,7 @@ class ConfirmaController extends Controller
                 $confirma->save();
                 break;
             }
-            case '8':{
+            case '8':{ //               REVISAR ESTE CASO PORQUE SE DEBEN INGRESAR DATOS SOLO DE MAMÁ (NO DE PAPÁ)
                 $id_persona = Persona::max('id');
                 $idm=$id_persona+1;
                 $idreali=$idm+1;
@@ -679,7 +679,7 @@ class ConfirmaController extends Controller
                 $personapa->save();
 
                 $confirma = Sacramentos3::findOrFail($idsacramento);
-                $confirma->id_padrino1 = $request->id_pd1;
+                $confirma->id_padrino = $request->id_pd1;
                 $confirma->id_padrino2 = $idp1;
                 $confirma->id_padrino3 = $idp2;
                 $confirma->id_padrino4 = $request->id_pd4;
@@ -956,7 +956,7 @@ class ConfirmaController extends Controller
                 $personapa->save();
 
                 $confirma = Sacramentos3::findOrFail($idsacramento);
-                $confirma->id_padrino1 = $request->id_pd1;
+                $confirma->id_padrino = $request->id_pd1;
                 $confirma->id_padrino2 = $idp2;
                 $confirma->id_padrino3 = $request->id_pd3;
                 $confirma->id_padrino4 = $idp4;
@@ -985,7 +985,7 @@ class ConfirmaController extends Controller
                 $personapa->save();
 
                 $confirma = Sacramentos3::findOrFail($idsacramento);
-                $confirma->id_padrino1 = $idp1;
+                $confirma->id_padrino = $idp1;
                 $confirma->id_padrino2 = $request->id_pd2;
                 $confirma->id_padrino3 = $request->id_pd3;
                 $confirma->id_padrino4 = $idp4;
