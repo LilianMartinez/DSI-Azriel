@@ -452,7 +452,7 @@ class ConfirmaController extends Controller
                 $confirma->save();
                 break;
             }
-            case '8':{
+            case '8':{ //               REVISAR ESTE CASO PORQUE SE DEBEN INGRESAR DATOS SOLO DE MAMÁ (NO DE PAPÁ)
                 $id_persona = Persona::max('id');
                 $idm=$id_persona+1;
                 $idreali=$idm+1;

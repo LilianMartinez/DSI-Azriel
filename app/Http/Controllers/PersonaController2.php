@@ -94,7 +94,7 @@ class PersonaController2 extends Controller
         $envio=array();
 
         if(!$request->ajax()) return redirect('/');
-        $iglesia = DB::table('iglesias')->get();
+        $iglesia = DB::table('iglesias')->where('estado','=',1)->get();
 
         return $iglesia;
     }
