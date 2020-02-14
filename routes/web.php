@@ -216,6 +216,7 @@ Route::group(['middleware'=>['auth']],function(){
                             //TABLA PARA CONTROL SECTORIAL
                             Route::post('/sectorial/buscarIglesiaFeligreses','ControlSectorialController@buscarIglesiaFeligreses');
                             Route::post('/sectorial/buscarIglesiaInventarios','ControlSectorialController@buscarIglesiaInventarios');
+                            Route::get('/persona/duisCS','PersonaController@buscarduisCS'); //buscar Duis para Control Sectorial
 
 
                             

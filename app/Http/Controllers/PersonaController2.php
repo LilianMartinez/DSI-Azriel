@@ -592,7 +592,7 @@ class PersonaController2 extends Controller
                 $iglesiaBa=Sacramento::join('iglesias','iglesias.id','=','sacramentos.id_iglesia')
                                        ->select('iglesias.nombre_iglesia')
                                        ->where('sacramentos.id_realizante1','=', $idrea)
-                                       ->where('sacramentos.tipo_sacramento','=',1)
+                                       ->where('sacramentos.tipo_sacramento','=',3)
                                        ->get(); //iglesia de bautizo
                 
                 $sacerFirma=Impresion::join('personas','personas.id','=','impresiones.idperso')

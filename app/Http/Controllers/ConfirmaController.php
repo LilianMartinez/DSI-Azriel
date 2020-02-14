@@ -46,6 +46,9 @@ class ConfirmaController extends Controller
                 $personareali->dui_pasaporte=$request->dui_reali;
                 $personareali->sexo=$request->sexo;
                 $personareali->fecha_nacimiento=$request->nacimiento;
+                $personareali->idzonaa=$request->idzonar; //zona realizante
+                $personareali->idiglesia=$request->idiglesiar; //iglesia realizante
+                $personareali->estado=1; //estado
                 $personareali->id_madre=$request->id_m;
                 $personareali->id_padre=$request->id_p;
                 $personareali->save();
@@ -70,6 +73,7 @@ class ConfirmaController extends Controller
                 $confirma->id_realizante1 = $idreali;
                 $confirma->id_sacerdote = $request->sacerdote;
                 $confirma->titulo=$request->titulo;
+                $confirma->id_iglesia=$request->idiglesia;
                 $confirma->save();
                 break;
             }
@@ -97,6 +101,9 @@ class ConfirmaController extends Controller
                 $personap->apellido_persona=$request->apellido_m;
                 $personap->dui_pasaporte=$request->dui_m;
                 $personap->sexo='F';
+                $personap->idzonaa=$request->idzonam;  //zona madre
+                $personap->idiglesia=$request->idiglesiam; //iglesia madre
+                $personap->estado=1; //estado
                 $personap->save();
 
                 $personareali = new Persona();
@@ -106,6 +113,9 @@ class ConfirmaController extends Controller
                 $personareali->dui_pasaporte=$request->dui_reali;
                 $personareali->sexo=$request->sexo;
                 $personareali->fecha_nacimiento=$request->nacimiento;
+                $personareali->idzonaa=$request->idzonar;  //zona realizante
+                $personareali->idiglesia=$request->idiglesiar; //zona realizante
+                $personareali->estado=1; //estado
                 $personareali->id_madre=$idm;
                 $personareali->id_padre=$request->id_p;
                 $personareali->save();
@@ -130,6 +140,7 @@ class ConfirmaController extends Controller
                 $confirma->id_realizante1 = $idreali;
                 $confirma->id_sacerdote = $request->sacerdote;
                 $confirma->titulo=$request->titulo;
+                $confirma->id_iglesia=$request->idiglesia;
                 $confirma->save();
                 break;
             }
@@ -157,6 +168,9 @@ class ConfirmaController extends Controller
                 $personap->apellido_persona=$request->apellido_p;
                 $personap->dui_pasaporte=$request->dui_p;
                 $personap->sexo='M';
+                $personap->idzonaa=$request->idzonap;  //zona padre
+                $personap->idiglesia=$request->idiglesiap; //iglesia padre
+                $personap->estado=1; //estado
                 $personap->save();
 
                 $personareali = new Persona();
@@ -166,6 +180,9 @@ class ConfirmaController extends Controller
                 $personareali->dui_pasaporte=$request->dui_reali;
                 $personareali->sexo=$request->sexo;
                 $personareali->fecha_nacimiento=$request->nacimiento;
+                $personareali->idzonaa=$request->idzonar;  //zona realizante
+                $personareali->idiglesia=$request->idiglesiar; //zona realizante
+                $personareali->estado=1; //estado
                 $personareali->id_padre=$idp;
                 $personareali->id_madre=$request->id_m;
                 $personareali->save();
@@ -190,6 +207,7 @@ class ConfirmaController extends Controller
                 $confirma->id_realizante1 = $idreali;
                 $confirma->id_sacerdote = $request->sacerdote;
                 $confirma->titulo=$request->titulo;
+                $confirma->id_iglesia=$request->idiglesia;
                 $confirma->save();
                 break;
             }
@@ -218,6 +236,9 @@ class ConfirmaController extends Controller
                 $personap->apellido_persona=$request->apellido_p;
                 $personap->dui_pasaporte=$request->dui_p;
                 $personap->sexo='M';
+                $personap->idzonaa=$request->idzonap;  //zona padre
+                $personap->idiglesia=$request->idiglesiap; //iglesia padre
+                $personap->estado=1; //estado
                 $personap->save();
 
                 $personap = new Persona();
@@ -226,6 +247,9 @@ class ConfirmaController extends Controller
                 $personap->apellido_persona=$request->apellido_m;
                 $personap->dui_pasaporte=$request->dui_m;
                 $personap->sexo='F';
+                $personap->idzonaa=$request->idzonam;  //zona madre
+                $personap->idiglesia=$request->idiglesiam; //iglesia madre
+                $personap->estado=1; //estado
                 $personap->save();
 
                 $personareali = new Persona();
@@ -235,6 +259,9 @@ class ConfirmaController extends Controller
                 $personareali->dui_pasaporte=$request->dui_reali;
                 $personareali->sexo=$request->sexo;
                 $personareali->fecha_nacimiento=$request->nacimiento;
+                $personareali->idzonaa=$request->idzonar;  //zona realizante
+                $personareali->idiglesia=$request->idiglesiar; //zona realizante
+                $personareali->estado=1; //estado
                 $personareali->id_madre=$idm;
                 $personareali->id_padre=$idp;
                 $personareali->save();
@@ -259,6 +286,7 @@ class ConfirmaController extends Controller
                 $confirma->id_realizante1 = $idreali;
                 $confirma->id_sacerdote = $request->sacerdote;
                 $confirma->titulo=$request->titulo;
+                $confirma->id_iglesia=$request->idiglesia;
                 $confirma->save();
                 break;
             }
@@ -286,6 +314,9 @@ class ConfirmaController extends Controller
                 $personareali->dui_pasaporte=$request->dui_reali;
                 $personareali->sexo=$request->sexo;
                 $personareali->fecha_nacimiento=$request->nacimiento;
+                $personareali->idzonaa=$request->idzonar;  //zona realizante
+                $personareali->idiglesia=$request->idiglesiar; //zona realizante
+                $personareali->estado=1; //estado
                 $personareali->id_padre=$request->id_p;
                 $personareali->save();
         
@@ -309,6 +340,7 @@ class ConfirmaController extends Controller
                 $confirma->id_realizante1 = $idreali;
                 $confirma->id_sacerdote = $request->sacerdote;
                 $confirma->titulo=$request->titulo;
+                $confirma->id_iglesia=$request->idiglesia;
                 $confirma->save();
                 break;
             }
@@ -336,6 +368,9 @@ class ConfirmaController extends Controller
                 $personareali->dui_pasaporte=$request->dui_reali;
                 $personareali->sexo=$request->sexo;
                 $personareali->fecha_nacimiento=$request->nacimiento;
+                $personareali->idzonaa=$request->idzonar;  //zona realizante
+                $personareali->idiglesia=$request->idiglesiar; //zona realizante
+                $personareali->estado=1; //estado
                 $personareali->id_madre=$request->id_m;
                 $personareali->save();
         
@@ -359,6 +394,7 @@ class ConfirmaController extends Controller
                 $confirma->id_realizante1 = $idreali;
                 $confirma->id_sacerdote = $request->sacerdote;
                 $confirma->titulo=$request->titulo;
+                $confirma->id_iglesia=$request->idiglesia;
                 $confirma->save();
                 break;
             }
@@ -387,6 +423,9 @@ class ConfirmaController extends Controller
                 $personareali->dui_pasaporte=$request->dui_reali;
                 $personareali->sexo=$request->sexo;
                 $personareali->fecha_nacimiento=$request->nacimiento;
+                $personareali->idzonaa=$request->idzonar;  //zona realizante
+                $personareali->idiglesia=$request->idiglesiar; //zona realizante
+                $personareali->estado=1; //estado
                 $personareali->save();
         
                 $partida = new PartidaNacimiento();
@@ -409,6 +448,7 @@ class ConfirmaController extends Controller
                 $confirma->id_realizante1 = $idreali;
                 $confirma->id_sacerdote = $request->sacerdote;
                 $confirma->titulo=$request->titulo;
+                $confirma->id_iglesia=$request->idiglesia;
                 $confirma->save();
                 break;
             }
@@ -432,10 +472,13 @@ class ConfirmaController extends Controller
 
                 $personap=new Persona();
                 $personap->id=$idm;
-                $personap->nombre_persona=$request->nombre_m; //revisar AQUIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII
+                $personap->nombre_persona=$request->nombre_m; 
                 $personap->apellido_persona=$request->apellido_m;
                 $personap->dui_pasaporte=$request->dui_m;
                 $personap->sexo='F';
+                $personap->idzonaa=$request->idzonam;  //zona madre
+                $personap->idiglesia=$request->idiglesiam; //iglesia madre
+                $personap->estado=1; //estado
                 $personap->save();
 
                 $persona_reali = new Persona();
@@ -445,8 +488,10 @@ class ConfirmaController extends Controller
                 $persona_reali->fecha_nacimiento = $request->nacimiento;
                 $persona_reali->dui_pasaporte = $request->dui_reali;
                 $persona_reali->sexo = $request->sexo;
-                $persona_reali->id_madre = $request->id_m;
-                $persona_reali->id_padre = $idpa;
+                $persona_reali->idzonaa=$request->idzonar;  //zona realizante
+                $persona_reali->idiglesia=$request->idiglesiar; //zona realizante
+                $persona_reali->estado=1; //estado
+                $persona_reali->id_madre = $idm;
                 $persona_reali->save();
 
                 $partida = new PartidaNacimiento();
@@ -471,6 +516,7 @@ class ConfirmaController extends Controller
                 $confirma->id_realizante1 = $idreali;
                 $confirma->id_sacerdote = $request->sacerdote;
                 $confirma->titulo=$request->titulo;
+                $confirma->id_iglesia=$request->idiglesia;
                 $confirma->save();
                 break;
             }
@@ -498,6 +544,9 @@ class ConfirmaController extends Controller
                 $personap->apellido_persona=$request->apellido_p;
                 $personap->dui_pasaporte=$request->dui_p;
                 $personap->sexo='M';
+                $personap->idzonaa=$request->idzonap;  //zona padre
+                $personap->idiglesia=$request->idiglesiap; //iglesia padre
+                $personap->estado=1; //estado
                 $personap->save();
 
                 $personareali = new Persona();
@@ -507,6 +556,9 @@ class ConfirmaController extends Controller
                 $personareali->dui_pasaporte=$request->dui_reali;
                 $personareali->sexo=$request->sexo;
                 $personareali->fecha_nacimiento=$request->nacimiento;
+                $personareali->idzonaa=$request->idzonar;  //zona realizante
+                $personareali->idiglesia=$request->idiglesiar; //zona realizante
+                $personareali->estado=1; //estado
                 $personareali->id_padre=$idp;
                 $personareali->save();
 
@@ -530,6 +582,7 @@ class ConfirmaController extends Controller
                 $confirma->id_realizante1 = $idreali;
                 $confirma->id_sacerdote = $request->sacerdote;
                 $confirma->titulo=$request->titulo;
+                $confirma->id_iglesia=$request->idiglesia;
                 $confirma->save();
                 break;
             }  
@@ -555,6 +608,9 @@ class ConfirmaController extends Controller
                 $personapa->apellido_persona=$request->apellido_pd1;
                 $personapa->dui_pasaporte=$request->dui_pd1;
                 $personapa->sexo=$request->sexo_pd1;
+                $personapa->idzonaa=$request->idzonap1;//zona padrino 1
+                $personapa->idiglesia=$request->idiglesiap1;//iglesia padrino 1
+                $personapa->estado=1; //estado 
                 $personapa->save();
 
                 $confirma = Sacramentos3::findOrFail($idsacramento);
@@ -576,6 +632,9 @@ class ConfirmaController extends Controller
                 $personapa->apellido_persona=$request->apellido_pd1;
                 $personapa->dui_pasaporte=$request->dui_pd1;
                 $personapa->sexo=$request->sexo_pd1;
+                $personapa->idzonaa=$request->idzonap1;//zona padrino 1
+                $personapa->idiglesia=$request->idiglesiap1;//iglesia padrino 1
+                $personapa->estado=1; //estado 
                 $personapa->save();
 
                 $personapa = new Persona();
@@ -584,6 +643,9 @@ class ConfirmaController extends Controller
                 $personapa->apellido_persona=$request->apellido_pd2;
                 $personapa->dui_pasaporte=$request->dui_pd2;
                 $personapa->sexo=$request->sexo_pd2;
+                $personapa->idzonaa=$request->idzonap2;//zona padrino 2
+                $personapa->idiglesia=$request->idiglesiap2;//iglesia padrino 2
+                $personapa->estado=1; //estado 
                 $personapa->save();
 
                 $confirma = Sacramentos3::findOrFail($idsacramento);
@@ -604,6 +666,9 @@ class ConfirmaController extends Controller
                 $personapa->apellido_persona=$request->apellido_pd2;
                 $personapa->dui_pasaporte=$request->dui_pd2;
                 $personapa->sexo=$request->sexo_pd2;
+                $personapa->idzonaa=$request->idzonap2;//zona padrino 2
+                $personapa->idiglesia=$request->idiglesiap2;//iglesia padrino 2
+                $personapa->estado=1; //estado 
                 $personapa->save();
 
                 $confirma = Sacramentos3::findOrFail($idsacramento);
@@ -624,6 +689,9 @@ class ConfirmaController extends Controller
                 $personapa->apellido_persona=$request->apellido_pd3;
                 $personapa->dui_pasaporte=$request->dui_pd3;
                 $personapa->sexo=$request->sexo_pd3;
+                $personapa->idzonaa=$request->idzonap3;//zona padrino 3
+                $personapa->idiglesia=$request->idiglesiap3;//iglesia padrino 3
+                $personapa->estado=1; //estado 
                 $personapa->save();
 
                 $confirma = Sacramentos3::findOrFail($idsacramento);
@@ -645,6 +713,9 @@ class ConfirmaController extends Controller
                 $personapa->apellido_persona=$request->apellido_pd1;
                 $personapa->dui_pasaporte=$request->dui_pd1;
                 $personapa->sexo=$request->sexo_pd1;
+                $personapa->idzonaa=$request->idzonap1;//zona padrino 1
+                $personapa->idiglesia=$request->idiglesiap1;//iglesia padrino 1
+                $personapa->estado=1; //estado 
                 $personapa->save();
 
                 $personapa = new Persona();
@@ -653,6 +724,9 @@ class ConfirmaController extends Controller
                 $personapa->apellido_persona=$request->apellido_pd3;
                 $personapa->dui_pasaporte=$request->dui_pd3;
                 $personapa->sexo=$request->sexo_pd3;
+                $personapa->idzonaa=$request->idzonap3;//zona padrino 3
+                $personapa->idiglesia=$request->idiglesiap3;//iglesia padrino 3
+                $personapa->estado=1; //estado 
                 $personapa->save();
 
                 $confirma = Sacramentos3::findOrFail($idsacramento);
@@ -674,6 +748,9 @@ class ConfirmaController extends Controller
                 $personapa->apellido_persona=$request->apellido_pd2;
                 $personapa->dui_pasaporte=$request->dui_pd2;
                 $personapa->sexo=$request->sexo_pd2;
+                $personapa->idzonaa=$request->idzonap2;//zona padrino 2
+                $personapa->idiglesia=$request->idiglesiap2;//iglesia padrino 2
+                $personapa->estado=1; //estado 
                 $personapa->save();
 
                 $personapa = new Persona();
@@ -682,6 +759,9 @@ class ConfirmaController extends Controller
                 $personapa->apellido_persona=$request->apellido_pd3;
                 $personapa->dui_pasaporte=$request->dui_pd3;
                 $personapa->sexo=$request->sexo_pd3;
+                $personapa->idzonaa=$request->idzonap3;//zona padrino 3
+                $personapa->idiglesia=$request->idiglesiap3;//iglesia padrino 3
+                $personapa->estado=1; //estado 
                 $personapa->save();
 
                 $confirma = Sacramentos3::findOrFail($idsacramento);
@@ -704,6 +784,9 @@ class ConfirmaController extends Controller
                 $personapa->apellido_persona=$request->apellido_pd1;
                 $personapa->dui_pasaporte=$request->dui_pd1;
                 $personapa->sexo=$request->sexo_pd1;
+                $personapa->idzonaa=$request->idzonap1;//zona padrino 1
+                $personapa->idiglesia=$request->idiglesiap1;//iglesia padrino 1
+                $personapa->estado=1; //estado 
                 $personapa->save();
 
                 $personapa = new Persona();
@@ -712,6 +795,9 @@ class ConfirmaController extends Controller
                 $personapa->apellido_persona=$request->apellido_pd2;
                 $personapa->dui_pasaporte=$request->dui_pd2;
                 $personapa->sexo=$request->sexo_pd2;
+                $personapa->idzonaa=$request->idzonap2;//zona padrino 2
+                $personapa->idiglesia=$request->idiglesiap2;//iglesia padrino 2
+                $personapa->estado=1; //estado 
                 $personapa->save();
 
                 $personapa = new Persona();
@@ -720,6 +806,9 @@ class ConfirmaController extends Controller
                 $personapa->apellido_persona=$request->apellido_pd3;
                 $personapa->dui_pasaporte=$request->dui_pd3;
                 $personapa->sexo=$request->sexo_pd3;
+                $personapa->idzonaa=$request->idzonap3;//zona padrino 3
+                $personapa->idiglesia=$request->idiglesiap3;//iglesia padrino 3
+                $personapa->estado=1; //estado 
                 $personapa->save();
 
                 $confirma = Sacramentos3::findOrFail($idsacramento);
@@ -743,6 +832,9 @@ class ConfirmaController extends Controller
                 $personapa->apellido_persona=$request->apellido_pd1;
                 $personapa->dui_pasaporte=$request->dui_pd1;
                 $personapa->sexo=$request->sexo_pd1;
+                $personapa->idzonaa=$request->idzonap1;//zona padrino 1
+                $personapa->idiglesia=$request->idiglesiap1;//iglesia padrino 1
+                $personapa->estado=1; //estado 
                 $personapa->save();
 
                 $personapa = new Persona();
@@ -751,6 +843,9 @@ class ConfirmaController extends Controller
                 $personapa->apellido_persona=$request->apellido_pd2;
                 $personapa->dui_pasaporte=$request->dui_pd2;
                 $personapa->sexo=$request->sexo_pd2;
+                $personapa->idzonaa=$request->idzonap2;//zona padrino 2
+                $personapa->idiglesia=$request->idiglesiap2;//iglesia padrino 2
+                $personapa->estado=1; //estado 
                 $personapa->save();
 
                 $personapa = new Persona();
@@ -759,6 +854,9 @@ class ConfirmaController extends Controller
                 $personapa->apellido_persona=$request->apellido_pd3;
                 $personapa->dui_pasaporte=$request->dui_pd3;
                 $personapa->sexo=$request->sexo_pd3;
+                $personapa->idzonaa=$request->idzonap3;//zona padrino 3
+                $personapa->idiglesia=$request->idiglesiap3;//iglesia padrino 3
+                $personapa->estado=1; //estado 
                 $personapa->save();
 
                 $personapa = new Persona();
@@ -767,6 +865,9 @@ class ConfirmaController extends Controller
                 $personapa->apellido_persona=$request->apellido_pd4;
                 $personapa->dui_pasaporte=$request->dui_pd4;
                 $personapa->sexo=$request->sexo_pd4;
+                $personapa->idzonaa=$request->idzonap4;//zona padrino 4
+                $personapa->idiglesia=$request->idiglesiap4;//iglesia padrino 4
+                $personapa->estado=1; //estado 
                 $personapa->save();
 
                 $confirma = Sacramentos3::findOrFail($idsacramento);
@@ -789,6 +890,9 @@ class ConfirmaController extends Controller
                 $personapa->apellido_persona=$request->apellido_pd2;
                 $personapa->dui_pasaporte=$request->dui_pd2;
                 $personapa->sexo=$request->sexo_pd2;
+                $personapa->idzonaa=$request->idzonap2;//zona padrino 2
+                $personapa->idiglesia=$request->idiglesiap2;//iglesia padrino 2
+                $personapa->estado=1; //estado 
                 $personapa->save();
 
                 $personapa = new Persona();
@@ -797,6 +901,9 @@ class ConfirmaController extends Controller
                 $personapa->apellido_persona=$request->apellido_pd3;
                 $personapa->dui_pasaporte=$request->dui_pd3;
                 $personapa->sexo=$request->sexo_pd3;
+                $personapa->idzonaa=$request->idzonap3;//zona padrino 3
+                $personapa->idiglesia=$request->idiglesiap3;//iglesia padrino 3
+                $personapa->estado=1; //estado 
                 $personapa->save();
 
                 $personapa = new Persona();
@@ -805,6 +912,9 @@ class ConfirmaController extends Controller
                 $personapa->apellido_persona=$request->apellido_pd4;
                 $personapa->dui_pasaporte=$request->dui_pd4;
                 $personapa->sexo=$request->sexo_pd4;
+                $personapa->idzonaa=$request->idzonap4;//zona padrino 4
+                $personapa->idiglesia=$request->idiglesiap4;//iglesia padrino 4
+                $personapa->estado=1; //estado 
                 $personapa->save();
 
                 $confirma = Sacramentos3::findOrFail($idsacramento);
@@ -826,6 +936,9 @@ class ConfirmaController extends Controller
                 $personapa->apellido_persona=$request->apellido_pd3;
                 $personapa->dui_pasaporte=$request->dui_pd3;
                 $personapa->sexo=$request->sexo_pd3;
+                $personapa->idzonaa=$request->idzonap3;//zona padrino 3
+                $personapa->idiglesia=$request->idiglesiap3;//iglesia padrino 3
+                $personapa->estado=1; //estado 
                 $personapa->save();
 
                 $personapa = new Persona();
@@ -834,6 +947,9 @@ class ConfirmaController extends Controller
                 $personapa->apellido_persona=$request->apellido_pd4;
                 $personapa->dui_pasaporte=$request->dui_pd4;
                 $personapa->sexo=$request->sexo_pd4;
+                $personapa->idzonaa=$request->idzonap4;//zona padrino 4
+                $personapa->idiglesia=$request->idiglesiap4;//iglesia padrino 4
+                $personapa->estado=1; //estado 
                 $personapa->save();
 
                 $confirma = Sacramentos3::findOrFail($idsacramento);
@@ -854,6 +970,9 @@ class ConfirmaController extends Controller
                 $personapa->apellido_persona=$request->apellido_pd4;
                 $personapa->dui_pasaporte=$request->dui_pd4;
                 $personapa->sexo=$request->sexo_pd4;
+                $personapa->idzonaa=$request->idzonap4;//zona padrino 4
+                $personapa->idiglesia=$request->idiglesiap4;//iglesia padrino 4
+                $personapa->estado=1; //estado 
                 $personapa->save();
 
                 $confirma = Sacramentos3::findOrFail($idsacramento);
@@ -876,6 +995,9 @@ class ConfirmaController extends Controller
                 $personapa->apellido_persona=$request->apellido_pd1;
                 $personapa->dui_pasaporte=$request->dui_pd1;
                 $personapa->sexo=$request->sexo_pd1;
+                $personapa->idzonaa=$request->idzonap1;//zona padrino 1
+                $personapa->idiglesia=$request->idiglesiap1;//iglesia padrino 1
+                $personapa->estado=1; //estado 
                 $personapa->save();
 
                 $personapa = new Persona();
@@ -884,6 +1006,9 @@ class ConfirmaController extends Controller
                 $personapa->apellido_persona=$request->apellido_pd3;
                 $personapa->dui_pasaporte=$request->dui_pd3;
                 $personapa->sexo=$request->sexo_pd3;
+                $personapa->idzonaa=$request->idzonap3;//zona padrino 3
+                $personapa->idiglesia=$request->idiglesiap3;//iglesia padrino 3
+                $personapa->estado=1; //estado 
                 $personapa->save();
 
                 $personapa = new Persona();
@@ -892,6 +1017,9 @@ class ConfirmaController extends Controller
                 $personapa->apellido_persona=$request->apellido_pd4;
                 $personapa->dui_pasaporte=$request->dui_pd4;
                 $personapa->sexo=$request->sexo_pd4;
+                $personapa->idzonaa=$request->idzonap4;//zona padrino 4
+                $personapa->idiglesia=$request->idiglesiap4;//iglesia padrino 4
+                $personapa->estado=1; //estado 
                 $personapa->save();
 
                 $confirma = Sacramentos3::findOrFail($idsacramento);
@@ -914,6 +1042,9 @@ class ConfirmaController extends Controller
                 $personapa->apellido_persona=$request->apellido_pd1;
                 $personapa->dui_pasaporte=$request->dui_pd1;
                 $personapa->sexo=$request->sexo_pd1;
+                $personapa->idzonaa=$request->idzonap1;//zona padrino 1
+                $personapa->idiglesia=$request->idiglesiap1;//iglesia padrino 1
+                $personapa->estado=1; //estado 
                 $personapa->save();
 
                 $personapa = new Persona();
@@ -922,6 +1053,9 @@ class ConfirmaController extends Controller
                 $personapa->apellido_persona=$request->apellido_pd2;
                 $personapa->dui_pasaporte=$request->dui_pd2;
                 $personapa->sexo=$request->sexo_pd2;
+                $personapa->idzonaa=$request->idzonap2;//zona padrino 2
+                $personapa->idiglesia=$request->idiglesiap2;//iglesia padrino 2
+                $personapa->estado=1; //estado 
                 $personapa->save();
 
                 $personapa = new Persona();
@@ -930,6 +1064,9 @@ class ConfirmaController extends Controller
                 $personapa->apellido_persona=$request->apellido_pd4;
                 $personapa->dui_pasaporte=$request->dui_pd4;
                 $personapa->sexo=$request->sexo_pd4;
+                $personapa->idzonaa=$request->idzonap4;//zona padrino 4
+                $personapa->idiglesia=$request->idiglesiap4;//iglesia padrino 4
+                $personapa->estado=1; //estado 
                 $personapa->save();
 
                 $confirma = Sacramentos3::findOrFail($idsacramento);
@@ -951,6 +1088,9 @@ class ConfirmaController extends Controller
                 $personapa->apellido_persona=$request->apellido_pd2;
                 $personapa->dui_pasaporte=$request->dui_pd2;
                 $personapa->sexo=$request->sexo_pd2;
+                $personapa->idzonaa=$request->idzonap2;//zona padrino 2
+                $personapa->idiglesia=$request->idiglesiap2;//iglesia padrino 2
+                $personapa->estado=1; //estado 
                 $personapa->save();
 
                 $personapa = new Persona();
@@ -959,6 +1099,9 @@ class ConfirmaController extends Controller
                 $personapa->apellido_persona=$request->apellido_pd4;
                 $personapa->dui_pasaporte=$request->dui_pd4;
                 $personapa->sexo=$request->sexo_pd4;
+                $personapa->idzonaa=$request->idzonap4;//zona padrino 4
+                $personapa->idiglesia=$request->idiglesiap4;//iglesia padrino 4
+                $personapa->estado=1; //estado 
                 $personapa->save();
 
                 $confirma = Sacramentos3::findOrFail($idsacramento);
@@ -980,6 +1123,9 @@ class ConfirmaController extends Controller
                 $personapa->apellido_persona=$request->apellido_pd1;
                 $personapa->dui_pasaporte=$request->dui_pd1;
                 $personapa->sexo=$request->sexo_pd1;
+                $personapa->idzonaa=$request->idzonap1;//zona padrino 1
+                $personapa->idiglesia=$request->idiglesiap1;//iglesia padrino 1
+                $personapa->estado=1; //estado 
                 $personapa->save();
 
                 $personapa = new Persona();
@@ -988,6 +1134,9 @@ class ConfirmaController extends Controller
                 $personapa->apellido_persona=$request->apellido_pd4;
                 $personapa->dui_pasaporte=$request->dui_pd4;
                 $personapa->sexo=$request->sexo_pd4;
+                $personapa->idzonaa=$request->idzonap4;//zona padrino 4
+                $personapa->idiglesia=$request->idiglesiap4;//iglesia padrino 4
+                $personapa->estado=1; //estado 
                 $personapa->save();
 
                 $confirma = Sacramentos3::findOrFail($idsacramento);

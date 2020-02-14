@@ -821,7 +821,6 @@
                     {
                         this.iglesiasm(this.idzonam);
                         this.idiglesiam=data['idiglesia'];
-                        this.nombre_iglesia=data['nombre_iglesia'];
                     }
             },
             llenarcamposp(data=[]){
@@ -834,7 +833,6 @@
                     {
                         this.iglesiasp(this.idzonap);
                         this.idiglesiap=data['idiglesia'];
-                        this.nombre_iglesia=data['nombre_iglesia'];
                     }
             },
             llenarmodal(id){
@@ -1176,7 +1174,7 @@
                 var url='/persona/duis?dui=' + d;
                     axios.get(url) .then(function (response) {
                         var respuesta=response.data.solo;
-                        var datos= response.data.persona; //<---- aqui 
+                        var datos= response.data.persona;
                     if(respuesta==2){
                         me.llenarcamposm(datos);
                     }else{

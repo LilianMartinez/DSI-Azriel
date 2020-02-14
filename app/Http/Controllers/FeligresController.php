@@ -22,22 +22,22 @@ class FeligresController extends Controller
             $feligres = Iglesia::join('personas','personas.idiglesia','=','iglesias.id')
             ->join('zonas','zonas.id','=','iglesias.idzona')
             ->select('iglesias.id as idigle','iglesias.nombre_iglesia','iglesias.idzona','personas.id', 'personas.nombre_persona', 
-                     'personas.apellido_persona', 'personas.idiglesia','personas.estado','personas.fecha_nacimiento',
+                     'personas.apellido_persona', 'personas.idiglesia','personas.estado','personas.fecha_nacimiento','personas.dui_pasaporte','personas.sexo',
                      'zonas.id as idz','zonas.nombre_zona')
             ->where('personas.estado','=',1)
             ->whereNull('personas.tipo_persona') 
-            ->paginate(15);
+            ->paginate(30);
             
         } else {
             $feligres = Iglesia::join('personas','personas.idiglesia','=','iglesias.id')
             ->join('zonas','zonas.id','=','iglesias.idzona')
             ->select('iglesias.id as idigle','iglesias.nombre_iglesia','iglesias.idzona','personas.id', 'personas.nombre_persona', 
-                     'personas.apellido_persona', 'personas.idiglesia','personas.estado','personas.fecha_nacimiento',
+                     'personas.apellido_persona', 'personas.idiglesia','personas.estado','personas.fecha_nacimiento','personas.dui_pasaporte','personas.sexo',
                      'zonas.id as idz','zonas.nombre_zona')
             ->where('personas.estado','=',1)
             ->whereNull('personas.tipo_persona') 
             ->where($criterio, 'like','%' . $buscar .'%')
-            ->paginate(15);
+            ->paginate(30);
         }
         return [
             'pagination' =>[
@@ -74,6 +74,8 @@ class FeligresController extends Controller
         $feligres->fecha_nacimiento=$request->fecha_nacimiento;
         $feligres->idzonaa= $request->idzonaa;
         $feligres->idiglesia= $request->idiglesia;
+        $feligres->dui_pasaporte= $request->dui;
+        $feligres->sexo= $request->sexo;
         $feligres->estado=1;
         $feligres->save();
     }
@@ -94,6 +96,8 @@ class FeligresController extends Controller
          $feligres->fecha_nacimiento= $request->fecha_nacimiento;
          $feligres->idiglesia= $request->idiglesia;
          $feligres->idzonaa= $request->idzonaa;
+         $feligres->dui_pasaporte= $request->dui;
+         $feligres->sexo= $request->sexo;
          $feligres->save();
     }
 

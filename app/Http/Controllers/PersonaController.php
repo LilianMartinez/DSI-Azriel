@@ -28,15 +28,7 @@ class PersonaController extends Controller
         $envio=array();
 
         if(!$request->ajax()) return redirect('/');
-        //$persona = DB::table('personas')->where('dui_pasaporte', $buscar )->first();
-        $persona = Persona::join('zonas','personas.idzonaa','=','zonas.id')
-                       ->join('iglesias','personas.idiglesia','=','iglesias.id')
-                       ->select('personas.id','personas.nombre_persona','personas.apellido_persona','personas.dui_pasaporte','personas.sexo',
-                                'personas.fecha_nacimiento','personas.estado','personas.idiglesia','personas.idzonaa',
-                                'zonas.id as idzo','zonas.nombre_zona','zonas.estado as estadoZ',
-                                'iglesias.id as idigle','iglesias.nombre_iglesia','iglesias.estado as estadoI','iglesias.idzona as idzon')
-                       ->where('dui_pasaporte','=', $buscar )->first();   
-
+        $persona = DB::table('personas')->where('dui_pasaporte', $buscar )->first();
         if(empty($persona)){
                 $envio['solo']=1;
             }
@@ -47,6 +39,25 @@ class PersonaController extends Controller
         
         return $envio;
     }
+
+    public function buscarduisCS(Request $request) //ESTO ES PARA CONTROL SECTORIAL AUN ESTA A PRUEBA
+    {
+        $buscar = $request->dui;
+        $envio=array();
+
+        if(!$request->ajax()) return redirect('/');
+        $persona = DB::table('personas')->where('dui_pasaporte', $buscar )->first();
+        if(empty($persona)){
+                $envio['solo']=1;
+            }
+            else{
+                $envio['solo']=2;
+                $envio['persona']=$persona;
+            }
+        
+        return $envio;
+    }
+    
     public function buscarsacerdote(Request $request)
     {
         $envio=array();
@@ -798,6 +809,9 @@ class PersonaController extends Controller
                 $personareali->dui_pasaporte=$request->dui_reali;
                 $personareali->sexo=$request->sexo;
                 $personareali->fecha_nacimiento=$request->nacimiento;
+                $personareali->idzonaa=$request->idzona;  //zona realizante
+                $personareali->idiglesia=$request->idiglesia; //zona realizante
+                $personareali->estado=1; //estado
                 $personareali->id_madre=$idm;
                 $personareali->save();
 
