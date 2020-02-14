@@ -416,9 +416,7 @@
                   'monto':this.montoConstancia,
                   'tipo':tip,
               }) .then(function (response) {
-                    me.cerrarModal();
-                    me.listarEfectivo(1,'','num_recibo',1);
-                    me.sumat();
+                    me.cerrarmodal();
                 })
                 .catch(function (error) {
                     // handle error

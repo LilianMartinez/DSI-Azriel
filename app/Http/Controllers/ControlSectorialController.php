@@ -19,8 +19,8 @@ class ControlSectorialController extends Controller
         if(!$request->ajax()) return redirect('/');
         $iglesias = Iglesia::join('personas','personas.idiglesia','=','iglesias.id')
                         ->join('zonas','zonas.id','=','iglesias.idzona')
-                        ->select('iglesias.id as idigle','iglesias.nombre_iglesia','iglesias.idzona','personas.id', 'personas.nombre_persona', 
-                                 'personas.apellido_persona', 'personas.idiglesia','personas.estado','personas.fecha_nacimiento',
+                        ->select('iglesias.id as idigle','iglesias.nombre_iglesia','iglesias.idzona','personas.id', 'personas.nombre_persona', 'personas.dui_pasaporte',
+                                 'personas.apellido_persona', 'personas.idiglesia','personas.estado','personas.fecha_nacimiento', 'personas.sexo',
                                  'zonas.id as idz','zonas.nombre_zona')
                         ->where('iglesias.id','=',$request->id)
                         ->where('personas.estado','=',1)
