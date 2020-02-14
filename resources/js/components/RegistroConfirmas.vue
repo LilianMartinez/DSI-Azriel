@@ -1787,7 +1787,7 @@ export default {
             if(this.idzonap4)
                 {
                     this.iglesiasp4(this.idzonap4);
-                   this.idiglesiap3=data['idiglesia'];
+                   this.idiglesiap4=data['idiglesia'];
                 }
         },
 
@@ -1800,6 +1800,9 @@ export default {
                 axios.get(url) .then(function (response) {
                     var respuesta=response.data.solo;
                     var datos= response.data.persona;
+                    if(respuesta==1){
+                        me.vaciarm();
+                    }
                     if(respuesta==2){
                         me.llenarcamposm(datos);
                     }
@@ -1807,6 +1810,13 @@ export default {
                     console.log(error);
                 });
             }
+        },
+        vaciarm(){
+            this.nombremadre='';
+            this.apellidomadre= '';
+            this.idmadre='';
+            this.idzonam=0;   //zona madre
+            this.idiglesiam=0; 
         },
         duip(){
             let me=this;
@@ -1816,6 +1826,9 @@ export default {
                 axios.get(url) .then(function (response) {
                     var respuesta=response.data.solo;
                     var datos= response.data.persona;
+                    if(respuesta==1){
+                        me.vaciarp();
+                    }
                     if(respuesta==2){
                         me.llenarcamposp(datos);
                     }
@@ -1824,6 +1837,13 @@ export default {
                 });
             }
                     
+        },
+        vaciarp(){
+            this.nombrepadre='';
+            this.apellidopadre= '';
+            this.idpadre='';
+            this.idzonap=0;   //zona padre
+            this.idiglesiap=0; 
         },
         duip1(){
             let me=this;
