@@ -18,9 +18,14 @@ class DetalleEntradaController extends Controller
         $criterio = $request->criterio;
          
         if ($buscar==''){
+            $fechaActual=new \DateTime();//FECHA ACTUAL 
+            $anio=$fechaActual->format('Y');
+            $mes=$fechaActual->format('m');
             $ingresos = Producto::join('detalle_entrada','producto.id','=','detalle_entrada.id_producto')
+            ->whereYear('detalle_entrada.fecha', $anio)
+            ->whereMonth('detalle_entrada.fecha', $mes)
             ->select('producto.id','producto.nombre_producto', 'producto.unidad_medida',
-            'detalle_entrada.cantidad','detalle_entrada.fecha','detalle_entrada.precio_compra')
+            'detalle_entrada.cantidad','detalle_entrada.fecha','detalle_entrada.precio_compra','detalle_entrada.tipo')
             ->orderBy('detalle_entrada.fecha', 'desc')->paginate(15);
         }
         else{
@@ -28,14 +33,14 @@ class DetalleEntradaController extends Controller
                 $ingresos = Producto::join('detalle_entrada','producto.id','=','detalle_entrada.id_producto')
                 ->where('producto.nombre_producto','like','%' . $buscar .'%')
                 ->select('producto.id','producto.nombre_producto','producto.unidad_medida',
-                'detalle_entrada.cantidad','detalle_entrada.fecha','detalle_entrada.precio_compra')
+                'detalle_entrada.cantidad','detalle_entrada.fecha','detalle_entrada.precio_compra','detalle_entrada.tipo')
                 ->orderBy('detalle_entrada.fecha', 'desc')->paginate(15);
             }
             else{
                 $ingresos = Producto::join('detalle_entrada','producto.id','=','detalle_entrada.id_producto')
                 ->where('detalle_entrada.fecha','like','%' . $buscar .'%')
                 ->select('producto.id','producto.nombre_producto','producto.unidad_medida',
-                'detalle_entrada.cantidad','detalle_entrada.fecha','detalle_entrada.precio_compra')
+                'detalle_entrada.cantidad','detalle_entrada.fecha','detalle_entrada.precio_compra','detalle_entrada.tipo')
                 ->orderBy('detalle_entrada.fecha', 'desc')->paginate(15);
            
         }

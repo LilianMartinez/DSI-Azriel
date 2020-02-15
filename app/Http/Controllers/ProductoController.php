@@ -87,11 +87,17 @@ class ProductoController extends Controller
     public function seleccionarProducto(Request $request)
     {
         if(!$request->ajax()) return redirect('/');
-        $filtro=$request->filtro;
-  
-        $productos = Producto::select(DB::raw("CONCAT(nombre_producto, '-', unidad_medida) AS nombre_producto"),'id')->where('estado','1')->where('nombre_producto', 'like','%' . $filtro .'%')
+        $filtro1=$request->filtro;
+        $filtro2=strtoupper($filtro1);
+        $filtro = trim($filtro2);
+        $i=strlen ($filtro);
+        if($i>0){
+        $productos = Producto::select(DB::raw("CONCAT(nombre_producto, '-', unidad_medida) AS nombre_producto"),'id')->where('estado','1')->where('nombre_producto', 'like', $filtro .'%')
         ->get();
         return ['producto'=> $productos];
+        }else{
+            return;
+        }
     }
     public function venta(Request $request)
     {
@@ -108,16 +114,24 @@ class ProductoController extends Controller
     }
     public function seleccionarProductoCanasta(Request $request)
     {
-        //if(!$request->ajax()) return redirect('/');
+        if(!$request->ajax()) return redirect('/');
         $filtro=$request->filtro;
+        $filtro1=$request->filtro;
+        $filtro2=strtoupper($filtro1);
+        $filtro = trim($filtro2);
+        $i=strlen ($filtro);
+        if($i>0){
   
         $productos = Producto::join('detalle_entrada','producto.id','=','detalle_entrada.id_producto')
         ->join('existencias','detalle_entrada.id','=','existencias.id_entrada')
-        ->select('producto.nombre_producto','producto.id')
-        ->where('detalle_entrada.tipo','1')->where('existencias.cantidad','>','0')->where('producto.nombre_producto', 'like','%' . $filtro .'%')
+        ->select(DB::raw("CONCAT(producto.nombre_producto, '-', producto.unidad_medida) AS nombre_producto"),'producto.id')
+        ->where('detalle_entrada.tipo','1')->where('existencias.cantidad','>','0')->where('producto.nombre_producto', 'like', $filtro .'%')
         ->groupBy('producto.id')
         ->get();
         return  ['producto'=> $productos];
+    }else{
+        return;
+    }
     }
     public function guardarventa(Request $request)
     {
@@ -144,7 +158,7 @@ class ProductoController extends Controller
     }
     public function seleccionarProductoExistencia(Request $request)
     {
-        //if(!$request->ajax()) return redirect('/');
+        if(!$request->ajax()) return redirect('/');
         $filtro=$request->filtro;
   
 

@@ -7,7 +7,7 @@
                     <label class="titulo-encabezados">Canastas</label> 
                     </div>
                     <div>
-                    <button type="button" @click="mostrarDetalle()" class="btn btn-secondary">
+                    <button type="button" @click="mostrarDetalle()" class="btn btn-primary">
                         <i class="icon-plus"></i>&nbsp;Nueva
                     </button>
                     </div>
@@ -74,7 +74,7 @@
                             <div class="col-md-9">
                                 <div class="form-group">
                                     <label for="">Nombre(*)</label>
-                                    <input type="text" class="form-control" v-model="nombre_canasta">
+                                    <input type="text" class="form-control" v-model="nombre_canasta"> 
                                 </div>
                             </div>
                             <div class="col-md-3">
@@ -333,6 +333,7 @@
             },
             selectProducto(search,loading){
                 let me=this;
+
                 loading(true);
 
                 var url='/producto/canasta?filtro='+search;
@@ -350,9 +351,17 @@
             
             getdatosproducto(val1){
                 let me = this;
+                if(val1== null)
+                {
+                    me.loading = false;
+                    me.id_producto = '';
+                    me.producto='';
+                }
+                else{
                 me.loading = true;
                 me.id_producto = val1.id;
                 me.producto=val1.nombre_producto;
+                }
                 
             },
             buscarF(){
@@ -366,7 +375,6 @@
                     me.existenciasC=respuesta.cantidad;
                 })
                 .catch(function (error) {
-                    console.log(error);
                 });
             },
 
@@ -463,6 +471,8 @@
             },
             agregarDetalle(){
                 let me=this;
+                if (this.validarCampos()){
+                        return;}
                 me.buscarF();
                 me.validar();
                 if(me.id_producto==0 || me.cantidad==0){
@@ -540,15 +550,15 @@
                     console.log(error);
                 });
             },
-            validarCompra(){
+            validarCampos(){
                 this.errorCanasta=0;
                 this.errorMostrarMsjCanasta =[];
 
-                if (this.id_producto==0) this.errorMostrarMsjCanasta.push("Debe seleccionar un producto.");
-                if (!this.cantidad) this.errorMostrarMsjCanasta.push("La cantidad no puede estar vacia.");
-                if (!this.precio_compra) this.errorMostrarMsjCanasta.push("El precio del producto comprado no puede estar vacio.");
-                if (this.arrayDetalle.length<=0) this.errorMostrarMsjCanasta.push("Ingrese productos");
-                if(!this.tipo) this.errorMostrarMsjCanasta.push("El tipo no puede estar vacío");
+                if (!this.nombre_canasta) this.errorMostrarMsjCanasta.push("La canasta debe de tener un nombre");
+                if (!this.precio_venta) this.errorMostrarMsjCanasta.push("La canasta debe poseer un precio de venta");
+                if (!this.cantidad_canasta) this.errorMostrarMsjCanasta.push("El total de canastas a creer no debe de estar vacío");
+                if (this.id_producto='') this.errorMostrarMsjCanasta.push("Debe seleccionar un producto");
+                if (!this.cantidad) this.errorMostrarMsjCanasta.push("La cantidad no puede estar vacia");
                 if (this.errorMostrarMsjCanasta.length) this.errorCanasta = 1;
 
                 return this.errorCanasta;

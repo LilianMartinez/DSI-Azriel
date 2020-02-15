@@ -7,7 +7,7 @@
                         <label class="titulo-encabezados">Compras</label> 
                     </div>
                     <div>
-                        <button type="button" @click="mostrarDetalle()" class="btn btn-secondary">
+                        <button type="button" @click="mostrarDetalle()" class="btn btn-primary">
                             <i class="icon-plus"></i>&nbsp;Nuevo
                         </button>
                     </div>
@@ -35,6 +35,7 @@
                                         <th>Producto</th>
                                         <th>Cantidad</th>
                                         <th>Costo ($)</th>
+                                        <th>Tipo</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -43,6 +44,8 @@
                                         <td>{{ingreso.nombre_producto}} ({{ingreso.unidad_medida}})</td>
                                         <td v-text="ingreso.cantidad"></td>
                                         <td v-text="ingreso.precio_compra"></td>
+                                        <td v-if="ingreso.tipo == 1"> Canasta</td>
+                                        <td v-if="ingreso.tipo == 2"> Suelto</td>
                                     </tr>                                
                                 </tbody>
                             </table>
@@ -86,7 +89,7 @@
                                 <input type="text" class="form-control" v-model="cantidad">
                             </div>
                             <div class="col-md-3">
-                                <label for="">Costo<b class="alerta">*</b></label>
+                                <label for="">Costo($)<b class="alerta">*</b></label>
                                 <input type="text" class="form-control" v-model="precio_compra">
                             </div>
                             <div class="col-md-7">
@@ -122,8 +125,8 @@
                                             <th>Opciones</th>
                                             <th>Producto</th>
                                             <th>Cantidad</th>
-                                            <th>Costo</th>
-                                            <th v-show="ti==2">Precio Venta</th>
+                                            <th>Costo($)</th>
+                                            <th v-show="ti==2">Precio Venta($)</th>
                                         </tr>
                                     </thead>
                                     <tbody v-if="arrayDetalle.length">
@@ -145,8 +148,8 @@
                                             <input v-show="detalle.tipo==2" v-model="detalle.precio_venta"  step="0.01" type="number" value="2" class="form-control">
                                             </td>
                                         </tr>
-                                        <tr v-show="ti==2"style="background-color: #CEECF5;">
-                                            <td colspan="4" align="right"><strong>Total:</strong></td>
+                                        <tr v-show="ti==2" style="background-color: #CEECF5;">
+                                            <td colspan="3" align="right"><strong>Total:</strong></td>
                                             <td>$ {{total=calcularTotal}}</td>
                                         </tr>
                                         <tr v-show="ti!=2" style="background-color: #CEECF5;">
@@ -309,7 +312,7 @@
             selectProducto(search,loading){
                 let me=this;
                 loading(true);
-
+               
                 var url='/producto/seleccionar?filtro='+search;
                 axios.get(url).then(function (response) {
                     let respuesta=response.data;
@@ -324,15 +327,27 @@
             },
             getdatosproducto(val1){
                 let me = this;
-                me.loading = true;
-                me.id_producto = val1.id;
-                me.producto=val1.nombre_producto;
+                if(val1== null)
+                {
+                    me.loading = false;
+                    me.id_producto = '';
+                    me.producto='';
+                }
+                else{
+                    me.loading = true;
+                    me.id_producto = val1.id;
+                    me.producto=val1.nombre_producto;
+                }
+                
             },
-            encuentra(id){
+            encuentra(id,tipo){
                 var sw=0;
                 for(var i=0;i<this.arrayDetalle.length;i++){
                     if(this.arrayDetalle[i].id_producto==id){
-                        sw=true;
+                        if(this.arrayDetalle[i].tipo==tipo){
+                            sw=true;
+                        }
+                        
                     }
                 }
                 return sw;
@@ -365,7 +380,7 @@
                 if(me.id_producto==0 || me.cantidad==0 || me.precio_compra<0){
                 }
                 else{
-                    if(me.encuentra(me.id_producto)){
+                    if(me.encuentra(me.id_producto, me.tipo)){
                         swal({
                             type: 'error',
                             title: 'Error...',
@@ -373,7 +388,10 @@
                             })
                     }
                     else{
-                        
+                        if(me.tipo==1)
+                        {
+                            me.precio_venta=0;
+                        }
                        me.arrayDetalle.push({
                             id_producto: me.id_producto,
                             producto: me.producto,
@@ -382,12 +400,12 @@
                             precio_venta:me.precio_venta,
                             tipo : me.tipo
                         });
-                        me.id_producto=0;
-                        me.cantidad=0;
+                        me.cantidad='';
                         me.producto='';
-                        me.precio_compra=0; 
-                        me.precio_venta=0;
+                        me.precio_compra=''; 
+                        me.precio_venta='';
                         me.tipo='';
+                        me.id_productoR=[];
                     }
                     
                 }
@@ -405,8 +423,6 @@
                 axios.put('/compras/registrar',{
                     'data': this.arrayDetalle
                 }).then(function (response) {
-                    me.listado=1;
-                    me.listaringreso(1,'','id_producto');
                     me.id_producto=0;
                     me.cantidad='';
                     me.precio_compra='';
@@ -414,22 +430,40 @@
                     me.total=0.0;
                     me.arrayDetalle=[];
                     me.arrayProducto=[];
+                    me.mensajeExito();
                 }).catch(function (error) {
-                    console.log(error);
+                   
                 });
             },
-            
+            mensajeExito(){
+                swal({
+                title: '¡Compra realizada con exito!',
+                showCancelButton: false,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Aceptar!',
+                confirmButtonClass: 'btn btn-success',
+                cancelButtonClass: 'btn btn-danger',
+                buttonsStyling: false,
+                reverseButtons: true
+                })
+            },
             validarvalores(){
                 this.errorIngresoT=0;
                 this.errorMostrarMsjIngresoT =[];
                 let me = this;
-                for(var i=0;i<me.arrayDetalle.length;i++){
-                    if (me.arrayDetalle[i].cantidad<=0) this.errorMostrarMsjIngresoT.push("La cantidad no puede estar vacia.");
-                    if (me.arrayDetalle[i].precio_compra=='') this.errorMostrarMsjIngresoT.push("El precio del producto comprado no puede estar vacio.");
-                    if(me.arrayDetalle[i].tipo!=1){
-                        if (me.arrayDetalle[i].precio_venta=='') this.errorMostrarMsjIngresoT.push("El precio de venta no puede estar vacio.");
+                if(me.arrayDetalle.length==0)
+                {
+                    this.errorMostrarMsjIngresoT.push("No se ha agregado ningún producto a la compra");
+                }
+                else{
+                    for(var i=0;i<me.arrayDetalle.length;i++){
+                        if (me.arrayDetalle[i].cantidad<=0) this.errorMostrarMsjIngresoT.push("La cantidad no puede estar vacia");
+                        if (me.arrayDetalle[i].precio_compra=='') this.errorMostrarMsjIngresoT.push("El precio del producto comprado no puede estar vacio");
+                        if (me.arrayDetalle[i].tipo!=1){
+                            if (me.arrayDetalle[i].precio_venta=='') this.errorMostrarMsjIngresoT.push("El precio de venta no puede estar vacio");
+                        }
                     }
-                 
                 }
                 if (this.errorMostrarMsjIngresoT.length) this.errorIngresoT = 1;
                 return this.errorIngresoT;
@@ -438,21 +472,23 @@
                 this.errorIngreso=0;
                 this.errorMostrarMsjIngreso =[];
 
-                if (this.id_producto==0) this.errorMostrarMsjIngreso.push("Debe seleccionar un producto.");
-                if (this.cantidad<=0) this.errorMostrarMsjIngreso.push("La cantidad no puede estar vacia.");
-                if (this.precio_compra<0) this.errorMostrarMsjIngreso.push("El precio del producto comprado no puede estar vacio.");
-                //if (this.arrayDetalle.length<=0) this.errorMostrarMsjIngreso.push("Ingrese productos");
+                if (this.id_producto==0) this.errorMostrarMsjIngreso.push("Debe seleccionar un producto");
+                if (this.cantidad<1) this.errorMostrarMsjIngreso.push("La cantidad no puede ser menor que uno");
+                if (this.precio_compra=='') this.errorMostrarMsjIngreso.push("El precio del producto comprado no puede estar vacio");
                 if(!this.tipo) this.errorMostrarMsjIngreso.push("El tipo no puede estar vacío");
                 if (this.errorMostrarMsjIngreso.length) this.errorIngreso = 1;
                 return this.errorIngreso;
             },
             mostrarDetalle(){
                 let me=this;
+                me.buscar='';
+                me.listaringreso(1,'','producto');
                 me.listado=0;
                 me.id_producto=0;
                 me.cantidad='';
                 me.precio_compra='';
                 me.tipo=0;
+                me.ti=0;
                 me.total=0.0;
                 me.arrayDetalle=[];
             },

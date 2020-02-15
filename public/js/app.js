@@ -16073,9 +16073,16 @@ __webpack_require__.r(__webpack_exports__);
     },
     getdatosproducto: function getdatosproducto(val1) {
       var me = this;
-      me.loading = true;
-      me.id_producto = val1.id;
-      me.producto = val1.nombre_producto;
+
+      if (val1 == null) {
+        me.loading = false;
+        me.id_producto = '';
+        me.producto = '';
+      } else {
+        me.loading = true;
+        me.id_producto = val1.id;
+        me.producto = val1.nombre_producto;
+      }
     },
     buscarF: function buscarF() {
       var me = this;
@@ -16085,9 +16092,7 @@ __webpack_require__.r(__webpack_exports__);
         var respuesta = response.data;
         me.precio_compra = respuesta.compra;
         me.existenciasC = respuesta.cantidad;
-      })["catch"](function (error) {
-        console.log(error);
-      });
+      })["catch"](function (error) {});
     },
     validar: function validar() {
       var me = this;
@@ -16181,6 +16186,11 @@ __webpack_require__.r(__webpack_exports__);
     },
     agregarDetalle: function agregarDetalle() {
       var me = this;
+
+      if (this.validarCampos()) {
+        return;
+      }
+
       me.buscarF();
       me.validar();
 
@@ -16249,14 +16259,14 @@ __webpack_require__.r(__webpack_exports__);
         console.log(error);
       });
     },
-    validarCompra: function validarCompra() {
+    validarCampos: function validarCampos() {
       this.errorCanasta = 0;
       this.errorMostrarMsjCanasta = [];
-      if (this.id_producto == 0) this.errorMostrarMsjCanasta.push("Debe seleccionar un producto.");
-      if (!this.cantidad) this.errorMostrarMsjCanasta.push("La cantidad no puede estar vacia.");
-      if (!this.precio_compra) this.errorMostrarMsjCanasta.push("El precio del producto comprado no puede estar vacio.");
-      if (this.arrayDetalle.length <= 0) this.errorMostrarMsjCanasta.push("Ingrese productos");
-      if (!this.tipo) this.errorMostrarMsjCanasta.push("El tipo no puede estar vacío");
+      if (!this.nombre_canasta) this.errorMostrarMsjCanasta.push("La canasta debe de tener un nombre");
+      if (!this.precio_venta) this.errorMostrarMsjCanasta.push("La canasta debe poseer un precio de venta");
+      if (!this.cantidad_canasta) this.errorMostrarMsjCanasta.push("El total de canastas a creer no debe de estar vacío");
+      if (this.id_producto = '') this.errorMostrarMsjCanasta.push("Debe seleccionar un producto");
+      if (!this.cantidad) this.errorMostrarMsjCanasta.push("La cantidad no puede estar vacia");
       if (this.errorMostrarMsjCanasta.length) this.errorCanasta = 1;
       return this.errorCanasta;
     },
@@ -16323,6 +16333,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vue_select__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(vue_select__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var vue_select_dist_vue_select_css__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vue-select/dist/vue-select.css */ "./node_modules/vue-select/dist/vue-select.css");
 /* harmony import */ var vue_select_dist_vue_select_css__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(vue_select_dist_vue_select_css__WEBPACK_IMPORTED_MODULE_1__);
+//
+//
+//
 //
 //
 //
@@ -16648,16 +16661,25 @@ __webpack_require__.r(__webpack_exports__);
     },
     getdatosproducto: function getdatosproducto(val1) {
       var me = this;
-      me.loading = true;
-      me.id_producto = val1.id;
-      me.producto = val1.nombre_producto;
+
+      if (val1 == null) {
+        me.loading = false;
+        me.id_producto = '';
+        me.producto = '';
+      } else {
+        me.loading = true;
+        me.id_producto = val1.id;
+        me.producto = val1.nombre_producto;
+      }
     },
-    encuentra: function encuentra(id) {
+    encuentra: function encuentra(id, tipo) {
       var sw = 0;
 
       for (var i = 0; i < this.arrayDetalle.length; i++) {
         if (this.arrayDetalle[i].id_producto == id) {
-          sw = true;
+          if (this.arrayDetalle[i].tipo == tipo) {
+            sw = true;
+          }
         }
       }
 
@@ -16693,13 +16715,17 @@ __webpack_require__.r(__webpack_exports__);
       }
 
       if (me.id_producto == 0 || me.cantidad == 0 || me.precio_compra < 0) {} else {
-        if (me.encuentra(me.id_producto)) {
+        if (me.encuentra(me.id_producto, me.tipo)) {
           swal({
             type: 'error',
             title: 'Error...',
             text: 'Ese artículo ya se encuentra agregado!'
           });
         } else {
+          if (me.tipo == 1) {
+            me.precio_venta = 0;
+          }
+
           me.arrayDetalle.push({
             id_producto: me.id_producto,
             producto: me.producto,
@@ -16708,12 +16734,12 @@ __webpack_require__.r(__webpack_exports__);
             precio_venta: me.precio_venta,
             tipo: me.tipo
           });
-          me.id_producto = 0;
-          me.cantidad = 0;
+          me.cantidad = '';
           me.producto = '';
-          me.precio_compra = 0;
-          me.precio_venta = 0;
+          me.precio_compra = '';
+          me.precio_venta = '';
           me.tipo = '';
+          me.id_productoR = [];
         }
       }
     },
@@ -16726,8 +16752,6 @@ __webpack_require__.r(__webpack_exports__);
       axios.put('/compras/registrar', {
         'data': this.arrayDetalle
       }).then(function (response) {
-        me.listado = 1;
-        me.listaringreso(1, '', 'id_producto');
         me.id_producto = 0;
         me.cantidad = '';
         me.precio_compra = '';
@@ -16735,8 +16759,20 @@ __webpack_require__.r(__webpack_exports__);
         me.total = 0.0;
         me.arrayDetalle = [];
         me.arrayProducto = [];
-      })["catch"](function (error) {
-        console.log(error);
+        me.mensajeExito();
+      })["catch"](function (error) {});
+    },
+    mensajeExito: function mensajeExito() {
+      swal({
+        title: '¡Compra realizada con exito!',
+        showCancelButton: false,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Aceptar!',
+        confirmButtonClass: 'btn btn-success',
+        cancelButtonClass: 'btn btn-danger',
+        buttonsStyling: false,
+        reverseButtons: true
       });
     },
     validarvalores: function validarvalores() {
@@ -16744,12 +16780,16 @@ __webpack_require__.r(__webpack_exports__);
       this.errorMostrarMsjIngresoT = [];
       var me = this;
 
-      for (var i = 0; i < me.arrayDetalle.length; i++) {
-        if (me.arrayDetalle[i].cantidad <= 0) this.errorMostrarMsjIngresoT.push("La cantidad no puede estar vacia.");
-        if (me.arrayDetalle[i].precio_compra == '') this.errorMostrarMsjIngresoT.push("El precio del producto comprado no puede estar vacio.");
+      if (me.arrayDetalle.length == 0) {
+        this.errorMostrarMsjIngresoT.push("No se ha agregado ningún producto a la compra");
+      } else {
+        for (var i = 0; i < me.arrayDetalle.length; i++) {
+          if (me.arrayDetalle[i].cantidad <= 0) this.errorMostrarMsjIngresoT.push("La cantidad no puede estar vacia");
+          if (me.arrayDetalle[i].precio_compra == '') this.errorMostrarMsjIngresoT.push("El precio del producto comprado no puede estar vacio");
 
-        if (me.arrayDetalle[i].tipo != 1) {
-          if (me.arrayDetalle[i].precio_venta == '') this.errorMostrarMsjIngresoT.push("El precio de venta no puede estar vacio.");
+          if (me.arrayDetalle[i].tipo != 1) {
+            if (me.arrayDetalle[i].precio_venta == '') this.errorMostrarMsjIngresoT.push("El precio de venta no puede estar vacio");
+          }
         }
       }
 
@@ -16759,21 +16799,23 @@ __webpack_require__.r(__webpack_exports__);
     validarCompra: function validarCompra() {
       this.errorIngreso = 0;
       this.errorMostrarMsjIngreso = [];
-      if (this.id_producto == 0) this.errorMostrarMsjIngreso.push("Debe seleccionar un producto.");
-      if (this.cantidad <= 0) this.errorMostrarMsjIngreso.push("La cantidad no puede estar vacia.");
-      if (this.precio_compra < 0) this.errorMostrarMsjIngreso.push("El precio del producto comprado no puede estar vacio."); //if (this.arrayDetalle.length<=0) this.errorMostrarMsjIngreso.push("Ingrese productos");
-
+      if (this.id_producto == 0) this.errorMostrarMsjIngreso.push("Debe seleccionar un producto");
+      if (this.cantidad < 1) this.errorMostrarMsjIngreso.push("La cantidad no puede ser menor que uno");
+      if (this.precio_compra == '') this.errorMostrarMsjIngreso.push("El precio del producto comprado no puede estar vacio");
       if (!this.tipo) this.errorMostrarMsjIngreso.push("El tipo no puede estar vacío");
       if (this.errorMostrarMsjIngreso.length) this.errorIngreso = 1;
       return this.errorIngreso;
     },
     mostrarDetalle: function mostrarDetalle() {
       var me = this;
+      me.buscar = '';
+      me.listaringreso(1, '', 'producto');
       me.listado = 0;
       me.id_producto = 0;
       me.cantidad = '';
       me.precio_compra = '';
       me.tipo = 0;
+      me.ti = 0;
       me.total = 0.0;
       me.arrayDetalle = [];
     },
@@ -24537,8 +24579,22 @@ __webpack_require__.r(__webpack_exports__);
         'unidad': this.unidad_medida.toUpperCase()
       }).then(function (response) {
         me.cerrarModal();
+        me.mensajeExito();
         me.listarproductos(1, buscar, criterio);
       })["catch"](function (error) {});
+    },
+    mensajeExito: function mensajeExito() {
+      swal({
+        title: '¡Producto registrado con exito!',
+        showCancelButton: false,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Aceptar!',
+        confirmButtonClass: 'btn btn-success',
+        cancelButtonClass: 'btn btn-danger',
+        buttonsStyling: false,
+        reverseButtons: true
+      });
     },
     actualizarproductos: function actualizarproductos() {
       if (this.validarvalores()) {
@@ -24554,10 +24610,24 @@ __webpack_require__.r(__webpack_exports__);
         'id': this.productos_id
       }).then(function (response) {
         me.cerrarModal();
+        me.mensajeExitoactualizacion();
         me.listarproductos(1, buscar, criterio);
       })["catch"](function (error) {
         // handle error
         console.log(error);
+      });
+    },
+    mensajeExitoactualizacion: function mensajeExitoactualizacion() {
+      swal({
+        title: '¡Actualizado con exito!',
+        showCancelButton: false,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Aceptar!',
+        confirmButtonClass: 'btn btn-success',
+        cancelButtonClass: 'btn btn-danger',
+        buttonsStyling: false,
+        reverseButtons: true
       });
     },
     eliminar: function eliminar() {
@@ -74986,7 +75056,7 @@ var render = function() {
               _c(
                 "button",
                 {
-                  staticClass: "btn btn-secondary",
+                  staticClass: "btn btn-primary",
                   attrs: { type: "button" },
                   on: {
                     click: function($event) {
@@ -75815,7 +75885,7 @@ var render = function() {
               _c(
                 "button",
                 {
-                  staticClass: "btn btn-secondary",
+                  staticClass: "btn btn-primary",
                   attrs: { type: "button" },
                   on: {
                     click: function($event) {
@@ -75979,7 +76049,15 @@ var render = function() {
                               domProps: {
                                 textContent: _vm._s(ingreso.precio_compra)
                               }
-                            })
+                            }),
+                            _vm._v(" "),
+                            ingreso.tipo == 1
+                              ? _c("td", [_vm._v(" Canasta")])
+                              : _vm._e(),
+                            _vm._v(" "),
+                            ingreso.tipo == 2
+                              ? _c("td", [_vm._v(" Suelto")])
+                              : _vm._e()
                           ])
                         }),
                         0
@@ -76281,7 +76359,7 @@ var render = function() {
                               _vm._v(" "),
                               _c("th", [_vm._v("Cantidad")]),
                               _vm._v(" "),
-                              _c("th", [_vm._v("Costo")]),
+                              _c("th", [_vm._v("Costo($)")]),
                               _vm._v(" "),
                               _c(
                                 "th",
@@ -76295,7 +76373,7 @@ var render = function() {
                                     }
                                   ]
                                 },
-                                [_vm._v("Precio Venta")]
+                                [_vm._v("Precio Venta($)")]
                               )
                             ])
                           ]),
@@ -76657,7 +76735,9 @@ var staticRenderFns = [
         _vm._v(" "),
         _c("th", [_vm._v("Cantidad")]),
         _vm._v(" "),
-        _c("th", [_vm._v("Costo ($)")])
+        _c("th", [_vm._v("Costo ($)")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Tipo")])
       ])
     ])
   },
@@ -76684,7 +76764,7 @@ var staticRenderFns = [
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c("label", { attrs: { for: "" } }, [
-      _vm._v("Costo"),
+      _vm._v("Costo($)"),
       _c("b", { staticClass: "alerta" }, [_vm._v("*")])
     ])
   },
@@ -76701,7 +76781,7 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("td", { attrs: { colspan: "4", align: "right" } }, [
+    return _c("td", { attrs: { colspan: "3", align: "right" } }, [
       _c("strong", [_vm._v("Total:")])
     ])
   },

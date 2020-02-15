@@ -264,6 +264,7 @@
                   'unidad': this.unidad_medida.toUpperCase(),
               }) .then(function (response) {
                     me.cerrarModal();
+                    me.mensajeExito();
                     me.listarproductos(1,buscar,criterio);
                 }) .catch(function (error) {
                  
@@ -271,7 +272,19 @@
 
             },
          
-
+            mensajeExito(){
+                swal({
+                title: '¡Producto registrado con exito!',
+                showCancelButton: false,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Aceptar!',
+                confirmButtonClass: 'btn btn-success',
+                cancelButtonClass: 'btn btn-danger',
+                buttonsStyling: false,
+                reverseButtons: true
+                })
+            },
             actualizarproductos(){
                 if(this.validarvalores()){
                   return;   
@@ -286,13 +299,26 @@
                   'id':this.productos_id,
                     }) .then(function (response) {
                     me.cerrarModal();
-                    
+                    me.mensajeExitoactualizacion();
                     me.listarproductos(1,buscar,criterio);
                 })
                 .catch(function (error) {
                     // handle error
                     console.log(error);
                 });
+            },
+            mensajeExitoactualizacion(){
+                swal({
+                title: '¡Actualizado con exito!',
+                showCancelButton: false,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Aceptar!',
+                confirmButtonClass: 'btn btn-success',
+                cancelButtonClass: 'btn btn-danger',
+                buttonsStyling: false,
+                reverseButtons: true
+                })
             },
              eliminar(){
                 let me=this;
