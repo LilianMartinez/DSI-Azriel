@@ -192,7 +192,6 @@
                     var respuesta= response.data;
                     me.arrayiglesiasZ=respuesta.iglesiasZ;
                     me.arrayiglesias=respuesta.iglesias;
-                    console.log(response);
                 })
                 .catch(function (error) {
                     console.log(error);
@@ -282,6 +281,8 @@
                 this.buscar='';
                 this.criterio='nombre_iglesia';
                 this.idzona='';
+                this.errorDatos=0;
+                this.errorMostrarMsj='';
             
             },
     

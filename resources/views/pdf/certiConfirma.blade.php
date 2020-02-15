@@ -570,7 +570,7 @@
                  CERTIFICADO DE CONFIRMACIÓN
                  </p>
                  <p id="parrafo">
-                 El suscrito Párroco de la Parroquia de San Luís Gonzaga en Mariona de  la Ciudad Cuscatancingo hace constar que:
+                 El suscrito Párroco de la Parroquia de San Luis Gonzaga en Mariona de  la Ciudad Cuscatancingo hace constar que:
                  @foreach ($confirmando as $c)
                  <br>En el libro de Confirmaciones No. {{$c->libro}}, Folio No. {{$c->folio}}, Asiento No. {{$c->asiento}} que nuestra
                  parroquia lleva. Se encuentra registrado: 

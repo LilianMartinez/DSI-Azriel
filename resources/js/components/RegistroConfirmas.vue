@@ -89,6 +89,24 @@
                                     <input tabindexgt="0" v-model="dui" class="form-control" placeholder="999999999" @keydown.tab="validarvalores('11')">
                                 </div>
                             </div>
+                            <div class="form-group row">
+                                    <label class="col-md-3 form-control-label" for="text-input">Zona:</label> 
+                                    <div class="col-md-5">
+                                        <select class="form-control" v-model="idzonar" @click="iglesiasr(idzona)"> 
+                                        <option value="0" disabled>Seleccione</option>
+                                        <option v-for="zona in arrayzona" :key="zona.id" v-bind:value="zona.id">{{zona.nombre_zona}}</option>
+                                        </select >
+                                    </div>
+                            </div>
+                            <div class="form-group row">
+                                    <label class="col-md-3 form-control-label" for="text-input">Iglesia:</label> 
+                                    <div class="col-md-5">
+                                        <select class="form-control" v-model="idiglesiar"> 
+                                        <option value="0" disabled>Seleccione</option>
+                                        <option v-for="iglesiar in arrayiglesiar" :key="iglesiar.id" v-bind:value="iglesiar.id" >{{iglesiar.nombre_iglesia}}</option>
+                                        </select >
+                                    </div>
+                            </div>
                             <div v-show="errorDatos" class="form-group row div-error">
                                 <div class="text-center text-error">
                                     <div v-for="error in errorMostrarMsj" :key="error" v-text="error"></div>
@@ -125,6 +143,24 @@
                                 </div>
                             </div>
                             <div class="form-group row">
+                                    <label class="col-md-3 form-control-label" for="text-input">Zona:</label> 
+                                    <div class="col-md-5">
+                                        <select class="form-control" v-model="idzonam" @click="iglesiasm(idzona)"> 
+                                        <option value="0" disabled>Seleccione</option>
+                                        <option v-for="zona in arrayzona" :key="zona.id" v-bind:value="zona.id">{{zona.nombre_zona}}</option>
+                                        </select >
+                                    </div>
+                            </div>
+                            <div class="form-group row">
+                                    <label class="col-md-3 form-control-label" for="text-input">Iglesia:</label> 
+                                    <div class="col-md-5">
+                                        <select class="form-control" v-model="idiglesiam"> 
+                                        <option value="0" disabled>Seleccione</option>
+                                        <option v-for="iglesiam in arrayiglesiam" :key="iglesiam.id" v-bind:value="iglesiam.id" >{{iglesiam.nombre_iglesia}}</option>
+                                        </select >
+                                    </div>
+                            </div>
+                            <div class="form-group row">
                                 <label class="col-md-3 form-control-label" for="text-input"><b>Datos del padre</b></label>
                             </div>
                             <div class="form-group row">
@@ -145,6 +181,24 @@
                                     <input type="text" tabindexgt="0" v-model="apellidopadre" class="form-control" placeholder="Apellidos del padre">
                                 </div>
                             </div>
+                            <div class="form-group row">
+                                    <label class="col-md-3 form-control-label" for="text-input">Zona:</label> 
+                                    <div class="col-md-5">
+                                        <select class="form-control" v-model="idzonap" @click="iglesiasp(idzona)"> 
+                                        <option value="0" disabled>Seleccione</option>
+                                        <option v-for="zona in arrayzona" :key="zona.id" v-bind:value="zona.id">{{zona.nombre_zona}}</option>
+                                        </select >
+                                    </div>
+                            </div>
+                            <div class="form-group row">
+                                    <label class="col-md-3 form-control-label" for="text-input">Iglesia:</label> 
+                                    <div class="col-md-5">
+                                        <select class="form-control" v-model="idiglesiap"> 
+                                        <option value="0" disabled>Seleccione</option>
+                                        <option v-for="iglesiap in arrayiglesiap" :key="iglesiap.id" v-bind:value="iglesiap.id" >{{iglesiap.nombre_iglesia}}</option>
+                                        </select >
+                                    </div>
+                            </div>
                             <div v-show="errorDatos" class="form-group row div-error">
                                 <div class="text-center text-error">
                                     <div v-for="error in errorMostrarMsj" :key="error" v-text="error"></div>
@@ -155,7 +209,7 @@
                                 <button type="button" class="btn btn-primary" @click="siguiente('3')">Siguiente</button>
                             </div> 
                         </div>
-                        <div v-show="cambiarm==3 || cambiarm==11">
+                        <div v-show="cambiarm==3 || cambiarm==11"> <!-- aqui-->
                             <div class="form-group row">
                                 <label class="col-md-3 form-control-label" for="text-input"><b>Datos del padrino 1</b></label>
                             </div>
@@ -186,15 +240,41 @@
                                     </table>
                                 </div>
                             </div>
+                            <div class="form-group row">
+                                    <label class="col-md-3 form-control-label" for="text-input">Zona:</label> 
+                                    <div class="col-md-5">
+                                        <select class="form-control" v-model="idzonap1" @click="iglesiasp1(idzona)"> 
+                                        <option value="0" disabled>Seleccione</option>
+                                        <option v-for="zona in arrayzona" :key="zona.id" v-bind:value="zona.id">{{zona.nombre_zona}}</option>
+                                        </select >
+                                    </div>
+                            </div>
+                            <div class="form-group row">
+                                    <label class="col-md-3 form-control-label" for="text-input">Iglesia:</label> 
+                                    <div class="col-md-5">
+                                        <select class="form-control" v-model="idiglesiap1"> 
+                                        <option value="0" disabled>Seleccione</option>
+                                        <option v-for="iglesiap1 in arrayiglesiap1" :key="iglesiap1.id" v-bind:value="iglesiap1.id" >{{iglesiap1.nombre_iglesia}}</option>
+                                        </select >
+                                    </div>
+                            </div>
                             <div v-show="errorDatos" class="form-group row div-error">
                                 <div class="text-center text-error">
                                     <div v-for="error in errorMostrarMsj" :key="error" v-text="error"></div>
                                 </div>
                             </div>
-                            <div class="col-md-5 modal-fo">
-                                <button type="button" class="btn btn-secondary" @click="siguiente('12')">Regresar</button>
-                                <button type="button" class="btn btn-primary" @click="siguiente('4')">Agregar otro padrino</button>
-                                <button type="button" class="btn btn-primary" @click="siguiente('7')">Continuar</button>
+                            <div v-show="cambiarmb==1">
+                                <div class="col-md-5 modal-fo">
+                                    <button type="button" class="btn btn-secondary" @click="siguiente('12')">Regresar</button> <!--aqui 3-->
+                                    <button type="button" class="btn btn-primary" @click="siguiente('4')">Agregar otro padrino</button>
+                                    <button type="button" class="btn btn-primary" @click="siguiente('7')">Continuar</button>
+                                </div>
+                            </div>
+                            <div v-show="cambiarmb==0">
+                                <div class="col-md-5 modal-fo">
+                                    <button type="button" class="btn btn-primary" @click="siguiente('4')">Agregar otro padrino</button>
+                                    <button type="button" class="btn btn-primary" @click="siguiente('7')">Continuar</button>
+                                </div>
                             </div>
                         </div>
                         <div v-show="cambiarm==4 || cambiarm==10">
@@ -227,6 +307,24 @@
                                         <tr> <input tabindexgt="-1" type="radio" v-model="sexopd2" value="M" name="sexo">Masculino</tr>
                                     </table>
                                 </div>
+                            </div>
+                            <div class="form-group row">
+                                    <label class="col-md-3 form-control-label" for="text-input">Zona:</label> 
+                                    <div class="col-md-5">
+                                        <select class="form-control" v-model="idzonap2" @click="iglesiasp2(idzona)"> 
+                                        <option value="0" disabled>Seleccione</option>
+                                        <option v-for="zona in arrayzona" :key="zona.id" v-bind:value="zona.id">{{zona.nombre_zona}}</option>
+                                        </select >
+                                    </div>
+                            </div>
+                            <div class="form-group row">
+                                    <label class="col-md-3 form-control-label" for="text-input">Iglesia:</label> 
+                                    <div class="col-md-5">
+                                        <select class="form-control" v-model="idiglesiap2"> 
+                                        <option value="0" disabled>Seleccione</option>
+                                        <option v-for="iglesiap2 in arrayiglesiap2" :key="iglesiap2.id" v-bind:value="iglesiap2.id" >{{iglesiap2.nombre_iglesia}}</option>
+                                        </select >
+                                    </div>
                             </div>
                             <div v-show="errorDatos" class="form-group row div-error">
                                 <div class="text-center text-error">
@@ -270,6 +368,24 @@
                                     </table>
                                 </div>
                             </div>
+                            <div class="form-group row">
+                                    <label class="col-md-3 form-control-label" for="text-input">Zona:</label> 
+                                    <div class="col-md-5">
+                                        <select class="form-control" v-model="idzonap3" @click="iglesiasp3(idzona)"> 
+                                        <option value="0" disabled>Seleccione</option>
+                                        <option v-for="zona in arrayzona" :key="zona.id" v-bind:value="zona.id">{{zona.nombre_zona}}</option>
+                                        </select >
+                                    </div>
+                            </div>
+                            <div class="form-group row">
+                                    <label class="col-md-3 form-control-label" for="text-input">Iglesia:</label> 
+                                    <div class="col-md-5">
+                                        <select class="form-control" v-model="idiglesiap3"> 
+                                        <option value="0" disabled>Seleccione</option>
+                                        <option v-for="iglesiap3 in arrayiglesiap3" :key="iglesiap3.id" v-bind:value="iglesiap3.id" >{{iglesiap3.nombre_iglesia}}</option>
+                                        </select >
+                                    </div>
+                            </div>
                             <div v-show="errorDatos" class="form-group row div-error">
                                 <div class="text-center text-error">
                                     <div v-for="error in errorMostrarMsj" :key="error" v-text="error"></div>
@@ -311,6 +427,24 @@
                                         <tr> <input tabindexgt="-1" type="radio" v-model="sexopd4" value="M" name="sexo">Masculino</tr>
                                     </table>
                                 </div>
+                            </div>
+                            <div class="form-group row">
+                                    <label class="col-md-3 form-control-label" for="text-input">Zona:</label> 
+                                    <div class="col-md-5">
+                                        <select class="form-control" v-model="idzonap4" @click="iglesiasp4(idzona)"> 
+                                        <option value="0" disabled>Seleccione</option>
+                                        <option v-for="zona in arrayzona" :key="zona.id" v-bind:value="zona.id">{{zona.nombre_zona}}</option>
+                                        </select >
+                                    </div>
+                            </div>
+                            <div class="form-group row">
+                                    <label class="col-md-3 form-control-label" for="text-input">Iglesia:</label> 
+                                    <div class="col-md-5">
+                                        <select class="form-control" v-model="idiglesiap4"> 
+                                        <option value="0" disabled>Seleccione</option>
+                                        <option v-for="iglesiap4 in arrayiglesiap4" :key="iglesiap4.id" v-bind:value="iglesiap4.id" >{{iglesiap4.nombre_iglesia}}</option>
+                                        </select >
+                                    </div>
                             </div>
                             <div v-show="errorDatos" class="form-group row div-error">
                                 <div class="text-center text-error">
@@ -397,19 +531,19 @@
                                     <div v-for="error in errorMostrarMsj" :key="error" v-text="error"></div>
                                 </div>
                             </div>
-                            <div v-show="cambiarmb==1">
+                            <div>
                                 <div class="col-md-6">
                                     <button type="button" class="btn btn-secondary" @click="siguiente('8')">Regresar</button>
                                     <button type="button" class="btn btn-secondary" @click="cerrarm()">Cancelar</button>
                                     <button type="submit"  class="btn btn-primary" @click="abrirmodal()">Guardar</button>
                                 </div>
                             </div>
-                            <div v-show="cambiarmb==0">
+                            <!--<div v-show="cambiarmb==0">
                                 <div class="col-md-6">
                                     <button type="button" class="btn btn-secondary" @click="cerrarm()">Cancelar</button>
                                     <button type="submit"  class="btn btn-primary" @click="abrirmodal()">Guardar</button>
                                 </div>
-                            </div>
+                            </div>-->
                         </div>
                     </div>
                 </div>
@@ -487,11 +621,13 @@
                                         </div>
                                         <div class="form-group row">
                                             <label class="col-md-4 form-control-label" for="text-input">Nacido el:</label>
-                                            <label class="col-md-6 form-control-label" >{{fechanaes}}</label>
+                                            <label class="col-md-6 form-control-label" >{{fechana}}</label>
                                         </div>
-                                        <div class="form-group row">
-                                            <label class="col-md-4 form-control-label" for="text-input">Fue confirmado:</label>
-                                            <label class="col-md-6 form-control-label" >{{fecharealizaciones}}</label>
+                                        <div v-show="accionbotones==2">
+                                            <div class="form-group row">
+                                                <label class="col-md-4 form-control-label" for="text-input">Fue confirmado:</label>
+                                                <label class="col-md-6 form-control-label" >{{fecharealizaciones}}</label>
+                                            </div> 
                                         </div>
                                     </div>
                                     <div v-show="accionbotones==2">
@@ -551,7 +687,7 @@
                                     <div v-show="accionbotones==1">
                                         <div class="col-md-4 modal-fo">
                                             <button type="button" class="btn btn-secondary" @click="cerrar()">Cancelar</button>
-                                            <button type="submit"  class="btn btn-primary" @click="siguiente('7')">Continuar</button>
+                                            <button type="submit"  class="btn btn-primary" @click="siguiente('3')">Continuar</button> <!--aqui2-->
                                         </div>
                                     </div>                         
                                 </div>
@@ -570,6 +706,65 @@
 export default {
     data (){
         return{
+            idzona:'',
+            idiglesia:'',
+            zona:'', //
+            iglesia:'',
+            nombre_zona:'',//
+            nombre_iglesia:'',
+            arrayzona:[], //
+            arrayiglesia:[],
+            arrayiglesiaID:[],
+
+            idzonar:'', //realizante
+            idiglesiar:'',
+            iglesiar:'',
+            nombre_iglesiar:'',
+            arrayiglesiar:[],
+            arrayiglesiaIDr:[],
+
+            idzonam:'', //mama
+            idiglesiam:'',
+            iglesiam:'',
+            nombre_iglesiam:'',
+            arrayiglesiam:[],
+            arrayiglesiaIDm:[],
+
+            idzonap:'', //papa
+            idiglesiap:'',
+            iglesiap:'',
+            nombre_iglesiap:'',
+            arrayiglesiap:[],
+            arrayiglesiaIDp:[],
+
+            idzonap1:'', //padrino1
+            idiglesiap1:'',
+            iglesiap1:'',
+            nombre_iglesiap1:'',
+            arrayiglesiap1:[],
+            arrayiglesiaIDp1:[],
+
+            idzonap2:'', //padrino2
+            idiglesiap2:'',
+            iglesiap2:'',
+            nombre_iglesiap2:'',
+            arrayiglesiap2:[],
+            arrayiglesiaIDp2:[],
+
+            idzonap3:'', //padrino3
+            idiglesiap3:'',
+            iglesiap3:'',
+            nombre_iglesiap3:'',
+            arrayiglesiap3:[],
+            arrayiglesiaIDp3:[],
+
+            idzonap4:'', //padrino4
+            idiglesiap4:'',
+            iglesiap4:'',
+            nombre_iglesiap4:'',
+            arrayiglesiap4:[],
+            arrayiglesiaIDp4:[],
+
             id:'',
             tipo:'',
             tipop:0,
@@ -578,7 +773,7 @@ export default {
             folioc:'',
             asiento:'',
             idsacerdote:'',
-            idiglesia:'',
+           // idiglesia:'',
             arrayiglesias:[],
             nomiglesia:'',
             fecharealizacion:'',
@@ -646,6 +841,151 @@ export default {
     },
 
     methods:{
+        //Para lo de zonas e iglesias
+             llenadolistazona(){
+            let me=this;
+            var url='/zona/buscarZona'; 
+            axios.get(url) .then(function (response) {
+                me.arrayzona=response.data;
+            })
+            .catch(function (error) {
+                console.log(error);
+            });
+        },  
+
+            iglesiasr(idzonar){  //realizante
+
+                let me=this;
+                var arrayiglesiaIDr=[];
+             axios.post('/feligreses/buscarIglesia',{
+               'id':this.idzonar}) 
+              .then(function (response) { 
+                arrayiglesiaIDr = response.data;     
+                me.llenarr(arrayiglesiaIDr);  
+                })
+                .catch(function (error) {
+                    // handle error
+                    console.log(error);
+                });
+            },
+           llenarr(d=[]){
+                this.arrayiglesiar=d;
+            },
+
+             iglesiasm(idzonam){  //mamá
+
+                let me=this;
+                var arrayiglesiaIDm=[];
+             axios.post('/feligreses/buscarIglesia',{
+               'id':this.idzonam}) 
+              .then(function (response) { 
+                arrayiglesiaIDm = response.data;     
+                me.llenarm(arrayiglesiaIDm);  
+                })
+                .catch(function (error) {
+                    // handle error
+                    console.log(error);
+                });
+            },
+            llenarm(d=[]){
+                this.arrayiglesiam=d;
+            },
+
+             iglesiasp(idzonap){ //papa
+
+                let me=this;
+                var arrayiglesiaIDp=[];
+             axios.post('/feligreses/buscarIglesia',{
+               'id':this.idzonap}) 
+              .then(function (response) { 
+                arrayiglesiaIDp= response.data;     
+                me.llenarp(arrayiglesiaIDp);  
+                })
+                .catch(function (error) {
+                    // handle error
+                    console.log(error);
+                });
+            },
+            llenarp(d=[]){
+                this.arrayiglesiap=d;
+            },
+
+            iglesiasp1(idzonap1){ //padrino1
+
+                let me=this;
+                var arrayiglesiaIDp1=[];
+             axios.post('/feligreses/buscarIglesia',{
+               'id':this.idzonap1}) 
+              .then(function (response) { 
+                arrayiglesiaIDp1= response.data;     
+                me.llenarp1(arrayiglesiaIDp1);  
+                })
+                .catch(function (error) {
+                    // handle error
+                    console.log(error);
+                });
+            },
+            llenarp1(d=[]){
+                this.arrayiglesiap1=d;
+            },
+
+            iglesiasp2(idzonap2){ //padrino2
+
+                let me=this;
+                var arrayiglesiaIDp2=[];
+             axios.post('/feligreses/buscarIglesia',{
+               'id':this.idzonap2}) 
+              .then(function (response) { 
+                arrayiglesiaIDp2= response.data;     
+                me.llenarp2(arrayiglesiaIDp2);  
+                })
+                .catch(function (error) {
+                    // handle error
+                    console.log(error);
+                });
+            },
+            llenarp2(d=[]){
+                this.arrayiglesiap2=d;
+            },
+
+            iglesiasp3(idzonap3){ //padrino3
+
+                let me=this;
+                var arrayiglesiaIDp3=[];
+             axios.post('/feligreses/buscarIglesia',{
+               'id':this.idzonap3}) 
+              .then(function (response) { 
+                arrayiglesiaIDp3= response.data;     
+                me.llenarp3(arrayiglesiaIDp3);  
+                })
+                .catch(function (error) {
+                    // handle error
+                    console.log(error);
+                });
+            },
+            llenarp3(d=[]){
+                this.arrayiglesiap3=d;
+            },
+
+            iglesiasp4(idzonap4){ //padrino4
+
+                let me=this;
+                var arrayiglesiaIDp4=[];
+             axios.post('/feligreses/buscarIglesia',{
+               'id':this.idzonap4}) 
+              .then(function (response) { 
+                arrayiglesiaIDp4= response.data;     
+                me.llenarp4(arrayiglesiaIDp4);  
+                })
+                .catch(function (error) {
+                    // handle error
+                    console.log(error);
+                });
+            },
+            llenarp4(d=[]){
+                this.arrayiglesiap4=d;
+            },
+
             //Mt. para calcular edad y ver si se muestra o no el div que contiene el dui del realizante
         cambiar(){ 
             var values=this.fechana.split("-");
@@ -721,6 +1061,7 @@ export default {
                         }else{
                             this.cambiarm=3;   //padrino 1
                         }
+                        this.modal=0;
                     break;
                 }
                 case '4':
@@ -761,7 +1102,6 @@ export default {
                         }else{
                             this.cambiarm=7;   //datos de la celebracion
                         }
-                        this.modal=0;
                     break;
                 } 
                 case '8':
@@ -851,12 +1191,33 @@ export default {
             this.cambiarm=0;
             this.cambiarmb=0;
             this.alcaldia='';
+            this.alcaldia='';
+            this.libro='';
+            this.partida='';
+            this.folio='';
+            this.ano='';
             this.libroc='';
             this.folioc='';
             this.sexopd1='';
             this.sexopd2='';
             this.sexopd3='';
-            this.sexopd4='';    
+            this.sexopd4='';
+            this.errorDatos=0;
+            this.errorMostrarMsj=[]; 
+            this.idzonar=0;    //zona realizante
+            this.idiglesiar=0;
+            this.idzonam=0;   //zona madre
+            this.idiglesiam=0;
+            this.idzonap=0;   //zona padre
+            this.idiglesiap=0;
+            this.idzonap1=0;   //zona padrino1
+            this.idiglesiap1=0;
+            this.idzonap2=0;   //zona padrino2
+            this.idiglesiap2=0;
+            this.idzonap3=0;   //zona padrino3
+            this.idiglesiap3=0;
+            this.idzonap4=0;   //zona padrino4
+            this.idiglesiap4=0;     
 
         },
         cerrarm(){ //botones cancelat
@@ -894,6 +1255,7 @@ export default {
             this.libro='';
             this.partida='';
             this.folio='';
+            this.ano='';
             this.anio='';
             this.idpadre='';
             this.idmadre='';
@@ -905,8 +1267,23 @@ export default {
             this.sexopd1='';
             this.sexopd2='';
             this.sexopd3='';
-            this.sexopd4='';       
-
+            this.sexopd4='';
+            this.errorDatos=0;
+            this.errorMostrarMsj=[];
+            this.idzonar=0;    //zona realizante
+            this.idiglesiar=0;
+            this.idzonam=0;   //zona madre
+            this.idiglesiam=0;
+            this.idzonap=0;   //zona padre
+            this.idiglesiap=0;
+            this.idzonap1=0;   //zona padrino1
+            this.idiglesiap1=0;
+            this.idzonap2=0;   //zona padrino2
+            this.idiglesiap2=0;
+            this.idzonap3=0;   //zona padrino3
+            this.idiglesiap3=0;
+            this.idzonap4=0;   //zona padrino4
+            this.idiglesiap4=0;       
         },
             //Mt. cuando le da modificar en el modal
         cerrarmodal(){
@@ -986,7 +1363,6 @@ export default {
                 //Si es F o M
                 if (this.sexo == 'M')   {
                     this.accionsexo=1;
-                    var_dump(sexo);
                 }
                 if (this.sexo == 'F')   {
                     this.accionsexo=0;
@@ -1009,24 +1385,24 @@ export default {
 
             llenarmodal(id){
                 let me=this;
-                var url='/persona/obtener?id=' + id;
+                var url='/persona/obtenerConfirma?id=' + id;
                     axios.get(url) .then(function (response) {
                         var d = response.data.solo;            
                         if(d==1){
-                             response.data.realizante.forEach(function(element) {
+                           /*  response.data.realizante.forEach(function(element) {
                             var texto = element.fecha_nacimiento;
                             element.fecha_nacimiento= texto.replace(/^(\d{4})-(\d{2})-(\d{2})$/g,'$3/$2/$1');
-                            });
+                            });*/
                             me.nombrerealizante= response.data.realizante.nombre_persona;
                             me.apellidorealizante=response.data.realizante.apellido_persona;
                             me.sexo=response.data.realizante.sexo;
                             me.fechana=response.data.realizante.fecha_nacimiento;
                         }
                         if(d==2){
-                             response.data.realizante.forEach(function(element) {
+                            /* response.data.realizante.forEach(function(element) {
                             var texto = element.fecha_nacimiento;
                             element.fecha_nacimiento= texto.replace(/^(\d{4})-(\d{2})-(\d{2})$/g,'$3/$2/$1');
-                            });
+                            });*/
                             me.nombrepadre= response.data.padre.nombre_persona;
                             me.apellidopadre=response.data.padre.apellido_persona;
                             me.nombrerealizante= response.data.realizante.nombre_persona;
@@ -1035,10 +1411,10 @@ export default {
                             me.fechana=response.data.realizante.fecha_nacimiento;
                         }
                         if(d==3){
-                             response.data.realizante.forEach(function(element) {
+                             /*response.data.realizante.forEach(function(element) {
                             var texto = element.fecha_nacimiento;
                             element.fecha_nacimiento= texto.replace(/^(\d{4})-(\d{2})-(\d{2})$/g,'$3/$2/$1');
-                            });
+                            });*/
                             me.nombremadre= response.data.madre.nombre_persona;
                             me.apellidomadre=response.data.madre.apellido_persona;
                             me.nombrerealizante= response.data.realizante.nombre_persona;
@@ -1047,10 +1423,10 @@ export default {
                             me.fechana=response.data.realizante.fecha_nacimiento;
                         }
                         if(d==4){
-                             response.data.realizante.forEach(function(element) {
+                             /*response.data.realizante.forEach(function(element) {
                             var texto = element.fecha_nacimiento;
                             element.fecha_nacimiento= texto.replace(/^(\d{4})-(\d{2})-(\d{2})$/g,'$3/$2/$1');
-                            });
+                            });*/
                             me.nombrepadre= response.data.padre.nombre_persona;
                             me.apellidopadre=response.data.padre.apellido_persona;
                             me.nombremadre= response.data.madre.nombre_persona;
@@ -1253,6 +1629,21 @@ export default {
                         'sexo_pd4':this.sexopd4,
                         'monto': this.monto,
                         'idcate':this.idcare,
+                        'idiglesia':this.idiglesia,
+                        'idzonar':this.idzonar,        //zona realizante
+                        'idiglesiar':this.idiglesiar,   //iglesia realizante
+                        'idzonam':this.idzonam,    //zona mamá
+                        'idiglesiam':this.idiglesiam, //iglesia mamá
+                        'idzonap':this.idzonap,  //zona papá
+                        'idiglesiap':this.idiglesiap, //iglesia papá
+                        'idzonap1':this.idzonap1,  //zona padrino1
+                        'idiglesiap1':this.idiglesiap1, //iglesia padrino1
+                        'idzonap2':this.idzonap2,  //zona padrino2
+                        'idiglesiap2':this.idiglesiap2, //iglesia padrino2
+                        'idzonap3':this.idzonap3,  //zona padrino3
+                        'idiglesiap3':this.idiglesiap3, //iglesia padrino3
+                        'idzonap4':this.idzonap4,  //zona padrino4
+                        'idiglesiap4':this.idiglesiap4, //iglesia padrino4
                 }) .then(function (response) {
                     me.modal=0;
                     me.cambiarm=0;
@@ -1276,19 +1667,32 @@ export default {
             var libro= this.libro;
             var partida= this.partida;
             var folio= this.folio;
-            var anio= this.anio;
+            var ano= this.ano;
 
-            var url='/partida/busqueda?alcaldia=' + alcaldia + '&libro=' + libro + '&partida=' + partida + '&folio=' + folio + '&anio=' + anio;
+            var url='/partida/busquedaConfirma?alcaldia=' + alcaldia + '&libro=' + libro + '&partida=' + partida + '&folio=' + folio + '&ano=' + ano;
             axios.get(url) .then(function (response) {
                 var respuesta=response.data.solo;
-                if(respuesta==1){
+               /* if(respuesta==1){
                     me.id=response.data.realizante.idpersona;
                     me.llenarmodal(me.id);
                 }else{
                     me.cambiarm=1;
                     me.cambiarmb=1;
-                }
-                     
+                }*/
+                if(respuesta==1){
+                        me.id=response.data.realizante.idpersona;
+                        me.llenarmodal(me.id);
+                        me.cambiarmb=0;
+                    }
+                    if(respuesta==0){
+                        me.cambiarm=1;
+                        me.cambiarmb=1;
+                    }
+                     if(respuesta==2){
+                         me.validarvalores('6');
+                        
+
+                     }                     
             }).catch(function (error) {
                 console.log(error);
             });
@@ -1312,31 +1716,79 @@ export default {
             this.nombremadre= data['nombre_persona'];
             this.apellidomadre= data['apellido_persona'];
             this.idmadre=data['id'];
+            this.idzonam=data['idzonaa'];
+            this.llenadolistazona();
+            if(this.idzonam)
+                {
+                    this.iglesiasm(this.idzonam);
+                    this.idiglesiam=data['idiglesia'];
+                }
         },
         llenarcamposp(data=[]){
             this.nombrepadre= data['nombre_persona'];
             this.apellidopadre= data['apellido_persona'];
             this.idpadre=data['id'];
+            this.idzonap=data['idzonaa'];
+            this.llenadolistazona();
+            if(this.idzonap)
+                {
+                    this.iglesiasp(this.idzonap);
+                    this.idiglesiap=data['idiglesia'];
+                }
         },
         llenarcamposp1(data=[]){
             this.nombrepd1= data['nombre_persona'];
             this.apellidopd1= data['apellido_persona'];
             this.idpd1=data['id'];
+            this.sexopd1=data['sexo'];
+            this.idzonap1=data['idzonaa'];
+            this.llenadolistazona();
+            if(this.idzonap1)
+                {
+                    this.iglesiasp1(this.idzonap1);
+                    this.idiglesiap1=data['idiglesia'];
+                }
         },
         llenarcamposp2(data=[]){
             this.nombrepd2= data['nombre_persona'];
             this.apellidopd2= data['apellido_persona'];
             this.idpd2=data['id'];
+            this.sexopd2=data['sexo'];
+            this.idzonap2=data['idzonaa'];
+            this.llenadolistazona();
+            if(this.idzonap2)
+                {
+                    this.iglesiasp2(this.idzonap2);
+                    this.idiglesiap2=data['idiglesia'];
+                }
         },
+
         llenarcamposp3(data=[]){
             this.nombrepd3= data['nombre_persona'];
             this.apellidopd3= data['apellido_persona'];
             this.idpd3=data['id'];
+            this.sexopd3=data['sexo'];
+            this.idzonap3=data['idzonaa'];
+            this.llenadolistazona();
+            if(this.idzonap3)
+                {
+                    this.iglesiasp3(this.idzonap3);
+                    this.idiglesiap3=data['idiglesia'];
+                }
         },
+
         llenarcamposp4(data=[]){
             this.nombrepd4= data['nombre_persona'];
             this.apellidopd4= data['apellido_persona'];
             this.idpd4=data['id'];
+            this.sexopd4=data['sexo'];
+            this.idzonap4=data['idzonaa'];
+            this.llenadolistazona();
+            if(this.idzonap4)
+                {
+                    this.iglesiasp4(this.idzonap4);
+                   this.idiglesiap4=data['idiglesia'];
+                }
         },
 
         duim(){
@@ -1348,6 +1800,9 @@ export default {
                 axios.get(url) .then(function (response) {
                     var respuesta=response.data.solo;
                     var datos= response.data.persona;
+                    if(respuesta==1){
+                        me.vaciarm();
+                    }
                     if(respuesta==2){
                         me.llenarcamposm(datos);
                     }
@@ -1355,6 +1810,13 @@ export default {
                     console.log(error);
                 });
             }
+        },
+        vaciarm(){
+            this.nombremadre='';
+            this.apellidomadre= '';
+            this.idmadre='';
+            this.idzonam=0;   //zona madre
+            this.idiglesiam=0; 
         },
         duip(){
             let me=this;
@@ -1364,6 +1826,9 @@ export default {
                 axios.get(url) .then(function (response) {
                     var respuesta=response.data.solo;
                     var datos= response.data.persona;
+                    if(respuesta==1){
+                        me.vaciarp();
+                    }
                     if(respuesta==2){
                         me.llenarcamposp(datos);
                     }
@@ -1372,6 +1837,13 @@ export default {
                 });
             }
                     
+        },
+        vaciarp(){
+            this.nombrepadre='';
+            this.apellidopadre= '';
+            this.idpadre='';
+            this.idzonap=0;   //zona padre
+            this.idiglesiap=0; 
         },
         duip1(){
             let me=this;
@@ -1397,6 +1869,8 @@ export default {
             this.nombrepd1='';
             this.apellidopd1= '';
             this.idpd1='';
+            this.idzonap1=0;   //zona padrino1
+            this.idiglesiap1=0; 
         },
         duip2(){
             let me=this;
@@ -1422,6 +1896,8 @@ export default {
             this.nombrepd2='';
             this.apellidopd2= '';
             this.idpd2='';
+            this.idzonap2=0;   //zona padrino2
+            this.idiglesiap2=0;
         },
         duip3(){
             let me=this;
@@ -1447,6 +1923,8 @@ export default {
             this.nombrepd3='';
             this.apellidopd3= '';
             this.idpd3='';
+            this.idzonap3=0;   //zona padrino3
+            this.idiglesiap3=0;
         },
         duip4(){
             let me=this;
@@ -1472,6 +1950,8 @@ export default {
             this.nombrepd4='';
             this.apellidopd4= '';
             this.idpd4='';
+            this.idzonap4=0;   //zona padrino4
+            this.idiglesiap4=0;
         },
 
          //Validar datos
@@ -1772,6 +2252,7 @@ export default {
       
       mounted() {
             this.llenadolistas();
+            this.llenadolistazona('','');
         }
 }
 

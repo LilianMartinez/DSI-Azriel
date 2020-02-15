@@ -270,6 +270,24 @@ export default {
 
             return this.errorModal;
         },
+
+    msjExito(){
+        swal({
+            type: 'success',
+            title: 'Evento guardado con éxito',
+            showConfirmButton: false,
+            timer: 1500
+        })
+    },
+
+    msjExito2(){
+        swal({
+            type: 'success',
+            title: 'Evento actualizado con éxito',
+            showConfirmButton: false,
+            timer: 1500
+        })
+    },
         
     addNewEvent() {
       if(this.validarDatos()){
@@ -284,6 +302,7 @@ export default {
           this.getEvents(); // update our list of events
           this.resetForm(); // clear newEvent properties (e.g. title, start_date and end_date)
           this.cerrarModal();
+          this.msjExito();
         })
         .catch(err =>
           console.log("Unable to add new event!", err.response.data)
@@ -317,12 +336,29 @@ export default {
           this.getEvents();
           this.addingMode = !this.addingMode;
           this.cerrarModal();
+          this.msjExito2();
         })
         .catch(err =>
           console.log("Unable to update event!", err.response.data)
         );
     },
     deleteEvent() {
+      swal({
+        title: '¿Esta seguro de eliminar este evento?',
+        type: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Aceptar!',
+        cancelButtonText: 'Cancelar',
+        confirmButtonClass: 'btn btn-success',
+        cancelButtonClass: 'btn btn-danger',
+        buttonsStyling: false,
+        reverseButtons: true
+        }).then((result) => {
+        if (result.value) {
+            let me = this;
+
       axios
         .delete("/api/calendar/" + this.indexToUpdate)
         .then(resp => {
@@ -330,10 +366,23 @@ export default {
           this.getEvents();
           this.addingMode = !this.addingMode;
           this.cerrarModal();
+          swal(
+                'Eliminado!',
+                'El evento ha sido eliminado con éxito.',
+                'success'
+                )
         })
         .catch(err =>
           console.log("Unable to delete event!", err.response.data)
         );
+
+        } else if (
+                // Read more about handling dismissals
+                result.dismiss === swal.DismissReason.cancel
+            ) {
+                
+            }
+            })
     },
     getEvents() {
       axios

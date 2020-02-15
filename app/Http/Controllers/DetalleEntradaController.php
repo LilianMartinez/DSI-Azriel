@@ -68,12 +68,8 @@ class DetalleEntradaController extends Controller
         if(!$request->ajax()) return redirect('/');
 
         $mytime= new \DateTime();
- 
-          
- 
-            $detalles = $request->data;//Array de detalles
-            //Recorro todos los elementos
- 
+            
+            $detalles = $request->data;/
             foreach($detalles as $ep=>$det)
             {
                 $id_entrada = DetalleEntrada::max('id');

@@ -503,11 +503,20 @@
                     var respuesta= response.data;
                     me.arrayinventario=respuesta.proinventarioIgle.data;
                     me.pagination= respuesta.pagination;
+                    me.cerrarmodal2();
                 })
                 .catch(function (error) {
                     console.log(error);
                 });
             
+            },
+            cerrarmodal2(){
+                this.arrayzona=[];
+                this.arrayiglesia=[];
+                this.idzona=0;
+                this.idiglesia=0;
+                this.llenadolistazona();
+                this.iglesias();
             },
             
             validarvalores(){

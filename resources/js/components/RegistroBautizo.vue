@@ -90,6 +90,24 @@
                                     <input tabindexgt="0" v-model="dui" class="form-control" placeholder="999999999">
                                 </div>
                             </div>
+                             <div class="form-group row">
+                                    <label class="col-md-3 form-control-label" for="text-input">Zona:</label> 
+                                    <div class="col-md-5">
+                                        <select class="form-control" v-model="idzona" @click="iglesias(idzona)"> 
+                                        <option value="0" disabled>Seleccione</option>
+                                        <option v-for="zona in arrayzona" :key="zona.id" v-bind:value="zona.id">{{zona.nombre_zona}}</option>
+                                        </select >
+                                    </div>
+                            </div>
+                            <div class="form-group row">
+                                    <label class="col-md-3 form-control-label" for="text-input">Iglesia:</label> 
+                                    <div class="col-md-5">
+                                        <select class="form-control" v-model="idiglesia"> 
+                                        <option value="0" disabled>Seleccione</option>
+                                        <option v-for="iglesia in arrayiglesia" :key="iglesia.id" v-bind:value="iglesia.id" >{{iglesia.nombre_iglesia}}</option>
+                                        </select >
+                                    </div>
+                            </div>
                             <div v-show="errorDatos" class="form-group row div-error">
                                 <div class="text-center text-error">
                                     <div v-for="error in errorMostrarMsj" :key="error" v-text="error">
@@ -625,6 +643,16 @@
 export default {
     data (){
         return{
+            idzona:'',
+            idiglesia:'',
+            zona:'',
+            iglesia:'',
+            nombre_zona:'',
+            nombre_iglesia:'',
+            arrayzona:[],
+            arrayiglesia:[],
+            arrayiglesiaID:[],
+
             id:'',
             tipo:'',
             folio:'',
@@ -700,6 +728,39 @@ export default {
     },
 
     methods:{
+
+            //Para lo de zonas e iglesias
+             llenadolistazona(){
+            let me=this;
+            var url='/zona/buscarZona'; 
+            axios.get(url) .then(function (response) {
+                me.arrayzona=response.data;
+            })
+            .catch(function (error) {
+                console.log(error);
+            });
+        },  
+
+            iglesias(idzona){
+
+                let me=this;
+                var arrayiglesiaID=[];
+             axios.post('/feligreses/buscarIglesia',{
+               'id':this.idzona}) 
+              .then(function (response) { 
+                arrayiglesiaID = response.data;     
+                me.llenar(arrayiglesiaID);  
+                })
+                .catch(function (error) {
+                    // handle error
+                    console.log(error);
+                });
+            },
+           llenar(d=[]){
+                this.arrayiglesia=d;
+            },
+
+
             //Mt. para calcular edad y ver si se muestra o no el div que contiene el dui del realizante
         cambiar(){ 
             var values=this.fechana.split("-");
@@ -837,7 +898,7 @@ export default {
 
             }
 
-        },
+        }, 
             //Mt. cuando da eliminar en el formulario
         cerrar(){
             this.precio='';
@@ -887,6 +948,7 @@ export default {
             this.sexopd4='';   
             this.monto='';
             this.asiento=''; 
+            this.idiglesia='';
 
         },
         cerrarm(){ //botones cancelat
@@ -942,6 +1004,7 @@ export default {
             this.sexopd4='';    
             this.asiento='';   
             this.monto='';
+            this.idiglesia='';
 
         },
             //Mt. cuando le da modificar en el modal
@@ -1037,7 +1100,7 @@ export default {
 
             llenarmodal(id){
                 let me=this;
-                var url='/persona/obtener?id=' + id;
+                var url='/persona/obtenerB?id=' + id;
                     axios.get(url) .then(function (response) {
                         var d = response.data.solo;            
                         if(d==1){
@@ -1081,7 +1144,7 @@ export default {
             },
 
             validarvalores(d){
-                this.errorDatos=0;
+          /*      this.errorDatos=0;
                 this.errorMostrarMsj=[];
                 var RE = /^([0-9])*$/;
                 var patron =/^[a-zA-ZÑñÁáÉéÍíÓóÚúÜü\s]+$/;
@@ -1225,7 +1288,7 @@ export default {
                         return this.errorDatos;
                         break;
                    }
-               }
+               }*/
                 
             },
             selectCategoria(){
@@ -1500,7 +1563,7 @@ export default {
             var d= this.duimadre;
 
             if(d != ''){
-                var url='/persona/duis?dui=' + d;
+                var url='/persona/duisB?dui=' + d;
                 axios.get(url) .then(function (response) {
                     var respuesta=response.data.solo;
                     var datos= response.data.persona;
@@ -1516,7 +1579,7 @@ export default {
             let me=this;
             var d=this.duipadre;
             if(d != ''){
-                var url='/persona/duis?dui=' + d;
+                var url='/persona/duisB?dui=' + d;
                 axios.get(url) .then(function (response) {
                     var respuesta=response.data.solo;
                     var datos= response.data.persona;
@@ -1533,7 +1596,7 @@ export default {
             let me=this;
             var d=this.duipd1;
             if(d != ''){
-                var url='/persona/duis?dui=' + d;
+                var url='/persona/duisB?dui=' + d;
                 axios.get(url) .then(function (response) {
                     var respuesta=response.data.solo;
                     var datos= response.data.persona;
@@ -1550,7 +1613,7 @@ export default {
             let me=this;
             var d=this.duipd2;
             if(d != ''){
-                var url='/persona/duis?dui=' + d;
+                var url='/persona/duisB?dui=' + d;
                 axios.get(url) .then(function (response) {
                     var respuesta=response.data.solo;
                     var datos= response.data.persona;
@@ -1567,7 +1630,7 @@ export default {
             let me=this;
             var d=this.duipd3;
             if(d != ''){
-                var url='/persona/duis?dui=' + d;
+                var url='/persona/duisB?dui=' + d;
                 axios.get(url) .then(function (response) {
                     var respuesta=response.data.solo;
                     var datos= response.data.persona;
@@ -1584,7 +1647,7 @@ export default {
             let me=this;
             var d=this.duipd4;
             if(d != ''){
-                var url='/persona/duis?dui=' + d;
+                var url='/persona/duisB?dui=' + d;
                 axios.get(url) .then(function (response) {
                     var respuesta=response.data.solo;
                     var datos= response.data.persona;
@@ -1603,6 +1666,7 @@ export default {
         this.llenadoarray();
         this.selectCategoria();
         this.llenadolista("","");
+        this.llenadolistazona('','');
     }
 }
 
