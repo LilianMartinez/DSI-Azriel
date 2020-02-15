@@ -497,7 +497,7 @@
                 var actualYear = fecha.getFullYear();
                 var actualMes = fecha.getMonth();
                 if(this.dui!=''){
-                    if (patrondui.test(this.dui))this.errorMostrarMsj.push("El DUI debe ser de nueve digitos");
+                    if (!patrondui.test(this.dui))this.errorMostrarMsj.push("El DUI debe ser de nueve digitos");
                 }
                
                 if (lengthmaxN > Max_Length)this.errorMostrarMsj.push("El nombre del feligres debe tener menos de 99 letras");
@@ -525,6 +525,7 @@
             verificarExistenciaDui(){
                 let me=this;
                 if(me.dui==''){
+                    me.dui='';
                     me.registrarfeligres();
                 }else{
                     me.buscarDui();
@@ -600,6 +601,7 @@
             verificarExistenciaDuiM(){
                 let me=this;
                 if(me.dui==''){
+                    me.dui ='';
                     me.actualizarfeligreses();
                 }else{
                     me.buscarDuiM();
