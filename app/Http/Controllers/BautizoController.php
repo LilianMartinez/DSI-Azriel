@@ -144,6 +144,7 @@ class BautizoController extends Controller
                 $personap->apellido_persona=$request->apellido_m;
                 $personap->dui_pasaporte=$request->dui_m;
                 $personap->sexo='F';
+                $personap->fecha_nacimiento=$request->nacimientom;
                 $personap->idzonaa=$request->idzonam;  //zona madre
                 $personap->idiglesia=$request->idiglesiam; //iglesia madre
                 $personap->estado=1; //estado
@@ -211,6 +212,7 @@ class BautizoController extends Controller
                 $personap->apellido_persona=$request->apellido_p;
                 $personap->dui_pasaporte=$request->dui_p;
                 $personap->sexo='M';
+                $personap->fecha_nacimiento=$request->nacimientop;
                 $personap->idzonaa=$request->idzonap;  //zona padre
                 $personap->idiglesia=$request->idiglesiap; //iglesia padre
                 $personap->estado=1; //estado
@@ -279,6 +281,7 @@ class BautizoController extends Controller
                 $personap->apellido_persona=$request->apellido_p;
                 $personap->dui_pasaporte=$request->dui_p;
                 $personap->sexo='M';
+                $personap->fecha_nacimiento=$request->nacimientop;
                 $personap->idzonaa=$request->idzonap;  //zona padre
                 $personap->idiglesia=$request->idiglesiap; //iglesia padre
                 $personap->estado=1; //estado
@@ -290,6 +293,7 @@ class BautizoController extends Controller
                 $personap->apellido_persona=$request->apellido_m;
                 $personap->dui_pasaporte=$request->dui_m;
                 $personap->sexo='F';
+                $personap->fecha_nacimiento=$request->nacimientom;
                 $personap->idzonaa=$request->idzonam;  //zona madre
                 $personap->idiglesia=$request->idiglesiam; //iglesia madre
                 $personap->estado=1; //estado
@@ -519,6 +523,7 @@ class BautizoController extends Controller
                 $personap->apellido_persona=$request->apellido_m;
                 $personap->dui_pasaporte=$request->dui_m;
                 $personap->sexo='F';
+                $personap->fecha_nacimiento=$request->nacimientom;
                 $personap->idzonaa=$request->idzonam;  //zona madre
                 $personap->idiglesia=$request->idiglesiam; //iglesia madre
                 $personap->estado=1; //estado
@@ -587,6 +592,7 @@ class BautizoController extends Controller
                 $personap->apellido_persona=$request->apellido_p;
                 $personap->dui_pasaporte=$request->dui_p;
                 $personap->sexo='M';
+                $personap->fecha_nacimiento=$request->nacimientop;
                 $personap->idzonaa=$request->idzonap;  //zona padre
                 $personap->idiglesia=$request->idiglesiap; //iglesia padre
                 $personap->estado=1; //estado
@@ -651,6 +657,7 @@ class BautizoController extends Controller
                 $personapa->apellido_persona=$request->apellido_pd1;
                 $personapa->dui_pasaporte=$request->dui_pd1;
                 $personapa->sexo=$request->sexo_pd1;
+                $personapa->fecha_nacimiento=$request->nacimientopad1;
                 $personapa->idzonaa=$request->idzonap1;//zona padrino 1
                 $personapa->idiglesia=$request->idiglesiap1;//iglesia padrino 1
                 $personapa->estado=1; //estado 
@@ -675,6 +682,7 @@ class BautizoController extends Controller
                 $personapa->apellido_persona=$request->apellido_pd1;
                 $personapa->dui_pasaporte=$request->dui_pd1;
                 $personapa->sexo=$request->sexo_pd1;
+                $personapa->fecha_nacimiento=$request->nacimientopad1;
                 $personapa->idzonaa=$request->idzonap1;//zona padrino 1
                 $personapa->idiglesia=$request->idiglesiap1;//iglesia padrino 1
                 $personapa->estado=1; //estado 
@@ -686,6 +694,7 @@ class BautizoController extends Controller
                 $personapa->apellido_persona=$request->apellido_pd2;
                 $personapa->dui_pasaporte=$request->dui_pd2;
                 $personapa->sexo=$request->sexo_pd2;
+                $personapa->fecha_nacimiento=$request->nacimientopad2;
                 $personapa->idzonaa=$request->idzonap2;//zona padrino 2
                 $personapa->idiglesia=$request->idiglesiap2;//iglesia padrino 2
                 $personapa->estado=1; //estado 
@@ -709,6 +718,7 @@ class BautizoController extends Controller
                 $personapa->apellido_persona=$request->apellido_pd2;
                 $personapa->dui_pasaporte=$request->dui_pd2;
                 $personapa->sexo=$request->sexo_pd2;
+                $personapa->fecha_nacimiento=$request->nacimientopad2;
                 $personapa->idzonaa=$request->idzonap2;//zona padrino 2
                 $personapa->idiglesia=$request->idiglesiap2;//iglesia padrino 2
                 $personapa->estado=1; //estado 
@@ -732,6 +742,7 @@ class BautizoController extends Controller
                 $personapa->apellido_persona=$request->apellido_pd3;
                 $personapa->dui_pasaporte=$request->dui_pd3;
                 $personapa->sexo=$request->sexo_pd3;
+                $personapa->fecha_nacimiento=$request->nacimientopad3;
                 $personapa->idzonaa=$request->idzonap3;//zona padrino 3
                 $personapa->idiglesia=$request->idiglesiap3;//iglesia padrino 3
                 $personapa->estado=1; //estado 
@@ -756,6 +767,7 @@ class BautizoController extends Controller
                 $personapa->apellido_persona=$request->apellido_pd1;
                 $personapa->dui_pasaporte=$request->dui_pd1;
                 $personapa->sexo=$request->sexo_pd1;
+                $personapa->fecha_nacimiento=$request->nacimientopad1;
                 $personapa->idzonaa=$request->idzonap1;//zona padrino 1
                 $personapa->idiglesia=$request->idiglesiap1;//iglesia padrino 1
                 $personapa->estado=1; //estado 
@@ -767,6 +779,7 @@ class BautizoController extends Controller
                 $personapa->apellido_persona=$request->apellido_pd3;
                 $personapa->dui_pasaporte=$request->dui_pd3;
                 $personapa->sexo=$request->sexo_pd3;
+                $personapa->fecha_nacimiento=$request->nacimientopad3;
                 $personapa->idzonaa=$request->idzonap3;//zona padrino 3
                 $personapa->idiglesia=$request->idiglesiap3;//iglesia padrino 3
                 $personapa->estado=1; //estado 
@@ -791,6 +804,7 @@ class BautizoController extends Controller
                 $personapa->apellido_persona=$request->apellido_pd2;
                 $personapa->dui_pasaporte=$request->dui_pd2;
                 $personapa->sexo=$request->sexo_pd2;
+                $personapa->fecha_nacimiento=$request->nacimientopad2;
                 $personapa->idzonaa=$request->idzonap2;//zona padrino 2
                 $personapa->idiglesia=$request->idiglesiap2;//iglesia padrino 2
                 $personapa->estado=1; //estado 
@@ -802,6 +816,7 @@ class BautizoController extends Controller
                 $personapa->apellido_persona=$request->apellido_pd3;
                 $personapa->dui_pasaporte=$request->dui_pd3;
                 $personapa->sexo=$request->sexo_pd3;
+                $personapa->fecha_nacimiento=$request->nacimientopad3;
                 $personapa->idzonaa=$request->idzonap3;//zona padrino 3
                 $personapa->idiglesia=$request->idiglesiap3;//iglesia padrino 3
                 $personapa->estado=1; //estado 
@@ -827,6 +842,7 @@ class BautizoController extends Controller
                 $personapa->apellido_persona=$request->apellido_pd1;
                 $personapa->dui_pasaporte=$request->dui_pd1;
                 $personapa->sexo=$request->sexo_pd1;
+                $personapa->fecha_nacimiento=$request->nacimientopad1;
                 $personapa->idzonaa=$request->idzonap1;//zona padrino 1
                 $personapa->idiglesia=$request->idiglesiap1;//iglesia padrino 1
                 $personapa->estado=1; //estado 
@@ -838,6 +854,7 @@ class BautizoController extends Controller
                 $personapa->apellido_persona=$request->apellido_pd2;
                 $personapa->dui_pasaporte=$request->dui_pd2;
                 $personapa->sexo=$request->sexo_pd2;
+                $personapa->fecha_nacimiento=$request->nacimientopad2;
                 $personapa->idzonaa=$request->idzonap2;//zona padrino 2
                 $personapa->idiglesia=$request->idiglesiap2;//iglesia padrino 2
                 $personapa->estado=1; //estado 
@@ -849,6 +866,7 @@ class BautizoController extends Controller
                 $personapa->apellido_persona=$request->apellido_pd3;
                 $personapa->dui_pasaporte=$request->dui_pd3;
                 $personapa->sexo=$request->sexo_pd3;
+                $personapa->fecha_nacimiento=$request->nacimientopad3;
                 $personapa->idzonaa=$request->idzonap3;//zona padrino 3
                 $personapa->idiglesia=$request->idiglesiap3;//iglesia padrino 3
                 $personapa->estado=1; //estado 
@@ -875,6 +893,7 @@ class BautizoController extends Controller
                 $personapa->apellido_persona=$request->apellido_pd1;
                 $personapa->dui_pasaporte=$request->dui_pd1;
                 $personapa->sexo=$request->sexo_pd1;
+                $personapa->fecha_nacimiento=$request->nacimientopad1;
                 $personapa->idzonaa=$request->idzonap1;//zona padrino 1
                 $personapa->idiglesia=$request->idiglesiap1;//iglesia padrino 1
                 $personapa->estado=1; //estado 
@@ -886,6 +905,7 @@ class BautizoController extends Controller
                 $personapa->apellido_persona=$request->apellido_pd2;
                 $personapa->dui_pasaporte=$request->dui_pd2;
                 $personapa->sexo=$request->sexo_pd2;
+                $personapa->fecha_nacimiento=$request->nacimientopad2;
                 $personapa->idzonaa=$request->idzonap2;//zona padrino 2
                 $personapa->idiglesia=$request->idiglesiap2;//iglesia padrino 2
                 $personapa->estado=1; //estado 
@@ -897,6 +917,7 @@ class BautizoController extends Controller
                 $personapa->apellido_persona=$request->apellido_pd3;
                 $personapa->dui_pasaporte=$request->dui_pd3;
                 $personapa->sexo=$request->sexo_pd3;
+                $personapa->fecha_nacimiento=$request->nacimientopad3;
                 $personapa->idzonaa=$request->idzonap3;//zona padrino 3
                 $personapa->idiglesia=$request->idiglesiap3;//iglesia padrino 3
                 $personapa->estado=1; //estado 
@@ -908,6 +929,7 @@ class BautizoController extends Controller
                 $personapa->apellido_persona=$request->apellido_pd4;
                 $personapa->dui_pasaporte=$request->dui_pd4;
                 $personapa->sexo=$request->sexo_pd4;
+                $personapa->fecha_nacimiento=$request->nacimientopad4;
                 $personapa->idzonaa=$request->idzonap4;//zona padrino 4
                 $personapa->idiglesia=$request->idiglesiap4;//iglesia padrino 4
                 $personapa->estado=1; //estado 
@@ -933,6 +955,7 @@ class BautizoController extends Controller
                 $personapa->apellido_persona=$request->apellido_pd2;
                 $personapa->dui_pasaporte=$request->dui_pd2;
                 $personapa->sexo=$request->sexo_pd2;
+                $personapa->fecha_nacimiento=$request->nacimientopad2;
                 $personapa->idzonaa=$request->idzonap2;//zona padrino 2
                 $personapa->idiglesia=$request->idiglesiap2;//iglesia padrino 2
                 $personapa->estado=1; //estado 
@@ -944,6 +967,7 @@ class BautizoController extends Controller
                 $personapa->apellido_persona=$request->apellido_pd3;
                 $personapa->dui_pasaporte=$request->dui_pd3;
                 $personapa->sexo=$request->sexo_pd3;
+                $personapa->fecha_nacimiento=$request->nacimientopad3;
                 $personapa->idzonaa=$request->idzonap3;//zona padrino 3
                 $personapa->idiglesia=$request->idiglesiap3;//iglesia padrino 3
                 $personapa->estado=1; //estado 
@@ -955,6 +979,7 @@ class BautizoController extends Controller
                 $personapa->apellido_persona=$request->apellido_pd4;
                 $personapa->dui_pasaporte=$request->dui_pd4;
                 $personapa->sexo=$request->sexo_pd4;
+                $personapa->fecha_nacimiento=$request->nacimientopad4;
                 $personapa->idzonaa=$request->idzonap4;//zona padrino 4
                 $personapa->idiglesia=$request->idiglesiap4;//iglesia padrino 4
                 $personapa->estado=1; //estado 
@@ -979,6 +1004,7 @@ class BautizoController extends Controller
                 $personapa->apellido_persona=$request->apellido_pd3;
                 $personapa->dui_pasaporte=$request->dui_pd3;
                 $personapa->sexo=$request->sexo_pd3;
+                $personapa->fecha_nacimiento=$request->nacimientopad3;
                 $personapa->idzonaa=$request->idzonap3;//zona padrino 3
                 $personapa->idiglesia=$request->idiglesiap3;//iglesia padrino 3
                 $personapa->estado=1; //estado 
@@ -990,6 +1016,7 @@ class BautizoController extends Controller
                 $personapa->apellido_persona=$request->apellido_pd4;
                 $personapa->dui_pasaporte=$request->dui_pd4;
                 $personapa->sexo=$request->sexo_pd4;
+                $personapa->fecha_nacimiento=$request->nacimientopad4;
                 $personapa->idzonaa=$request->idzonap4;//zona padrino 4
                 $personapa->idiglesia=$request->idiglesiap4;//iglesia padrino 4
                 $personapa->estado=1; //estado 
@@ -1013,6 +1040,7 @@ class BautizoController extends Controller
                 $personapa->apellido_persona=$request->apellido_pd4;
                 $personapa->dui_pasaporte=$request->dui_pd4;
                 $personapa->sexo=$request->sexo_pd4;
+                $personapa->fecha_nacimiento=$request->nacimientopad4;
                 $personapa->idzonaa=$request->idzonap4;//zona padrino 4
                 $personapa->idiglesia=$request->idiglesiap4;//iglesia padrino 4
                 $personapa->estado=1; //estado 
@@ -1038,6 +1066,7 @@ class BautizoController extends Controller
                 $personapa->apellido_persona=$request->apellido_pd1;
                 $personapa->dui_pasaporte=$request->dui_pd1;
                 $personapa->sexo=$request->sexo_pd1;
+                $personapa->fecha_nacimiento=$request->nacimientopad1;
                 $personapa->idzonaa=$request->idzonap1;//zona padrino 1
                 $personapa->idiglesia=$request->idiglesiap1;//iglesia padrino 1
                 $personapa->estado=1; //estado 
@@ -1049,6 +1078,7 @@ class BautizoController extends Controller
                 $personapa->apellido_persona=$request->apellido_pd3;
                 $personapa->dui_pasaporte=$request->dui_pd3;
                 $personapa->sexo=$request->sexo_pd3;
+                $personapa->fecha_nacimiento=$request->nacimientopad3;
                 $personapa->idzonaa=$request->idzonap3;//zona padrino 3
                 $personapa->idiglesia=$request->idiglesiap3;//iglesia padrino 3
                 $personapa->estado=1; //estado 
@@ -1060,6 +1090,7 @@ class BautizoController extends Controller
                 $personapa->apellido_persona=$request->apellido_pd4;
                 $personapa->dui_pasaporte=$request->dui_pd4;
                 $personapa->sexo=$request->sexo_pd4;
+                $personapa->fecha_nacimiento=$request->nacimientopad4;
                 $personapa->idzonaa=$request->idzonap4;//zona padrino 4
                 $personapa->idiglesia=$request->idiglesiap4;//iglesia padrino 4
                 $personapa->estado=1; //estado 
@@ -1085,6 +1116,7 @@ class BautizoController extends Controller
                 $personapa->apellido_persona=$request->apellido_pd1;
                 $personapa->dui_pasaporte=$request->dui_pd1;
                 $personapa->sexo=$request->sexo_pd1;
+                $personapa->fecha_nacimiento=$request->nacimientopad1;
                 $personapa->idzonaa=$request->idzonap1;//zona padrino 1
                 $personapa->idiglesia=$request->idiglesiap1;//iglesia padrino 1
                 $personapa->estado=1; //estado 
@@ -1096,6 +1128,7 @@ class BautizoController extends Controller
                 $personapa->apellido_persona=$request->apellido_pd2;
                 $personapa->dui_pasaporte=$request->dui_pd2;
                 $personapa->sexo=$request->sexo_pd2;
+                $personapa->fecha_nacimiento=$request->nacimientopad2;
                 $personapa->idzonaa=$request->idzonap2;//zona padrino 2
                 $personapa->idiglesia=$request->idiglesiap2;//iglesia padrino 2
                 $personapa->estado=1; //estado 
@@ -1107,6 +1140,7 @@ class BautizoController extends Controller
                 $personapa->apellido_persona=$request->apellido_pd4;
                 $personapa->dui_pasaporte=$request->dui_pd4;
                 $personapa->sexo=$request->sexo_pd4;
+                $personapa->fecha_nacimiento=$request->nacimientopad4;
                 $personapa->idzonaa=$request->idzonap4;//zona padrino 4
                 $personapa->idiglesia=$request->idiglesiap4;//iglesia padrino 4
                 $personapa->estado=1; //estado 
@@ -1131,6 +1165,7 @@ class BautizoController extends Controller
                 $personapa->apellido_persona=$request->apellido_pd2;
                 $personapa->dui_pasaporte=$request->dui_pd2;
                 $personapa->sexo=$request->sexo_pd2;
+                $personapa->fecha_nacimiento=$request->nacimientopad2;
                 $personapa->idzonaa=$request->idzonap2;//zona padrino 2
                 $personapa->idiglesia=$request->idiglesiap2;//iglesia padrino 2
                 $personapa->estado=1; //estado 
@@ -1142,6 +1177,7 @@ class BautizoController extends Controller
                 $personapa->apellido_persona=$request->apellido_pd4;
                 $personapa->dui_pasaporte=$request->dui_pd4;
                 $personapa->sexo=$request->sexo_pd4;
+                $personapa->fecha_nacimiento=$request->nacimientopad4;
                 $personapa->idzonaa=$request->idzonap4;//zona padrino 4
                 $personapa->idiglesia=$request->idiglesiap4;//iglesia padrino 4
                 $personapa->estado=1; //estado 
@@ -1166,6 +1202,7 @@ class BautizoController extends Controller
                 $personapa->apellido_persona=$request->apellido_pd1;
                 $personapa->dui_pasaporte=$request->dui_pd1;
                 $personapa->sexo=$request->sexo_pd1;
+                $personapa->fecha_nacimiento=$request->nacimientopad1;
                 $personapa->idzonaa=$request->idzonap1;//zona padrino 1
                 $personapa->idiglesia=$request->idiglesiap1;//iglesia padrino 1
                 $personapa->estado=1; //estado 
@@ -1177,6 +1214,7 @@ class BautizoController extends Controller
                 $personapa->apellido_persona=$request->apellido_pd4;
                 $personapa->dui_pasaporte=$request->dui_pd4;
                 $personapa->sexo=$request->sexo_pd4;
+                $personapa->fecha_nacimiento=$request->nacimientopad4;
                 $personapa->idzonaa=$request->idzonap4;//zona padrino 4
                 $personapa->idiglesia=$request->idiglesiap4;//iglesia padrino 4
                 $personapa->estado=1; //estado 

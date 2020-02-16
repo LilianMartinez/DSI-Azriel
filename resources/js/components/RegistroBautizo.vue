@@ -143,6 +143,12 @@
                                 </div>
                             </div>
                             <div class="form-group row">
+                                <label class="col-md-3 form-control-label" for="text-input">Fecha de Nacimiento<b class="alerta">*</b></label>
+                                <div class="col-md-4">
+                                    <input type="date" class="form-control datepicker" name="date" v-model="fechamadre"  @keydown.tab="validarvalores('fecm')">
+                                </div>
+                            </div>
+                            <div class="form-group row">
                                     <label class="col-md-3 form-control-label" for="text-input">Zona:</label> 
                                     <div class="col-md-5">
                                         <select class="form-control" v-model="idzonam" @click="iglesiasm(idzona)"> 
@@ -179,6 +185,12 @@
                                 <label class="col-md-3 form-control-label" for="text-input">Apellidos</label>
                                 <div class="col-md-5">
                                     <input type="text" tabindexgt="0" v-model="apellidopadre" class="form-control" placeholder="Apellidos del padre">
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-md-3 form-control-label" for="text-input">Fecha de Nacimiento<b class="alerta">*</b></label>
+                                <div class="col-md-4">
+                                    <input type="date" class="form-control datepicker" name="date" v-model="fechapadre"  @keydown.tab="validarvalores('fecp')">
                                 </div>
                             </div>
                             <div class="form-group row">
@@ -238,6 +250,12 @@
                                         <tr> <input tabindexgt="-1" type="radio" v-model="sexopd1" value="F" name="sexo">Femenino</tr>
                                         <tr> <input tabindexgt="-1" type="radio" v-model="sexopd1" value="M" name="sexo">Masculino</tr>
                                     </table>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-md-3 form-control-label" for="text-input">Fecha de Nacimiento<b class="alerta">*</b></label>
+                                <div class="col-md-4">
+                                    <input type="date" class="form-control datepicker" name="date" v-model="fechapad1"  @keydown.tab="validarvalores('fecp1')">
                                 </div>
                             </div>
                             <div class="form-group row">
@@ -309,6 +327,12 @@
                                 </div>
                             </div>
                             <div class="form-group row">
+                                <label class="col-md-3 form-control-label" for="text-input">Fecha de Nacimiento<b class="alerta">*</b></label>
+                                <div class="col-md-4">
+                                    <input type="date" class="form-control datepicker" name="date" v-model="fechapad2"  @keydown.tab="validarvalores('fecp2')">
+                                </div>
+                            </div>
+                            <div class="form-group row">
                                     <label class="col-md-3 form-control-label" for="text-input">Zona:</label> 
                                     <div class="col-md-5">
                                         <select class="form-control" v-model="idzonap2" @click="iglesiasp2(idzona)"> 
@@ -369,6 +393,12 @@
                                 </div>
                             </div>
                             <div class="form-group row">
+                                <label class="col-md-3 form-control-label" for="text-input">Fecha de Nacimiento<b class="alerta">*</b></label>
+                                <div class="col-md-4">
+                                    <input type="date" class="form-control datepicker" name="date" v-model="fechapad3"  @keydown.tab="validarvalores('fecp3')">
+                                </div>
+                            </div>
+                            <div class="form-group row">
                                     <label class="col-md-3 form-control-label" for="text-input">Zona:</label> 
                                     <div class="col-md-5">
                                         <select class="form-control" v-model="idzonap3" @click="iglesiasp3(idzona)"> 
@@ -426,6 +456,12 @@
                                         <tr> <input tabindexgt="-1" type="radio" v-model="sexopd4" value="F" name="sexo">Femenino</tr>
                                         <tr> <input tabindexgt="-1" type="radio" v-model="sexopd4" value="M" name="sexo">Masculino</tr>
                                     </table>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-md-3 form-control-label" for="text-input">Fecha de Nacimiento<b class="alerta">*</b></label>
+                                <div class="col-md-4">
+                                    <input type="date" class="form-control datepicker" name="date" v-model="fechapad4"  @keydown.tab="validarvalores('fecp4')">
                                 </div>
                             </div>
                             <div class="form-group row">
@@ -621,7 +657,7 @@
                                         </div>
                                         <div class="form-group row">
                                             <label class="col-md-4 form-control-label" for="text-input">Nacido el:</label>
-                                            <label class="col-md-6 form-control-label" >{{fechana}}</label>
+                                            <label class="col-md-6 form-control-label" >{{fechanaes}}</label>
                                         </div>
                                         <div v-show="accionbotones==2">
                                             <div class="form-group row">
@@ -729,6 +765,7 @@ export default {
             nombre_iglesiam:'',
             arrayiglesiam:[],
             arrayiglesiaIDm:[],
+            fechamadre:'',
 
             idzonap:'', //papa
             idiglesiap:'',
@@ -736,6 +773,7 @@ export default {
             nombre_iglesiap:'',
             arrayiglesiap:[],
             arrayiglesiaIDp:[],
+            fechapadre:'',
 
             idzonap1:'', //padrino1
             idiglesiap1:'',
@@ -743,6 +781,7 @@ export default {
             nombre_iglesiap1:'',
             arrayiglesiap1:[],
             arrayiglesiaIDp1:[],
+            fechapad1:'',
 
             idzonap2:'', //padrino2
             idiglesiap2:'',
@@ -750,6 +789,7 @@ export default {
             nombre_iglesiap2:'',
             arrayiglesiap2:[],
             arrayiglesiaIDp2:[],
+            fechapad2:'',
 
             idzonap3:'', //padrino3
             idiglesiap3:'',
@@ -757,6 +797,7 @@ export default {
             nombre_iglesiap3:'',
             arrayiglesiap3:[],
             arrayiglesiaIDp3:[],
+            fechapad3:'',
 
             idzonap4:'', //padrino4
             idiglesiap4:'',
@@ -764,6 +805,7 @@ export default {
             nombre_iglesiap4:'',
             arrayiglesiap4:[],
             arrayiglesiaIDp4:[],
+            fechapad4:'',
 
             id:'',
             tipo:'',
@@ -1217,7 +1259,13 @@ export default {
             this.idzonap3=0;   //zona padrino3
             this.idiglesiap3=0;
             this.idzonap4=0;   //zona padrino4
-            this.idiglesiap4=0;     
+            this.idiglesiap4=0;
+            this.fechamadre='';
+            this.fechapadre='';
+            this.fechapad1='';
+            this.fechapad2='';
+            this.fechapad3='';
+            this.fechapad4='';
 
         },
         cerrarm(){ //botones cancelat
@@ -1283,7 +1331,13 @@ export default {
             this.idzonap3=0;   //zona padrino3
             this.idiglesiap3=0;
             this.idzonap4=0;   //zona padrino4
-            this.idiglesiap4=0;       
+            this.idiglesiap4=0;
+            this.fechamadre='';
+            this.fechapadre='';
+            this.fechapad1='';
+            this.fechapad2='';
+            this.fechapad3='';
+            this.fechapad4='';
         },
             //Mt. cuando le da modificar en el modal
         cerrarmodal(){
@@ -1315,8 +1369,8 @@ export default {
                 this.apellidopd4=this.apellidopd4.toUpperCase();
 
 
-                var t = this.fechana;
-               this.fechanaes= t.replace(/^(\d{4})-(\d{2})-(\d{2})$/g,'$3/$2/$1');
+                var t1 = this.fechana;
+               this.fechanaes= t1.replace(/^(\d{4})-(\d{2})-(\d{2})$/g,'$3/$2/$1');
 
                var t2 = this.fecharealizacion;
                this.fecharealizaciones= t2.replace(/^(\d{4})-(\d{2})-(\d{2})$/g,'$3/$2/$1');
@@ -1644,6 +1698,12 @@ export default {
                         'idiglesiap3':this.idiglesiap3, //iglesia padrino3
                         'idzonap4':this.idzonap4,  //zona padrino4
                         'idiglesiap4':this.idiglesiap4, //iglesia padrino4
+                        'nacimientom':this.fechamadre,
+                        'nacimientop':this.fechapadre,
+                        'nacimientopad1':this.fechapad1,
+                        'nacimientopad2':this.fechapad2,
+                        'nacimientopad3':this.fechapad3,
+                        'nacimientopad4':this.fechapad4,
                 }) .then(function (response) {
                     me.modal=0;
                     me.cambiarm=0;
@@ -1716,6 +1776,7 @@ export default {
             this.nombremadre= data['nombre_persona'];
             this.apellidomadre= data['apellido_persona'];
             this.idmadre=data['id'];
+            this.fechamadre=data['fecha_nacimiento'];
             this.idzonam=data['idzonaa'];
             this.llenadolistazona();
             if(this.idzonam)
@@ -1728,6 +1789,7 @@ export default {
             this.nombrepadre= data['nombre_persona'];
             this.apellidopadre= data['apellido_persona'];
             this.idpadre=data['id'];
+            this.fechapadre=data['fecha_nacimiento'];
             this.idzonap=data['idzonaa'];
             this.llenadolistazona();
             if(this.idzonap)
@@ -1741,6 +1803,7 @@ export default {
             this.apellidopd1= data['apellido_persona'];
             this.idpd1=data['id'];
             this.sexopd1=data['sexo'];
+            this.fechapad1=data['fecha_nacimiento'];
             this.idzonap1=data['idzonaa'];
             this.llenadolistazona();
             if(this.idzonap1)
@@ -1754,6 +1817,7 @@ export default {
             this.apellidopd2= data['apellido_persona'];
             this.idpd2=data['id'];
             this.sexopd2=data['sexo'];
+            this.fechapad2=data['fecha_nacimiento'];
             this.idzonap2=data['idzonaa'];
             this.llenadolistazona();
             if(this.idzonap2)
@@ -1768,6 +1832,7 @@ export default {
             this.apellidopd3= data['apellido_persona'];
             this.idpd3=data['id'];
             this.sexopd3=data['sexo'];
+            this.fechapad3=data['fecha_nacimiento'];
             this.idzonap3=data['idzonaa'];
             this.llenadolistazona();
             if(this.idzonap3)
@@ -1782,6 +1847,7 @@ export default {
             this.apellidopd4= data['apellido_persona'];
             this.idpd4=data['id'];
             this.sexopd4=data['sexo'];
+            this.fechapad4=data['fecha_nacimiento'];
             this.idzonap4=data['idzonaa'];
             this.llenadolistazona();
             if(this.idzonap4)
@@ -1815,6 +1881,7 @@ export default {
             this.nombremadre='';
             this.apellidomadre= '';
             this.idmadre='';
+            this.fechamadre='';
             this.idzonam=0;   //zona madre
             this.idiglesiam=0; 
         },
@@ -1842,6 +1909,7 @@ export default {
             this.nombrepadre='';
             this.apellidopadre= '';
             this.idpadre='';
+            this.fechapadre='';
             this.idzonap=0;   //zona padre
             this.idiglesiap=0; 
         },
@@ -1869,6 +1937,8 @@ export default {
             this.nombrepd1='';
             this.apellidopd1= '';
             this.idpd1='';
+            this.sexopd1='';
+            this.fechapad1='';
             this.idzonap1=0;   //zona padrino1
             this.idiglesiap1=0; 
         },
@@ -1896,6 +1966,8 @@ export default {
             this.nombrepd2='';
             this.apellidopd2= '';
             this.idpd2='';
+            this.sexopd2='';
+            this.fechapad2='';
             this.idzonap2=0;   //zona padrino2
             this.idiglesiap2=0;
         },
@@ -1923,6 +1995,8 @@ export default {
             this.nombrepd3='';
             this.apellidopd3= '';
             this.idpd3='';
+            this.sexopd3='';
+            this.fechapad3='';
             this.idzonap3=0;   //zona padrino3
             this.idiglesiap3=0;
         },
@@ -1950,6 +2024,8 @@ export default {
             this.nombrepd4='';
             this.apellidopd4= '';
             this.idpd4='';
+            this.sexopd4='';
+            this.fechapad4='';
             this.idzonap4=0;   //zona padrino4
             this.idiglesiap4=0;
         },
@@ -2243,6 +2319,116 @@ export default {
                                 if(this.errorMostrarMsj.length) this.errorDatos=1;
                                 return this.errorDatos;
                                 break;   
+                            }
+
+                            //casos de validaciones de fecha de nacimiento: fecm / fecp / fecp1 / fecp2 / fecp3 / fecp4
+                            case 'fecm':
+                            {
+                                var values=this.fechamadre.split("-");
+                                var dia = values[2];
+                                var mes = values[1];
+                                var ano = values[0];
+                                if (ano < 1900)this.errorMostrarMsj.push("El año debe ser mayor a 1990");
+                                if(anioac<ano) {
+                                    this.errorMostrarMsj.push("El año debe ser menor o igual al actual");
+                                    
+                                }
+                                if(mesac<mes && ano==anioac) {
+                                        this.errorMostrarMsj.push("El mes debe ser menor al actual");
+                                        }
+                                if(this.errorMostrarMsj.length) this.errorDatos=1;
+                                return this.errorDatos;
+                                break;
+                            }
+                            case 'fecp':
+                            {
+                                var values=this.fechapadre.split("-");
+                                var dia = values[2];
+                                var mes = values[1];
+                                var ano = values[0];
+                                if (ano < 1900)this.errorMostrarMsj.push("El año debe ser mayor a 1990");
+                                if(anioac<ano) {
+                                    this.errorMostrarMsj.push("El año debe ser menor o igual al actual");
+                                    
+                                }
+                                if(mesac<mes && ano==anioac) {
+                                        this.errorMostrarMsj.push("El mes debe ser menor al actual");
+                                        }
+                                if(this.errorMostrarMsj.length) this.errorDatos=1;
+                                return this.errorDatos;
+                                break;
+                            }
+                            case 'fecp1':
+                            {
+                                var values=this.fechapad1.split("-");
+                                var dia = values[2];
+                                var mes = values[1];
+                                var ano = values[0];
+                                if (ano < 1900)this.errorMostrarMsj.push("El año debe ser mayor a 1990");
+                                if(anioac<ano) {
+                                    this.errorMostrarMsj.push("El año debe ser menor o igual al actual");
+                                    
+                                }
+                                if(mesac<mes && ano==anioac) {
+                                        this.errorMostrarMsj.push("El mes debe ser menor al actual");
+                                        }
+                                if(this.errorMostrarMsj.length) this.errorDatos=1;
+                                return this.errorDatos;
+                                break;
+                            }
+                            case 'fecp2':
+                            {
+                                var values=this.fechapad2.split("-");
+                                var dia = values[2];
+                                var mes = values[1];
+                                var ano = values[0];
+                                if (ano < 1900)this.errorMostrarMsj.push("El año debe ser mayor a 1990");
+                                if(anioac<ano) {
+                                    this.errorMostrarMsj.push("El año debe ser menor o igual al actual");
+                                    
+                                }
+                                if(mesac<mes && ano==anioac) {
+                                        this.errorMostrarMsj.push("El mes debe ser menor al actual");
+                                        }
+                                if(this.errorMostrarMsj.length) this.errorDatos=1;
+                                return this.errorDatos;
+                                break;
+                            }
+                            case 'fecp3':
+                            {
+                                var values=this.fechapad3.split("-");
+                                var dia = values[2];
+                                var mes = values[1];
+                                var ano = values[0];
+                                if (ano < 1900)this.errorMostrarMsj.push("El año debe ser mayor a 1990");
+                                if(anioac<ano) {
+                                    this.errorMostrarMsj.push("El año debe ser menor o igual al actual");
+                                    
+                                }
+                                if(mesac<mes && ano==anioac) {
+                                        this.errorMostrarMsj.push("El mes debe ser menor al actual");
+                                        }
+                                if(this.errorMostrarMsj.length) this.errorDatos=1;
+                                return this.errorDatos;
+                                break;
+                            }
+                            case 'fecp4':
+                            {
+                                var values=this.fechapad4.split("-");
+                                var dia = values[2];
+                                var mes = values[1];
+                                var ano = values[0];
+                                if (ano < 1900)this.errorMostrarMsj.push("El año debe ser mayor a 1990");
+                                if(anioac<ano) {
+                                    this.errorMostrarMsj.push("El año debe ser menor o igual al actual");
+                                    
+                                }
+                                if(mesac<mes && ano==anioac) {
+                                        this.errorMostrarMsj.push("El mes debe ser menor al actual");
+                                        }
+                                if(this.errorMostrarMsj.length) this.errorDatos=1;
+                                return this.errorDatos;
+                                break;
                             }
 
                 }
