@@ -61,30 +61,7 @@ class BautizoController extends Controller
         $tipo=$request->tipo;
         $tiposacra=1;
         if(!$request->ajax()) return redirect('/');
-        $this->validate($request, [
-            'dui_reali'=>'required|max:10',
-            'nombre_reali'=>'required|min:3|max:100',
-            'apellido_reali'=>'required|min3|max:100',
-            'dui_m'=>'required|max:10',
-            'nombre_m'=>'required|min:3|max:100',
-            'apellido_m'=>'required|min3|max:100',
-            'dui_p'=>'required|max:10',
-            'nombre_p'=>'required|min:3|max:100',
-            'apellido_p'=>'required|min3|max:100',
-            'dui_pd1'=>'required|max:10',
-            'nombre_pd1'=>'required|min:3|max:100',
-            'apellido_pd1'=>'required|min3|max:100',
-            'dui_pd2'=>'required|max:10',
-            'nombre_pd2'=>'required|min:3|max:100',
-            'apellido_pd2'=>'required|min3|max:100',
-            'dui_pd3'=>'required|max:10',
-            'nombre_pd3'=>'required|min:3|max:100',
-            'apellido_pd3'=>'required|min3|max:100',
-            'dui_pd4'=>'required|max:10',
-            'nombre_pd4'=>'required|min:3|max:100',
-            'apellido_pd4'=>'required|min3|max:100'
- 
-         ]);
+        
         switch($tipo){
             case '1':{
                 $id_realizante=Persona::max('id');
