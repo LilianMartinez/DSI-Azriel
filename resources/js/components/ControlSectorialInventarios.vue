@@ -128,62 +128,60 @@
                         <div class="modal-body">
                            <form action="" method="post" enctype="multipart/form-data" class="form-horizontal">
                             <div class="form-group row">
-                                    <label class="col-md-3 form-control-label" for="text-input">Categoria:<b class="alerta">*</b></label> 
-                                    <div class="col-md-5">
+                                    <label class="col-md-2 form-control-label" for="text-input">Categoria:<b class="alerta">*</b></label> 
+                                    <div class="col-md-4">
                                         <select class="form-control" v-model="idcategoriainv"> 
                                         <option value="0" disabled>Seleccione</option>
                                         <option v-for="categoria in arraycategoria" :key="categoria.id" v-bind:value="categoria.id">{{categoria.nombre_categoriainv}}</option>
                                         </select >
                                     </div>
-                            </div>
-                            <div class="form-group row">
-                                    <label class="col-md-3 form-control-label" for="text-input">Producto:<b class="alerta">*</b></label>
-                                    <div class="col-md-5">
+                            
+                                    <label class="col-md-2 form-control-label" for="text-input">Producto:<b class="alerta">*</b></label>
+                                    <div class="col-md-4">
                                         <input type="text" tabindexgt="0" v-model="nombre_producto" class="form-control" placeholder="Nombre Producto">
                                     </div>
                             </div>
                             <div class="form-group row">
-                                    <label class="col-md-3 form-control-label" for="text-input">Marca:</label>
-                                    <div class="col-md-5">
-                                        <input type="text" tabindexgt="0" v-model="marca" class="form-control" placeholder="Marca del producto">
+                                     <label class="col-md-2 form-control-label" for="text-input">Descripción:</label>
+                                    <div class="col-md-4">
+                                        <textarea rows="4" tabindexgt="-1" cols="75" v-model="descripcion" placeholder="color, forma, textura, etc."></textarea>
                                     </div>
-                            </div>
-                            <div class="form-group row">
-                                    <label class="col-md-3 form-control-label" for="text-input">Descripción:</label>
-                                    <div class="col-md-5">
-                                        <textarea rows="8" tabindexgt="-1" cols="45" v-model="descripcion" placeholder="color, forma, textura, etc."></textarea>
-                                    </div>
+                                    
                             </div>
                              <div class="form-group row">
-                                    <label class="col-md-3 form-control-label" for="text-input">Cantidad<b class="alerta">*</b></label>
-                                    <div class="col-md-5">
+                                    <label class="col-md-2 form-control-label" for="text-input">Marca:</label>
+                                    <div class="col-md-4">
+                                        <input type="text" tabindexgt="0" v-model="marca" class="form-control" placeholder="Marca del producto">
+                                    </div>
+
+                                    <label class="col-md-2 form-control-label" for="text-input">Cantidad<b class="alerta">*</b></label>
+                                    <div class="col-md-4">
                                         <input type="text" tabindexgt="0" v-model="cantidad" class="form-control" placeholder="Cantidad del producto adquirido">
                                     </div>
-                            </div>
-                              <div class="form-group row">
-                                <label class="col-md-3 form-control-label" for="text-input">Fecha adquirido:</label>
-                                <div class="col-md-4">
-                                    <input type="date" class="form-control datepicker" name="date" v-model="fecha_adquirido">
-                                </div>
+                            
                             </div>
                             <div class="form-group row">
-                                    <label class="col-md-3 form-control-label" for="text-input">Costo de la compra:</label>
-                                    <div class="col-md-5">
-                                        <input type="text" tabindexgt="0" v-model="costocompra" class="form-control" placeholder="Cantidad de la compra total">
+                                     <label class="col-md-2 form-control-label" for="text-input">Fecha adquirido:</label>
+                                        <div class="col-md-4">
+                                            <input type="date" class="form-control datepicker" name="date" v-model="fecha_adquirido">
+                                        </div>
+                                    
+                                    <label class="col-md-2 form-control-label" for="text-input">Costo de la compra:</label>
+                                    <div class="col-md-4">
+                                        <input type="text" tabindexgt="0" v-model="costocompra" class="form-control" placeholder="Costo total de la compra total">
                                     </div>
                             </div>
                             <div class="form-group row">
-                                    <label class="col-md-3 form-control-label" for="text-input">Zona:<b class="alerta">*</b></label> 
-                                    <div class="col-md-5">
+                                    <label class="col-md-2 form-control-label" for="text-input">Zona:<b class="alerta">*</b></label> 
+                                    <div class="col-md-4">
                                         <select class="form-control" v-model="idzona" @click="iglesias(idzona)"> 
                                         <option value="0" disabled>Seleccione</option>
                                         <option v-for="zona in arrayzona" :key="zona.id" v-bind:value="zona.id">{{zona.nombre_zona}}</option>
                                         </select >
                                     </div>
-                            </div>
-                            <div class="form-group row">
-                                    <label class="col-md-3 form-control-label" for="text-input">Iglesia:<b class="alerta">*</b></label> 
-                                    <div class="col-md-5">
+                            
+                                    <label class="col-md-2 form-control-label" for="text-input">Iglesia:<b class="alerta">*</b></label> 
+                                    <div class="col-md-4">
                                         <select class="form-control" v-model="idiglesia"> 
                                         <option value="0" disabled>Seleccione</option>
                                         <option v-for="iglesia in arrayiglesia" :key="iglesia.id" v-bind:value="iglesia.id" >{{iglesia.nombre_iglesia}}</option>
@@ -505,11 +503,20 @@
                     var respuesta= response.data;
                     me.arrayinventario=respuesta.proinventarioIgle.data;
                     me.pagination= respuesta.pagination;
+                    me.cerrarmodal2();
                 })
                 .catch(function (error) {
                     console.log(error);
                 });
             
+            },
+            cerrarmodal2(){
+                this.arrayzona=[];
+                this.arrayiglesia=[];
+                this.idzona=0;
+                this.idiglesia=0;
+                this.llenadolistazona();
+                this.iglesias();
             },
             
             validarvalores(){
@@ -677,6 +684,8 @@
                 this.idiglesia='';
                 this.criterio='nombre_producto';
                 this.idzona='';
+                this.errorDatos=0;
+                this.errorMostrarMsj=[];
             
             },
 

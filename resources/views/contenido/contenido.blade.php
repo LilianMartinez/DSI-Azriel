@@ -7,32 +7,48 @@
                           <escritorio></escritorio>
                         </template>
 
-                        <template v-if="menu==3">
-                            <h1>Bautizo</h1>
+                        <template v-if="menu==7">
+                            <historialefectivo></historialefectivo>
                         </template>
                         
-                        <template v-if="menu==4">
-                            <h1>Primera Comunión</h1>
+                        <template v-if="menu==8">
+                            <resumeneconomico></resumeneconomico>
                         </template>
                         
-                        <template v-if="menu==5">
-                            <h1>Confirma</h1>
-                        </template>
-                        
-                        <template v-if="menu==6">
-                                <matrimonio1></matrimonio1>
+                        <template v-if="menu==2">
+                            <calendario></calendario>
                         </template>
 
                         <template v-if="menu==10">
                                 <user></user> 
                         </template>
 
-                        <template v-if="menu==14">
-                            <h1>Ayuda</h1>
+                        <template v-if="menu==12">
+                        <controlsectorialfeligreses></controlsectorialfeligreses>
                         </template>
-                        
-                        <template v-if="menu==15">
-                            <h1>Acerca de...</h1>
+                            
+                        <template v-if="menu==13">
+                           <controlsectorialinventarios></controlsectorialinventarios>
+                        </template>
+
+                        <template v-if="menu==3">
+                            <bautizo></bautizo>
+                        </template>
+
+                        <template v-if="menu==5">
+                        <historialprimeracomunion></historialprimeracomunion>
+                        </template>
+
+                        <template v-if="menu==20">
+                        <historialconfirmas></historialconfirmas>
+                        </template>
+
+                        <template v-if="menu==6">
+                            <matrimonio1></matrimonio1>
+                        </template>
+
+                        <template v-if="menu==34">
+                            <ventas></ventas>
                         </template>
 
             @elseif(Auth::user()->idrol==2)

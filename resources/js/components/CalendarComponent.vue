@@ -53,11 +53,11 @@
 
         <form @submit.prevent>
           <div class="form-group">
-            <label for="event_name">Nombre del evento</label>
+            <label for="event_name">Nombre</label>
             <input type="text" id="event_name" class="form-control" v-model="newEvent.event_name">
           </div>
           <div class="form-group">
-            <label for="event_description">Descripción del evento</label>
+            <label for="event_description">Descripción</label>
             <div class="fb-quotable"> <!-- plugin de facebook de lo que esta dentro del modal -->
             <textarea id="event_description" rows="5" class="form-control" v-model="newEvent.event_description"></textarea>
             <div class="fb-quote"></div>
@@ -241,7 +241,7 @@ export default {
                 if(mes1 < actualMes+1 && anio1 == actualYear){
                   this.errorMostrarMsjModal.push("Mes malo - No se puede iniciar un evento de días anteriores");
                 }else{
-                  if(dia1 < actualDay && mes1 == actualMes+1 && anio1 == actualYear){
+                  if(dia1 < actualDay+1 && mes1 == actualMes+1 && anio1 == actualYear){
                     this.errorMostrarMsjModal.push("Día malo - No se puede iniciar un evento de días anteriores");
                   }
                 }
@@ -270,6 +270,24 @@ export default {
 
             return this.errorModal;
         },
+
+    msjExito(){
+        swal({
+            type: 'success',
+            title: 'Evento guardado con éxito',
+            showConfirmButton: false,
+            timer: 1500
+        })
+    },
+
+    msjExito2(){
+        swal({
+            type: 'success',
+            title: 'Evento actualizado con éxito',
+            showConfirmButton: false,
+            timer: 1500
+        })
+    },
         
     addNewEvent() {
       if(this.validarDatos()){
@@ -284,6 +302,7 @@ export default {
           this.getEvents(); // update our list of events
           this.resetForm(); // clear newEvent properties (e.g. title, start_date and end_date)
           this.cerrarModal();
+          this.msjExito();
         })
         .catch(err =>
           console.log("Unable to add new event!", err.response.data)
@@ -317,12 +336,29 @@ export default {
           this.getEvents();
           this.addingMode = !this.addingMode;
           this.cerrarModal();
+          this.msjExito2();
         })
         .catch(err =>
           console.log("Unable to update event!", err.response.data)
         );
     },
     deleteEvent() {
+      swal({
+        title: '¿Esta seguro de eliminar este evento?',
+        type: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Aceptar!',
+        cancelButtonText: 'Cancelar',
+        confirmButtonClass: 'btn btn-success',
+        cancelButtonClass: 'btn btn-danger',
+        buttonsStyling: false,
+        reverseButtons: true
+        }).then((result) => {
+        if (result.value) {
+            let me = this;
+
       axios
         .delete("/api/calendar/" + this.indexToUpdate)
         .then(resp => {
@@ -330,10 +366,23 @@ export default {
           this.getEvents();
           this.addingMode = !this.addingMode;
           this.cerrarModal();
+          swal(
+                'Eliminado!',
+                'El evento ha sido eliminado con éxito.',
+                'success'
+                )
         })
         .catch(err =>
           console.log("Unable to delete event!", err.response.data)
         );
+
+        } else if (
+                // Read more about handling dismissals
+                result.dismiss === swal.DismissReason.cancel
+            ) {
+                
+            }
+            })
     },
     getEvents() {
       axios

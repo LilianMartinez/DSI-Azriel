@@ -53,6 +53,7 @@
                         <table class="table table-bordered table-striped table-sm">
                             <thead>
                                 <tr>
+                                    <th>Documento de identidad</th>
                                     <th>Nombre del feligres</th>
                                     <th>fecha de nacimiento</th>
                                     <th>Zona</th>
@@ -62,6 +63,7 @@
                             </thead>
                             <tbody>
                                 <tr v-for="feligres in arrayfeligres" :key="feligres.id">                              
+                                    <td>{{feligres.dui_pasaporte}}</td>
                                     <td>{{feligres.nombre_persona}}, {{feligres.apellido_persona}}</td>
                                     <td v-text="feligres.fecha_nacimiento"></td>
                                     <td v-text="feligres.nombre_zona"></td>
@@ -105,6 +107,21 @@
                         </div>
                         <div class="modal-body">
                            <form action="" method="post" enctype="multipart/form-data" class="form-horizontal">
+                            <div v-show="verim==1">
+                                <div class="form-group row">
+                                        <label class="col-md-3 form-control-label" for="text-input">Documento de identidad</label>
+                                        &nbsp;&nbsp;&nbsp;
+                                        <label  for="text-input"></label><label>{{dui}}</label>
+                                </div>
+                            </div>
+                            <div v-show="verim==0">
+                                <div class="form-group row">
+                                    <label class="col-md-3 form-control-label" for="text-input">Documento de identidad</label>
+                                    <div class="col-md-5">
+                                        <input tabindexgt="0" v-model="dui" class="form-control" placeholder="999999999" >
+                                    </div>
+                                </div>
+                            </div>
                             <div class="form-group row">
                                     <label class="col-md-3 form-control-label" for="text-input">Nombres del feligres:<b class="alerta">*</b></label>
                                     <div class="col-md-5">
@@ -119,8 +136,17 @@
                             </div>
                               <div class="form-group row">
                                 <label class="col-md-3 form-control-label" for="text-input">Fecha de Nacimiento</label>
-                                <div class="col-md-4">
+                               <div class="col-md-4">
                                     <input type="date" class="form-control datepicker" name="date" v-model="fechana">
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-md-3 form-control-label" for="text-input">Sexo<b class="alerta">*</b></label>
+                                <div class="col-md-5">
+                                    <table>
+                                        <tr> <input tabindexgt="-1" type="radio" v-model="sexo" value="F" name="sexo">Femenino</tr>
+                                        <tr> <input tabindexgt="-1" type="radio" v-model="sexo" value="M" name="sexo">Maculino</tr>
+                                    </table>
                                 </div>
                             </div>
                             <div class="form-group row">
@@ -151,8 +177,12 @@
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" @click="cerrarModal()">Cerrar</button>
-                            <button type="button" class="btn btn-primary" v-if="tipoAccion==1" @click="registrarfeligres()">Guardar</button>
-                            <button type="button" class="btn btn-primary" v-if="tipoAccion==2" @click="actualizarfeligreses()">Actualizar</button>
+                            <div v-show="veri==1">
+                            <button type="button" class="btn btn-primary" v-if="tipoAccion==1" @click="verificarExistenciaDui()">Guardar</button>
+                            </div>
+                            <div v-show="veri==1">
+                            <button type="button" class="btn btn-primary" v-if="tipoAccion==2" @click="verificarExistenciaDuiM()">Actualizar</button>
+                            </div>
                         </div>
                     </div>
                     <!-- /.modal-content -->
@@ -171,9 +201,16 @@
                             </button>
                         </div>
                         <div class="modal-body">
-                       <div class="form-group row">
-                                   <b class="alerta"> <label class="col-md-12 form-control-label" for="text-input">Nombre del feligres</label></b>
-                                   &nbsp;&nbsp;&nbsp;
+                                <!--<div v-show="dui==''">-->
+                                    <div class="form-group row">
+                                        <b class="alerta"><label class="col-md-12 form-control-label" for="text-input">Documento de identidad</label></b>
+                                        &nbsp;&nbsp;&nbsp;
+                                        <b class="alerta"> <label  for="text-input"></label><label>{{dui}}</label></b>   
+                                    </div>
+                                <!--</div>-->
+                                <div class="form-group row">
+                                        <b class="alerta"> <label class="col-md-12 form-control-label" for="text-input">Nombre del feligres</label></b>
+                                        &nbsp;&nbsp;&nbsp;
                                         <b class="alerta"><label  for="text-input">{{nombre_persona}}</label></b>   
                                 </div>
                                  <div class="form-group row">
@@ -185,6 +222,11 @@
                                     <b class="alerta"><label class="col-md-12 form-control-label" for="text-input">Fecha de nacimiento</label></b>
                                     &nbsp;&nbsp;&nbsp;
                                     <b class="alerta"> <label  for="text-input"></label><label>{{fechana}}</label></b>   
+                                </div>
+                                <div class="form-group row">
+                                    <b class="alerta"><label class="col-md-12 form-control-label" for="text-input">Sexo</label></b>
+                                    &nbsp;&nbsp;&nbsp;
+                                    <b class="alerta"> <label  for="text-input"></label><label>{{sexo}}</label></b>   
                                 </div>
                                 <div class="form-group row">
                                     <b class="alerta"><label class="col-md-12 form-control-label" for="text-input">Zona</label></b>
@@ -215,6 +257,13 @@
     export default {
       data(){
             return{
+                
+                sexo:'',//sexo
+
+                dui:'', //dui
+                veri:1,
+                verim:0,
+
                 idzona:'',
                 idiglesia:'',
                 zona:'',
@@ -292,7 +341,58 @@
             //Envia la peticion para visualizar la data de esa pagina
             me.listarFeligresesBuscar(page,buscar,criterio)
         },
-        
+
+         buscarDui(){
+            let me=this;
+            var d=this.dui;
+            var idcs=this.id;
+            if(d != ''){
+                var url='/persona/duis?dui=' + d;
+                axios.get(url) .then(function (response) {
+                    var respuesta=response.data.solo;
+                    var datos= response.data.persona;
+                    if(respuesta==1){
+                        me.veri=1;
+                        me.registrarfeligres();
+                    }
+                    if(respuesta==2){
+                        me.veri=2;
+                        me.llenarcampos(datos);
+                        me.validarvalores2();
+                    }
+                }).catch(function (error) {
+                    console.log(error);
+                });
+            }
+                    
+        },
+
+        validarvalores2(){
+            this.errorDatos=0;
+                this.errorMostrarMsj=[];
+               
+                if(this.veri==2) this.errorMostrarMsj.push("Esta persona ya existe en el sistema");
+                if(this.errorMostrarMsj.length) this.errorDatos=1;
+                return this.errorDatos;
+        },
+
+        llenarcampos(data=[]){
+            this.nombre_persona= data['nombre_persona'];
+            this.apellido_persona= data['apellido_persona'];
+            this.fechana=data['fecha_nacimiento'];
+            this.id=data['id'];
+            this.sexo=data['sexo']; //no tiene que estar ligado al DUI ya que no todos los feligreses tienen dui
+            this.idzona=data['idzonaa']; 
+            this.llenadolistazona();
+            if(this.idzona)
+                {
+                    this.iglesias(this.idzona);
+                    this.idiglesia=data['idiglesia'];
+                    this.nombre_iglesia=data['nombre_iglesia'];
+                }
+            
+        },
+
              llenadolistazona(){
             let me=this;
             var url='/zona/buscarZona'; 
@@ -330,8 +430,15 @@
              axios.post('/sectorial/buscarIglesiaFeligreses',{
                'id':this.idiglesia}) 
               .then(function (response) { 
+                  /*response.data.forEach(function(element) {
+                        if(element.fecha_nacimiento != null){
+                        var texto = element.fecha_nacimiento;
+                        element.fecha_nacimiento= texto.replace(/^(\d{4})-(\d{2})-(\d{2})$/g,'$3/$2/$1');
+                        }
+                    });*/
                 arrayiglesiaFeligre = response.data;     
                 me.llenar2(arrayiglesiaFeligre);  
+                
                 })
                 .catch(function (error) {
                     // handle error
@@ -353,16 +460,16 @@
                  buscar2=this.buscar;
                 var url='/feligreses?page='+ page + '&buscar=' + buscar2 + '&criterio=' + criterio;
                 axios.get(url) .then(function (response) {
-                    response.data.feligres.data.forEach(function(element) {
+                  /*  response.data.feligres.data.forEach(function(element) {
                         if(element.fecha_nacimiento != null){
                         var texto = element.fecha_nacimiento;
                         element.fecha_nacimiento= texto.replace(/^(\d{4})-(\d{2})-(\d{2})$/g,'$3/$2/$1');
                         }
-                    });
+                    });*/
                     var respuesta= response.data;
                     me.arrayfeligres=respuesta.feligres.data;
                     me.pagination= respuesta.pagination;
-
+                    me.cerrarmodal2();
                     
                 })
                 .catch(function (error) {
@@ -371,10 +478,11 @@
             
             },
             
-            validarvalores(){
+            validarvalores(){ //sexo aqui
                 this.errorDatos=0;
                 this.errorMostrarMsj=[];
                 var RE = /^\d*(\.\d{1})?\d{0,1}$/;
+                var patrondui= /^\d{9}$/;
                var Max_Length = 99;
                var Min_Length = 3;
                //Nombre y apellido
@@ -388,6 +496,9 @@
                 var fecha2 = new Date();
                 var actualYear = fecha.getFullYear();
                 var actualMes = fecha.getMonth();
+                if(this.dui!=''){
+                    if (!patrondui.test(this.dui))this.errorMostrarMsj.push("El DUI debe ser de nueve digitos");
+                }
                
                 if (lengthmaxN > Max_Length)this.errorMostrarMsj.push("El nombre del feligres debe tener menos de 99 letras");
                 if (lengthminN < Min_Length)this.errorMostrarMsj.push("El nombre del feligres debe tener más de 3 letras");
@@ -398,7 +509,7 @@
                     {
                             var values = this.fechana.split("-");
                             var anio = values[0];
-                            if(anio < 1989)this.errorMostrarMsj.push("El año debe de ser mayor a 1989");
+                            if(anio < 1800)this.errorMostrarMsj.push("El año debe de ser mayor a 1800");
                             if((actualYear)<anio)this.errorMostrarMsj.push("El año debe ser menor o igual al " + (actualYear));
                         
                     };
@@ -409,6 +520,16 @@
             
 
                 return this.errorDatos;
+            },
+
+            verificarExistenciaDui(){
+                let me=this;
+                if(me.dui==''){
+                    me.dui='';
+                    me.registrarfeligres();
+                }else{
+                    me.buscarDui();
+                }
             },
              
               registrarfeligres(){
@@ -423,12 +544,15 @@
                   'nombre_persona': this.nombre_persona.toUpperCase(),
                   'apellido_persona': this.apellido_persona.toUpperCase(),
                   'fecha_nacimiento':this.fechana,
+                  'idzonaa':this.idzona,
                   'idiglesia':this.idiglesia,
+                  'dui':this.dui,
+                  'sexo':this.sexo,
               }) .then(function (response) {
                     me.mensajeExito();
                     me.cerrarModal();
                     me.listarFeligresesBuscar(1,buscar,criterio);
-                    console.log(response);
+                    //console.log(response);
                 }) .catch(function (error) {
                  
                 });
@@ -453,13 +577,61 @@
                 this.tipoAccion=0;
                 this.nombre_persona='';
                 this.apellido_persona='';
+                this.sexo='';
                 this.fechana='';
                 this.buscar='';
                 this.idiglesia='';
                 this.criterio='nombre_iglesia';
                 this.idzona='';
+                this.errorDatos=0;
+                this.errorMostrarMsj=[];
+                this.dui='';
+                this.veri=1;
             
             },
+            cerrarmodal2(){
+                this.arrayzona=[];
+                this.arrayiglesia=[];
+                this.idzona=0;
+                this.idiglesia=0;
+                this.llenadolistazona();
+                this.iglesias();
+            },
+
+            verificarExistenciaDuiM(){
+                let me=this;
+                if(me.dui==''){
+                    me.dui ='';
+                    me.actualizarfeligreses();
+                }else{
+                    me.buscarDuiM();
+                }
+            },
+
+            buscarDuiM(){
+            let me=this;
+            var d=this.dui;
+            var idcs=this.id;
+            if(d != ''){
+                var url='/persona/duis?dui=' + d;
+                axios.get(url) .then(function (response) {
+                    var respuesta=response.data.solo;
+                    var datos= response.data.persona;
+                    if(respuesta==1){
+                        me.veri=1;
+                        me.actualizarfeligreses();
+                    }
+                    if(respuesta==2){
+                        me.veri=2;
+                        me.llenarcampos(datos);
+                        me.validarvalores2();
+                    }
+                }).catch(function (error) {
+                    console.log(error);
+                });
+            }
+                    
+        },
 
             actualizarfeligreses(){
                 if(this.validarvalores()){
@@ -474,8 +646,10 @@
                   'apellido_persona':this.apellido_persona.toUpperCase(),
                   'fecha_nacimiento':this.fechana,
                   'idiglesia':this.idiglesia,
-                  'idzona':this.idzona,
+                  'idzonaa':this.idzona,
                   'id':this.feligreses_id,
+                  'dui':this.dui,
+                  'sexo':this.sexo,
                     }) .then(function (response) {
                     me.cerrarModal();
                     me.mensajeExito();
@@ -488,10 +662,13 @@
             },
              eliminar(){
                 let me=this;
+                var buscar='';
+                var criterio='nombre_persona';
                 axios.put('/feligreses/eliminar',{
                   'id':this.feligreses_id,
                     }) .then(function (response) {
                      me.cerrarModal();
+                    // me.mensajeExito();
                      me.listarFeligresesBuscar(1,buscar,criterio);
                 })
                 .catch(function (error) {
@@ -516,21 +693,35 @@
                                 this.fechana=null;
                                 this.idiglesia='';
                                 this.idzona='';
+                                this.dui='';
+                                this.sexo='';
                                 break;
 
                             }
                              case 'actualizar':
                             {
-                                 this.modal=1;
+                                this.modal=1;
                                 this.tituloModal='Modificar Feligres';
                                 this.tipoAccion=2;
+                                this.feligreses_id=data['id'];
                                 this.nombre_persona=data['nombre_persona'];
                                 this.apellido_persona=data['apellido_persona'];
                                 this.fechana=data['fecha_nacimiento'];
-                                this.idiglesia=data['idiglesia'];
+                                this.sexo=data['sexo'];
                                 this.idzona=data['idzona'];
-                                this.feligreses_id=data['id'];
                                 this.nombre_zona=data['nombre_zona'];
+                                this.dui=data['dui_pasaporte'];
+                                if(this.idzona){
+                                this.iglesias(this.idzona);
+                                this.idiglesia=data['idiglesia'];
+                                this.nombre_iglesia=data['nombre_iglesia'];
+                                }
+                                if(this.dui==null)
+                                {
+                                    this.verim=0;
+                                }else{
+                                    this.verim=1;
+                                }
                                break;
                             }
                              case 'eliminar':
@@ -539,12 +730,14 @@
                                 this.tituloModal='Eliminar Feligres';
                                 this.feligreses_id=data['id'];
                                 this.nombre_persona=data['nombre_persona'];
+                                this.sexo=data['sexo'];
                                 this.apellido_persona=data['apellido_persona'];
                                 this.fechana=data['fecha_nacimiento'];
                                 this.idiglesia=data['idiglesia'];
                                 this.nombre_iglesia=data['nombre_iglesia'];
                                 this.nombre_zona=data['nombre_zona'];
                                 this.idzona=data['idzona'];
+                                this.dui=data['dui_pasaporte'];
                                break;
                             }
                         }

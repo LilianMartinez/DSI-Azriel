@@ -258,6 +258,8 @@
                 this.descripcion_categoriainv='';
                 this.buscar='';
                 this.criterio='nombre_categoriainv';
+                this.errorDatos=0;
+                this.errorMostrarMsj='';
             
             },
     

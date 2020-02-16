@@ -60,9 +60,9 @@
                                     </td>
                                     <td> <!-- Aquí relizamos el if para saber que botones mostrar u ocultar -->
                                         <template v-if="sacramento.estado==1">
-                                            <button type="button" @click="abrirModal('sacramento','actualizar',sacramento)">
+                                            <!-- <button type="button" @click="abrirModal('sacramento','actualizar',sacramento)">
                                               <i class="icon-pencil  enter"></i>
-                                            </button> &nbsp;
+                                            </button> &nbsp; -->
                                             <button type="button" @click="abrirModal2('sacramento','paso2',sacramento)">
                                               <i class="icon-folder  enter"></i>
                                             </button> &nbsp;
@@ -707,8 +707,6 @@
                   'tipo':tip,
               }) .then(function (response) {
                     me.cerrarModal();
-                    me.listarEfectivo(1,'','num_recibo',1);
-                    me.sumat();
                 })
                 .catch(function (error) {
                     // handle error
@@ -1437,7 +1435,7 @@
 
         //este lo ocupa el método Registrar
         validarMatrimonio1(){
-            this.errorMatrimonio1=0;
+          /*  this.errorMatrimonio1=0;
             this.errorMostrarMsjMatrimonio1=[];
             var patron =/^[a-zA-ZÑñÁáÉéÍíÓóÚúÜü\s]+$/;
             var patrondui= /^\d{9}$/;
@@ -1458,12 +1456,12 @@
 
             if (this.errorMostrarMsjMatrimonio1.length) this.errorMatrimonio1 = 1;
 
-            return this.errorMatrimonio1;
+            return this.errorMatrimonio1;*/
         },
 
         //este es para el modal 2 (fecha de realización y lugar)
         validarModal2(){
-            this.errorModal2=0;
+         /*   this.errorModal2=0;
             this.errorMostrarMsjModal2=[];
 
             var fecha = new Date();
@@ -1484,12 +1482,12 @@
 
             if (this.errorMostrarMsjModal2.length) this.errorModal2 = 1;
 
-            return this.errorModal2;
+            return this.errorModal2;*/
         },
 
         //este es para el modal 3 (datos de los padrinos y cobro)
         validarModal3(){
-            this.errorModal3=0;
+            /*this.errorModal3=0;
             this.errorMostrarMsjModal3=[];
             var patron =/^[a-zA-ZÑñÁáÉéÍíÓóÚúÜü\s]+$/;
             var patrondui= /^\d{9}$/;
@@ -1546,11 +1544,11 @@
             //falta validar para que solo sean números
             if (this.errorMostrarMsjModal3.length) this.errorModal3 = 1;
 
-            return this.errorModal3;
+            return this.errorModal3;*/
         },
 
         validarModal4(){
-            this.errorModal4=0;
+           /* this.errorModal4=0;
             this.errorMostrarMsjModal4=[];
             var RE = /^\d*(\.\d{1})?\d{0,1}$/;
             this.conceptoim;
@@ -1566,7 +1564,7 @@
 
             if (this.errorMostrarMsjModal4.length) this.errorModal4 = 1;
 
-            return this.errorModal4;
+            return this.errorModal4;*/
         },
 
         //Este cambia de un modal a otro (adelante y atras)

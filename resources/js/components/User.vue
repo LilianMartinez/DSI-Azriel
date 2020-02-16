@@ -1,9 +1,6 @@
 <template>
    <main class="main">
             <!-- Breadcrumb -->
-            <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="#">Admin</a></li>
-            </ol>
             <div class="container-fluid">
                 <!-- Ejemplo de tabla Listado -->
                 <div class="card">
@@ -53,13 +50,15 @@
                                           <i class="icon-pencil"></i>
                                         </button> &nbsp;
                                         <template v-if="persona.condicion">
+                                            &nbsp;
                                             <button type="button" class="btn btn-danger btn-sm" @click="desactivarUsuario(persona.id)">
-                                                <i class="icon-trash"></i>
+                                                <i class="icon-trash"></i> Desactivar Usuario
                                             </button>
                                         </template>
                                        <template v-else>
+                                            &nbsp;
                                             <button type="button" class="btn btn-info btn-sm" @click="activarUsuario(persona.id)">
-                                                <i class="icon-check"></i> 
+                                                <i class="icon-check"></i>&nbsp;Activar Usuario 
                                             </button>
                                         </template>
                                 </tr>
@@ -96,19 +95,19 @@
                         <div class="modal-body">
                             <form action="" method="post" enctype="multipart/form-data" class="form-horizontal">
                                 <div class="form-group row">
-                                    <label class="col-md-3 form-control-label" for="text-input">Nombre*</label>
+                                    <label class="col-md-3 form-control-label" for="text-input">Nombre<b class="alerta">*</b></label>
                                     <div class="col-md-9">
                                         <input type="text" v-model="nombre_persona" class="form-control" placeholder="Nombre de la persona">
                                     </div>
                                 </div>
                                 <div class="form-group row">
-                                    <label class="col-md-3 form-control-label" for="email-input">Apellido*</label>
+                                    <label class="col-md-3 form-control-label" for="email-input">Apellido<b class="alerta">*</b></label>
                                     <div class="col-md-9">
                                         <input type="text" v-model="apellido_persona" class="form-control" placeholder="Apellido de la persona">
                                     </div>
                                 </div>
                                  <div class="form-group row">
-                                    <label class="col-md-3 form-control-label" for="email-input">Rol*</label>
+                                    <label class="col-md-3 form-control-label" for="email-input">Rol<b class="alerta">*</b></label>
                                     <div class="col-md-9">
                                         <select class="form-control" v-model="idrol">
                                             <option value="0">Seleccione un rol</option>
@@ -119,13 +118,13 @@
                                     </div>
                                 </div>
                                   <div class="form-group row">
-                                    <label class="col-md-3 form-control-label" for="email-input">Usuario*</label>
+                                    <label class="col-md-3 form-control-label" for="email-input">Usuario<b class="alerta">*</b></label>
                                     <div class="col-md-9">
-                                        <input type="text" v-model="usuario" class="form-control" placeholder="Ej.AA01##   (01->parroco 02->secretaria)">
+                                        <input type="text" v-model="usuario" class="form-control">
                                     </div>
                                 </div>
                                 <div class="form-group row">
-                                    <label class="col-md-3 form-control-label" for="email-input">Password*</label>
+                                    <label class="col-md-3 form-control-label" for="email-input">Password<b class="alerta">*</b></label>
                                     <div class="col-md-9">
                                         <input type="password" v-model="password" class="form-control" placeholder="Ej.AA######*">
                                     </div>
@@ -303,9 +302,10 @@
             validarPersona(){ 
                 this.errorPersona=0;
                 this.errorMostrarMsjPersona=[];
-                var RE =/^[a-zA-Z]+( [a-zA-z]+)*$/;  ///^[A-Z]+$/i
-                var max_length=6;
-                var min_length=6;
+                //var RE =/^[a-zA-Z]+( [a-zA-z]+)*$/;  ///^[A-Z]+$/i
+                var RE = /^\d*(\.\d{1})?\d{0,1}$/;
+                var max_length=20;
+                var min_length=3;
                 var min_length_contra=9;
                 var lengthMax = this.usuario.length;
                 var lengthMin = this.usuario.length;
@@ -314,13 +314,13 @@
                 if(!this.nombre_persona)this.errorMostrarMsjPersona.push("El campo nombre no puede estar vacio");
                 if(!this.apellido_persona)this.errorMostrarMsjPersona.push("El campo apellido no debe estar vacio");
                 if(!this.usuario)this.errorMostrarMsjPersona.push("El campo usuario no debe estar vacio");
-                if(lengthMax > max_length)this.errorMostrarMsjPersona.push("El nombre de usuario no debe ser mayor a 6 letras");
-                if(lengthMin < min_length)this.errorMostrarMsjPersona.push("El nombre de usuario no debe ser menor a 6 letras");
+                if(lengthMax > max_length)this.errorMostrarMsjPersona.push("El nombre de usuario no debe ser mayor a 20 letras");
+                if(lengthMin < min_length)this.errorMostrarMsjPersona.push("El nombre de usuario no debe ser menor a 3 letras");
                 if(!this.password)this.errorMostrarMsjPersona.push("El campo password no puede estar vacío");
                 if(lengthMin_contra < min_length_contra)this.errorMostrarMsjPersona.push("El password no debe ser menor a 9 digitos");
                 if(this.idrol==0)this.errorMostrarMsjPersona.push("Debe seleccionar un rol para el usuario");
-                if(!RE.test(this.nombre_persona))this.errorMostrarMsjPersona.push("No pueden ir números en el nombre");
-                if(!RE.test(this.apellido_persona))this.errorMostrarMsjPersona.push("No pueden ir números en el apellido");
+                if(RE.test(this.nombre_persona))this.errorMostrarMsjPersona.push("No pueden ir números en el nombre");
+                if(RE.test(this.apellido_persona))this.errorMostrarMsjPersona.push("No pueden ir números en el apellido");
 
                 if(this.errorMostrarMsjPersona.length)this.errorPersona=1;
 
