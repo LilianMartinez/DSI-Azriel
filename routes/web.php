@@ -178,6 +178,7 @@ Route::group(['middleware'=>['auth']],function(){
                              Route::get('/canastas','CanastasController@index');
                              Route::put('/canastas/registrar','CanastasController@store');
                              Route::get('/canastas/detalle','CanastasController@Buscar');
+                             Route::get('/canastas/canasta','CanastasController@Buscar2');
                              Route::put('/canastas/vender','CanastasController@vender');
                              
                             

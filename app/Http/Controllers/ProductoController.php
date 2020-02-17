@@ -115,7 +115,6 @@ class ProductoController extends Controller
     public function seleccionarProductoCanasta(Request $request)
     {
         if(!$request->ajax()) return redirect('/');
-        $filtro=$request->filtro;
         $filtro1=$request->filtro;
         $filtro2=strtoupper($filtro1);
         $filtro = trim($filtro2);
@@ -162,20 +161,19 @@ class ProductoController extends Controller
         $filtro=$request->filtro;
   
 
-        $productos2 = DetalleEntrada::join('existencias','detalle_entrada.id','=','existencias.id_entrada')
+        /*$productos2 = DetalleEntrada::join('existencias','detalle_entrada.id','=','existencias.id_entrada')
         ->select('detalle_entrada.unitario')
         ->where('existencias.cantidad','>','0')->where('detalle_entrada.id_producto','=', $filtro)
         ->orderby('existencias.id', 'asc')
         ->get();
-        $envio['compra']=  $productos2;
+        $envio['compra']=  $productos2;*/
 
         $productos3 = DetalleEntrada::join('existencias','detalle_entrada.id','=','existencias.id_entrada')
-        ->select('existencias.cantidad','existencias.id')
+        ->select('existencias.cantidad','existencias.id','detalle_entrada.unitario')
         ->where('existencias.cantidad','>','0')->where('detalle_entrada.id_producto','=', $filtro)
-        ->orderby('existencias.id', 'asc')
-        ->get();
-        $envio['cantidad']=  $productos3;
-        return  $envio;
+        ->orderby('existencias.id', 'asc')->get();
+        
+        return [ 'lista'=>$productos3];
     }
  
 

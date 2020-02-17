@@ -69,7 +69,7 @@ class DetalleEntradaController extends Controller
 
         $mytime= new \DateTime();
             
-            $detalles = $request->data;/
+            $detalles = $request->data;
             foreach($detalles as $ep=>$det)
             {
                 $id_entrada = DetalleEntrada::max('id');

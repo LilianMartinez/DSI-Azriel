@@ -205,7 +205,7 @@
 
                 producto : '',
                 id_productoR:'',
-                id_producto:'',
+                id_producto:0,
                 precio_compra:0.0,
                 precio_venta:0.0,
                 cantidad:0.0,
@@ -330,8 +330,16 @@
                 if(val1== null)
                 {
                     me.loading = false;
-                    me.id_producto = '';
+                    me.id_producto = 0;
                     me.producto='';
+                    return;
+                }
+                if(val1=='')
+                {
+                    me.loading = false;
+                    me.id_producto = 0;
+                    me.producto='';
+                    return;
                 }
                 else{
                     me.loading = true;
@@ -396,8 +404,8 @@
                             id_producto: me.id_producto,
                             producto: me.producto,
                             cantidad: me.cantidad,
-                            precio_compra: me.precio_compra,
-                            precio_venta:me.precio_venta,
+                            precio_compra: me.precio_compra.toFixed(2),
+                            precio_venta:me.precio_venta.toFixed(2),
                             tipo : me.tipo
                         });
                         me.cantidad='';
@@ -471,10 +479,13 @@
             validarCompra(){
                 this.errorIngreso=0;
                 this.errorMostrarMsjIngreso =[];
-
+                var RE = /^([0-9])*$/;
+                var RE2 = /^\d*(\.\d{1})?\d{0,1}$/;
                 if (this.id_producto==0) this.errorMostrarMsjIngreso.push("Debe seleccionar un producto");
                 if (this.cantidad<1) this.errorMostrarMsjIngreso.push("La cantidad no puede ser menor que uno");
+                if (!RE.test(this.cantidad)) this.errorMostrarMsjIngreso.push("La cantidad debe ser un numero");
                 if (this.precio_compra=='') this.errorMostrarMsjIngreso.push("El precio del producto comprado no puede estar vacio");
+                if (!RE2.test(this.precio_compra)) this.errorMostrarMsjIngreso.push("El precio del producto solo pueden ser decimales");
                 if(!this.tipo) this.errorMostrarMsjIngreso.push("El tipo no puede estar vacío");
                 if (this.errorMostrarMsjIngreso.length) this.errorIngreso = 1;
                 return this.errorIngreso;
