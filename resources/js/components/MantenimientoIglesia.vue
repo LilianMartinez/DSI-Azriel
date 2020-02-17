@@ -227,6 +227,7 @@
                   'nombre_iglesia': this.nombre_iglesia.toUpperCase(),
                   'idz':this.idzona,
               }) .then(function (response) {
+                    me.msjExito();
                     me.cerrarModal();
                     me.listariglesias(buscar,criterio);
                 }) .catch(function (error) {
@@ -264,6 +265,7 @@
                   'idz':this.idzona,
                   'id':this.iglesias_id,
                     }) .then(function (response) {
+                    me.msjEliminado();
                     me.cerrarModal();
                     me.listariglesias(buscar,criterio);
                 })
@@ -325,6 +327,25 @@
                     }
                 }
 
+            },
+
+            //MENSAJE DE ÉXITO
+            msjExito(){
+                swal({
+                    type: 'success',
+                    title: 'Datos guardados con éxito',
+                    showConfirmButton: false,
+                    timer: 1500
+                })
+            },
+            //MENSAJE DE ELIMINACIÓN EXITOSA
+            msjEliminado(){
+                swal({
+                    type: 'error',
+                    title: 'Datos eliminados con éxito',
+                    showConfirmButton: false,
+                    timer: 1500
+                })
             }
         },
         mounted() {

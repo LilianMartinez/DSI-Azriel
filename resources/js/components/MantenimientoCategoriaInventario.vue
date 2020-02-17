@@ -206,6 +206,7 @@
                   'nombre_categoriainv': this.nombre_categoriainv.toUpperCase(),
                   'descripcion_categoriainv': this.descripcion_categoriainv.toUpperCase(),
               }) .then(function (response) {
+                    me.msjExito();
                     me.cerrarModal();
                     me.listarcategoriasinventario(buscar,criterio);
                 }) .catch(function (error) {
@@ -226,6 +227,7 @@
                   'descripcion_categoriainv': this.descripcion_categoriainv.toUpperCase(),
                   'id':this.cateinve_id,
                     }) .then(function (response) {
+                    me.msjExito();
                     me.cerrarModal();
                    me.listarcategoriasinventario(buscar,criterio);
                 })
@@ -241,6 +243,7 @@
                 axios.put('/categoriainventario/eliminar',{
                   'id':this.cateinve_id,
                     }) .then(function (response) {
+                    me.msjEliminado();
                     me.cerrarModal();
                     me.listarcategoriasinventario(buscar,criterio);
                 })
@@ -301,6 +304,25 @@
                     }
                 }
 
+            },
+
+            //MENSAJE DE ÉXITO
+            msjExito(){
+                swal({
+                    type: 'success',
+                    title: 'Datos guardados con éxito',
+                    showConfirmButton: false,
+                    timer: 1500
+                })
+            },
+            //MENSAJE DE ELIMINACIÓN EXITOSA
+            msjEliminado(){
+                swal({
+                    type: 'error',
+                    title: 'Datos eliminados con éxito',
+                    showConfirmButton: false,
+                    timer: 1500
+                })
             }
         },
         mounted() {

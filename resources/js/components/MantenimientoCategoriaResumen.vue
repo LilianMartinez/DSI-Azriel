@@ -205,6 +205,7 @@
                   'nombre_categoria': this.nombre_categoria.toUpperCase(),
                   'descripcion_categoria':this.descripcion_categoria.toUpperCase(),
               }) .then(function (response) {
+                    me.msjExito();
                     me.cerrarModal();
                     me.listarcategoriasresumenes(buscar,criterio);
                 }) .catch(function (error) {
@@ -227,6 +228,7 @@
                   'descripcion_categoria':this.descripcion_categoria.toUpperCase(),
                   'id':this.categoriasResumenes_id,
                     }) .then(function (response) {
+                    me.msjExito();
                     me.cerrarModal();
                     
                     me.listarcategoriasresumenes(buscar,criterio);
@@ -243,6 +245,7 @@
                 axios.put('/categoriaresumen/eliminarCR',{
                   'id':this.categoriasResumenes_id,
                     }) .then(function (response) {
+                    me.msjEliminado();
                     me.cerrarModal();
                     me.listarcategoriasresumenes(buscar,criterio);
                 })
@@ -302,6 +305,25 @@
                     }
                 }
 
+            },
+
+            //MENSAJE DE ÉXITO
+            msjExito(){
+                swal({
+                    type: 'success',
+                    title: 'Datos guardados con éxito',
+                    showConfirmButton: false,
+                    timer: 1500
+                })
+            },
+            //MENSAJE DE ELIMINACIÓN EXITOSA
+            msjEliminado(){
+                swal({
+                    type: 'error',
+                    title: 'Datos eliminados con éxito',
+                    showConfirmButton: false,
+                    timer: 1500
+                })
             }
         },
         mounted() {

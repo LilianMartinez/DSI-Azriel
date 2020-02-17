@@ -217,6 +217,7 @@
                   'apellido_persona':this.apellido_persona.toUpperCase(),
                   'dui_pasaporte':this.dui_pasaporte.toUpperCase(),
               }) .then(function (response) {
+                    me.msjExito();
                     me.cerrarModal();
                     me.listarreligiosos(buscar,criterio);
                 }) .catch(function (error) {
@@ -240,6 +241,7 @@
                   'dui_pasaporte':this.dui_pasaporte.toUpperCase(),
                   'id':this.religiosos_id,
                     }) .then(function (response) {
+                    me.msjExito();
                     me.cerrarModal();
                     
                     me.listarreligiosos(buscar,criterio);
@@ -256,6 +258,7 @@
                 axios.put('/religioso/eliminar',{
                   'id':this.religiosos_id,
                     }) .then(function (response) {
+                    me.msjEliminado();
                     me.cerrarModal();
                     me.listarreligiosos(buscar,criterio);
                 })
@@ -320,6 +323,25 @@
                     }
                 }
 
+            },
+
+            //MENSAJE DE ÉXITO
+            msjExito(){
+                swal({
+                    type: 'success',
+                    title: 'Datos guardados con éxito',
+                    showConfirmButton: false,
+                    timer: 1500
+                })
+            },
+            //MENSAJE DE ELIMINACIÓN EXITOSA
+            msjEliminado(){
+                swal({
+                    type: 'error',
+                    title: 'Datos eliminados con éxito',
+                    showConfirmButton: false,
+                    timer: 1500
+                })
             }
         },
         mounted() {

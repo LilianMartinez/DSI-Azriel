@@ -178,6 +178,7 @@
               axios.put('/zona/registrar',{
                   'nombre_zona': this.nombre_zona.toUpperCase(),
               }) .then(function (response) {
+                    me.msjExito();
                     me.cerrarModal();
                     me.listarzonas(buscar,criterio);
                 }) .catch(function (error) {
@@ -199,6 +200,7 @@
                   'nombre_zona': this.nombre_zona.toUpperCase(),
                   'id':this.zonas_id,
                     }) .then(function (response) {
+                    me.msjExito();
                     me.cerrarModal();
                     me.listarzonas(buscar,criterio);
                 })
@@ -214,6 +216,7 @@
                 axios.put('/zona/eliminar',{
                   'id':this.zonas_id,
                     }) .then(function (response) {
+                    me.msjEliminado();
                     me.cerrarModal();
                     me.listarzonas(buscar,criterio);
                 })
@@ -270,6 +273,25 @@
                     }
                 }
 
+            },
+
+            //MENSAJE DE ÉXITO
+            msjExito(){
+                swal({
+                    type: 'success',
+                    title: 'Datos guardados con éxito',
+                    showConfirmButton: false,
+                    timer: 1500
+                })
+            },
+            //MENSAJE DE ELIMINACIÓN EXITOSA
+            msjEliminado(){
+                swal({
+                    type: 'error',
+                    title: 'Datos eliminados con éxito',
+                    showConfirmButton: false,
+                    timer: 1500
+                })
             }
         },
         mounted() {

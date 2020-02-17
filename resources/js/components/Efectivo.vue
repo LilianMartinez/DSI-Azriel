@@ -382,6 +382,7 @@
                   'monto':this.monto,
                   'tipo':this.tipo
               }) .then(function (response) {
+                    me.msjExito();
                     me.cerrarModal();
                     me.listarEfectivo(1,'','num_recibo',1);
                     me.sumat();
@@ -406,6 +407,7 @@
                   'tipo':this.tipo,
                   'id':this.efectivo_id,
               }) .then(function (response) {
+                    me.msjExito();
                     me.cerrarModal();
                     me.listarEfectivo(1,'','num_recibo',1);
                     me.sumat();
@@ -489,6 +491,7 @@
               axios.put('/efectivo/eliminar',{
                   'id':this.efectivo_id,
               }) .then(function (response) {
+                me.msjEliminado();
                 me.cerrarModalE();
                 me.listarEfectivo(1,'','num_recibo',1);
                 me.sumat();
@@ -555,6 +558,25 @@
                     }
                 }
                 this.selectCategoria();
+            },
+
+            //MENSAJE DE ÉXITO
+            msjExito(){
+                swal({
+                    type: 'success',
+                    title: 'Datos guardados con éxito',
+                    showConfirmButton: false,
+                    timer: 1500
+                })
+            },
+            //MENSAJE DE ELIMINACIÓN EXITOSA
+            msjEliminado(){
+                swal({
+                    type: 'error',
+                    title: 'Datos eliminados con éxito',
+                    showConfirmButton: false,
+                    timer: 1500
+                })
             }
         },
         

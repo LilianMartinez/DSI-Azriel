@@ -198,6 +198,7 @@
                   'nombremf': this.nombremf.toUpperCase(),
                   'montof':this.montof,
               }) .then(function (response) {
+                    me.msjExito();
                     me.cerrarModal();
                     me.listarmontosfijos(buscar,criterio);
                 }) .catch(function (error) {
@@ -220,10 +221,10 @@
                   'montof':this.montof,
                   'id':this.montosfijos_id,
                     }) .then(function (response) {
-                    me.cerrarModal();
-                    
-                    me.listarmontosfijos(buscar,criterio);
-                })
+                        me.msjExito();
+                        me.cerrarModal();
+                        me.listarmontosfijos(buscar,criterio);
+                    })
                 .catch(function (error) {
                     // handle error
                     console.log(error);
@@ -236,6 +237,7 @@
                 axios.put('/montofijo/eliminar',{
                   'id':this.montosfijos_id,
                     }) .then(function (response) {
+                    me.msjEliminado();
                     me.cerrarModal();
                     me.listarmontosfijos(buscar,criterio);
                 })
@@ -295,6 +297,25 @@
                     }
                 }
 
+            },
+
+            //MENSAJE DE ÉXITO
+            msjExito(){
+                swal({
+                    type: 'success',
+                    title: 'Datos guardados con éxito',
+                    showConfirmButton: false,
+                    timer: 1500
+                })
+            },
+            //MENSAJE DE ELIMINACIÓN EXITOSA
+            msjEliminado(){
+                swal({
+                    type: 'error',
+                    title: 'Datos eliminados con éxito',
+                    showConfirmButton: false,
+                    timer: 1500
+                })
             }
         },
         mounted() {
