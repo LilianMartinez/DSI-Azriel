@@ -40,7 +40,7 @@
                                 <tbody>
                                     <tr v-for="canasta in arrayCanasta" :key="canasta.id">
                                         <td>
-                                            <button type="button" @click="listarDetalles(canasta.id)" class="btn btn-success btn-sm">
+                                            <button type="button" @click="abrirModal('canasta','ver',canasta)" class="btn btn-success btn-sm">
                                             <i class="icon-eye"></i>
                                             </button> &nbsp;
                                         </td>
@@ -324,10 +324,10 @@
                     console.log(error);
                 });
             },
-            listarDetalles (canasta){
+            listarDetalles (){
 
                 let me=this;
-                var v=canasta;
+                var v=me.po;
                 var url= '/canastas/detalle?buscar='+ v;
                 axios.get(url).then(function (response) {
                     var respuesta= response.data;
@@ -347,7 +347,6 @@
                     var respuesta= response.data;
                     me.canti= respuesta.canasta;
                     me.cambio();
-                    me.abrirModal('canasta','ver',canasta);
                 })
                 .catch(function (error) {
                     console.log(error);
@@ -595,10 +594,24 @@
                     me.listado=1;
                     me.modal=0;
                     me.tituloModal='';
+                    me.mensajeExitoventa();
                     me.listarCanasta(1,'','nombre_canasta');
                 }).catch(function (error) {
                     console.log(error);
                 });
+            },
+            mensajeExitoventa(){
+                swal({
+                title: '¡Venta realizada con exito!',
+                showCancelButton: false,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Aceptar!',
+                confirmButtonClass: 'btn btn-success',
+                cancelButtonClass: 'btn btn-danger',
+                buttonsStyling: false,
+                reverseButtons: true
+                })
             },
             validarCampos(){
                 this.errorCanasta=0;
@@ -654,8 +667,11 @@
                 this.errorPersona=0;
                 this.precioventa=0;
                 this.arrayIntermedio=[];
+                this.listarCanasta(1,this.buscar,this.criterio);
             },
             abrirModal(modelo, accion, data = []){
+                
+                
                 switch(modelo){
                     case "canasta":
                     {
@@ -665,6 +681,7 @@
                             {
                                 //console.log(data);
                                 this.po=data['id'];
+                                this.listarDetalles();
                                 this.modal=1;
                                 this.precioventa=data['precio_venta'];
                                 this.tituloModal='Descripcion Canasta';

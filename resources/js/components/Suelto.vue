@@ -90,9 +90,9 @@
                                 </div>
                             </div>
                             <div class="col-md-12">
-                                <div v-show="errorProducto" class="form-group row div-error">
+                                <div v-show="errorSuelto" class="form-group row div-error">
                                     <div class="text-center text-error">
-                                        <div v-for="error in errorMostrarMsjProducto" :key="error" v-text="error">
+                                        <div v-for="error in errorMostarMsj" :key="error" v-text="error">
                                         </div>
                                     </div>
                                 </div> 
@@ -166,6 +166,7 @@
                 cantidadT:'',
                 fecha:'',
                 tipo:'',
+                resultado:'',
                 totalP:0.0,
                 arraysProducto : [],
                 arraysProducto2 : [],
@@ -174,8 +175,8 @@
                 cantidadQ:[],
                 po:'',
                 listado:1,
-                errorProducto : 0,
-                errorMostrarMsjProducto : [],
+                errorSuelto : 0,
+                errorMostarMsj : [],
                 pagination : {
                     'total' : 0,
                     'current_page' : 0,
@@ -238,12 +239,14 @@
                     console.log(error);
                 });
             },
-            listarproducto2(page,buscar,criterio){
+            listarproducto3(){
                 let me=this;
-                var url= '/productos/v?page=' + page + '&buscar='+ buscar + '&criterio='+ criterio;
+                var filtro=me.id_producto;
+                var url= '/productos/buscarventa?buscar='+ filtro;
                 axios.get(url).then(function (response) {
                     var respuesta= response.data;
-                    me.arraysProducto2 = respuesta.productos.data;
+                    me.arraysProducto2 = respuesta.productos;
+                    me.validar();
                 })
                 .catch(function (error) {
                     console.log(error);
@@ -288,18 +291,14 @@
                 var inter;
                 
             
-                for(var i=0;i<me.arraysProducto2.length;i++){
-                     if(me.arraysProducto2[i].id==me.id_producto){
-                    
-                    resultado=resultado+ parseInt(me.arraysProducto2[i].cantidad);
-                }
+                for(var i=0;i<this.arraysProducto2.length;i++){
+                    me.resultado=me.resultado+ parseInt(me.arraysProducto2[i].cantidad);
                 }
                 
                 inter=parseInt(me.cantidad);
                 me.cantidadT=inter;
-                if(me.cantidadT<=resultado){
+                if(me.cantidadT<=me.resultado){
                         for(var i=0;i<this.arraysProducto2.length;i++){   
-                            if(me.cantidadT!=0 && me.arraysProducto2[i].id==me.id_producto){
                                 var c=parseInt(me.arraysProducto2[i].cantidad);
                                 var p;
                                 var t;
@@ -310,7 +309,7 @@
                                     me.cantidadQ.push({
                                         id_producto: me.id_producto,
                                         descontar: c,
-                                        id_existencia: me.arraysProducto2[i].exi,
+                                        id_existencia: me.arraysProducto2[i].id,
                                         queda: 0,
                                         preciov: t*c
                                     });
@@ -324,23 +323,30 @@
                                     me.cantidadQ.push({
                                         id_producto: me.id_producto,
                                         descontar: me.cantidadT,
-                                        id_existencia: me.arraysProducto2[i].exi,
+                                        id_existencia: me.arraysProducto2[i].id,
                                         queda: c-me.cantidadT,
                                         preciov: t*x
                                     });
                                     me.cantidadT=0;
                                     break;
                                 }
-                        }
+                        
                 }
 
                 
-               
+                me.la=1;
 
 
                 }else{
-
+                     me.la=0;
+                     me.id_producto=0;
+                        swal({
+                        type: 'error',
+                        title: 'Error...',
+                        text: 'No posee suficientes productos!',
+                        })
                 }
+                me.agregarDetalle2();
 
             },
             
@@ -365,36 +371,56 @@
                 me.arrayDetalle.splice(index, 1);
                 
             },
+            validarCampos(){
+                this.errorSuelto=0;
+                this.errorMostrarMsj =[];
+                var RE = /^([0-9])*$/;
+            
+                if (this.id_producto==0) this.errorMostrarMsj.push("Debe seleccionar un producto");
+                if (this.cantidad<1) this.errorMostrarMsj.push("La cantidad de productos no debe estar vacio");
+                if (!RE.test(this.cantidad)) this.errorMostrarMsj.push("La cantidad de productos debe ser un numero");
+                if (this.errorMostrarMsj.length) this.errorSuelto = 1;
+
+                return this.errorSuelto;
+            },
             agregarDetalle(){
                 let me=this;
-                if(me.id_producto==0 || me.cantidad==0){
-                }
-                else{
+                if (this.validarCampos()){
+                        return;}
+                        this.listarproducto3();
+                        },
+
+            agregarDetalle2(){
+                let me=this;
                     if(me.encuentra(me.id_producto)){
                         swal({
                             type: 'error',
                             title: 'Error...',
-                            text: 'Ese artículo ya se encuentra agregado!',
+                            text: 'Ese producto ya se encuentra agregado!',
                             })
                     }
                     else{
-                        me.validar();
+                        
+                         if(me.la==1){
                         me.arrayDetalle.push({
                             id_producto: me.id_producto,
                             producto: me.producto,
                             cantidad:me.cantidad,
-                        });
-                        
-                        me.id_producto=0;
-                        me.producto='';
-                        
+                        });}
     
                     }
                     
-                }
-
+                
+                    me.limpiar();
             },
-            
+            limpiar(){
+                this.id_producto=0;
+                this.producto='';
+                this.cantidad='';
+                this.resultado=0;
+                this.id_productoR=[];
+                this.arraysProducto2=[];
+            },
             registrarVentaP(){
                 let me = this;
 
@@ -402,30 +428,32 @@
                     'data': this.arrayDetalle,
                     'existencias': this.cantidadQ
                 }).then(function (response) {
-                    me.listado=1;
+                    me.mensajeExitoventa();
                     me.listarproduc(1,'','nombre_producto');
-                    me.id_producto=0;
+                     me.id_producto=0;
                     me.cantidad='';
                     me.nombre_producto='';
                     me.precio_venta='';
                     me.arrayDetalle=[];
                     me.cantidadQ=[];
                     me.totalP=0;
+                    me.listado=1;
                 }).catch(function (error) {
                     console.log(error);
                 });
             },
-            validarCompra(){
-                this.errorProducto=0;
-                this.errorMostrarMsjProducto =[];
-
-                if (this.id_producto==0) this.errorMostrarMsjProducto.push("Debe seleccionar un producto.");
-                if (!this.cantidad) this.errorMostrarMsjProducto.push("La cantidad no puede estar vacia.");
-                if (this.arrayDetalle.length<=0) this.errorMostrarMsjProducto.push("Ingrese productos");
-                if(!this.tipo) this.errorMostrarMsjProducto.push("El tipo no puede estar vacío");
-                if (this.errorMostrarMsjProducto.length) this.errorProducto = 1;
-
-                return this.errorProducto;
+            mensajeExitoventa(){
+                swal({
+                title: '¡Venta realizada con exito!',
+                showCancelButton: false,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Aceptar!',
+                confirmButtonClass: 'btn btn-success',
+                cancelButtonClass: 'btn btn-danger',
+                buttonsStyling: false,
+                reverseButtons: true
+                })
             },
             mostrarDetalle(){
                 let me=this;
@@ -447,7 +475,7 @@
         },
         mounted() {
             this.listarproduc(1,this.buscar,this.criterio);
-            this.listarproducto2(1,this.buscar,this.criterio);
+            
         }
     }
 </script>

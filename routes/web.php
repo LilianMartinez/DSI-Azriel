@@ -161,6 +161,7 @@ Route::group(['middleware'=>['auth']],function(){
                             //TABLA Producto
                             Route::get('/producto','ProductoController@index');
                             Route::get('/productos/v','ProductoController@indexv');
+                            Route::get('/productos/buscarventa','ProductoController@buscarventa');
                             Route::get('/productos/venta','ProductoController@venta');
                             Route::get('/producto/seleccionar','ProductoController@seleccionarProducto'); //Para compras
                             Route::get('/producto/canasta','ProductoController@seleccionarProductoCanasta');

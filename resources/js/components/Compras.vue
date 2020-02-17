@@ -400,12 +400,13 @@
                         {
                             me.precio_venta=0;
                         }
+                       
                        me.arrayDetalle.push({
                             id_producto: me.id_producto,
                             producto: me.producto,
                             cantidad: me.cantidad,
-                            precio_compra: me.precio_compra.toFixed(2),
-                            precio_venta:me.precio_venta.toFixed(2),
+                            precio_compra: parseFloat(me.precio_compra).toFixed(2),
+                            precio_venta:parseFloat(me.precio_venta).toFixed(2),
                             tipo : me.tipo
                         });
                         me.cantidad='';
