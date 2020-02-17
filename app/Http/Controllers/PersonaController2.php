@@ -131,8 +131,12 @@ class PersonaController2 extends Controller
                 $novio->apellido_persona=$request->novioAp;
                 $novio->dui_pasaporte=$request->novioD;
                 $novio->sexo='M';
+                $novio->fecha_nacimiento=$request->fechana1; //novio
+                $novio->idzonaa=$request->idzona1;
+                $novio->idiglesia=$request->idiglesia1;
                 $novio->estado=1;
                 $novio->save();
+
 
                 $novia = new Persona();
                 $novia->id=$idNovia;
@@ -140,9 +144,12 @@ class PersonaController2 extends Controller
                 $novia->apellido_persona=$request->noviaAp;
                 $novia->dui_pasaporte=$request->noviaD;
                 $novia->sexo='F';
+                $novia->fecha_nacimiento=$request->fechana2; //novia
+                $novia->idzonaa=$request->idzona2;
+                $novia->idiglesia=$request->idiglesia2;
                 $novia->estado=1;
                 $novia->save();
-        
+
                 //En esta etapa, solo se almacenan los datos para abrir un nuevo expediente (no hay datos de padrino y boda hasta la siguiente etapa en "actualizar")
                 $sacramento = new Sacramento();
                 $sacramento->id=$idsacramento;
@@ -181,6 +188,9 @@ class PersonaController2 extends Controller
                 $novio->apellido_persona=$request->novioAp;
                 $novio->dui_pasaporte=$request->novioD;
                 $novio->sexo='M';
+                $novio->fecha_nacimiento=$request->fechana1; //novio
+                $novio->idzonaa=$request->idzona1;
+                $novio->idiglesia=$request->idiglesia1;
                 $novio->estado=1;
                 $novio->save();
         
@@ -223,6 +233,9 @@ class PersonaController2 extends Controller
                 $novia->apellido_persona=$request->noviaAp;
                 $novia->dui_pasaporte=$request->noviaD;
                 $novia->sexo='F';
+                $novia->fecha_nacimiento=$request->fechana2; //novia
+                $novia->idzonaa=$request->idzona2;
+                $novia->idiglesia=$request->idiglesia2;
                 $novia->estado=1;
                 $novia->save();
         
@@ -326,14 +339,16 @@ class PersonaController2 extends Controller
                     /* $novio = App\Persona::where('id', $idNovio)->first(); */
                     /* $persona = DB::table('personas')->where('id', 'like', '%'. $buscar .'%')->first(); */
                     $novio = DB::table('personas')->where("id",$request->id_realizante1)
-                    ->update(["nombre_persona"=>$request->novioNom, "apellido_persona" => $request->novioAp, "dui_pasaporte" =>$request->novioD]);
+                    ->update(["nombre_persona"=>$request->novioNom, "apellido_persona" => $request->novioAp, "dui_pasaporte" =>$request->novioD,
+                            "fecha_nacimiento"=>$request->fechana1,"idzonaa"=>$request->idzona1,"idiglesia"=>$request->idiglesia1]);
                     /* $novio->novioNom= $request->novioNom;
                     $novio->novioAp=$request->novioAp;
                     $novio->novioD=$request->novioD;
                     $novio->save(); */
 
                     $novia = DB::table('personas')->where("id",$request->id_realizante2)
-                    ->update(["nombre_persona"=>$request->noviaNom, "apellido_persona" => $request->noviaAp, "dui_pasaporte" =>$request->noviaD]);
+                    ->update(["nombre_persona"=>$request->noviaNom, "apellido_persona" => $request->noviaAp, "dui_pasaporte" =>$request->noviaD,
+                    "fecha_nacimiento"=>$request->fechana2,"idzonaa"=>$request->idzona2,"idiglesia"=>$request->idiglesia2]);
 
                 break;
             }

@@ -80,6 +80,9 @@ Route::group(['middleware'=>['auth']],function(){
                             Route::get('/persona/duis','PersonaController@buscarduis');//primera comunión - confirma
                             Route::get('/persona/pan','PersonaController@show'); // ????
                             Route::put('/persona/registrar','PersonaController@store'); //PRIMERA COMUNIÓN
+                           
+                            Route::get('/persona/existenciamadre','PersonaController@existenciamadre');//buscar a la madre sin dui solo con el nombre,apellido y fecha nacimiento-PRIMERA COMUNIÓN
+                            //Route::get('/persona/obtenerDatosMadre','PersonaController@obtenerDatosMadre');
                             
                             Route::get('/persona/obtenerConfirma','PersonaController3@realizante'); //CONFIRMA 
                             //Route::get('/persona/duis','PersonaController3@buscarduis'); //Es el mismo que el de primera comunión

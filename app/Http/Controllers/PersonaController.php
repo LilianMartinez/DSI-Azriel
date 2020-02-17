@@ -422,6 +422,7 @@ class PersonaController extends Controller
                         $personap->dui_pasaporte=$request->dui_m;
                         $personap->idzonaa=$request->idzonam;  //zona madre
                         $personap->idiglesia=$request->idiglesiam; //iglesia madre
+                        $personap->fecha_nacimiento=$request->nacimientom; //fecha nacimiento madre
                         $personap->sexo='F';
                         $personap->estado=1; //estado
                         $personap->save();
@@ -490,6 +491,7 @@ class PersonaController extends Controller
                         $personap->dui_pasaporte=$request->dui_p;
                         $personap->idzonaa=$request->idzonap;  //zona padre
                         $personap->idiglesia=$request->idiglesiap; //iglesia padre
+                        $personap->fecha_nacimiento=$request->nacimientop; //fecha nacimiento padre
                         $personap->sexo='M';
                         $personap->estado=1; //estado
                         $personap->save();
@@ -559,6 +561,7 @@ class PersonaController extends Controller
                         $personap->dui_pasaporte=$request->dui_p;
                         $personap->idzonaa=$request->idzonap;  //zona padre
                         $personap->idiglesia=$request->idiglesiap; //iglesia padre
+                        $personap->fecha_nacimiento=$request->nacimientop; //fecha nacimiento padre
                         $personap->sexo='M';
                         $personap->estado=1; //estado
                         $personap->save();
@@ -570,6 +573,7 @@ class PersonaController extends Controller
                         $personap->dui_pasaporte=$request->dui_m;
                         $personap->idzonaa=$request->idzonam;  //zona madre
                         $personap->idiglesia=$request->idiglesiam; //iglesia madre
+                        $personap->fecha_nacimiento=$request->nacimientom; //fecha nacimiento madre
                         $personap->sexo='F';
                         $personap->estado=1; //estado
                         $personap->save();
@@ -798,6 +802,7 @@ class PersonaController extends Controller
                 $personap->dui_pasaporte=$request->dui_m;
                 $personap->idzonaa=$request->idzonam;  //zona madre
                 $personap->idiglesia=$request->idiglesiam; //iglesia madre
+                $personap->fecha_nacimiento=$request->nacimientom; //fecha nacimiento madre
                 $personap->sexo='F';
                 $personap->estado=1; //estado
                 $personap->save();
@@ -865,6 +870,7 @@ class PersonaController extends Controller
                 $personap->dui_pasaporte=$request->dui_p;
                 $personap->idzonaa=$request->idzonap;  //zona padre
                 $personap->idiglesia=$request->idiglesiap; //iglesia padre
+                $personap->fecha_nacimiento=$request->nacimientop; //fecha nacimiento padre
                 $personap->sexo='M';
                 $personap->estado=1; //estado
                 $personap->save();
@@ -909,6 +915,56 @@ class PersonaController extends Controller
         
     } //llave funcion
 
+  /*  public function existenciamadre(Request $request){ //GLORIA
+        
+        $nombremadre=$request->nombre_persona;
+        $apellidomadre3=$request->apellido_persona;
+        $fechanam=$request->fecha_nacimiento;
+        $envio=array();
+
+         // if(!$request->ajax()) return redirect('/');
+        $idm=DB::table('personas')
+                    ->where('nombre_persona',$nombremadre)
+                    ->where('apellido_persona',$apellidomadre3)
+                    ->where('fecha_nacimiento',$fechanam)->first();
+
+            if(empty($idm)){
+                $envio['existenciamadre']=1; //esa persona no existe.
+            }else{
+                $datoshijos=DB::table('personas')->select('id','nombre_persona','apellido_persona')
+                                ->where('id_madre','=',$idm->id)->first();
+                                
+                    if(empty($datoshijos)){
+                        $envio['existenciamadre']=2; //la persona existe
+                        $envio['hijos']=1; //la persona no tiene hijos
+                        $envio['idmm']=$idm; //id de la madre
+                    }else{
+                        $envio['existenciamadre']=2; //la persona existe
+                        $envio['hijos']=2; //la persona tiene hijos
+                        $envio['idmm']=$idm; //id de la madre
+                    }
+            }
+
+         return $envio;
+
+    }
+
+    public function obtenerDatosMadre(Request $request){
+
+        $buscar = $request->idmadre;
+        $envio=array();
+
+        //if(!$request->ajax()) return redirect('/');
+        $datoshijos=DB::table('personas')->select('id','nombre_persona','apellido_persona')
+                         ->where('id_madre','=',$buscar)->get();
+        
+        $datomadre=DB::table('personas')->where('id','=',$buscar)->first();
+
+         $envio['datoshijos']=$datoshijos; //datos de los hijos
+         $envio['datosmadre']=$datomadre; //datos de la madre
+        
+        return $envio;
+    } */
 
     /**
      * Display the specified resource.

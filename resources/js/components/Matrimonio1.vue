@@ -104,7 +104,7 @@
             </div>
 
             <!--Inicio del modal agregar/actualizar-->
-            <div class="modal fade" tabindex="-1" :class="{'mostrar' : modal}" role="dialog" aria-labelledby="myModalLabel" style="display: none;" aria-hidden="true">
+            <div class="modal fade" tabindex="-1" :class="{'mostrar' : modal}" role="dialog" aria-labelledby="myModalLabel" style="display: none; overflow-y:auto;" aria-hidden="true">
                 <div class="modal-dialog modal-primary modal-lg" role="document">
                     <div class="modal-content">
                         <div class="modal-header">
@@ -138,6 +138,11 @@
                                     <div class="col-md-5">
                                         <input type="text" v-model="novioD" class="form-control" placeholder=" " @keydown.tab="novioDui()">
                                     </div>
+
+                                    <label class="col-md-2 form-control-label" for="text-input">Fecha de Nacimiento<b class="alerta">*</b></label>
+                                    <div class="col-md-3">
+                                        <input type="date" class="form-control datepicker" name="date" v-model="fechana1">
+                                    </div>
                                 </div>
                                 <div class="form-group row">
                                     <label class="col-md-2 form-control-label" for="text-input">Nombre del Novio</label>
@@ -149,7 +154,24 @@
                                         <input type="text" v-model="novioAp" true-value="mostrar" false-value="ocultar" class="form-control" placeholder="Apellidos">
                                     </div>
                                 </div>
-                                
+                                <div class="form-group row">
+                                    <label class="col-md-2 form-control-label" for="text-input">Zona:</label> 
+                                    <div class="col-md-3">
+                                        <select class="form-control" v-model="idzona1" @click="iglesias1(idzona)"> 
+                                        <option value="0" disabled>Seleccione</option>
+                                        <option v-for="zona in arrayzona" :key="zona.id" v-bind:value="zona.id">{{zona.nombre_zona}}</option>
+                                        </select >
+                                    </div>
+
+                                    <label class="col-md-2 form-control-label" for="text-input">Iglesia:</label> 
+                                    <div class="col-md-3">
+                                        <select class="form-control" v-model="idiglesia1"> 
+                                        <option value="0" disabled>Seleccione</option>
+                                        <option v-for="iglesia1 in arrayiglesia1" :key="iglesia1.id" v-bind:value="iglesia1.id" >{{iglesia1.nombre_iglesia}}</option>
+                                        </select >
+                                    </div>
+                                </div>
+
                                 <!-- Datos del Realizante2 -->
                                 <div class="form-group row">
                                   <label class="col-md-5 form-control-label" for="text-input"><b>Datos de la novia</b></label>
@@ -159,6 +181,11 @@
                                     <div class="col-md-5">
                                         <input type="text" v-model="noviaD" class="form-control" placeholder=" " @keydown.tab="noviaDui()">
                                     </div>
+
+                                    <label class="col-md-2 form-control-label" for="text-input">Fecha de Nacimiento<b class="alerta">*</b></label>
+                                    <div class="col-md-3">
+                                        <input type="date" class="form-control datepicker" name="date" v-model="fechana2">
+                                    </div>
                                 </div>
                                 <div class="form-group row">
                                     <label class="col-md-2 form-control-label" for="text-input">Nombre de la Novia</label>
@@ -167,6 +194,23 @@
                                     </div>
                                     <div class="col-md-5">
                                         <input type="text" v-model="noviaAp" class="form-control" placeholder="Apellidos">
+                                    </div>
+                                </div>
+                                 <div class="form-group row">
+                                    <label class="col-md-2 form-control-label" for="text-input">Zona:</label> 
+                                    <div class="col-md-3">
+                                        <select class="form-control" v-model="idzona2" @click="iglesias2(idzona)"> 
+                                        <option value="0" disabled>Seleccione</option>
+                                        <option v-for="zona in arrayzona" :key="zona.id" v-bind:value="zona.id">{{zona.nombre_zona}}</option>
+                                        </select >
+                                    </div>
+
+                                    <label class="col-md-2 form-control-label" for="text-input">Iglesia:</label> 
+                                    <div class="col-md-3">
+                                        <select class="form-control" v-model="idiglesia2"> 
+                                        <option value="0" disabled>Seleccione</option>
+                                        <option v-for="iglesia2 in arrayiglesia2" :key="iglesia2.id" v-bind:value="iglesia2.id" >{{iglesia2.nombre_iglesia}}</option>
+                                        </select >
                                     </div>
                                 </div>
 
@@ -315,6 +359,29 @@
                                         <input type="text" v-model="pad1Ap" class="form-control" placeholder="Apellidos del Padrino">
                                     </div>
                                 </div>
+                                <div class="form-group row">
+                                    <label class="col-md-2 form-control-label" for="text-input">Zona:</label> 
+                                    <div class="col-md-4">
+                                        <select class="form-control" v-model="idzonap1" @click="iglesiasp1(idzona)"> 
+                                        <option value="0" disabled>Seleccione</option>
+                                        <option v-for="zona in arrayzona" :key="zona.id" v-bind:value="zona.id">{{zona.nombre_zona}}</option>
+                                        </select >
+                                    </div>
+                
+                                    <label class="col-md-2 form-control-label" for="text-input">Iglesia:</label> 
+                                    <div class="col-md-4">
+                                        <select class="form-control" v-model="idiglesiap1"> 
+                                        <option value="0" disabled>Seleccione</option>
+                                        <option v-for="iglesiap1 in arrayiglesiap1" :key="iglesiap1.id" v-bind:value="iglesiap1.id" >{{iglesiap1.nombre_iglesia}}</option>
+                                        </select >
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-md-2 form-control-label" for="text-input">Fecha de Nacimiento<b class="alerta">*</b></label>
+                                    <div class="col-md-3">
+                                        <input type="date" class="form-control datepicker" name="date" v-model="fechanap1" >
+                                    </div>
+                                </div>
                                 
                                 <div class="form-group row">
                                   <label class="col-md-5 form-control-label" for="text-input"><b>Datos Persona 2</b></label>
@@ -342,6 +409,28 @@
                                         <input type="text" v-model="mad1Ap" class="form-control" placeholder="Apellidos del padrino">
                                     </div>
                                 </div>
+                                 <div class="form-group row">
+                                    <label class="col-md-2 form-control-label" for="text-input">Zona:</label> 
+                                    <div class="col-md-4">
+                                        <select class="form-control" v-model="idzonap2" @click="iglesiasp2(idzona)"> 
+                                        <option value="0" disabled>Seleccione</option>
+                                        <option v-for="zona in arrayzona" :key="zona.id" v-bind:value="zona.id">{{zona.nombre_zona}}</option>
+                                        </select >
+                                    </div>
+                                    <label class="col-md-2 form-control-label" for="text-input">Iglesia:</label> 
+                                    <div class="col-md-4">
+                                        <select class="form-control" v-model="idiglesiap2"> 
+                                        <option value="0" disabled>Seleccione</option>
+                                        <option v-for="iglesiap2 in arrayiglesiap2" :key="iglesiap2.id" v-bind:value="iglesiap2.id" >{{iglesiap2.nombre_iglesia}}</option>
+                                        </select >
+                                    </div>
+                            </div>
+                            <div class="form-group row">
+                                    <label class="col-md-2 form-control-label" for="text-input">Fecha de Nacimiento<b class="alerta">*</b></label>
+                                    <div class="col-md-3">
+                                        <input type="date" class="form-control datepicker" name="date" v-model="fechanap2">
+                                    </div>
+                            </div>
 
                                 <div class="form-group row">
                                   <label class="col-md-5 form-control-label" for="text-input"><b>Datos Persona 3</b></label>
@@ -369,6 +458,29 @@
                                         <input type="text" v-model="pad2Ap" class="form-control" placeholder="Apellidos del Padrino">
                                     </div>
                                 </div>
+                                <div class="form-group row">
+                                    <label class="col-md-2 form-control-label" for="text-input">Zona:</label> 
+                                    <div class="col-md-4">
+                                        <select class="form-control" v-model="idzonap3" @click="iglesiasp3(idzona)"> 
+                                        <option value="0" disabled>Seleccione</option>
+                                        <option v-for="zona in arrayzona" :key="zona.id" v-bind:value="zona.id">{{zona.nombre_zona}}</option>
+                                        </select >
+                                    </div>
+                         
+                                    <label class="col-md-2 form-control-label" for="text-input">Iglesia:</label> 
+                                    <div class="col-md-4">
+                                        <select class="form-control" v-model="idiglesiap3"> 
+                                        <option value="0" disabled>Seleccione</option>
+                                        <option v-for="iglesiap3 in arrayiglesiap3" :key="iglesiap3.id" v-bind:value="iglesiap3.id" >{{iglesiap3.nombre_iglesia}}</option>
+                                        </select >
+                                    </div>
+                            </div>
+                            <div class="form-group row">
+                                    <label class="col-md-2 form-control-label" for="text-input">Fecha de Nacimiento<b class="alerta">*</b></label>
+                                    <div class="col-md-3">
+                                        <input type="date" class="form-control datepicker" name="date" v-model="fechanap3">
+                                    </div>
+                            </div>
 
                                 <div class="form-group row">
                                   <label class="col-md-5 form-control-label" for="text-input"><b>Datos Persona 4</b></label>
@@ -396,6 +508,28 @@
                                         <input type="text" v-model="mad2Ap" class="form-control" placeholder="Apellidos del padrino">
                                     </div>
                                 </div>
+                                 <div class="form-group row">
+                                    <label class="col-md-2 form-control-label" for="text-input">Zona:</label> 
+                                    <div class="col-md-4">
+                                        <select class="form-control" v-model="idzonap4" @click="iglesiasp4(idzona)"> 
+                                        <option value="0" disabled>Seleccione</option>
+                                        <option v-for="zona in arrayzona" :key="zona.id" v-bind:value="zona.id">{{zona.nombre_zona}}</option>
+                                        </select >
+                                    </div>
+                                    <label class="col-md-2 form-control-label" for="text-input">Iglesia:</label> 
+                                    <div class="col-md-4">
+                                        <select class="form-control" v-model="idiglesiap4"> 
+                                        <option value="0" disabled>Seleccione</option>
+                                        <option v-for="iglesiap4 in arrayiglesiap4" :key="iglesiap4.id" v-bind:value="iglesiap4.id" >{{iglesiap4.nombre_iglesia}}</option>
+                                        </select >
+                                    </div>
+                            </div>
+                            <div class="form-group row">
+                                    <label class="col-md-2 form-control-label" for="text-input">Fecha de Nacimiento<b class="alerta">*</b></label>
+                                    <div class="col-md-3">
+                                        <input type="date" class="form-control datepicker" name="date" v-model="fechanap4">
+                                    </div>
+                            </div>
 
                                     <!-- BOTON COBRAR-->
                                 <div class="form-group row">
@@ -546,6 +680,68 @@
       data(){
           //Dave: En esta función declaramos las variables que utilizaremos
             return{
+                fechana1:'', //fecha nacimiento novio
+                fechana2:'', //fecha nacimiento novia
+                fechanap1:'', //fecha nacimiento padrino 1
+                fechanap2:'', //fecha nacimiento padrino 2
+                fechanap3:'', //fecha nacimiento padrino 3
+                fechanap4:'', //fecha nacimiento padrino 4
+
+
+                //para zonas e iglesias de los novios y los padrinos
+                idzona:'',
+                idiglesia:'',
+                zona:'', //
+                iglesia:'',
+                nombre_zona:'',//
+                nombre_iglesia:'',
+                arrayzona:[], //
+                arrayiglesia:[],
+                arrayiglesiaID:[],
+
+                idzona1:'', //realizante 1: NOVIO
+                idiglesia1:'',
+                iglesia1:'',
+                nombre_iglesia1:'',
+                arrayiglesia1:[],
+                arrayiglesiaID1:[],
+
+                idzona2:'', //realizante 2: NOVIA
+                idiglesia2:'',
+                iglesia2:'',
+                nombre_iglesia2:'',
+                arrayiglesia2:[],
+                arrayiglesiaID2:[],
+
+                idzonap1:'', //padrino1
+                idiglesiap1:'',
+                iglesiap1:'',
+                nombre_iglesiap1:'',
+                arrayiglesiap1:[],
+                arrayiglesiaIDp1:[],
+
+                idzonap2:'', //padrino2
+                idiglesiap2:'',
+                iglesiap2:'',
+                nombre_iglesiap2:'',
+                arrayiglesiap2:[],
+                arrayiglesiaIDp2:[],
+
+                idzonap3:'', //padrino3
+                idiglesiap3:'',
+                iglesiap3:'',
+                nombre_iglesiap3:'',
+                arrayiglesiap3:[],
+                arrayiglesiaIDp3:[],
+
+                idzonap4:'', //padrino4
+                idiglesiap4:'',
+                iglesiap4:'',
+                nombre_iglesiap4:'',
+                arrayiglesiap4:[],
+                arrayiglesiaIDp4:[],
+
+
            //     id:'', //id del id_sacramento capturado <---es para certificados
                 sacramento_id:0,
                 libro : '',
@@ -665,6 +861,135 @@
             }
         },
     methods:{
+        //Para lo de zonas e iglesias
+             llenadolistazona(){
+            let me=this;
+            var url='/zona/buscarZona'; 
+            axios.get(url) .then(function (response) {
+                me.arrayzona=response.data;
+            })
+            .catch(function (error) {
+                console.log(error);
+            });
+        },  
+
+
+             iglesias1(idzona1){  //realizante 1: NOVIO
+
+                let me=this;
+                var arrayiglesiaID1=[];
+             axios.post('/feligreses/buscarIglesia',{
+               'id':this.idzona1}) 
+              .then(function (response) { 
+                arrayiglesiaID1 = response.data;     
+                me.llenar1(arrayiglesiaID1);  
+                })
+                .catch(function (error) {
+                    // handle error
+                    console.log(error);
+                });
+            },
+            llenar1(d=[]){
+                this.arrayiglesia1=d;
+            },
+
+             iglesias2(idzona2){ //realizante2:NOVIA
+
+                let me=this;
+                var arrayiglesiaID2=[];
+             axios.post('/feligreses/buscarIglesia',{
+               'id':this.idzona2}) 
+              .then(function (response) { 
+                arrayiglesiaID2= response.data;     
+                me.llenar2(arrayiglesiaID2);  
+                })
+                .catch(function (error) {
+                    // handle error
+                    console.log(error);
+                });
+            },
+            llenar2(d=[]){
+                this.arrayiglesia2=d;
+            },
+
+            iglesiasp1(idzonap1){ //padrino1
+
+                let me=this;
+                var arrayiglesiaIDp1=[];
+             axios.post('/feligreses/buscarIglesia',{
+               'id':this.idzonap1}) 
+              .then(function (response) { 
+                arrayiglesiaIDp1= response.data;     
+                me.llenarp1(arrayiglesiaIDp1);  
+                })
+                .catch(function (error) {
+                    // handle error
+                    console.log(error);
+                });
+            },
+            llenarp1(d=[]){
+                this.arrayiglesiap1=d;
+            },
+
+            iglesiasp2(idzonap2){ //padrino2
+
+                let me=this;
+                var arrayiglesiaIDp2=[];
+             axios.post('/feligreses/buscarIglesia',{
+               'id':this.idzonap2}) 
+              .then(function (response) { 
+                arrayiglesiaIDp2= response.data;     
+                me.llenarp2(arrayiglesiaIDp2);  
+                })
+                .catch(function (error) {
+                    // handle error
+                    console.log(error);
+                });
+            },
+            llenarp2(d=[]){
+                this.arrayiglesiap2=d;
+            },
+
+            iglesiasp3(idzonap3){ //padrino3
+
+                let me=this;
+                var arrayiglesiaIDp3=[];
+             axios.post('/feligreses/buscarIglesia',{
+               'id':this.idzonap3}) 
+              .then(function (response) { 
+                arrayiglesiaIDp3= response.data;     
+                me.llenarp3(arrayiglesiaIDp3);  
+                })
+                .catch(function (error) {
+                    // handle error
+                    console.log(error);
+                });
+            },
+            llenarp3(d=[]){
+                this.arrayiglesiap3=d;
+            },
+
+            iglesiasp4(idzonap4){ //padrino4
+
+                let me=this;
+                var arrayiglesiaIDp4=[];
+             axios.post('/feligreses/buscarIglesia',{
+               'id':this.idzonap4}) 
+              .then(function (response) { 
+                arrayiglesiaIDp4= response.data;     
+                me.llenarp4(arrayiglesiaIDp4);  
+                })
+                .catch(function (error) {
+                    // handle error
+                    console.log(error);
+                });
+            },
+            llenarp4(d=[]){
+                this.arrayiglesiap4=d;
+            },
+
+            ///////////////////////////////////////////////////////////////////////////////////////
+
 
         cobrar: function (){
             this.cobrado=true;
@@ -778,6 +1103,14 @@
                 this.novioNom= data['nombre_persona'];
                 this.novioAp= data['apellido_persona'];
                 this.id_realizante1=data['id'];
+                this.fechana1=data['fecha_nacimiento'];
+                this.idzona1=data['idzonaa'];
+                this.llenadolistazona();
+                if(this.idzona1)
+                    {
+                        this.iglesias1(this.idzona1);
+                        this.idiglesia1=data['idiglesia'];
+                    }
         },
 
         //Esto tambien es para el autollenado con el num de dui; invocamos al metodo "buscarduis" del controlador
@@ -808,6 +1141,14 @@
                 this.noviaNom= data['nombre_persona'];
                 this.noviaAp= data['apellido_persona'];
                 this.id_realizante2=data['id'];
+                this.fechana2=data['fecha_nacimiento'];
+                this.idzona2=data['idzonaa'];
+                this.llenadolistazona();
+                if(this.idzona2)
+                    {
+                        this.iglesias2(this.idzona2);
+                        this.idiglesia2=data['idiglesia'];
+                    }
         },
 
         //Esto tambien es para el autollenado con el num de dui; invocamos al metodo "buscarduis" del controlador
@@ -836,6 +1177,14 @@
                 this.pad1Ap= data['apellido_persona'];
                 this.id_padrino1=data['id'];
                 this.pad1Sexo=data['sexo'];
+                this.fechanap1=data['fecha_nacimiento'];
+                this.idzonap1=data['idzonaa'];
+                this.llenadolistazona();
+                if(this.idzonap1)
+                    {
+                        this.iglesiasp1(this.idzonap1);
+                        this.idiglesiap1=data['idiglesia'];
+                    }
         },
 
         //Esto tambien es para el autollenado con el num de dui; invocamos al metodo "buscarduis" del controlador
@@ -863,6 +1212,14 @@
                 this.mad1Ap= data['apellido_persona'];
                 this.id_madrina1=data['id'];
                 this.mad1Sexo=data['sexo'];
+                this.fechanap2=data['fecha_nacimiento'];
+                this.idzonap2=data['idzonaa'];
+                this.llenadolistazona();
+                if(this.idzonap2)
+                    {
+                        this.iglesiasp2(this.idzonap2);
+                        this.idiglesiap2=data['idiglesia'];
+                    }
         },
 
         //Esto tambien es para el autollenado con el num de dui; invocamos al metodo "buscarduis" del controlador
@@ -890,6 +1247,14 @@
                 this.pad2Ap= data['apellido_persona'];
                 this.id_padrino2=data['id'];
                 this.pad2Sexo=data['sexo'];
+                this.fechanap3=data['fecha_nacimiento'];
+                this.idzonap3=data['idzonaa'];
+                this.llenadolistazona();
+                if(this.idzonap3)
+                    {
+                        this.iglesiasp3(this.idzonap3);
+                        this.idiglesiap3=data['idiglesia'];
+                    }
         },
 
         //Esto tambien es para el autollenado con el num de dui; invocamos al metodo "buscarduis" del controlador
@@ -916,6 +1281,14 @@
                 this.mad2Ap= data['apellido_persona'];
                 this.id_madrina2=data['id'];
                 this.mad2Sexo=data['sexo'];
+                this.fechanap4=data['fecha_nacimiento'];
+                this.idzonap4=data['idzonaa'];
+                this.llenadolistazona();
+                if(this.idzonap4)
+                    {
+                        this.iglesiasp4(this.idzonap4);
+                        this.idiglesiap4=data['idiglesia'];
+                    }
         },
 
         //Esto tambien es para el autollenado con el num de dui; invocamos al metodo "buscarduis" del controlador
@@ -1016,6 +1389,12 @@
                     'novioNom': this.novioNom.toUpperCase(),
                     'novioAp': this.novioAp.toUpperCase(),
                     'novioD':this.novioD,
+                    'fechana1':this.fechana1, //fecha nacimiento novio
+                    'fechana2':this.fechana2, //fecha nacimiento novia
+                    'idzona1':this.idzona1, //zona novio
+                    'idzona2':this.idzona2, //zona novia
+                    'idiglesia1':this.idiglesia1, //iglesia novio
+                    'idiglesia2':this.idiglesia2, //iglesia novia
                     'noviaNom': this.noviaNom.toUpperCase(),
                     'noviaAp': this.noviaAp.toUpperCase(),
                     'noviaD':this.noviaD,
@@ -1036,6 +1415,9 @@
                     'novioNom': this.novioNom.toUpperCase(),
                     'novioAp': this.novioAp.toUpperCase(),
                     'novioD':this.novioD,
+                    'fechana1':this.fechana1, //fecha nacimiento novio
+                    'idzona1':this.idzona1, //zona novio
+                    'idiglesia1':this.idiglesia1, //iglesia novio
                     'id_realizante2':this.id_realizante2,
                     'monto': this.ofrendaExp,
                     'idcate':this.idcare
@@ -1056,6 +1438,9 @@
                     'noviaNom': this.noviaNom.toUpperCase(),
                     'noviaAp': this.noviaAp.toUpperCase(),
                     'noviaD':this.noviaD,
+                    'fechana2':this.fechana2, //fecha nacimiento novia
+                    'idzona2':this.idzona2, //zona novia
+                    'idiglesia2':this.idiglesia2, //iglesia novia
                     'id_realizante1':this.id_realizante1,
                     'monto': this.ofrendaExp,
                     'idcate':this.idcare
@@ -1128,7 +1513,13 @@
                 'noviaD':this.noviaD,
                 'id':this.sacramento_id,
                 'id_realizante1':this.id_realizante1,
-                'id_realizante2':this.id_realizante2
+                'id_realizante2':this.id_realizante2,
+                'fechana1':this.fechana1, //fecha nacimiento novio
+                'fechana2':this.fechana2, //fecha nacimiento novia
+                'idzona1':this.idzona1, //zona novio
+                'idzona2':this.idzona2, //zona novia
+                'idiglesia1':this.idiglesia1, //iglesia novio
+                'idiglesia2':this.idiglesia2, //iglesia novia
             }) .then(function (response) { //si todo funciona:
                 me.listarMatrimonio1();
                 me.cerrarModal();
@@ -1183,7 +1574,10 @@
                             'titulo':this.cargosacerdote,
                             'id_padrino1':this.id_padrino1,
                             'monto': this.monto,
-                            'idcate':this.idcare
+                            'idcate':this.idcare,
+                            'idzonap1':this.idzonap1, //zona padrino 1
+                            'idiglesiap1':this.idiglesiap1, //iglesia padrino 1
+                            'fechanap1':this.fechanap1, //fecha nacimiento padrino 1
                         }).then(function (response) { //si todo funciona:
                             me.listarMatrimonio1();
                             me.cerrarModal3();
@@ -1230,7 +1624,13 @@
                             'id_padrino1':this.id_padrino1,
                             'id_madrina1':this.id_madrina1,
                             'monto': this.monto,
-                            'idcate':this.idcare
+                            'idcate':this.idcare,
+                            'idzonap1':this.idzonap1, //zona padrino 1
+                            'idzonap2':this.idzonap2, //zona padrino 2
+                            'idiglesiap1':this.idiglesiap1, //iglesia padrino 1
+                            'idiglesiap2':this.idiglesiap2, //iglesia padrino 2
+                            'fechanap1':this.fechanap1, //fecha nacimiento padrino 1
+                            'fechanap2':this.fechanap2, //fecha nacimiento padrino 2
                         }).then(function (response) { //si todo funciona:
                             me.listarMatrimonio1();
                             me.cerrarModal3();
@@ -1303,7 +1703,16 @@
                         'id_madrina1':this.id_madrina1,
                         'id_padrino2':this.id_padrino2,
                         'monto': this.monto,
-                        'idcate':this.idcare
+                        'idcate':this.idcare,
+                        'idzonap1':this.idzonap1, //zona padrino 1
+                        'idzonap2':this.idzonap2, //zona padrino 2
+                        'idzonap3':this.idzonap3, //zona padrino 3
+                        'idiglesiap1':this.idiglesiap1, //iglesia padrino 1
+                        'idiglesiap2':this.idiglesiap2, //iglesia padrino 2
+                        'idiglesiap3':this.idiglesiap3, //iglesia padrino 3
+                        'fechanap1':this.fechanap1, //fecha nacimiento padrino 1
+                        'fechanap2':this.fechanap2, //fecha nacimiento padrino 2
+                        'fechanap3':this.fechanap3, //fecha nacimiento padrino 3
                     }).then(function (response) { //si todo funciona:
                         me.listarMatrimonio1();
                         me.cerrarModal3();
@@ -1420,6 +1829,18 @@
                     'id_madrina1':this.id_madrina1,
                     'id_padrino2':this.id_padrino2,
                     'id_madrina2':this.id_madrina2,
+                    'idzonap1':this.idzonap1, //zona padrino 1
+                    'idzonap2':this.idzonap2, //zona padrino 2
+                    'idzonap3':this.idzonap3, //zona padrino 3
+                    'idzonap4':this.idzonap4, //zona padrino 4
+                    'idiglesiap1':this.idiglesiap1, //iglesia padrino 1
+                    'idiglesiap2':this.idiglesiap2, //iglesia padrino 2
+                    'idiglesiap3':this.idiglesiap3, //iglesia padrino 3
+                    'idiglesiap4':this.idiglesiap4, //iglesia padrino 4
+                    'fechanap1':this.fechanap1, //fecha nacimiento padrino 1
+                    'fechanap2':this.fechanap2, //fecha nacimiento padrino 2
+                    'fechanap3':this.fechanap3, //fecha nacimiento padrino 3
+                    'fechanap4':this.fechanap4, //fecha nacimiento padrino 4
                     'monto': this.monto,
                     'idcate':this.idcare
                 }).then(function (response) { //si todo funciona:
@@ -1435,7 +1856,7 @@
 
         //este lo ocupa el método Registrar
         validarMatrimonio1(){
-          /*  this.errorMatrimonio1=0;
+            this.errorMatrimonio1=0;
             this.errorMostrarMsjMatrimonio1=[];
             var patron =/^[a-zA-ZÑñÁáÉéÍíÓóÚúÜü\s]+$/;
             var patrondui= /^\d{9}$/;
@@ -1443,25 +1864,63 @@
             var decimales= /^\d+(\.\d{0,2})?$/;
             //Comprueba que las celdas no estén vacías
 
-            if (this.libro =='' || this.num_expediente =='' || this.novioD =='' || this.novioNom=='' || this.novioAp=='' || this.noviaD =='' || this.noviaNom=='' || this.noviaAp=='' || this.ofrendaExp==''){
-                this.errorMostrarMsjMatrimonio1.push("Todos los datos son obligatorios");
-            }else{
+            if (this.libro =='' || this.num_expediente ==''){
+                this.errorMostrarMsjMatrimonio1.push("Los campos del Libro y Expediente son obligatorios");
+            } else{
                 if(!soloIntPositivo.test(this.libro) || !soloIntPositivo.test(this.num_expediente))this.errorMostrarMsjMatrimonio1.push("En libro y número de expediente solo se permiten números enteros positivos");
-                //if(!patrondui.test(this.novioD) || !patrondui.test(this.noviaD))this.errorMostrarMsjMatrimonio1.push("Error, El dui debe contener 9 números");
+            }           
+            if(this.novioD =='' || this.noviaD=='' ){
+                this.errorMostrarMsjMatrimonio1.push("Los Documentos de identidad de la novia y el novio son obligatorios");
+            }
+            if(this.novioAp=='' ||  this.novioNom=='' || this.noviaNom=='' || this.noviaAp==''){
+                this.errorMostrarMsjMatrimonio1.push("Debe escribir los nombres completos del novio y la novia");
+            }else{
                 if(!patron.test(this.novioNom) || !patron.test(this.novioAp))this.errorMostrarMsjMatrimonio1.push("Los datos del novio deben contener letras solamente");
                 if(!patron.test(this.noviaNom) || !patron.test(this.noviaAp))this.errorMostrarMsjMatrimonio1.push("Los datos de la novia debe contener letras solamente");
-                if(!decimales.test(this.ofrendaExp))this.errorMostrarMsjMatrimonio1.push("La ofrenda debe de ser un número positivo");
-                if(this.idcare==0)this.errorMostrarMsjMatrimonio1.push("Debe elegir una categoría");
             }
+            if(this.ofrendaExp==''){
+                this.errorMostrarMsjMatrimonio1.push("La Ofrenda por Apertura de Expediente es obligatoria");
+            }else{
+                if(!decimales.test(this.ofrendaExp))this.errorMostrarMsjMatrimonio1.push("La ofrenda debe de ser un número positivo");
+            }
+
+            if(!this.fechana1 || !this.fechana2){
+                this.errorMostrarMsjMatrimonio1.push("La fecha de nacimiento del novio y la novia es obligatoria");
+            }else{
+
+            var fecha = new Date();
+            var actualYear = fecha.getFullYear();
+            var actualMes = fecha.getMonth();
+            var values1 = this.fechana1.split("-");
+            var anio1 = values1[0];
+
+            var values2 = this.fechana2.split("-");
+            var anio2 = values2[0];
+
+                                if(anio1 < 1900)this.errorMostrarMsjMatrimonio1.push("La fecha nacimiento del novio debe ser mayor a 1900");
+                                if((actualYear)<anio1)this.errorMostrarMsjMatrimonio1.push("El año de nacimiento del novio debe ser menor a " + (actualYear));
+
+                                if(anio2 < 1900)this.errorMostrarMsjMatrimonio1.push("La fecha nacimiento de la novia debe ser mayor a 1900");
+                                if((actualYear)<anio2)this.errorMostrarMsjMatrimonio1.push("El año de nacimiento de la novia debe ser menor a " + (actualYear));
+            }
+             if(this.idcare==0)this.errorMostrarMsjMatrimonio1.push("Debe elegir una categoría");                           
+                                    
+            /*else{
+                
+                //if(!patrondui.test(this.novioD) || !patrondui.test(this.noviaD))this.errorMostrarMsjMatrimonio1.push("Error, El dui debe contener 9 números");
+                
+                
+               
+            }*/
 
             if (this.errorMostrarMsjMatrimonio1.length) this.errorMatrimonio1 = 1;
 
-            return this.errorMatrimonio1;*/
+            return this.errorMatrimonio1;
         },
 
         //este es para el modal 2 (fecha de realización y lugar)
         validarModal2(){
-         /*   this.errorModal2=0;
+            this.errorModal2=0;
             this.errorMostrarMsjModal2=[];
 
             var fecha = new Date();
@@ -1482,49 +1941,73 @@
 
             if (this.errorMostrarMsjModal2.length) this.errorModal2 = 1;
 
-            return this.errorModal2;*/
+            return this.errorModal2;
         },
 
         //este es para el modal 3 (datos de los padrinos y cobro)
         validarModal3(){
-            /*this.errorModal3=0;
+            this.errorModal3=0;
             this.errorMostrarMsjModal3=[];
             var patron =/^[a-zA-ZÑñÁáÉéÍíÓóÚúÜü\s]+$/;
             var patrondui= /^\d{9}$/;
             //var soloIntPositivo= /^\d*$/;
             var decimales= /^\d+(\.\d{0,2})?$/;
 
+            var fecha = new Date();
+            var actualYear = fecha.getFullYear();
+            var actualMes = fecha.getMonth();
+
+            var values1 = this.fechanap1.split("-");
+            var aniop1 = values1[0];
+
+            var values2 = this.fechanap2.split("-");
+            var aniop2 = values2[0];
+
+            var values3 = this.fechanap3.split("-");
+            var aniop3 = values3[0];
+
+            var values4 = this.fechanap4.split("-");
+            var aniop4 = values4[0];
+
             //Esta súpervalidación ayuda a que sea imposible para el usuario dejar "padrinos en blanco"... así solo podrá ingresarlos en orden
-            if(!this.pad1D || !this.pad1Nom || !this.pad1Ap || this.pad1Sexo==0){
-                this.errorMostrarMsjModal3.push("Complete los datos de la persona 1");
+            if(!this.pad1D || !this.pad1Nom || !this.pad1Ap || this.pad1Sexo==0 || !this.fechanap1){
+                this.errorMostrarMsjModal3.push("Complete los campos de documento de identidad, nombre, apellido, fecha de nacimiento y sexo de la persona 1");
             }else{
                 if(!patron.test(this.pad1Nom) || !patron.test(this.pad1Ap)) this.errorMostrarMsjModal3.push("Los datos de la persona 1 debe contener letras solamente");
+                if(aniop1 < 1900)this.errorMostrarMsjModal3.push("La fecha nacimiento de la persona 1 debe ser mayor a 1900");
+                if((actualYear)<aniop1)this.errorMostrarMsjModal3.push("El año de nacimiento de la persona 1 debe ser menor a " + (actualYear));
                 //if(!patrondui.test(this.pad1D))this.errorMostrarMsjModal3.push("Error, El dui de la persona 1 debe contener 9 números");
 
-                if(!(!this.mad1D && !this.mad1Nom && !this.mad1Ap && this.mad1Sexo==0 &&
-                   !this.pad2D && !this.pad2Nom && !this.pad2Ap && this.pad2Sexo==0 &&
-                   !this.mad2D && !this.mad2Nom && !this.mad2Ap && this.mad2Sexo==0)){
+                if(!(!this.mad1D && !this.mad1Nom && !this.mad1Ap && this.mad1Sexo==0 && !this.fechanap2 && 
+                   !this.pad2D && !this.pad2Nom && !this.pad2Ap && this.pad2Sexo==0 && !this.fechanap3 &&
+                   !this.mad2D && !this.mad2Nom && !this.mad2Ap && this.mad2Sexo==0 && !this.fechanap4)){
 
-                    if(!this.mad1D || !this.mad1Nom || !this.mad1Ap || this.mad1Sexo==0){
-                        this.errorMostrarMsjModal3.push("Complete los datos de la persona 2");
+                    if(!this.mad1D || !this.mad1Nom || !this.mad1Ap || this.mad1Sexo==0 || !this.fechanap2){
+                        this.errorMostrarMsjModal3.push("Complete los campos de documento de identidad, nombre, apellido, fecha de nacimiento y sexo de la persona 2");
                     }else{
                         if(!patron.test(this.mad1Nom) || !patron.test(this.mad1Ap)) this.errorMostrarMsjModal3.push("Los datos de la persona 2 debe contener letras solamente");
                         //if(!patrondui.test(this.mad1D))this.errorMostrarMsjModal3.push("Error, El dui de la persona 2 debe contener 9 números");
+                        if(aniop2 < 1900)this.errorMostrarMsjModal3.push("La fecha nacimiento de la persona 2 debe ser mayor a 1900");
+                        if((actualYear)<aniop2)this.errorMostrarMsjModal3.push("El año de nacimiento de la persona 2 debe ser menor a " + (actualYear));
 
-                        if(!(!this.pad2D && !this.pad2Nom && !this.pad2Ap && this.pad2Sexo==0 &&
-                        !this.mad2D && !this.mad2Nom && !this.mad2Ap && this.mad2Sexo==0)){
+                        if(!(!this.pad2D && !this.pad2Nom && !this.pad2Ap && this.pad2Sexo==0 && !this.fechanap3 &&
+                        !this.mad2D && !this.mad2Nom && !this.mad2Ap && this.mad2Sexo==0 && !this.fechanap4)){
 
-                            if(!this.pad2D || !this.pad2Nom || !this.pad2Ap || this.pad2Sexo==0){
-                                this.errorMostrarMsjModal3.push("Complete los datos de la persona 3");
+                            if(!this.pad2D || !this.pad2Nom || !this.pad2Ap || this.pad2Sexo==0 || !this.fechanap3 ){
+                                this.errorMostrarMsjModal3.push("Complete los campos de documento de identidad, nombre, apellido, fecha de nacimiento y sexo de la persona 3");
                             }else{
                                 if(!patron.test(this.pad2Nom) || !patron.test(this.pad2Ap)) this.errorMostrarMsjModal3.push("Los datos de la persona 3 debe contener letras solamente");
+                                if(aniop3 < 1900)this.errorMostrarMsjModal3.push("La fecha nacimiento de la persona 3 debe ser mayor a 1900");
+                                if((actualYear)<aniop3)this.errorMostrarMsjModal3.push("El año de nacimiento de la persona 3 debe ser menor a " + (actualYear));
                                 //if(!patrondui.test(this.pad2D))this.errorMostrarMsjModal3.push("Error, El dui de la persona 3 debe contener 9 números");
 
-                                if(!(!this.mad2D && !this.mad2Nom && !this.mad2Ap && this.mad2Sexo==0)){
-                                    if(!this.mad2D || !this.mad2Nom || !this.mad2Ap || this.mad2Sexo==0){
-                                        this.errorMostrarMsjModal3.push("Complete los datos de la persona 4");
+                                if(!(!this.mad2D && !this.mad2Nom && !this.mad2Ap && this.mad2Sexo==0 && !this.fechanap4)){
+                                    if(!this.mad2D || !this.mad2Nom || !this.mad2Ap || this.mad2Sexo==0 || !this.fechanap4){
+                                        this.errorMostrarMsjModal3.push("Complete los campos de documento de identidad, nombre, apellido, fecha de nacimiento y sexo de la persona 4");
                                     }else{
                                         if(!patron.test(this.mad2Nom) || !patron.test(this.mad2Ap)) this.errorMostrarMsjModal3.push("Los datos de la persona 4 debe contener letras solamente");
+                                        if(aniop4 < 1900)this.errorMostrarMsjModal3.push("La fecha nacimiento de la persona 4 debe ser mayor a 1900");
+                                        if((actualYear)<aniop4)this.errorMostrarMsjModal3.push("El año de nacimiento de la persona 4 debe ser menor a " + (actualYear));
                                         //if(!patrondui.test(this.mad2D))this.errorMostrarMsjModal3.push("Error, El dui de la persona 4 debe contener 9 números");
                                     }
                                 }
@@ -1544,27 +2027,27 @@
             //falta validar para que solo sean números
             if (this.errorMostrarMsjModal3.length) this.errorModal3 = 1;
 
-            return this.errorModal3;*/
+            return this.errorModal3;
         },
 
         validarModal4(){
-           /* this.errorModal4=0;
+            this.errorModal4=0;
             this.errorMostrarMsjModal4=[];
             var RE = /^\d*(\.\d{1})?\d{0,1}$/;
             this.conceptoim;
             this.montoConstancia;
 
             //if(this.cobrado!=true)this.errorMostrarMsjModal4.push("Debe cobrar la solicitud de la constancia de confirma");
-            if(this.conceptoim=='')this.errorMostrarMsjModal4.push("El campo de motivo de la constancia no puede estar vacio");
-            if(this.idperso=='')this.errorMostrarMsjModal4.push("Debe elegir al Padre que firmará la constancia");
-            if(this.cargoim=='')this.errorMostrarMsjModal4.push("Debe elegir el cargo del padre que firmará la constancia");
+            if(this.conceptoim=='')this.errorMostrarMsjModal4.push("El campo de motivo del certificado no puede estar vacio");
+            if(this.idperso=='')this.errorMostrarMsjModal4.push("Debe elegir al Padre que firmará el certificado");
+            if(this.cargoim=='')this.errorMostrarMsjModal4.push("Debe elegir el cargo del padre que firmará el certificado");
              if(this.montoConstancia ==''){
-                    this.errorMostrarMsjModal4.push("Debe cobrar la constancia");
-                }if(!RE.test(this.montoConstancia))this.errorMostrarMsjModal4.push("La ofrenda por constancias solo pueden ser decimales");
+                    this.errorMostrarMsjModal4.push("Debe cobrar el certificado");
+                }if(!RE.test(this.montoConstancia))this.errorMostrarMsjModal4.push("La ofrenda por certificados solo puede ser decimales");
 
             if (this.errorMostrarMsjModal4.length) this.errorModal4 = 1;
 
-            return this.errorModal4;*/
+            return this.errorModal4;
         },
 
         //Este cambia de un modal a otro (adelante y atras)
@@ -1608,6 +2091,12 @@
             this.idcare=0;
             this.errorMatrimonio1=0;
             this.errorMostrarMsjMatrimonio1=[];
+            this.fechana1=''; //fecha nacimiento novio
+            this.fechana2=''; //fecha nacimiento novia
+            this.idzona1=''; //zona novio
+            this.idzona2=''; //zona novia
+            this.idiglesia1=''; //iglesia novio
+            this.idiglesia2=''; //iglesia novia
 
         },
         //estos dos, cierran los modales de paso 2 y paso3
@@ -1645,6 +2134,19 @@
             this.idcare=0;
             this.errorModal2=0;
             this.errorMostrarMsjModal2=[];
+            this.idzonap1=''; //zona p1
+            this.idzonap2=''; //zona p2
+            this.idzonap3=''; //zona p3
+            this.idzonap4=''; //zona p4
+            this.idiglesiap1=''; //iglesia p1
+            this.idiglesiap2=''; //iglesia p2
+            this.idiglesiap3=''; //iglesia p3
+            this.idiglesiap4=''; //iglesia p4
+            this.fechanap1=''; //fecha nacimiento p1
+            this.fechanap2=''; //fecha nacimiento p2
+            this.fechanap3=''; //fecha nacimiento p3
+            this.fechanap4=''; //fecha nacimiento p4
+
         },
         cerrarModal3(){
             this.modal2=0;
@@ -1680,6 +2182,18 @@
             this.idcare=0;
             this.errorModal3=0;
             this.errorMostrarMsjModal3=[];
+            this.idzonap1=''; //zona p1
+            this.idzonap2=''; //zona p2
+            this.idzonap3=''; //zona p3
+            this.idzonap4=''; //zona p4
+            this.idiglesiap1=''; //iglesia p1
+            this.idiglesiap2=''; //iglesia p2
+            this.idiglesiap3=''; //iglesia p3
+            this.idiglesiap4=''; //iglesia p4
+            this.fechanap1=''; //fecha nacimiento p1
+            this.fechanap2=''; //fecha nacimiento p2
+            this.fechanap3=''; //fecha nacimiento p3
+            this.fechanap4=''; //fecha nacimiento p4
         },
 
         cerrarModal4(){
@@ -1717,6 +2231,12 @@
                                 this.noviaD='';
                                 this.noviaNom='';
                                 this.noviaAp='';
+                                this.fechana1='', //fecha nacimiento novio
+                                this.fechana2='', //fecha nacimiento novia
+                                this.idzona1='', //zona novio
+                                this.idzona2='', //zona novia
+                                this.idiglesia1='', //iglesia novio
+                                this.idiglesia2='', //iglesia novia
                                 this.tipoAccion = 1;
                                 break;
                             }
@@ -1736,6 +2256,23 @@
                                 this.noviaD=data['noviaD'];
                                 this.noviaNom=data['noviaNom'];
                                 this.noviaAp=data['noviaAp'];
+                                this.fechana1=data['fechana1']; //fecha nacimiento novio  AQUI
+                                this.fechana2=data['fechana2']; //fecha nacimiento novia
+                                this.idzona1=data['idzona1']; //zona novio
+                                this.idzona2=data['idzona2']; //zona novia
+                                this.idiglesia1=data['idiglesia1']; //iglesia novio
+                                this.idiglesia2=data['idiglesia2']; //iglesia novia
+
+                                if(this.idzona1!=null){
+                                this.iglesias1(this.idzona1);
+                                this.idiglesia1=data['idiglesia'];
+                                }
+
+                                if(this.idzona2){
+                                this.iglesias2(this.idzona2);
+                                this.idiglesia2=data['idiglesia'];
+                                }
+
                                 break;
                             }
                     }
@@ -1853,6 +2390,18 @@
                                 this.mad2D='';
                                 this.mad2Nom='';
                                 this.mad2Ap='';
+                                this.idzonap1=''; //zona p1
+                                this.idzonap2=''; //zona p2
+                                this.idzonap3=''; //zona p3
+                                this.idzonap4=''; //zona p4
+                                this.idiglesiap1=''; //iglesia p1
+                                this.idiglesiap2=''; //iglesia p2
+                                this.idiglesiap3=''; //iglesia p3
+                                this.idiglesiap4=''; //iglesia p4
+                                this.fechanap1=''; //fecha nacimiento p1
+                                this.fechanap2=''; //fecha nacimiento p2
+                                this.fechanap3=''; //fecha nacimiento p3
+                                this.fechanap4=''; //fecha nacimiento p4
                         //botones matrimonio realizado / Cancelado
                                 this.tipoAccion = 3;
                                 break;
@@ -2036,6 +2585,7 @@
             this.selectCategoria();
             this.llenadolista('','');
             this.llenadolistaiglesia('','');
+            this.llenadolistazona('','');
            
         }
     }
