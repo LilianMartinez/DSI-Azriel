@@ -1553,6 +1553,7 @@
                 }) .then(function (response) {
                     me.modal=0;
                     me.cambiarm=0;
+                    me.msjExito();
                     me.cerrarm();
                     
                 })
@@ -1577,6 +1578,7 @@
                 }) .then(function (response) {
                      me.modal=0;
                      me.cambiarm=0;
+                     me.msjExito();
                      me.cerrarm();
                    
                     
@@ -1584,7 +1586,18 @@
                 .catch(function (error) {
                     console.log(error);
                 });
-            } 
+            },
+
+            //MENSAJE DE ÉXITO
+            msjExito(){
+                swal({
+                    type: 'success',
+                    title: 'Datos guardados con éxito',
+                    showConfirmButton: false,
+                    timer: 1500
+                })
+            }
+             
             },
             
         mounted() {

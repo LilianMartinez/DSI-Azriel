@@ -1708,6 +1708,7 @@ export default {
                     me.modal=0;
                     me.cambiarm=0;
              
+                    me.msjExito();
                     me.cerrarm();
                     
                 })

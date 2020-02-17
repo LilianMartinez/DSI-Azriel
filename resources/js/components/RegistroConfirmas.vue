@@ -1711,6 +1711,7 @@ export default {
                     me.modal=0;
                     me.cambiarm=0;
              
+                    me.msjExito();
                     me.cerrarm();
                     
                 })
@@ -2412,6 +2413,16 @@ export default {
                             }
 
                 }
+            },
+
+            //MENSAJE DE ÉXITO
+            msjExito(){
+                swal({
+                    type: 'success',
+                    title: 'Datos guardados con éxito',
+                    showConfirmButton: false,
+                    timer: 1500
+                })
             }
                 
             },

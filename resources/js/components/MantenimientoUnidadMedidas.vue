@@ -229,6 +229,7 @@
               axios.put('/unidad/registrar',{
                   'nombremf': this.nombremf.toUpperCase(),
               }) .then(function (response) {
+                    me.msjExito();
                     me.cerrarModal();
                     me.listarunidad_medida(1,buscar);
                 }) .catch(function (error) {
@@ -250,6 +251,7 @@
                   'nombremf': this.nombremf.toUpperCase(),
                   'id':this.unidad_medida_id,
                     }) .then(function (response) {
+                    me.msjExito();
                     me.cerrarModal();
                     
                     me.listarunidad_medida(1,buscar);
@@ -266,6 +268,7 @@
                 axios.put('/unidad/eliminar',{
                   'id':this.unidad_medida_id,
                     }) .then(function (response) {
+                    me.msjEliminado();
                     me.cerrarModal();
                     me.listarunidad_medida(1,buscar);
                 })
@@ -318,6 +321,25 @@
                     }
                 }
 
+            },
+
+            //MENSAJE DE ÉXITO
+            msjExito(){
+                swal({
+                    type: 'success',
+                    title: 'Datos guardados con éxito',
+                    showConfirmButton: false,
+                    timer: 1500
+                })
+            },
+            //MENSAJE DE ELIMINACIÓN EXITOSA
+            msjEliminado(){
+                swal({
+                    type: 'error',
+                    title: 'Datos eliminados con éxito',
+                    showConfirmButton: false,
+                    timer: 1500
+                })
             }
         },
         mounted() {

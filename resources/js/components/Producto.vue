@@ -327,6 +327,7 @@
                 axios.put('/producto/eliminar',{
                   'id':this.productos_id,
                     }) .then(function (response) {
+                    me.msjEliminado();
                     me.cerrarModal();
                     me.listarproductos(1,buscar,criterio);
                 })
@@ -382,6 +383,16 @@
                     }
                 }
 
+            },
+
+            //MENSAJE DE ELIMINACIÓN EXITOSA
+            msjEliminado(){
+                swal({
+                    type: 'error',
+                    title: 'Datos eliminados con éxito',
+                    showConfirmButton: false,
+                    timer: 1500
+                })
             }
         },
         mounted() {
