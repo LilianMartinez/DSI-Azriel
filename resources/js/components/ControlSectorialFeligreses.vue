@@ -44,6 +44,7 @@
                                       <option value="nombre_persona">Nombre</option>
                                       <option value="apellido_persona">Apellido</option> 
                                       <option value="fecha_nacimiento">Fecha de nacimiento</option> 
+                                      <option value="dui_pasaporte">DUI</option>
                                     </select>
                                     <input type="text"  v-model="buscar" @keyup.enter="listarFeligresesBuscar(1,buscar,criterio)" class="form-control" placeholder="Texto a buscar">
                                     <button type="submit" @click="listarFeligresesBuscar(1,buscar,criterio) " class="btn btn-primary"><i class="fa fa-search"></i> Buscar</button>
@@ -96,7 +97,7 @@
             </div>
    
             <!--Inicio del modal agregar/actualizar-->
-            <div class="modal fade"  tabindex="-1" :class="{'mostrar': modal}" role="dialog" aria-labelledby="myModalLabel" style="display: none;" aria-hidden="true">
+            <div class="modal fade"  tabindex="-1" :class="{'mostrar': modal}" role="dialog" aria-labelledby="myModalLabel"  style="display: none; overflow-y:auto;" aria-hidden="true">
                 <div class="modal-dialog modal-primary modal-lg" role="document">
                     <div class="modal-content">
                         <div class="modal-header">
@@ -134,12 +135,22 @@
                                         <input type="text" tabindexgt="0" v-model="apellido_persona" class="form-control" placeholder="Apellido del Feligres">
                                     </div>
                             </div>
-                              <div class="form-group row">
-                                <label class="col-md-3 form-control-label" for="text-input">Fecha de Nacimiento</label>
-                               <div class="col-md-4">
-                                    <input type="date" class="form-control datepicker" name="date" v-model="fechana">
+                            <div v-show="verim==0">
+                                <div class="form-group row">
+                                        <label class="col-md-3 form-control-label" for="text-input">Fecha de Nacimiento<b class="alerta">*</b></label>
+                                    <div class="col-md-4">
+                                            <input type="date" class="form-control datepicker" name="date" v-model="fechana">
+                                    </div>
                                 </div>
                             </div>
+                            <div v-show="verim==1">
+                                <div class="form-group row">
+                                        <label class="col-md-3 form-control-label" for="text-input">Fecha de Nacimiento<b class="alerta">*</b></label>
+                                    &nbsp;&nbsp;&nbsp;
+                                        <label  for="text-input"></label><label>{{fechana}}</label>
+                                </div>
+                            </div>
+
                             <div class="form-group row">
                                 <label class="col-md-3 form-control-label" for="text-input">Sexo<b class="alerta">*</b></label>
                                 <div class="col-md-5">
@@ -431,7 +442,7 @@
                'id':this.idiglesia}) 
               .then(function (response) { 
                   /*response.data.forEach(function(element) {
-                        if(element.fecha_nacimiento != null){
+                        if(element.fecha_nacimiento != ''){
                         var texto = element.fecha_nacimiento;
                         element.fecha_nacimiento= texto.replace(/^(\d{4})-(\d{2})-(\d{2})$/g,'$3/$2/$1');
                         }
@@ -461,7 +472,7 @@
                 var url='/feligreses?page='+ page + '&buscar=' + buscar2 + '&criterio=' + criterio;
                 axios.get(url) .then(function (response) {
                   /*  response.data.feligres.data.forEach(function(element) {
-                        if(element.fecha_nacimiento != null){
+                        if(element.fecha_nacimiento != ''){
                         var texto = element.fecha_nacimiento;
                         element.fecha_nacimiento= texto.replace(/^(\d{4})-(\d{2})-(\d{2})$/g,'$3/$2/$1');
                         }
@@ -478,7 +489,7 @@
             
             },
             
-            validarvalores(){ //sexo aqui
+            validarvalores(){ 
                 this.errorDatos=0;
                 this.errorMostrarMsj=[];
                 var RE = /^\d*(\.\d{1})?\d{0,1}$/;
@@ -496,6 +507,11 @@
                 var fecha2 = new Date();
                 var actualYear = fecha.getFullYear();
                 var actualMes = fecha.getMonth();
+                var actualDate = fecha.getDate();
+
+                var values = this.fechana.split("-");
+                var anio = values[0];
+
                 if(this.dui!=''){
                     if (!patrondui.test(this.dui))this.errorMostrarMsj.push("El DUI debe ser de nueve digitos");
                 }
@@ -505,21 +521,142 @@
                 if (lengthmaxA > Max_Length)this.errorMostrarMsj.push("El apellido del feligres debe tener menos de 99 letras");
                 if (lengthminA < Min_Length)this.errorMostrarMsj.push("El apellido del feligres debe tener más de 3 letras");
                 
-                if(this.fechana != null)
+                if(!this.fechana)
                     {
+                            this.errorMostrarMsj.push("La fecha de nacimiento es obligatoria");
+                        
+                    }else{
                             var values = this.fechana.split("-");
                             var anio = values[0];
-                            if(anio < 1800)this.errorMostrarMsj.push("El año debe de ser mayor a 1800");
+                            if(anio < 1800)this.errorMostrarMsj.push("El año debe de ser mayor a 1900");
                             if((actualYear)<anio)this.errorMostrarMsj.push("El año debe ser menor o igual al " + (actualYear));
-                        
-                    };
+
+                            var values=this.fechana.split("-");
+                            var dia = values[2];
+                            var mes = values[1];
+                            var ano = values[0];
+
+                                // cogemos los valores actuales
+                            var fecha_hoy = new Date();
+                            var ahora_ano = fecha_hoy.getYear();
+                            var ahora_mes = fecha_hoy.getMonth()+1;
+                            var ahora_dia = fecha_hoy.getDate();
+            
+                            var fechana2 = (ahora_ano + 1900) - ano;
+
+                            if ( ahora_mes < mes )
+                            {
+                                fechana2--;
+                            }
+                            if ((mes == ahora_mes) && (ahora_dia < dia))
+                            {
+                                fechana2--;
+                            }
+                            if (fechana2 > 1900)
+                            {
+                                fechana2-= 1900;
+                            }
+                            if (fechana2 >= 18 && this.dui=='')  {
+                                this.errorMostrarMsj.push("La persona es mayor de edad, ingrese el DUI");
+                            }
+                            if(fechana2 < 18 && this.dui==''){
+                                    this.dui='';
+                                }
+                            if(fechana2 < 18 && this.dui!=''){
+                                this.errorMostrarMsj.push("La persona es menor de edad, no debe ingresar DUI");
+                                }
+
+                    }
                 
+                if(!this.sexo) this.errorMostrarMsj.push("Debe seleccionar el sexo de la persona");
                 if(this.idzona=='') this.errorMostrarMsj.push("Seleccione una zona");
                 if(this.idiglesia=='') this.errorMostrarMsj.push("Seleccione una iglesia");
-                if(this.errorMostrarMsj.length) this.errorDatos=1;
-            
-
+                if(this.errorMostrarMsj.length) this.errorDatos=1;    
                 return this.errorDatos;
+            },
+
+
+            validarvaloresm(){
+                this.errorDatos=0;
+                this.errorMostrarMsj=[];
+                var RE = /^\d*(\.\d{1})?\d{0,1}$/;
+                var patrondui= /^\d{9}$/;
+               var Max_Length = 99;
+               var Min_Length = 3;
+               //Nombre y apellido
+               var lengthmaxN = this.nombre_persona.length;
+               var lengthminN = this.nombre_persona.length;
+               var lengthmaxA = this.apellido_persona.length;
+               var lengthminA = this.apellido_persona.length;
+
+               //fecha
+                var fecha = new Date();
+                var fecha2 = new Date();
+                var actualYear = fecha.getFullYear();
+                var actualMes = fecha.getMonth();
+                var actualDate = fecha.getDate();
+                var values = this.fechana.split("-");
+                var anio = values[0];
+
+                if(this.dui!=null && this.dui!=''){
+                    if (!patrondui.test(this.dui))this.errorMostrarMsj.push("El DUI debe ser de nueve digitos");
+                }
+               
+                if (lengthmaxN > Max_Length)this.errorMostrarMsj.push("El nombre del feligres debe tener menos de 99 letras");
+                if (lengthminN < Min_Length)this.errorMostrarMsj.push("El nombre del feligres debe tener más de 3 letras");
+                if (lengthmaxA > Max_Length)this.errorMostrarMsj.push("El apellido del feligres debe tener menos de 99 letras");
+                if (lengthminA < Min_Length)this.errorMostrarMsj.push("El apellido del feligres debe tener más de 3 letras");
+                
+                if(!this.fechana)
+                    {
+                            this.errorMostrarMsj.push("La fecha de nacimiento es obligatoria");
+                        
+                    }else{
+                            var values = this.fechana.split("-");
+                            var anio = values[0];
+                            if(anio < 1800)this.errorMostrarMsj.push("El año debe de ser mayor a 1900");
+                            if((actualYear)<anio)this.errorMostrarMsj.push("El año debe ser menor o igual al " + (actualYear));
+
+                            var values=this.fechana.split("-");
+                            var dia = values[2];
+                            var mes = values[1];
+                            var ano = values[0];
+
+                                // cogemos los valores actuales
+                            var fecha_hoy = new Date();
+                            var ahora_ano = fecha_hoy.getYear();
+                            var ahora_mes = fecha_hoy.getMonth()+1;
+                            var ahora_dia = fecha_hoy.getDate();
+            
+                            var fechana2 = (ahora_ano + 1900) - ano;
+
+                            if ( ahora_mes < mes )
+                            {
+                                fechana2--;
+                            }
+                            if ((mes == ahora_mes) && (ahora_dia < dia))
+                            {
+                                fechana2--;
+                            }
+                            if (fechana2 > 1900)
+                            {
+                                fechana2-= 1900;
+                            }
+                            if (fechana2 >= 18 && this.dui==null)  {
+                                this.errorMostrarMsj.push("La persona es mayor de edad, ingrese el DUI");
+                            }
+                            if(fechana2 < 18 && this.dui!='' && this.dui!=null){
+                                this.errorMostrarMsj.push("La persona es menor de edad, no debe ingresar DUI");
+                                }
+
+                    }
+                
+                if(!this.sexo) this.errorMostrarMsj.push("Debe seleccionar el sexo de la persona");
+                if(this.idzona=='') this.errorMostrarMsj.push("Seleccione una zona");
+                if(this.idiglesia=='') this.errorMostrarMsj.push("Seleccione una iglesia");
+                if(this.errorMostrarMsj.length) this.errorDatos=1;    
+                return this.errorDatos;
+
             },
 
             verificarExistenciaDui(){
@@ -549,7 +686,7 @@
                   'dui':this.dui,
                   'sexo':this.sexo,
               }) .then(function (response) {
-                    me.mensajeExito();
+                    me.msjExito();
                     me.cerrarModal();
                     me.listarFeligresesBuscar(1,buscar,criterio);
                     //console.log(response);
@@ -557,19 +694,14 @@
                  
                 });
             },
-            mensajeExito(){
-                swal({
-                title: 'El Feligres se guardo exitosamente',
-                showCancelButton: false,
-                confirmButtonColor: '#3085d6',
-                cancelButtonColor: '#d33',
-                confirmButtonText: 'Aceptar!',
-                confirmButtonClass: 'btn btn-success',
-                cancelButtonClass: 'btn btn-danger',
-                buttonsStyling: false,
-                reverseButtons: true
-                })
-            },
+            msjExito(){
+            swal({
+                type: 'success',
+                title: 'Los datos se guardaron con éxito',
+                showConfirmButton: false,
+                timer: 1500
+            })
+        },
             cerrarModal(){
                 this.modal=0;
                 this.modal2=0;
@@ -587,6 +719,7 @@
                 this.errorMostrarMsj=[];
                 this.dui='';
                 this.veri=1;
+                
             
             },
             cerrarmodal2(){
@@ -604,7 +737,12 @@
                     me.dui ='';
                     me.actualizarfeligreses();
                 }else{
-                    me.buscarDuiM();
+                    if(this.verim==0){
+                        me.buscarDuiM();
+                    }else{
+                        me.actualizarfeligreses();
+                    }
+                    
                 }
             },
 
@@ -634,7 +772,7 @@
         },
 
             actualizarfeligreses(){
-                if(this.validarvalores()){
+                if(this.validarvaloresm()){
                   return;   
                  }
                
@@ -652,7 +790,7 @@
                   'sexo':this.sexo,
                     }) .then(function (response) {
                     me.cerrarModal();
-                    me.mensajeExito();
+                    me.msjExito();
                     me.listarFeligresesBuscar(1,buscar,criterio);
                 })
                 .catch(function (error) {
@@ -668,7 +806,7 @@
                   'id':this.feligreses_id,
                     }) .then(function (response) {
                      me.cerrarModal();
-                    // me.mensajeExito();
+                     me.msjEliminar();
                      me.listarFeligresesBuscar(1,buscar,criterio);
                 })
                 .catch(function (error) {
@@ -676,6 +814,14 @@
                     console.log(error);
                 });
             },
+            msjEliminar(){
+            swal({
+                type: 'success',
+                title: 'Se elimino con éxito',
+                showConfirmButton: false,
+                timer: 1500
+            })
+        },
 
     
           abrirModal(modelo, accion, data=[]){
@@ -690,11 +836,12 @@
                                 this.tipoAccion=1;
                                 this.nombre_persona='';
                                 this.apellido_persona='';
-                                this.fechana=null;
+                                this.fechana='';
                                 this.idiglesia='';
                                 this.idzona='';
                                 this.dui='';
                                 this.sexo='';
+                                this.verim=0;
                                 break;
 
                             }
@@ -716,7 +863,7 @@
                                 this.idiglesia=data['idiglesia'];
                                 this.nombre_iglesia=data['nombre_iglesia'];
                                 }
-                                if(this.dui==null)
+                                if(!this.dui)
                                 {
                                     this.verim=0;
                                 }else{

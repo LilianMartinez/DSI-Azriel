@@ -430,12 +430,12 @@
             this.conceptoim;
             this.montoConstancia;
 
-            if(this.conceptoim=='')this.errorMostrarMsjModal4.push("El campo de motivo de la constancia no puede estar vacio");
-            if(this.idperso=='')this.errorMostrarMsjModal4.push("Debe elegir al Padre que firmará la constancia");
-            if(this.cargoim=='')this.errorMostrarMsjModal4.push("Debe elegir el cargo del padre que firmará la constancia");
+            if(this.conceptoim=='')this.errorMostrarMsjModal4.push("El campo de motivo del certificado no puede estar vacio");
+            if(this.idperso=='')this.errorMostrarMsjModal4.push("Debe elegir al Padre que firmará el certificado");
+            if(this.cargoim=='')this.errorMostrarMsjModal4.push("Debe elegir el cargo del padre que firmará el certificado");
              if(this.montoConstancia ==''){
-                    this.errorMostrarMsjModal4.push("Debe cobrar la constancia");
-                }if(!RE.test(this.montoConstancia))this.errorMostrarMsjModal4.push("La ofrenda por constancias solo pueden ser decimales");
+                    this.errorMostrarMsjModal4.push("Debe cobrar el certificado");
+                }if(!RE.test(this.montoConstancia))this.errorMostrarMsjModal4.push("La ofrenda por certificado solo puede ser decimales");
 
             if (this.errorMostrarMsjModal4.length) this.errorModal4 = 1;
 
