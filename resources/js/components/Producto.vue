@@ -18,8 +18,8 @@
                                         <option value="nombre_producto">Nombre producto</option>
                                         <option value="unidad_medida">Unidad de medida</option>
                                     </select>
-                                    <input type="text"  v-model="buscar" @keyup.enter="listarproductos(buscar,criterio)" class="form-control" placeholder="Texto a buscar">
-                                    <button type="submit" @click="listarproductos(buscar,criterio) " class="btn btn-primary"><i class="fa fa-search"></i> Buscar</button>
+                                    <input type="text"  v-model="buscar" @keyup.enter="listarproductos(1,buscar,criterio)" class="form-control" placeholder="Texto a buscar">
+                                    <button type="submit" @click="listarproductos(1,buscar,criterio) " class="btn btn-primary"><i class="fa fa-search"></i> Buscar</button>
                                 </div>
                             </div>
                         </div>
@@ -44,6 +44,19 @@
                                 </tr>
                             </tbody>
                         </table>
+                        <nav>
+                            <ul class="pagination">
+                                <li class="page-item" v-if="pagination.current_page > 1">
+                                    <a class="page-link" href="#" @click.prevent="cambiarPagina(pagination.current_page - 1,buscar,criterio)">Ant</a>
+                                </li>
+                                <li class="page-item" v-for="page in pagesNumber" :key="page" :class="[page == isActived ? 'active' :'']">
+                                    <a class="page-link" href="#" @click.prevent="cambiarPagina(page,buscar,criterio)" v-text="page"></a>
+                                </li>
+                                <li class="page-item" v-if="pagination.current_page < pagination.last_page">
+                                    <a class="page-link" href="#" @click.prevent="cambiarPagina(pagination.current_page + 1, buscar, criterio)">Sig</a>
+                                </li>
+                            </ul>
+                        </nav>
                     </div>
                 </div>
                 <!-- tabla Listado -->
@@ -70,7 +83,10 @@
                                 <div class="form-group row">
                                     <label class="col-md-3 form-control-label" for="text-input">Unidad de medida<b class="alerta">*</b></label>
                                     <div class="col-md-5">
-                                        <input type="text" tabindexgt="0" v-model="unidad_medida" class="form-control" placeholder="">
+                                        <select class="form-control" v-model="unidad_medida"> 
+                                        <option value="0" disabled>Seleccione</option>
+                                        <option v-for="unidad in arrayunidad" :key="unidad.id"  v-bind:value="unidad.unidad" v-text="unidad.unidad"></option>
+                                        </select>
                                     </div>
                                 </div>
                                 <div v-show="errorDatos" class="form-group row div-error">
@@ -130,6 +146,7 @@
                 nombre_producto:'',
                 unidad_medida:'',
                 arrayproductos:[],
+                arrayunidad:[],
                 modal : 0,
                 modal2: 0,
                 tituloModal : '',
@@ -138,11 +155,59 @@
                 buscar: '',
                 errorDatos:0,
                 errorMostrarMsj:[],
+
+                
+                pagination:{
+                    'total' :0,
+                    'current_page' :0,
+                    'per_page' :0,
+                    'last_page' :0,
+                    'from' :0,
+                    'to' :0,
+                },
+                offset: 4,
                 
             }
         },
+        computed:{
+            isActived: function(){
+                return this.pagination.current_page;
+            },
+            //calcula los elementos de la paginacion
+            pagesNumber: function(){
+                if(!this.pagination.to){
+                    return[];
+                }
+                var from = this.pagination.current_page - this.offset;
+                if(from <1){
+                    from=1;
+                }
+                var to = from + (this.offset * 2);
+                if(to >= this.pagination.last_page){
+                    to=this.pagination.last_page;
+                }
+                 var pagesArray=[];
+                 while(from <= to){
+                     pagesArray.push(from);
+                     from++;
+                 }
+                    return pagesArray;
+            }
+        },
         methods:{
-            listarproductos(buscar,criterio,estado){
+            llenadolista(buscar,criterio){
+                let me=this;
+                var url='/unidad?buscar=' + buscar;
+                axios.get(url) .then(function (response) {
+                    var respuesta= response.data;
+                    me.arrayunidad=respuesta.unidad_medida.data;
+                    
+                })
+                .catch(function (error) {
+                    console.log(error);
+                });
+            },
+            listarproductos(page,buscar,criterio){
                 let me=this;
                 var lengthbuscar = this.buscar.length;
                  if(lengthbuscar >0)
@@ -150,16 +215,26 @@
                      var buscar2= this.buscar.toUpperCase();
                  }else
                  buscar2=this.buscar;
-                var url='/producto?buscar=' + buscar2 + '&criterio=' + criterio;
+                var url='/producto?page='+ page + '&buscar=' + buscar2 + '&criterio=' + criterio;
                 axios.get(url) .then(function (response) {
-                    me.arrayproductos=response.data;
+                    var respuesta= response.data;
+                    me.arrayproductos=respuesta.productos.data;
+                    me.pagination= respuesta.pagination;
                 })
                 .catch(function (error) {
                     console.log(error);
                 });
         
             },
+            cambiarPagina(page,buscar,criterio){
+            let me = this;
+            //Actualiza la pagina actualizar
+            me.pagination.current_page = page;
+            //Envia la peticion para visualizar la data de esa pagina
+        
+            me.listarproductos(page,buscar,criterio);
             
+        },
             validarvalores(){
                 this.errorDatos=0;
                 this.errorMostrarMsj=[];
@@ -189,14 +264,27 @@
                   'unidad': this.unidad_medida.toUpperCase(),
               }) .then(function (response) {
                     me.cerrarModal();
-                    me.listarproductos(buscar,criterio);
+                    me.mensajeExito();
+                    me.listarproductos(1,buscar,criterio);
                 }) .catch(function (error) {
                  
                 });
 
             },
          
-
+            mensajeExito(){
+                swal({
+                title: '¡Producto registrado con exito!',
+                showCancelButton: false,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Aceptar!',
+                confirmButtonClass: 'btn btn-success',
+                cancelButtonClass: 'btn btn-danger',
+                buttonsStyling: false,
+                reverseButtons: true
+                })
+            },
             actualizarproductos(){
                 if(this.validarvalores()){
                   return;   
@@ -211,13 +299,26 @@
                   'id':this.productos_id,
                     }) .then(function (response) {
                     me.cerrarModal();
-                    
-                    me.listarproductos(buscar,criterio);
+                    me.mensajeExitoactualizacion();
+                    me.listarproductos(1,buscar,criterio);
                 })
                 .catch(function (error) {
                     // handle error
                     console.log(error);
                 });
+            },
+            mensajeExitoactualizacion(){
+                swal({
+                title: '¡Actualizado con exito!',
+                showCancelButton: false,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Aceptar!',
+                confirmButtonClass: 'btn btn-success',
+                cancelButtonClass: 'btn btn-danger',
+                buttonsStyling: false,
+                reverseButtons: true
+                })
             },
              eliminar(){
                 let me=this;
@@ -227,7 +328,7 @@
                   'id':this.productos_id,
                     }) .then(function (response) {
                     me.cerrarModal();
-                    me.listarproductos(buscar,criterio);
+                    me.listarproductos(1,buscar,criterio);
                 })
                 .catch(function (error) {
                     // handle error
@@ -284,7 +385,8 @@
             }
         },
         mounted() {
-            this.listarproductos(this.buscar,this.criterio);
+            this.listarproductos(1,this.buscar,this.criterio);
+            this.llenadolista('','');
         }
     }
 </script>

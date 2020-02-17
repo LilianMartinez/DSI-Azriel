@@ -7,7 +7,7 @@
                     <label class="titulo-encabezados">Canastas</label> 
                     </div>
                     <div>
-                    <button type="button" @click="mostrarDetalle()" class="btn btn-secondary">
+                    <button type="button" @click="mostrarDetalle()" class="btn btn-primary">
                         <i class="icon-plus"></i>&nbsp;Nueva
                     </button>
                     </div>
@@ -40,7 +40,7 @@
                                 <tbody>
                                     <tr v-for="canasta in arrayCanasta" :key="canasta.id">
                                         <td>
-                                            <button type="button" @click="abrirModal('canasta','ver',canasta)" class="btn btn-success btn-sm">
+                                            <button type="button" @click="listarDetalles(canasta.id)" class="btn btn-success btn-sm">
                                             <i class="icon-eye"></i>
                                             </button> &nbsp;
                                         </td>
@@ -74,7 +74,7 @@
                             <div class="col-md-9">
                                 <div class="form-group">
                                     <label for="">Nombre(*)</label>
-                                    <input type="text" class="form-control" v-model="nombre_canasta">
+                                    <input type="text" class="form-control" v-model="nombre_canasta"> 
                                 </div>
                             </div>
                             <div class="col-md-3">
@@ -147,7 +147,7 @@
                                         </tr>
                                         <tr style="background-color: #CEECF5;">
                                             <td colspan="2" align="right"><strong>Total:</strong></td>
-                                            <td>$ {{total}}</td>
+                                            <td>$ {{total=Total}}</td>
                                         </tr>
                                     </tbody>
                                     <tbody v-else>
@@ -183,8 +183,8 @@
                             </button>
                         </div>
                         <div class="modal-body">
-                        <label><strong>{{precioventa}}</strong></label>
-                        <div class="form-group row border">
+                        <label><strong>Valor de canasta: ${{precioventa}}</strong></label>
+                   
                             <div class="table-responsive col-md-12">
                                 <table class="table table-bordered table-striped table-sm">
                                     <thead>
@@ -201,7 +201,7 @@
                                 </tbody>                                           
                                 </table>
                             </div>
-                        </div>
+                        
                             
                         </div>
                         <div class="modal-footer">
@@ -226,19 +226,20 @@
 
                 producto : '',
                 id_productoR:'',
-                id_producto:'',
+                id_producto:0,
                 nombre_canasta:'',
                 precio_venta:'',
                 precioventa:'',
                 cantidad_canasta:'',
-                existenciasC:'',
+                existenciasC:[],
                 precio_compra:0.0,
                 cantidad:0.0,
                 cantidadT:'',
+                canti:0,
+                canti2:0,
                 fecha:'',
                 tipo:'',
                 total:0.0,
-                totalP:0.0,
                 resultado:0.0,
                 arrayCanasta : [],
                 arrayDetalle : [],
@@ -249,8 +250,10 @@
                 la:0,
                 modal : 0,
                 listado:1,
+                index:[],
                 tituloModal : '',
                 tipoAccion : 0,
+                texto:0,
                 errorCanasta : 0,
                 errorMostrarMsjCanasta : [],
                 pagination : {
@@ -272,6 +275,16 @@
         computed:{
             isActived: function(){
                 return this.pagination.current_page;
+            },
+            Total: function(){
+                var resultado =0.0;
+                var resu;
+                for(var i=0;i<this.cantidadQ.length;i++){
+                    resultado=resultado+parseFloat(this.cantidadQ[i].preciov);
+                }
+                resu=(resultado/this.cantidad_canasta).toFixed(2);
+                return resu;
+
             },
             //Calcula los elementos de la paginación
             pagesNumber: function() {
@@ -311,18 +324,45 @@
                     console.log(error);
                 });
             },
-            listarDetalles (){
+            listarDetalles (canasta){
 
                 let me=this;
-                var v=me.po;
+                var v=canasta;
                 var url= '/canastas/detalle?buscar='+ v;
                 axios.get(url).then(function (response) {
                     var respuesta= response.data;
                     me.arrayIntermedio = respuesta.producto;
+                    me.listarDetalles2(v);
                 })
                 .catch(function (error) {
                     console.log(error);
                 });
+            },
+            listarDetalles2 (canasta){
+
+                let me=this;
+                var v=canasta;
+                var url= '/canastas/canasta?buscar='+ v;
+                axios.get(url).then(function (response) {
+                    var respuesta= response.data;
+                    me.canti= respuesta.canasta;
+                    me.cambio();
+                    me.abrirModal('canasta','ver',canasta);
+                })
+                .catch(function (error) {
+                    console.log(error);
+                });
+            },
+            cambio(){
+                this.canti2=0;
+                for(var i=0;i<this.canti.length;i++){
+                 this.canti2= parseInt(this.canti[i].cantidad);
+                }
+                for(var i=0;i<this.arrayIntermedio.length;i++){
+                    this.texto = parseInt(this.arrayIntermedio[i].cantidad);
+                    this.arrayIntermedio[i].cantidad= this.texto/this.canti2;
+                }
+
             },
             cambiarPagina(page,buscar,criterio){
                 let me = this;
@@ -350,9 +390,25 @@
             
             getdatosproducto(val1){
                 let me = this;
+                if(val1== null)
+                {
+                    me.loading = false;
+                    me.id_producto = 0;
+                    me.producto='';
+                    return;
+                }
+                if(val1=='')
+                {
+                    me.loading = false;
+                    me.id_producto = 0;
+                    me.producto='';
+                    return;
+                }
+                else{
                 me.loading = true;
                 me.id_producto = val1.id;
                 me.producto=val1.nombre_producto;
+                }
                 
             },
             buscarF(){
@@ -362,82 +418,70 @@
                 var url='/producto/existencia?filtro='+filtro;
                 axios.get(url).then(function (response) {
                     var respuesta= response.data; 
-                    me.precio_compra=respuesta.compra;
-                    me.existenciasC=respuesta.cantidad;
+                    me.existenciasC=respuesta.lista;
+                    me.validar();
                 })
                 .catch(function (error) {
-                    console.log(error);
                 });
             },
 
             validar(){
-                let me=this;
-                var resultado =0.0;
+                let me = this;
                 var inter;
                 var inter2;
                 var va;
-            
-                for(var i=0;i<me.existenciasC.length;i++){
-                    me.resultado=me.resultado+ parseInt(me.existenciasC[i].cantidad);
+                me.resultado=0;
+                for(var i=0;i<this.existenciasC.length;i++){
+                    me.resultado= me.resultado+ parseInt(me.existenciasC[i].cantidad)
                 }
-                inter=parseInt(me.cantidad);
-                inter2=parseInt(me.cantidad_canasta);
-                me.cantidadT=inter*inter2;
-               va=me.cantidadT;
+               
+                me.cantidadT=me.cantidad*me.cantidad_canasta;
+                va=me.cantidadT;
                 if(me.cantidadT<=me.resultado){
-                    
-                     
-                        //Guarda sin penas
-                        for(var i=0;i<this.existenciasC.length;i++){
-                            
-                            if(me.cantidadT!=0){
-                                var c=parseInt(me.existenciasC[i].cantidad);
-                                var p;
-                                var t;
-                                var x;
-                                if(me.cantidadT>c){
-                                    t=parseFloat(me.precio_compra[i].unitario);
-                                    me.totalP=(me.totalP+ t*c);
-                                    me.cantidadQ.push({
-                                        preciov: t*c,
-                                        id_producto: me.id_producto,
-                                        descontar: c,
-                                        id_existencia: me.existenciasC[i].id,
-                                        queda: 0
-                                    });
-                                    p=me.cantidadT-c;
-                                    me.cantidadT=p;
-                                }else{
-                                    t=parseFloat(me.precio_compra[i].unitario);
-                                    x=parseInt(me.cantidadT);
-                                    me.totalP=(me.totalP+ t*x);
-                                    me.cantidadQ.push({
-                                        preciov: t*x,
-                                        id_producto: me.id_producto,
-                                        descontar: me.cantidadT,
-                                        id_existencia: me.existenciasC[i].id,
-                                        queda: c-me.cantidadT
-                                    });
-                                    me.cantidadT=0;
-                                    break;
-                                }
+                    //Guarda
+                    for(var i=0;i<this.existenciasC.length;i++){   
+                        var c=parseInt(me.existenciasC[i].cantidad);
+                        var p;
+                        var t;
+                        var x;
+                        if(me.cantidadT>c){
+                            t=parseFloat(me.existenciasC[i].unitario);
+                            me.cantidadQ.push({
+                                descontar: c,
+                                id_existencia: me.existenciasC[i].id,
+                                id_producto: me.id_producto,
+                                preciov: t*c,
+                                queda: 0
+                                });
+                            p=me.cantidadT-c;
+                            me.cantidadT=p;
                         }
-                }
+                        else{
+                            t=parseFloat(me.existenciasC[i].unitario);
+                            me.cantidadQ.push({
+                                descontar: me.cantidadT,
+                                id_existencia: me.existenciasC[i].id,
+                                id_producto: me.id_producto,
+                                preciov: t*me.cantidadT,
+                                queda: c-me.cantidadT
+                                });
+                            me.cantidadT=0;
+                            break;
+                        }
+                    }
+                
                 me.la=1;
-                
-                me.total=me.total+(me.totalP/va);
-
-                }else{
-                    me.la=0;
-                      me.id_producto=0;
-                            swal({
-                            type: 'error',
-                            title: 'Error...',
-                            text: 'No posee suficientes productos!',
-                            })
                 }
-
-                
+                else{
+                    me.la=0;
+                    me.id_producto=0;
+                        swal({
+                        type: 'error',
+                        title: 'Error...',
+                        text: 'No posee suficientes productos!',
+                        })
+                }
+                me.agregarDetalle2();
 
             },
             
@@ -452,53 +496,57 @@
             },
             eliminarDetalle(index){
                 let me = this;
+                me.index=[];
                  me.po=me.arrayDetalle[index].id_producto;
                 for(var i=0;i<this.cantidadQ.length;i++){
                     if(this.cantidadQ[i].id_producto==me.po){
-                        me.total=me.total-me.cantidadQ[i].preciov;
-                        me.cantidadQ.splice(i, 1);
+                       me.cantidadQ.splice(i, 1);
+                       i--;
                     }
                 }
                 me.arrayDetalle.splice(index, 1);
             },
             agregarDetalle(){
                 let me=this;
+                if (this.validarCampos()){
+                        return;}
                 me.buscarF();
-                me.validar();
-                if(me.id_producto==0 || me.cantidad==0){
+
+            },
+            agregarDetalle2(){
+                let me=this;
+                if(me.encuentra(me.id_producto)){
+                    swal({
+                        type: 'error',
+                        title: 'Error...',
+                        text: 'Ese artículo ya se encuentra agregado!',
+                        })
                 }
                 else{
-                    if(me.encuentra(me.id_producto)){
-                        swal({
-                            type: 'error',
-                            title: 'Error...',
-                            text: 'Ese artículo ya se encuentra agregado!',
-                            })
-                    }
-                    else{if(me.la==1){
+                    if(me.la==1){
                         me.arrayDetalle.push({
                             id_producto: me.id_producto,
                             producto: me.producto,
                             cantidad:me.cantidad,
                         });
-                        }
-                        
-                        me.id_producto=0;
-                        me.producto='';
-                        me.existenciasC='';
-    
                     }
-                    
                 }
+                me.limpiar();
 
             },
-            
+            limpiar(){
+                this.id_producto=0;
+                this.producto='';
+                this.cantidad='';
+                this.existenciasC=[];
+                this.resultado=0;
+                this.id_productoR=[];
+            },
             registrarCanasta(){
-               /* if (this.validarCompra()){
-                    return;
-                }*/
+               
                 
                 let me = this;
+                
 
                 axios.put('/canastas/registrar',{
                     'nombreC':this.nombre_canasta,
@@ -508,8 +556,7 @@
                     'data': this.arrayDetalle,
                     'existencias': this.cantidadQ
                 }).then(function (response) {
-                    me.listado=1;
-                    me.listarCanasta(1,'','nombre_canasta');
+                    me.mensajeExito();
                     me.id_producto=0;
                     me.cantidad='';
                     me.precio_compra='';
@@ -518,9 +565,25 @@
                     me.precio_venta='';
                     me.total=0.0;
                     me.arrayDetalle=[];
+                    me.po='';
+                    me.la='';
+                    me.cantidadQ=[];
                 }).catch(function (error) {
                     console.log(error);
                 });
+            },
+            mensajeExito(){
+                swal({
+                title: '¡Canasta registrada con exito!',
+                showCancelButton: false,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Aceptar!',
+                confirmButtonClass: 'btn btn-success',
+                cancelButtonClass: 'btn btn-danger',
+                buttonsStyling: false,
+                reverseButtons: true
+                })
             },
             venderCanasta(){
                 
@@ -537,15 +600,19 @@
                     console.log(error);
                 });
             },
-            validarCompra(){
+            validarCampos(){
                 this.errorCanasta=0;
                 this.errorMostrarMsjCanasta =[];
-
-                if (this.id_producto==0) this.errorMostrarMsjCanasta.push("Debe seleccionar un producto.");
-                if (!this.cantidad) this.errorMostrarMsjCanasta.push("La cantidad no puede estar vacia.");
-                if (!this.precio_compra) this.errorMostrarMsjCanasta.push("El precio del producto comprado no puede estar vacio.");
-                if (this.arrayDetalle.length<=0) this.errorMostrarMsjCanasta.push("Ingrese productos");
-                if(!this.tipo) this.errorMostrarMsjCanasta.push("El tipo no puede estar vacío");
+                var RE = /^([0-9])*$/;
+                var RE2 = /^\d*(\.\d{1})?\d{0,1}$/;
+                if (!this.nombre_canasta) this.errorMostrarMsjCanasta.push("La canasta debe de tener un nombre");
+                if (!this.precio_venta) this.errorMostrarMsjCanasta.push("La canasta debe poseer un precio de venta");
+                if (!RE2.test(this.precio_venta)) this.errorMostrarMsjCanasta.push("El precio de venta solo pueden ser decimales");
+                if (this.cantidad_canasta<1) this.errorMostrarMsjCanasta.push("El total de canastas a crear no debe estar vacio");
+                if (!RE.test(this.cantidad_canasta)) this.errorMostrarMsjCanasta.push("El total de canastas a crear debe ser un numero");
+                if (this.id_producto==0) this.errorMostrarMsjCanasta.push("Debe seleccionar un producto");
+                if (this.cantidad<1) this.errorMostrarMsjCanasta.push("La cantidad de productos no debe estar vacio");
+                if (!RE.test(this.cantidad)) this.errorMostrarMsjCanasta.push("La cantidad de productos debe ser un numero");
                 if (this.errorMostrarMsjCanasta.length) this.errorCanasta = 1;
 
                 return this.errorCanasta;
@@ -561,17 +628,34 @@
                 me.precio_venta='';
                 me.total=0.0;
                 me.arrayDetalle=[];
+                me.po='';
+                me.la='';
+                me.cantidadQ=[];
             },
             ocultarDetalle(){
+                let me=this;
+                me.listado=0;
+                me.id_producto=0;
+                me.cantidad='';
+                me.precio_compra='';
+                me.nombre_canasta='';
+                me.cantidad_canasta='';
+                me.precio_venta='';
+                me.total=0.0;
+                me.arrayDetalle=[];
+                me.po='';
+                me.la='';
+                me.cantidadQ=[];
                 this.listado=1;
             },
             cerrarModal(){
                 this.modal=0;
                 this.tituloModal='';
                 this.errorPersona=0;
+                this.precioventa=0;
+                this.arrayIntermedio=[];
             },
             abrirModal(modelo, accion, data = []){
-                
                 switch(modelo){
                     case "canasta":
                     {
@@ -581,7 +665,6 @@
                             {
                                 //console.log(data);
                                 this.po=data['id'];
-                                this.listarDetalles();
                                 this.modal=1;
                                 this.precioventa=data['precio_venta'];
                                 this.tituloModal='Descripcion Canasta';

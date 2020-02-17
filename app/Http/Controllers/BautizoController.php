@@ -6,9 +6,9 @@ use Illuminate\Http\Request;
 use App\Sacramentos3;
 use App\Persona;
 use App\Efectivo;
-use App\NotaMarginal;
 use App\PartidaNacimiento;
 use Illuminate\Support\Facades\DB;
+
 
 class BautizoController extends Controller
 {
@@ -59,71 +59,51 @@ class BautizoController extends Controller
     public function store(Request $request)
     {
         $tipo=$request->tipo;
+        $tipop=$request->tipop;
         $tiposacra=1;
+        $idsacra = Sacramentos3::max('id');
+        $idsacramento = $idsacra+1;
         if(!$request->ajax()) return redirect('/');
-     /*   $this->validate($request, [
-            'dui_reali'=>'required|max:10',
-            'nombre_reali'=>'required|min:3|max:100',
-            'apellido_reali'=>'required|min3|max:100',
-            'dui_m'=>'required|max:10',
-            'nombre_m'=>'required|min:3|max:100',
-            'apellido_m'=>'required|min3|max:100',
-            'dui_p'=>'required|max:10',
-            'nombre_p'=>'required|min:3|max:100',
-            'apellido_p'=>'required|min3|max:100',
-            'dui_pd1'=>'required|max:10',
-            'nombre_pd1'=>'required|min:3|max:100',
-            'apellido_pd1'=>'required|min3|max:100',
-            'dui_pd2'=>'required|max:10',
-            'nombre_pd2'=>'required|min:3|max:100',
-            'apellido_pd2'=>'required|min3|max:100',
-            'dui_pd3'=>'required|max:10',
-            'nombre_pd3'=>'required|min:3|max:100',
-            'apellido_pd3'=>'required|min3|max:100',
-            'dui_pd4'=>'required|max:10',
-            'nombre_pd4'=>'required|min:3|max:100',
-            'apellido_pd4'=>'required|min3|max:100'
- 
-         ]);*/
         switch($tipo){
             case '1':{
-                $id_realizante=Persona::max('id');
-                $idreali = $id_realizante+1;
-                $idsacra = Sacramentos3::max('id');
-                $idsacramento = $idsacra+1;
-                $idpartida = PartidaNacimiento::max('id');
-                $idp = $idpartida+1;
+                $id_persona = Persona::max('id');
+                $idreali=$id_persona+1;
+                $idpartida_p= PartidaNacimiento::max('id');
+                $idpartida=$idpartida_p+1;
                 $monto_p= Efectivo::max('id');
                 $montos=$monto_p+1;
 
                 $efectivo = new Efectivo();
                 $efectivo->id=$montos;
-                $efectivo->descripcion_efectivo='BAUTISMO';
+                $efectivo->descripcion_efectivo='BAUTIZO';
                 $efectivo->idcare=$request->idcate;
                 $efectivo->tipo= 1;
                 $efectivo->monto=$request->monto;
                 $efectivo->fecha= new \DateTime();
                 $efectivo->save();
 
-                $persona_reali = new Persona();
-                $persona_reali->id = $idreali;
-                $persona_reali->nombre_persona = $request->nombre_reali;
-                $persona_reali->apellido_persona = $request->apellido_reali;
-                $persona_reali->fecha_nacimiento = $request->nacimiento;
-                $persona_reali->dui_pasaporte = $request->dui_reali;
-                $persona_reali->sexo = $request->sexo;
-                $persona_reali->id_madre = $request->id_m;
-                $persona_reali->id_padre = $request->id_p;
-                $persona_reali->save();
-
+                $personareali = new Persona();
+                $personareali->id=$idreali;
+                $personareali->nombre_persona= $request->nombre_reali;
+                $personareali->apellido_persona=$request->apellido_reali;
+                $personareali->dui_pasaporte=$request->dui_reali;
+                $personareali->sexo=$request->sexo;
+                $personareali->fecha_nacimiento=$request->nacimiento;
+                $personareali->idzonaa=$request->idzonar; //zona realizante
+                $personareali->idiglesia=$request->idiglesiar; //iglesia realizante
+                $personareali->estado=1; //estado
+                $personareali->id_madre=$request->id_m;
+                $personareali->id_padre=$request->id_p;
+                $personareali->save();
+        
                 $partida = new PartidaNacimiento();
-                $partida->id = $idp;
-                $partida->alcaldia = $request->alcaldia;
-                $partida->libro = $request->libro;
-                $partida->partida = $request->partida;
-                $partida->folio = $request->folio;
-                $partida->ano = $request->ano;
-                $partida->idpersona = $idreali;
+                $partida->id=$idpartida;
+                $partida->alcaldia= $request->alcaldia;
+                $partida->libro=$request->libro;
+                $partida->partida=$request->partida;
+                $partida->folio=$request->folio;
+                $partida->ano=$request->ano;
+                $partida->idpersona=$idreali;
                 $partida->save();
 
                 $bautizo = new Sacramentos3();
@@ -135,72 +115,64 @@ class BautizoController extends Controller
                 $bautizo->fecha_realizacion = $request->fecha;
                 $bautizo->id_realizante1 = $idreali;
                 $bautizo->id_sacerdote = $request->sacerdote;
-                $bautizo->id_padrino = $request->id_pd1;
-                $bautizo->id_padrino2 = $request->id_pd2;
-                $bautizo->id_padrino3 = $request->id_pd3;
-                $bautizo->id_padrino4 = $request->id_pd4;
-                $bautizo->titulo = $request->titulo;
+                $bautizo->titulo=$request->titulo;
+                $bautizo->id_iglesia=$request->idiglesia;
                 $bautizo->save();
                 break;
             }
             case '2':{
-                $id_persona=Persona::max('id');
-                $idpa3=$id_persona+1;
-                $idpa4=$idpa3+1;
-                $idreali = $idpa4+1;
-                $idsacra = Sacramentos3::max('id');
-                $idsacramento = $idsacra+1;
-                $idpartida = PartidaNacimiento::max('id');
-                $idp = $idpartida+1;
+                $id_persona = Persona::max('id');
+                $idm=$id_persona+1;
+                $idreali=$idm+1;
+                $idpartida_p= PartidaNacimiento::max('id');
+                $idpartida=$idpartida_p+1;
                 $monto_p= Efectivo::max('id');
                 $montos=$monto_p+1;
 
                 $efectivo = new Efectivo();
                 $efectivo->id=$montos;
-                $efectivo->descripcion_efectivo='BAUTISMO';
+                $efectivo->descripcion_efectivo='BAUTIZO';
                 $efectivo->idcare=$request->idcate;
                 $efectivo->tipo= 1;
                 $efectivo->monto=$request->monto;
                 $efectivo->fecha= new \DateTime();
                 $efectivo->save();
 
+                $personap = new Persona();
+                $personap->id= $idm;
+                $personap->nombre_persona= $request->nombre_m;
+                $personap->apellido_persona=$request->apellido_m;
+                $personap->dui_pasaporte=$request->dui_m;
+                $personap->sexo='F';
+                $personap->fecha_nacimiento=$request->nacimientom;
+                $personap->idzonaa=$request->idzonam;  //zona madre
+                $personap->idiglesia=$request->idiglesiam; //iglesia madre
+                $personap->estado=1; //estado
+                $personap->save();
 
-                $personapd3=new Persona();
-                $personapd3->id=$idpa3;
-                $personapd3->nombre_persona=$request->nombre_pd3;
-                $personapd3->apellido_persona=$request->apellido_pd3;
-                $personapd3->dui_pasaporte=$request->dui_pd3;
-                $personapd3->sexo=$request->sexo_pd3;
-                $personapd3->save();
-
-                $personapd4=new Persona();
-                $personapd4->id=$idpa4;
-                $personapd4->nombre_persona=$request->nombre_pd4;
-                $personapd4->apellido_persona=$request->apellido_pd4;
-                $personapd4->dui_pasaporte=$request->dui_pd4;
-                $personapd4->sexo=$request->sexo_pd4;
-                $personapd4->save();
-
-                $persona_reali = new Persona();
-                $persona_reali->id = $idreali;
-                $persona_reali->nombre_persona = $request->nombre_reali;
-                $persona_reali->apellido_persona = $request->apellido_reali;
-                $persona_reali->fecha_nacimiento = $request->nacimiento;
-                $persona_reali->dui_pasaporte = $request->dui_reali;
-                $persona_reali->sexo = $request->sexo;
-                $persona_reali->id_madre = $request->id_m;
-                $persona_reali->id_padre = $request->id_p;
-                $persona_reali->save();
+                $personareali = new Persona();
+                $personareali->id=$idreali;
+                $personareali->nombre_persona= $request->nombre_reali;
+                $personareali->apellido_persona=$request->apellido_reali;
+                $personareali->dui_pasaporte=$request->dui_reali;
+                $personareali->sexo=$request->sexo;
+                $personareali->fecha_nacimiento=$request->nacimiento;
+                $personareali->idzonaa=$request->idzonar;  //zona realizante
+                $personareali->idiglesia=$request->idiglesiar; //zona realizante
+                $personareali->estado=1; //estado
+                $personareali->id_madre=$idm;
+                $personareali->id_padre=$request->id_p;
+                $personareali->save();
 
                 $partida = new PartidaNacimiento();
-                $partida->id = $idp;
-                $partida->alcaldia = $request->alcaldia;
-                $partida->libro = $request->libro;
-                $partida->partida = $request->partida;
-                $partida->folio = $request->folio;
-                $partida->ano = $request->ano;
-                $partida->idpersona = $idreali;
-                $partida->save();
+                $partida->id=$idpartida;
+                $partida->alcaldia= $request->alcaldia;
+                $partida->libro=$request->libro;
+                $partida->partida=$request->partida;
+                $partida->folio=$request->folio;
+                $partida->ano=$request->ano;
+                $partida->idpersona=$idreali;
+                $partida->save();        
 
                 $bautizo = new Sacramentos3();
                 $bautizo->id = $idsacramento;
@@ -211,61 +183,63 @@ class BautizoController extends Controller
                 $bautizo->fecha_realizacion = $request->fecha;
                 $bautizo->id_realizante1 = $idreali;
                 $bautizo->id_sacerdote = $request->sacerdote;
-                $bautizo->id_padrino = $request->id_pd1;
-                $bautizo->id_padrino2 = $request->id_pd2;
-                $bautizo->id_padrino3=$idpa3;
-                $bautizo->id_padrino4=$idpa4;
-                $bautizo->titulo = $request->titulo;
+                $bautizo->titulo=$request->titulo;
+                $bautizo->id_iglesia=$request->idiglesia;
                 $bautizo->save();
                 break;
             }
             case '3':{
-                $id_persona=Persona::max('id');
-                $idpa4=$id_persona+1;
-                $idreali=$idpa4+1;
-                $idsacra = Sacramentos3::max('id');
-                $idsacramento = $idsacra+1;
-                $idpartida = PartidaNacimiento::max('id');
-                $idp = $idpartida+1;
+                $id_persona = Persona::max('id');
+                $idp=$id_persona+1;
+                $idreali=$idp+1;
+                $idpartida_p= PartidaNacimiento::max('id');
+                $idpartida=$idpartida_p+1;
                 $monto_p= Efectivo::max('id');
                 $montos=$monto_p+1;
 
                 $efectivo = new Efectivo();
                 $efectivo->id=$montos;
-                $efectivo->descripcion_efectivo='BAUTISMO';
+                $efectivo->descripcion_efectivo='BAUTIZO';
                 $efectivo->idcare=$request->idcate;
                 $efectivo->tipo= 1;
                 $efectivo->monto=$request->monto;
                 $efectivo->fecha= new \DateTime();
                 $efectivo->save();
 
-                $personapd4=new Persona();
-                $personapd4->id=$idpa4;
-                $personapd4->nombre_persona=$request->nombre_pd4;
-                $personapd4->apellido_persona=$request->apellido_pd4;
-                $personapd4->dui_pasaporte=$request->dui_pd4;
-                $personapd4->sexo=$request->sexo_pd4;
-                $personapd4->save();
+                $personap = new Persona();
+                $personap->id= $idp;
+                $personap->nombre_persona= $request->nombre_p;
+                $personap->apellido_persona=$request->apellido_p;
+                $personap->dui_pasaporte=$request->dui_p;
+                $personap->sexo='M';
+                $personap->fecha_nacimiento=$request->nacimientop;
+                $personap->idzonaa=$request->idzonap;  //zona padre
+                $personap->idiglesia=$request->idiglesiap; //iglesia padre
+                $personap->estado=1; //estado
+                $personap->save();
 
-                $persona_reali = new Persona();
-                $persona_reali->id = $idreali;
-                $persona_reali->nombre_persona = $request->nombre_reali;
-                $persona_reali->apellido_persona = $request->apellido_reali;
-                $persona_reali->fecha_nacimiento = $request->nacimiento;
-                $persona_reali->dui_pasaporte = $request->dui_reali;
-                $persona_reali->sexo = $request->sexo;
-                $persona_reali->id_madre = $request->id_m;
-                $persona_reali->id_padre = $request->id_p;
-                $persona_reali->save();
+                $personareali = new Persona();
+                $personareali->id=$idreali;
+                $personareali->nombre_persona= $request->nombre_reali;
+                $personareali->apellido_persona=$request->apellido_reali;
+                $personareali->dui_pasaporte=$request->dui_reali;
+                $personareali->sexo=$request->sexo;
+                $personareali->fecha_nacimiento=$request->nacimiento;
+                $personareali->idzonaa=$request->idzonar;  //zona realizante
+                $personareali->idiglesia=$request->idiglesiar; //zona realizante
+                $personareali->estado=1; //estado
+                $personareali->id_padre=$idp;
+                $personareali->id_madre=$request->id_m;
+                $personareali->save();
 
                 $partida = new PartidaNacimiento();
-                $partida->id = $idp;
-                $partida->alcaldia = $request->alcaldia;
-                $partida->libro = $request->libro;
-                $partida->partida = $request->partida;
-                $partida->folio = $request->folio;
-                $partida->ano = $request->ano;
-                $partida->idpersona = $idreali;
+                $partida->id=$idpartida;
+                $partida->alcaldia= $request->alcaldia;
+                $partida->libro=$request->libro;
+                $partida->partida=$request->partida;
+                $partida->folio=$request->folio;
+                $partida->ano=$request->ano;
+                $partida->idpersona=$idreali;
                 $partida->save();
 
                 $bautizo = new Sacramentos3();
@@ -277,81 +251,77 @@ class BautizoController extends Controller
                 $bautizo->fecha_realizacion = $request->fecha;
                 $bautizo->id_realizante1 = $idreali;
                 $bautizo->id_sacerdote = $request->sacerdote;
-                $bautizo->id_padrino = $request->id_pd1;
-                $bautizo->id_padrino2 = $request->id_pd2;
-                $bautizo->id_padrino3 = $request->id_pd3;
-                $bautizo->id_padrino4 = $idpa4;
-                $bautizo->titulo = $request->titulo;
+                $bautizo->titulo=$request->titulo;
+                $bautizo->id_iglesia=$request->idiglesia;
                 $bautizo->save();
                 break;
             }
             case '4':{
-                $id_persona=Persona::max('id');
-                $idpa2=$id_persona+1;
-                $idpa3=$idpa2+1;
-                $idpa4=$idpa3+1;
-                $idreali = $idpa4+1;
-                $idsacra = Sacramentos3::max('id');
-                $idsacramento = $idsacra+1;
-                $idpartida = PartidaNacimiento::max('id');
-                $idp = $idpartida+1;
+                $id_persona = Persona::max('id');
+                $idp=$id_persona+1;
+                $idm=$idp+1;
+                $idreali=$idm+1;
+                $idpartida_p= PartidaNacimiento::max('id');
+                $idpartida=$idpartida_p+1;
                 $monto_p= Efectivo::max('id');
                 $montos=$monto_p+1;
 
                 $efectivo = new Efectivo();
                 $efectivo->id=$montos;
-                $efectivo->descripcion_efectivo='BAUTISMO';
+                $efectivo->descripcion_efectivo='BAUTIZO';
                 $efectivo->idcare=$request->idcate;
                 $efectivo->tipo= 1;
                 $efectivo->monto=$request->monto;
                 $efectivo->fecha= new \DateTime();
                 $efectivo->save();
 
+                $personap = new Persona();
+                $personap->id= $idp;
+                $personap->nombre_persona= $request->nombre_p;
+                $personap->apellido_persona=$request->apellido_p;
+                $personap->dui_pasaporte=$request->dui_p;
+                $personap->sexo='M';
+                $personap->fecha_nacimiento=$request->nacimientop;
+                $personap->idzonaa=$request->idzonap;  //zona padre
+                $personap->idiglesia=$request->idiglesiap; //iglesia padre
+                $personap->estado=1; //estado
+                $personap->save();
 
-                $personapd2=new Persona();
-                $personapd2->id=$idpa2;
-                $personapd2->nombre_persona=$request->nombre_pd2;
-                $personapd2->apellido_persona=$request->apellido_pd2;
-                $personapd2->dui_pasaporte=$request->dui_pd2;
-                $personapd2->sexo=$request->sexo_pd2;
-                $personapd2->save();
+                $personap = new Persona();
+                $personap->id= $idm;
+                $personap->nombre_persona= $request->nombre_m;
+                $personap->apellido_persona=$request->apellido_m;
+                $personap->dui_pasaporte=$request->dui_m;
+                $personap->sexo='F';
+                $personap->fecha_nacimiento=$request->nacimientom;
+                $personap->idzonaa=$request->idzonam;  //zona madre
+                $personap->idiglesia=$request->idiglesiam; //iglesia madre
+                $personap->estado=1; //estado
+                $personap->save();
 
-                $personapd3=new Persona();
-                $personapd3->id=$idpa3;
-                $personapd3->nombre_persona=$request->nombre_pd3;
-                $personapd3->apellido_persona=$request->apellido_pd3;
-                $personapd3->dui_pasaporte=$request->dui_pd3;
-                $personapd3->sexo=$request->sexo_pd3;
-                $personapd3->save();
-
-                $personapd4=new Persona();
-                $personapd4->id=$idpa4;
-                $personapd4->nombre_persona=$request->nombre_pd4;
-                $personapd4->apellido_persona=$request->apellido_pd4;
-                $personapd4->dui_pasaporte=$request->dui_pd4;
-                $personapd4->sexo=$request->sexo_pd4;
-                $personapd4->save();
-
-                $persona_reali = new Persona();
-                $persona_reali->id = $idreali;
-                $persona_reali->nombre_persona = $request->nombre_reali;
-                $persona_reali->apellido_persona = $request->apellido_reali;
-                $persona_reali->fecha_nacimiento = $request->nacimiento;
-                $persona_reali->dui_pasaporte = $request->dui_reali;
-                $persona_reali->sexo = $request->sexo;
-                $persona_reali->id_madre = $request->id_m;
-                $persona_reali->id_padre = $request->id_p;
-                $persona_reali->save();
+                $personareali = new Persona();
+                $personareali->id=$idreali;
+                $personareali->nombre_persona= $request->nombre_reali;
+                $personareali->apellido_persona=$request->apellido_reali;
+                $personareali->dui_pasaporte=$request->dui_reali;
+                $personareali->sexo=$request->sexo;
+                $personareali->fecha_nacimiento=$request->nacimiento;
+                $personareali->idzonaa=$request->idzonar;  //zona realizante
+                $personareali->idiglesia=$request->idiglesiar; //zona realizante
+                $personareali->estado=1; //estado
+                $personareali->id_madre=$idm;
+                $personareali->id_padre=$idp;
+                $personareali->save();
 
                 $partida = new PartidaNacimiento();
-                $partida->id = $idp;
-                $partida->alcaldia = $request->alcaldia;
-                $partida->libro = $request->libro;
-                $partida->partida = $request->partida;
-                $partida->folio = $request->folio;
-                $partida->ano = $request->ano;
-                $partida->idpersona = $idreali;
-                $partida->save();
+                $partida->id=$idpartida;
+                $partida->alcaldia= $request->alcaldia;
+                $partida->libro=$request->libro;
+                $partida->partida=$request->partida;
+                $partida->folio=$request->folio;
+                $partida->ano=$request->ano;
+                $partida->idpersona=$idreali;
+                $partida->save();    
 
                 $bautizo = new Sacramentos3();
                 $bautizo->id = $idsacramento;
@@ -362,78 +332,49 @@ class BautizoController extends Controller
                 $bautizo->fecha_realizacion = $request->fecha;
                 $bautizo->id_realizante1 = $idreali;
                 $bautizo->id_sacerdote = $request->sacerdote;
-                $bautizo->id_padrino = $request->id_pd1;
-                $bautizo->id_padrino2 = $idpa2;
-                $bautizo->id_padrino3 = $idpa3;
-                $bautizo->id_padrino4 = $idpa4;
-                $bautizo->titulo = $request->titulo;
+                $bautizo->titulo=$request->titulo;
+                $bautizo->id_iglesia=$request->idiglesia;
                 $bautizo->save();
                 break;
             }
             case '5':{
-                $id_persona=Persona::max('id');
-                $idpa=$id_persona+1;
-                $idpa3=$idpa+1;
-                $idpa4=$idpa3+1;
-                $idreali = $idpa4+1;
-                $idsacra = Sacramentos3::max('id');
-                $idsacramento = $idsacra+1;
-                $idpartida = PartidaNacimiento::max('id');
-                $idp = $idpartida+1;
+                $id_persona = Persona::max('id');
+                $idreali=$id_persona+1;
+                $idpartida_p= PartidaNacimiento::max('id');
+                $idpartida=$idpartida_p+1;
                 $monto_p= Efectivo::max('id');
                 $montos=$monto_p+1;
 
                 $efectivo = new Efectivo();
                 $efectivo->id=$montos;
-                $efectivo->descripcion_efectivo='BAUTISMO';
+                $efectivo->descripcion_efectivo='BAUTIZO';
                 $efectivo->idcare=$request->idcate;
                 $efectivo->tipo= 1;
                 $efectivo->monto=$request->monto;
                 $efectivo->fecha= new \DateTime();
                 $efectivo->save();
 
-                $personap=new Persona();
-                $personap->id=$idpa;
-                $personap->nombre_persona=$request->nombre_p;
-                $personap->apellido_persona=$request->apellido_p;
-                $personap->dui_pasaporte=$request->dui_p;
-                $personap->save();
-
-                $personapd3=new Persona();
-                $personapd3->id=$idpa3;
-                $personapd3->nombre_persona=$request->nombre_pd3;
-                $personapd3->apellido_persona=$request->apellido_pd3;
-                $personapd3->dui_pasaporte=$request->dui_pd3;
-                $personapd3->sexo=$request->sexo_pd3;
-                $personapd3->save();
-
-                $personapd4=new Persona();
-                $personapd4->id=$idpa4;
-                $personapd4->nombre_persona=$request->nombre_pd4;
-                $personapd4->apellido_persona=$request->apellido_pd4;
-                $personapd4->dui_pasaporte=$request->dui_pd4;
-                $personapd4->sexo=$request->sexo_pd4;
-                $personapd4->save();
-
-                $persona_reali = new Persona();
-                $persona_reali->id = $idreali;
-                $persona_reali->nombre_persona = $request->nombre_reali;
-                $persona_reali->apellido_persona = $request->apellido_reali;
-                $persona_reali->fecha_nacimiento = $request->nacimiento;
-                $persona_reali->dui_pasaporte = $request->dui_reali;
-                $persona_reali->sexo = $request->sexo;
-                $persona_reali->id_madre = $request->id_m;
-                $persona_reali->id_padre = $idpa;
-                $persona_reali->save();
-
+                $personareali = new Persona();
+                $personareali->id=$idreali;
+                $personareali->nombre_persona= $request->nombre_reali;
+                $personareali->apellido_persona=$request->apellido_reali;
+                $personareali->dui_pasaporte=$request->dui_reali;
+                $personareali->sexo=$request->sexo;
+                $personareali->fecha_nacimiento=$request->nacimiento;
+                $personareali->idzonaa=$request->idzonar;  //zona realizante
+                $personareali->idiglesia=$request->idiglesiar; //zona realizante
+                $personareali->estado=1; //estado
+                $personareali->id_padre=$request->id_p;
+                $personareali->save();
+        
                 $partida = new PartidaNacimiento();
-                $partida->id = $idp;
-                $partida->alcaldia = $request->alcaldia;
-                $partida->libro = $request->libro;
-                $partida->partida = $request->partida;
-                $partida->folio = $request->folio;
-                $partida->ano = $request->ano;
-                $partida->idpersona = $idreali;
+                $partida->id=$idpartida;
+                $partida->alcaldia= $request->alcaldia;
+                $partida->libro=$request->libro;
+                $partida->partida=$request->partida;
+                $partida->folio=$request->folio;
+                $partida->ano=$request->ano;
+                $partida->idpersona=$idreali;
                 $partida->save();
 
                 $bautizo = new Sacramentos3();
@@ -445,70 +386,49 @@ class BautizoController extends Controller
                 $bautizo->fecha_realizacion = $request->fecha;
                 $bautizo->id_realizante1 = $idreali;
                 $bautizo->id_sacerdote = $request->sacerdote;
-                $bautizo->id_padrino = $request->id_pd1;
-                $bautizo->id_padrino2 = $request->id_pd2;
-                $bautizo->id_padrino3 = $idpa3;
-                $bautizo->id_padrino4 = $idpa4;
-                $bautizo->titulo = $request->titulo;
+                $bautizo->titulo=$request->titulo;
+                $bautizo->id_iglesia=$request->idiglesia;
                 $bautizo->save();
                 break;
             }
             case '6':{
-                $id_persona=Persona::max('id');
-                $idpa=$id_persona+1;
-                $idpa4=$idpa+1;
-                $idreali = $idpa4+1;
-                $idsacra = Sacramentos3::max('id');
-                $idsacramento = $idsacra+1;
-                $idpartida = PartidaNacimiento::max('id');
-                $idp = $idpartida+1;
+                $id_persona = Persona::max('id');
+                $idreali=$id_persona+1;
+                $idpartida_p= PartidaNacimiento::max('id');
+                $idpartida=$idpartida_p+1;
                 $monto_p= Efectivo::max('id');
                 $montos=$monto_p+1;
 
                 $efectivo = new Efectivo();
                 $efectivo->id=$montos;
-                $efectivo->descripcion_efectivo='BAUTISMO';
+                $efectivo->descripcion_efectivo='BAUTIZO';
                 $efectivo->idcare=$request->idcate;
                 $efectivo->tipo= 1;
                 $efectivo->monto=$request->monto;
                 $efectivo->fecha= new \DateTime();
                 $efectivo->save();
 
-
-                $personap=new Persona();
-                $personap->id=$idpa;
-                $personap->nombre_persona=$request->nombre_p;
-                $personap->apellido_persona=$request->apellido_p;
-                $personap->dui_pasaporte=$request->dui_p;
-                $personap->save();
-
-                $personapd4=new Persona();
-                $personapd4->id=$idpa4;
-                $personapd4->nombre_persona=$request->nombre_pd4;
-                $personapd4->apellido_persona=$request->apellido_pd4;
-                $personapd4->dui_pasaporte=$request->dui_pd4;
-                $personapd4->sexo=$request->sexo_pd4;
-                $personapd4->save();
-
-                $persona_reali = new Persona();
-                $persona_reali->id = $idreali;
-                $persona_reali->nombre_persona = $request->nombre_reali;
-                $persona_reali->apellido_persona = $request->apellido_reali;
-                $persona_reali->fecha_nacimiento = $request->nacimiento;
-                $persona_reali->dui_pasaporte = $request->dui_reali;
-                $persona_reali->sexo = $request->sexo;
-                $persona_reali->id_madre = $request->id_m;
-                $persona_reali->id_padre = $idpa;
-                $persona_reali->save();
-
+                $personareali = new Persona();
+                $personareali->id=$idreali;
+                $personareali->nombre_persona= $request->nombre_reali;
+                $personareali->apellido_persona=$request->apellido_reali;
+                $personareali->dui_pasaporte=$request->dui_reali;
+                $personareali->sexo=$request->sexo;
+                $personareali->fecha_nacimiento=$request->nacimiento;
+                $personareali->idzonaa=$request->idzonar;  //zona realizante
+                $personareali->idiglesia=$request->idiglesiar; //zona realizante
+                $personareali->estado=1; //estado
+                $personareali->id_madre=$request->id_m;
+                $personareali->save();
+        
                 $partida = new PartidaNacimiento();
-                $partida->id = $idp;
-                $partida->alcaldia = $request->alcaldia;
-                $partida->libro = $request->libro;
-                $partida->partida = $request->partida;
-                $partida->folio = $request->folio;
-                $partida->ano = $request->ano;
-                $partida->idpersona = $idreali;
+                $partida->id=$idpartida;
+                $partida->alcaldia= $request->alcaldia;
+                $partida->libro=$request->libro;
+                $partida->partida=$request->partida;
+                $partida->folio=$request->folio;
+                $partida->ano=$request->ano;
+                $partida->idpersona=$idreali;
                 $partida->save();
 
                 $bautizo = new Sacramentos3();
@@ -520,89 +440,51 @@ class BautizoController extends Controller
                 $bautizo->fecha_realizacion = $request->fecha;
                 $bautizo->id_realizante1 = $idreali;
                 $bautizo->id_sacerdote = $request->sacerdote;
-                $bautizo->id_padrino = $request->id_pd1;
-                $bautizo->id_padrino2 = $request->id_pd2;
-                $bautizo->id_padrino3 = $request->id_pd3;
-                $bautizo->id_padrino4 = $idpa4;
-                $bautizo->titulo = $request->titulo;
+                $bautizo->titulo=$request->titulo;
+                $bautizo->id_iglesia=$request->idiglesia;
                 $bautizo->save();
                 break;
             }
             case '7':{
                 $id_persona=Persona::max('id');
-                $idpa=$id_persona+1;
-                $idpa2=$idpa+1;
-                $idpa3=$idpa2+1;
-                $idpa4=$idpa3+1;
-                $idreali = $idpa4+1;
-                $idsacra = Sacramentos3::max('id');
-                $idsacramento = $idsacra+1;
-                $idpartida = PartidaNacimiento::max('id');
-                $idp = $idpartida+1;
+                $idreali = $id_persona+1;
+                $idpartida_p = PartidaNacimiento::max('id');
+                $idpartida = $idpartida_p+1;
                 $monto_p= Efectivo::max('id');
                 $montos=$monto_p+1;
 
                 $efectivo = new Efectivo();
                 $efectivo->id=$montos;
-                $efectivo->descripcion_efectivo='BAUTISMO';
+                $efectivo->descripcion_efectivo='BAUTIZO';
                 $efectivo->idcare=$request->idcate;
                 $efectivo->tipo= 1;
                 $efectivo->monto=$request->monto;
                 $efectivo->fecha= new \DateTime();
                 $efectivo->save();
 
-                $personap=new Persona();
-                $personap->id=$idpa;
-                $personap->nombre_persona=$request->nombre_p;
-                $personap->apellido_persona=$request->apellido_p;
-                $personap->dui_pasaporte=$request->dui_p;
-                $personap->save();
-
-                $personapd2=new Persona();
-                $personapd2->id=$idpa2;
-                $personapd2->nombre_persona=$request->nombre_pd2;
-                $personapd2->apellido_persona=$request->apellido_pd2;
-                $personapd2->dui_pasaporte=$request->dui_pd2;
-                $personapd2->sexo=$request->sexo_pd2;
-                $personapd2->save();
-
-                $personapd3=new Persona();
-                $personapd3->id=$idpa3;
-                $personapd3->nombre_persona=$request->nombre_pd3;
-                $personapd3->apellido_persona=$request->apellido_pd3;
-                $personapd3->dui_pasaporte=$request->dui_pd3;
-                $personapd3->sexo=$request->sexo_pd3;
-                $personapd3->save();
-
-                $personapd4=new Persona();
-                $personapd4->id=$idpa4;
-                $personapd4->nombre_persona=$request->nombre_pd4;
-                $personapd4->apellido_persona=$request->apellido_pd4;
-                $personapd4->dui_pasaporte=$request->dui_pd4;
-                $personapd4->sexo=$request->sexo_pd4;
-                $personapd4->save();
-
-                $persona_reali = new Persona();
-                $persona_reali->id = $idreali;
-                $persona_reali->nombre_persona = $request->nombre_reali;
-                $persona_reali->apellido_persona = $request->apellido_reali;
-                $persona_reali->fecha_nacimiento = $request->nacimiento;
-                $persona_reali->dui_pasaporte = $request->dui_reali;
-                $persona_reali->sexo = $request->sexo;
-                $persona_reali->id_madre = $request->id_m;
-                $persona_reali->id_padre = $idpa;
-                $persona_reali->save();
-
+        
+                $personareali = new Persona();
+                $personareali->id=$idreali;
+                $personareali->nombre_persona= $request->nombre_reali;
+                $personareali->apellido_persona=$request->apellido_reali;
+                $personareali->dui_pasaporte=$request->dui_reali;
+                $personareali->sexo=$request->sexo;
+                $personareali->fecha_nacimiento=$request->nacimiento;
+                $personareali->idzonaa=$request->idzonar;  //zona realizante
+                $personareali->idiglesia=$request->idiglesiar; //zona realizante
+                $personareali->estado=1; //estado
+                $personareali->save();
+        
                 $partida = new PartidaNacimiento();
-                $partida->id = $idp;
-                $partida->alcaldia = $request->alcaldia;
-                $partida->libro = $request->libro;
-                $partida->partida = $request->partida;
-                $partida->folio = $request->folio;
-                $partida->ano = $request->ano;
-                $partida->idpersona = $idreali;
+                $partida->id=$idpartida;
+                $partida->alcaldia= $request->alcaldia;
+                $partida->libro=$request->libro;
+                $partida->partida=$request->partida;
+                $partida->folio=$request->folio;
+                $partida->ano=$request->ano;
+                $partida->idpersona=$idreali;
                 $partida->save();
-
+        
                 $bautizo = new Sacramentos3();
                 $bautizo->id = $idsacramento;
                 $bautizo->tipo_sacramento=$tiposacra;
@@ -612,28 +494,23 @@ class BautizoController extends Controller
                 $bautizo->fecha_realizacion = $request->fecha;
                 $bautizo->id_realizante1 = $idreali;
                 $bautizo->id_sacerdote = $request->sacerdote;
-                $bautizo->id_padrino = $request->id_pd1;
-                $bautizo->id_padrino2 = $idpa2;
-                $bautizo->id_padrino3 = $idpa3;
-                $bautizo->id_padrino4 = $idpa4;
-                $bautizo->titulo = $request->titulo;
+                $bautizo->titulo=$request->titulo;
+                $bautizo->id_iglesia=$request->idiglesia;
                 $bautizo->save();
                 break;
             }
-            case '8':{
-                $id_persona=Persona::max('id');
-                $idpa=$id_persona+1;
-                $idreali = $idpa+1;
-                $idsacra = Sacramentos3::max('id');
-                $idsacramento = $idsacra+1;
-                $idpartida = PartidaNacimiento::max('id');
-                $idp = $idpartida+1;
+            case '8':{ //               REVISAR ESTE CASO PORQUE SE DEBEN INGRESAR DATOS SOLO DE MAMÁ (NO DE PAPÁ)
+                $id_persona = Persona::max('id');
+                $idm=$id_persona+1;
+                $idreali=$idm+1;
+                $idpartida_p= PartidaNacimiento::max('id');
+                $idpartida=$idpartida_p+1;
                 $monto_p= Efectivo::max('id');
                 $montos=$monto_p+1;
 
                 $efectivo = new Efectivo();
                 $efectivo->id=$montos;
-                $efectivo->descripcion_efectivo='BAUTISMO';
+                $efectivo->descripcion_efectivo='BAUTIZO';
                 $efectivo->idcare=$request->idcate;
                 $efectivo->tipo= 1;
                 $efectivo->monto=$request->monto;
@@ -641,10 +518,15 @@ class BautizoController extends Controller
                 $efectivo->save();
 
                 $personap=new Persona();
-                $personap->id=$idpa;
-                $personap->nombre_persona=$request->nombre_p;
-                $personap->apellido_persona=$request->apellido_p;
-                $personap->dui_pasaporte=$request->dui_p;
+                $personap->id=$idm;
+                $personap->nombre_persona=$request->nombre_m; 
+                $personap->apellido_persona=$request->apellido_m;
+                $personap->dui_pasaporte=$request->dui_m;
+                $personap->sexo='F';
+                $personap->fecha_nacimiento=$request->nacimientom;
+                $personap->idzonaa=$request->idzonam;  //zona madre
+                $personap->idiglesia=$request->idiglesiam; //iglesia madre
+                $personap->estado=1; //estado
                 $personap->save();
 
                 $persona_reali = new Persona();
@@ -654,17 +536,21 @@ class BautizoController extends Controller
                 $persona_reali->fecha_nacimiento = $request->nacimiento;
                 $persona_reali->dui_pasaporte = $request->dui_reali;
                 $persona_reali->sexo = $request->sexo;
-                $persona_reali->id_madre = $request->id_m;
-                $persona_reali->id_padre = $idpa;
+                $persona_reali->idzonaa=$request->idzonar;  //zona realizante
+                $persona_reali->idiglesia=$request->idiglesiar; //zona realizante
+                $persona_reali->estado=1; //estado
+                $persona_reali->id_madre = $idm;
                 $persona_reali->save();
 
                 $partida = new PartidaNacimiento();
-                $partida->id = $idp;
+                $partida->id = $idpartida;
                 $partida->alcaldia = $request->alcaldia;
                 $partida->libro = $request->libro;
                 $partida->partida = $request->partida;
                 $partida->folio = $request->folio;
                 $partida->ano = $request->ano;
+                $partida->libro = $request->libro;
+                $partida->partida = $request->partida;
                 $partida->idpersona = $idreali;
                 $partida->save();
 
@@ -677,60 +563,62 @@ class BautizoController extends Controller
                 $bautizo->fecha_realizacion = $request->fecha;
                 $bautizo->id_realizante1 = $idreali;
                 $bautizo->id_sacerdote = $request->sacerdote;
-                $bautizo->id_padrino = $request->id_pd1;
-                $bautizo->id_padrino2 = $request->id_pd2;
-                $bautizo->id_padrino3 = $request->id_pd3;
-                $bautizo->id_padrino4 = $request->id_pd4;
-                $bautizo->titulo = $request->titulo;
+                $bautizo->titulo=$request->titulo;
+                $bautizo->id_iglesia=$request->idiglesia;
                 $bautizo->save();
                 break;
             }
             case '9':{
-                $id_persona=Persona::max('id');
-                $idma=$id_persona+1;
-                $idreali = $idma+1;
-                $idsacra = Sacramentos3::max('id');
-                $idsacramento = $idsacra+1;
-                $idpartida = PartidaNacimiento::max('id');
-                $idp = $idpartida+1;
+                $id_persona = Persona::max('id');
+                $idp=$id_persona+1;
+                $idreali=$idp+1;
+                $idpartida_p= PartidaNacimiento::max('id');
+                $idpartida=$idpartida_p+1;
                 $monto_p= Efectivo::max('id');
                 $montos=$monto_p+1;
 
                 $efectivo = new Efectivo();
                 $efectivo->id=$montos;
-                $efectivo->descripcion_efectivo='BAUTISMO';
+                $efectivo->descripcion_efectivo='BAUTIZO';
                 $efectivo->idcare=$request->idcate;
                 $efectivo->tipo= 1;
                 $efectivo->monto=$request->monto;
                 $efectivo->fecha= new \DateTime();
                 $efectivo->save();
 
-                $personam=new Persona();
-                $personam->id=$idma;
-                $personam->nombre_persona=$request->nombre_m;
-                $personam->apellido_persona=$request->apellido_m;
-                $personam->dui_pasaporte=$request->dui_m;
-                $personam->save();
+                $personap = new Persona();
+                $personap->id= $idp;
+                $personap->nombre_persona= $request->nombre_p;
+                $personap->apellido_persona=$request->apellido_p;
+                $personap->dui_pasaporte=$request->dui_p;
+                $personap->sexo='M';
+                $personap->fecha_nacimiento=$request->nacimientop;
+                $personap->idzonaa=$request->idzonap;  //zona padre
+                $personap->idiglesia=$request->idiglesiap; //iglesia padre
+                $personap->estado=1; //estado
+                $personap->save();
 
-                $persona_reali = new Persona();
-                $persona_reali->id = $idreali;
-                $persona_reali->nombre_persona = $request->nombre_reali;
-                $persona_reali->apellido_persona = $request->apellido_reali;
-                $persona_reali->fecha_nacimiento = $request->nacimiento;
-                $persona_reali->dui_pasaporte = $request->dui_reali;
-                $persona_reali->sexo = $request->sexo;
-                $persona_reali->id_madre = $idma;
-                $persona_reali->id_padre = $request->id_p;
-                $persona_reali->save();
+                $personareali = new Persona();
+                $personareali->id=$idreali;
+                $personareali->nombre_persona= $request->nombre_reali;
+                $personareali->apellido_persona=$request->apellido_reali;
+                $personareali->dui_pasaporte=$request->dui_reali;
+                $personareali->sexo=$request->sexo;
+                $personareali->fecha_nacimiento=$request->nacimiento;
+                $personareali->idzonaa=$request->idzonar;  //zona realizante
+                $personareali->idiglesia=$request->idiglesiar; //zona realizante
+                $personareali->estado=1; //estado
+                $personareali->id_padre=$idp;
+                $personareali->save();
 
                 $partida = new PartidaNacimiento();
-                $partida->id = $idp;
-                $partida->alcaldia = $request->alcaldia;
-                $partida->libro = $request->libro;
-                $partida->partida = $request->partida;
-                $partida->folio = $request->folio;
-                $partida->ano = $request->ano;
-                $partida->idpersona = $idreali;
+                $partida->id=$idpartida;
+                $partida->alcaldia= $request->alcaldia;
+                $partida->libro=$request->libro;
+                $partida->partida=$request->partida;
+                $partida->folio=$request->folio;
+                $partida->ano=$request->ano;
+                $partida->idpersona=$idreali;
                 $partida->save();
 
                 $bautizo = new Sacramentos3();
@@ -742,2008 +630,607 @@ class BautizoController extends Controller
                 $bautizo->fecha_realizacion = $request->fecha;
                 $bautizo->id_realizante1 = $idreali;
                 $bautizo->id_sacerdote = $request->sacerdote;
+                $bautizo->titulo=$request->titulo;
+                $bautizo->id_iglesia=$request->idiglesia;
+                $bautizo->save();
+                break;
+            }  
+           
+        }
+        switch($tipop){
+            case '1':{
+                $bautizo = Sacramentos3::findOrFail($idsacramento);
                 $bautizo->id_padrino = $request->id_pd1;
                 $bautizo->id_padrino2 = $request->id_pd2;
                 $bautizo->id_padrino3 = $request->id_pd3;
                 $bautizo->id_padrino4 = $request->id_pd4;
-                $bautizo->titulo = $request->titulo;
                 $bautizo->save();
-                break;
+            break;
+            }
+            case '2':{
+                $id_persona = Persona::max('id');
+                $idp=$id_persona+1;
+
+                $personapa = new Persona();
+                $personapa->id= $idp;
+                $personapa->nombre_persona= $request->nombre_pd1;
+                $personapa->apellido_persona=$request->apellido_pd1;
+                $personapa->dui_pasaporte=$request->dui_pd1;
+                $personapa->sexo=$request->sexo_pd1;
+                $personapa->fecha_nacimiento=$request->nacimientopad1;
+                $personapa->idzonaa=$request->idzonap1;//zona padrino 1
+                $personapa->idiglesia=$request->idiglesiap1;//iglesia padrino 1
+                $personapa->estado=1; //estado 
+                $personapa->save();
+
+                $bautizo = Sacramentos3::findOrFail($idsacramento);
+                $bautizo->id_padrino = $idp;
+                $bautizo->id_padrino2 = $request->id_pd2;
+                $bautizo->id_padrino3 = $request->id_pd3;
+                $bautizo->id_padrino4 = $request->id_pd4;
+                $bautizo->save();
+            break;
+            }
+            case '3':{
+                $id_persona= Persona::max('id');
+                $idp1=$id_persona+1;
+                $idp2=$idp1+1;
+
+                $personapa = new Persona();
+                $personapa->id= $idp1;
+                $personapa->nombre_persona= $request->nombre_pd1;
+                $personapa->apellido_persona=$request->apellido_pd1;
+                $personapa->dui_pasaporte=$request->dui_pd1;
+                $personapa->sexo=$request->sexo_pd1;
+                $personapa->fecha_nacimiento=$request->nacimientopad1;
+                $personapa->idzonaa=$request->idzonap1;//zona padrino 1
+                $personapa->idiglesia=$request->idiglesiap1;//iglesia padrino 1
+                $personapa->estado=1; //estado 
+                $personapa->save();
+
+                $personapa = new Persona();
+                $personapa->id= $idp2;
+                $personapa->nombre_persona= $request->nombre_pd2;
+                $personapa->apellido_persona=$request->apellido_pd2;
+                $personapa->dui_pasaporte=$request->dui_pd2;
+                $personapa->sexo=$request->sexo_pd2;
+                $personapa->fecha_nacimiento=$request->nacimientopad2;
+                $personapa->idzonaa=$request->idzonap2;//zona padrino 2
+                $personapa->idiglesia=$request->idiglesiap2;//iglesia padrino 2
+                $personapa->estado=1; //estado 
+                $personapa->save();
+
+                $bautizo = Sacramentos3::findOrFail($idsacramento);
+                $bautizo->id_padrino = $idp1;
+                $bautizo->id_padrino2 = $idp2;
+                $bautizo->id_padrino3 = $request->id_pd3;
+                $bautizo->id_padrino4 = $request->id_pd4;
+                $bautizo->save();
+            break;
+            }
+            case '4':{
+                $id_persona = Persona::max('id');
+                $idp=$id_persona+1;
+
+                $personapa = new Persona();
+                $personapa->id= $idp;
+                $personapa->nombre_persona= $request->nombre_pd2;
+                $personapa->apellido_persona=$request->apellido_pd2;
+                $personapa->dui_pasaporte=$request->dui_pd2;
+                $personapa->sexo=$request->sexo_pd2;
+                $personapa->fecha_nacimiento=$request->nacimientopad2;
+                $personapa->idzonaa=$request->idzonap2;//zona padrino 2
+                $personapa->idiglesia=$request->idiglesiap2;//iglesia padrino 2
+                $personapa->estado=1; //estado 
+                $personapa->save();
+
+                $bautizo = Sacramentos3::findOrFail($idsacramento);
+                $bautizo->id_padrino = $request->id_pd1;
+                $bautizo->id_padrino2 = $idp;
+                $bautizo->id_padrino3 = $request->id_pd3;
+                $bautizo->id_padrino4 = $request->id_pd4;
+                $bautizo->save();
+            break;
+            }
+            case '5':{
+                $id_persona = Persona::max('id');
+                $idp=$id_persona+1;
+
+                $personapa = new Persona();
+                $personapa->id= $idp;
+                $personapa->nombre_persona= $request->nombre_pd3;
+                $personapa->apellido_persona=$request->apellido_pd3;
+                $personapa->dui_pasaporte=$request->dui_pd3;
+                $personapa->sexo=$request->sexo_pd3;
+                $personapa->fecha_nacimiento=$request->nacimientopad3;
+                $personapa->idzonaa=$request->idzonap3;//zona padrino 3
+                $personapa->idiglesia=$request->idiglesiap3;//iglesia padrino 3
+                $personapa->estado=1; //estado 
+                $personapa->save();
+
+                $bautizo = Sacramentos3::findOrFail($idsacramento);
+                $bautizo->id_padrino = $request->id_pd1;
+                $bautizo->id_padrino2 = $request->id_pd2;
+                $bautizo->id_padrino3 = $idp;
+                $bautizo->id_padrino4 = $request->id_pd4;
+                $bautizo->save();
+            break;
+            }
+            case '6':{
+                $id_persona= Persona::max('id');
+                $idp1=$id_persona+1;
+                $idp3=$idp1+1;
+
+                $personapa = new Persona();
+                $personapa->id= $idp1;
+                $personapa->nombre_persona= $request->nombre_pd1;
+                $personapa->apellido_persona=$request->apellido_pd1;
+                $personapa->dui_pasaporte=$request->dui_pd1;
+                $personapa->sexo=$request->sexo_pd1;
+                $personapa->fecha_nacimiento=$request->nacimientopad1;
+                $personapa->idzonaa=$request->idzonap1;//zona padrino 1
+                $personapa->idiglesia=$request->idiglesiap1;//iglesia padrino 1
+                $personapa->estado=1; //estado 
+                $personapa->save();
+
+                $personapa = new Persona();
+                $personapa->id= $idp3;
+                $personapa->nombre_persona= $request->nombre_pd3;
+                $personapa->apellido_persona=$request->apellido_pd3;
+                $personapa->dui_pasaporte=$request->dui_pd3;
+                $personapa->sexo=$request->sexo_pd3;
+                $personapa->fecha_nacimiento=$request->nacimientopad3;
+                $personapa->idzonaa=$request->idzonap3;//zona padrino 3
+                $personapa->idiglesia=$request->idiglesiap3;//iglesia padrino 3
+                $personapa->estado=1; //estado 
+                $personapa->save();
+
+                $bautizo = Sacramentos3::findOrFail($idsacramento);
+                $bautizo->id_padrino = $idp1;
+                $bautizo->id_padrino2 = $request->id_pd2;
+                $bautizo->id_padrino3 = $idp3;
+                $bautizo->id_padrino4 = $request->id_pd4;
+                $bautizo->save();
+            break;
+            }
+            case '7':{
+                $id_persona= Persona::max('id');
+                $idp1=$id_persona+1;
+                $idp2=$idp1+1;
+
+                $personapa = new Persona();
+                $personapa->id= $idp1;
+                $personapa->nombre_persona= $request->nombre_pd2;
+                $personapa->apellido_persona=$request->apellido_pd2;
+                $personapa->dui_pasaporte=$request->dui_pd2;
+                $personapa->sexo=$request->sexo_pd2;
+                $personapa->fecha_nacimiento=$request->nacimientopad2;
+                $personapa->idzonaa=$request->idzonap2;//zona padrino 2
+                $personapa->idiglesia=$request->idiglesiap2;//iglesia padrino 2
+                $personapa->estado=1; //estado 
+                $personapa->save();
+
+                $personapa = new Persona();
+                $personapa->id= $idp2;
+                $personapa->nombre_persona= $request->nombre_pd3;
+                $personapa->apellido_persona=$request->apellido_pd3;
+                $personapa->dui_pasaporte=$request->dui_pd3;
+                $personapa->sexo=$request->sexo_pd3;
+                $personapa->fecha_nacimiento=$request->nacimientopad3;
+                $personapa->idzonaa=$request->idzonap3;//zona padrino 3
+                $personapa->idiglesia=$request->idiglesiap3;//iglesia padrino 3
+                $personapa->estado=1; //estado 
+                $personapa->save();
+
+                $bautizo = Sacramentos3::findOrFail($idsacramento);
+                $bautizo->id_padrino = $request->id_pd1;
+                $bautizo->id_padrino2 = $idp1;
+                $bautizo->id_padrino3 = $idp2;
+                $bautizo->id_padrino4 = $request->id_pd4;
+                $bautizo->save();
+            break;
+            }
+            case '8':{
+                $id_persona= Persona::max('id');
+                $idp2=$idp1+1;
+                $idp3=$idp2+1;
+                $idp4=$idp3+1;
+
+                $personapa = new Persona();
+                $personapa->id= $idp1;
+                $personapa->nombre_persona= $request->nombre_pd1;
+                $personapa->apellido_persona=$request->apellido_pd1;
+                $personapa->dui_pasaporte=$request->dui_pd1;
+                $personapa->sexo=$request->sexo_pd1;
+                $personapa->fecha_nacimiento=$request->nacimientopad1;
+                $personapa->idzonaa=$request->idzonap1;//zona padrino 1
+                $personapa->idiglesia=$request->idiglesiap1;//iglesia padrino 1
+                $personapa->estado=1; //estado 
+                $personapa->save();
+
+                $personapa = new Persona();
+                $personapa->id= $idp2;
+                $personapa->nombre_persona= $request->nombre_pd2;
+                $personapa->apellido_persona=$request->apellido_pd2;
+                $personapa->dui_pasaporte=$request->dui_pd2;
+                $personapa->sexo=$request->sexo_pd2;
+                $personapa->fecha_nacimiento=$request->nacimientopad2;
+                $personapa->idzonaa=$request->idzonap2;//zona padrino 2
+                $personapa->idiglesia=$request->idiglesiap2;//iglesia padrino 2
+                $personapa->estado=1; //estado 
+                $personapa->save();
+
+                $personapa = new Persona();
+                $personapa->id= $idp3;
+                $personapa->nombre_persona= $request->nombre_pd3;
+                $personapa->apellido_persona=$request->apellido_pd3;
+                $personapa->dui_pasaporte=$request->dui_pd3;
+                $personapa->sexo=$request->sexo_pd3;
+                $personapa->fecha_nacimiento=$request->nacimientopad3;
+                $personapa->idzonaa=$request->idzonap3;//zona padrino 3
+                $personapa->idiglesia=$request->idiglesiap3;//iglesia padrino 3
+                $personapa->estado=1; //estado 
+                $personapa->save();
+
+                $bautizo = Sacramentos3::findOrFail($idsacramento);
+                $bautizo->id_padrino = $idp1;
+                $bautizo->id_padrino2 = $idp2;
+                $bautizo->id_padrino3 = $idp3;
+                $bautizo->id_padrino4 = $request->id_pd4;
+                $bautizo->save();
+            break;
+            }
+            case '9':{
+                $id_persona= Persona::max('id');
+                $idp1=$id_persona+1;
+                $idp2=$idp1+1;
+                $idp3=$idp2+1;
+                $idp4=$idp3+1;
+
+                $personapa = new Persona();
+                $personapa->id= $idp1;
+                $personapa->nombre_persona= $request->nombre_pd1;
+                $personapa->apellido_persona=$request->apellido_pd1;
+                $personapa->dui_pasaporte=$request->dui_pd1;
+                $personapa->sexo=$request->sexo_pd1;
+                $personapa->fecha_nacimiento=$request->nacimientopad1;
+                $personapa->idzonaa=$request->idzonap1;//zona padrino 1
+                $personapa->idiglesia=$request->idiglesiap1;//iglesia padrino 1
+                $personapa->estado=1; //estado 
+                $personapa->save();
+
+                $personapa = new Persona();
+                $personapa->id= $idp2;
+                $personapa->nombre_persona= $request->nombre_pd2;
+                $personapa->apellido_persona=$request->apellido_pd2;
+                $personapa->dui_pasaporte=$request->dui_pd2;
+                $personapa->sexo=$request->sexo_pd2;
+                $personapa->fecha_nacimiento=$request->nacimientopad2;
+                $personapa->idzonaa=$request->idzonap2;//zona padrino 2
+                $personapa->idiglesia=$request->idiglesiap2;//iglesia padrino 2
+                $personapa->estado=1; //estado 
+                $personapa->save();
+
+                $personapa = new Persona();
+                $personapa->id= $idp3;
+                $personapa->nombre_persona= $request->nombre_pd3;
+                $personapa->apellido_persona=$request->apellido_pd3;
+                $personapa->dui_pasaporte=$request->dui_pd3;
+                $personapa->sexo=$request->sexo_pd3;
+                $personapa->fecha_nacimiento=$request->nacimientopad3;
+                $personapa->idzonaa=$request->idzonap3;//zona padrino 3
+                $personapa->idiglesia=$request->idiglesiap3;//iglesia padrino 3
+                $personapa->estado=1; //estado 
+                $personapa->save();
+
+                $personapa = new Persona();
+                $personapa->id= $idp4;
+                $personapa->nombre_persona= $request->nombre_pd4;
+                $personapa->apellido_persona=$request->apellido_pd4;
+                $personapa->dui_pasaporte=$request->dui_pd4;
+                $personapa->sexo=$request->sexo_pd4;
+                $personapa->fecha_nacimiento=$request->nacimientopad4;
+                $personapa->idzonaa=$request->idzonap4;//zona padrino 4
+                $personapa->idiglesia=$request->idiglesiap4;//iglesia padrino 4
+                $personapa->estado=1; //estado 
+                $personapa->save();
+
+                $bautizo = Sacramentos3::findOrFail($idsacramento);
+                $bautizo->id_padrino = $idp1;
+                $bautizo->id_padrino2 = $idp2;
+                $bautizo->id_padrino3 = $idp3;
+                $bautizo->id_padrino4 = $idp4;
+                $bautizo->save();
+            break;
             }
             case '10':{
-                $id_persona=Persona::max('id');
-                $idma=$id_persona+1;
-                $idpa4=$idma+1;
-                $idreali = $idpa4+1;
-                $idsacra = Sacramentos3::max('id');
-                $idsacramento = $idsacra+1;
-                $idpartida = PartidaNacimiento::max('id');
-                $idp = $idpartida+1;
-                $monto_p= Efectivo::max('id');
-                $montos=$monto_p+1;
+                $id_persona= Persona::max('id');
+                $idp2=$id_persona+1;
+                $idp3=$idp2+1;
+                $idp4=$idp3+1;
 
-                $efectivo = new Efectivo();
-                $efectivo->id=$montos;
-                $efectivo->descripcion_efectivo='BAUTISMO';
-                $efectivo->idcare=$request->idcate;
-                $efectivo->tipo= 1;
-                $efectivo->monto=$request->monto;
-                $efectivo->fecha= new \DateTime();
-                $efectivo->save();
+                $personapa = new Persona();
+                $personapa->id= $idp2;
+                $personapa->nombre_persona= $request->nombre_pd2;
+                $personapa->apellido_persona=$request->apellido_pd2;
+                $personapa->dui_pasaporte=$request->dui_pd2;
+                $personapa->sexo=$request->sexo_pd2;
+                $personapa->fecha_nacimiento=$request->nacimientopad2;
+                $personapa->idzonaa=$request->idzonap2;//zona padrino 2
+                $personapa->idiglesia=$request->idiglesiap2;//iglesia padrino 2
+                $personapa->estado=1; //estado 
+                $personapa->save();
 
-                $personam=new Persona();
-                $personam->id=$idma;
-                $personam->nombre_persona=$request->nombre_m;
-                $personam->apellido_persona=$request->apellido_m;
-                $personam->dui_pasaporte=$request->dui_m;
-                $personam->save();
+                $personapa = new Persona();
+                $personapa->id= $idp3;
+                $personapa->nombre_persona= $request->nombre_pd3;
+                $personapa->apellido_persona=$request->apellido_pd3;
+                $personapa->dui_pasaporte=$request->dui_pd3;
+                $personapa->sexo=$request->sexo_pd3;
+                $personapa->fecha_nacimiento=$request->nacimientopad3;
+                $personapa->idzonaa=$request->idzonap3;//zona padrino 3
+                $personapa->idiglesia=$request->idiglesiap3;//iglesia padrino 3
+                $personapa->estado=1; //estado 
+                $personapa->save();
 
-                $personapd4=new Persona();
-                $personapd4->id=$idpa4;
-                $personapd4->nombre_persona=$request->nombre_pd4;
-                $personapd4->apellido_persona=$request->apellido_pd4;
-                $personapd4->dui_pasaporte=$request->dui_pd4;
-                $personapd4->sexo=$request->sexo_pd4;
-                $personapd4->save();
+                $personapa = new Persona();
+                $personapa->id= $idp4;
+                $personapa->nombre_persona= $request->nombre_pd4;
+                $personapa->apellido_persona=$request->apellido_pd4;
+                $personapa->dui_pasaporte=$request->dui_pd4;
+                $personapa->sexo=$request->sexo_pd4;
+                $personapa->fecha_nacimiento=$request->nacimientopad4;
+                $personapa->idzonaa=$request->idzonap4;//zona padrino 4
+                $personapa->idiglesia=$request->idiglesiap4;//iglesia padrino 4
+                $personapa->estado=1; //estado 
+                $personapa->save();
 
-                $persona_reali = new Persona();
-                $persona_reali->id = $idreali;
-                $persona_reali->nombre_persona = $request->nombre_reali;
-                $persona_reali->apellido_persona = $request->apellido_reali;
-                $persona_reali->fecha_nacimiento = $request->nacimiento;
-                $persona_reali->dui_pasaporte = $request->dui_reali;
-                $persona_reali->sexo = $request->sexo;
-                $persona_reali->id_madre = $idma;
-                $persona_reali->id_padre = $request->id_p;
-                $persona_reali->save();
-
-                $partida = new PartidaNacimiento();
-                $partida->id = $idp;
-                $partida->alcaldia = $request->alcaldia;
-                $partida->libro = $request->libro;
-                $partida->partida = $request->partida;
-                $partida->folio = $request->folio;
-                $partida->ano = $request->ano;
-                $partida->idpersona = $idreali;
-                $partida->save();
-
-                $bautizo = new Sacramentos3();
-                $bautizo->id = $idsacramento;
-                $bautizo->tipo_sacramento=$tiposacra;
-                $bautizo->libro = $request->librob;
-                $bautizo->folio = $request->foliob;
-                $bautizo->asiento = $request->asiento;
-                $bautizo->fecha_realizacion = $request->fecha;
-                $bautizo->id_realizante1 = $idreali;
-                $bautizo->id_sacerdote = $request->sacerdote;
+                $bautizo = Sacramentos3::findOrFail($idsacramento);
                 $bautizo->id_padrino = $request->id_pd1;
-                $bautizo->id_padrino2 = $request->id_pd2;
-                $bautizo->id_padrino3 = $request->id_pd3;
-                $bautizo->id_padrino4 = $idpa4;
-                $bautizo->titulo = $request->titulo;
+                $bautizo->id_padrino2 = $idp2;
+                $bautizo->id_padrino3 = $idp3;
+                $bautizo->id_padrino4 = $idp4;
                 $bautizo->save();
-                break;
+            break;
             }
             case '11':{
-                $id_persona=Persona::max('id');
-                $idma=$id_persona+1;
-                $idpa3=$idma+1;
-                $idpa4=$idpa3+1;
-                $idreali = $idpa4+1;
-                $idsacra = Sacramentos3::max('id');
-                $idsacramento = $idsacra+1;
-                $idpartida = PartidaNacimiento::max('id');
-                $idp = $idpartida+1;
-                $monto_p= Efectivo::max('id');
-                $montos=$monto_p+1;
+                $id_persona= Persona::max('id');
+                $idp3=$id_persona+1;
+                $idp4=$idp3+1;
 
-                $efectivo = new Efectivo();
-                $efectivo->id=$montos;
-                $efectivo->descripcion_efectivo='BAUTISMO';
-                $efectivo->idcare=$request->idcate;
-                $efectivo->tipo= 1;
-                $efectivo->monto=$request->monto;
-                $efectivo->fecha= new \DateTime();
-                $efectivo->save();
+                $personapa = new Persona();
+                $personapa->id= $idp3;
+                $personapa->nombre_persona= $request->nombre_pd3;
+                $personapa->apellido_persona=$request->apellido_pd3;
+                $personapa->dui_pasaporte=$request->dui_pd3;
+                $personapa->sexo=$request->sexo_pd3;
+                $personapa->fecha_nacimiento=$request->nacimientopad3;
+                $personapa->idzonaa=$request->idzonap3;//zona padrino 3
+                $personapa->idiglesia=$request->idiglesiap3;//iglesia padrino 3
+                $personapa->estado=1; //estado 
+                $personapa->save();
 
-                $personam=new Persona();
-                $personam->id=$idma;
-                $personam->nombre_persona=$request->nombre_m;
-                $personam->apellido_persona=$request->apellido_m;
-                $personam->dui_pasaporte=$request->dui_m;
-                $personam->save();
+                $personapa = new Persona();
+                $personapa->id= $idp4;
+                $personapa->nombre_persona= $request->nombre_pd4;
+                $personapa->apellido_persona=$request->apellido_pd4;
+                $personapa->dui_pasaporte=$request->dui_pd4;
+                $personapa->sexo=$request->sexo_pd4;
+                $personapa->fecha_nacimiento=$request->nacimientopad4;
+                $personapa->idzonaa=$request->idzonap4;//zona padrino 4
+                $personapa->idiglesia=$request->idiglesiap4;//iglesia padrino 4
+                $personapa->estado=1; //estado 
+                $personapa->save();
 
-                $personapd3=new Persona();
-                $personapd3->id=$idpa3;
-                $personapd3->nombre_persona=$request->nombre_pd3;
-                $personapd3->apellido_persona=$request->apellido_pd3;
-                $personapd3->dui_pasaporte=$request->dui_pd3;
-                $personapd3->sexo=$request->sexo_pd3;
-                $personapd3->save();
-
-                $personapd4=new Persona();
-                $personapd4->id=$idpa4;
-                $personapd4->nombre_persona=$request->nombre_pd4;
-                $personapd4->apellido_persona=$request->apellido_pd4;
-                $personapd4->dui_pasaporte=$request->dui_pd4;
-                $personapd4->sexo=$request->sexo_pd4;
-                $personapd4->save();
-
-                $persona_reali = new Persona();
-                $persona_reali->id = $idreali;
-                $persona_reali->nombre_persona = $request->nombre_reali;
-                $persona_reali->apellido_persona = $request->apellido_reali;
-                $persona_reali->fecha_nacimiento = $request->nacimiento;
-                $persona_reali->dui_pasaporte = $request->dui_reali;
-                $persona_reali->sexo = $request->sexo;
-                $persona_reali->id_madre = $idma;
-                $persona_reali->id_padre = $request->id_p;
-                $persona_reali->save();
-
-                $partida = new PartidaNacimiento();
-                $partida->id = $idp;
-                $partida->alcaldia = $request->alcaldia;
-                $partida->libro = $request->libro;
-                $partida->partida = $request->partida;
-                $partida->folio = $request->folio;
-                $partida->ano = $request->ano;
-                $partida->idpersona = $idreali;
-                $partida->save();
-
-                $bautizo = new Sacramentos3();
-                $bautizo->id = $idsacramento;
-                $bautizo->tipo_sacramento=$tiposacra;
-                $bautizo->libro = $request->librob;
-                $bautizo->folio = $request->foliob;
-                $bautizo->asiento = $request->asiento;
-                $bautizo->fecha_realizacion = $request->fecha;
-                $bautizo->id_realizante1 = $idreali;
-                $bautizo->id_sacerdote = $request->sacerdote;
+                $bautizo = Sacramentos3::findOrFail($idsacramento);
                 $bautizo->id_padrino = $request->id_pd1;
                 $bautizo->id_padrino2 = $request->id_pd2;
-                $bautizo->id_padrino3 = $idpa3;
-                $bautizo->id_padrino4 = $idpa4;
-                $bautizo->titulo = $request->titulo;
+                $bautizo->id_padrino3 = $idp3;
+                $bautizo->id_padrino4 = $idp4;
                 $bautizo->save();
-                break;
+            break;
             }
             case '12':{
-                $id_persona=Persona::max('id');
-                $idma=$id_persona+1;
-                $idpa2=$idma+1;
-                $idpa3=$idpa2+1;
-                $idpa4=$idpa3+1;
-                $idreali = $idpa4+1;
-                $idsacra = Sacramentos3::max('id');
-                $idsacramento = $idsacra+1;
-                $idpartida = PartidaNacimiento::max('id');
-                $idp = $idpartida+1;
-                $monto_p= Efectivo::max('id');
-                $montos=$monto_p+1;
+                $id_persona= Persona::max('id');
+                $idp4=$id_persona+1;
 
-                $efectivo = new Efectivo();
-                $efectivo->id=$montos;
-                $efectivo->descripcion_efectivo='BAUTISMO';
-                $efectivo->idcare=$request->idcate;
-                $efectivo->tipo= 1;
-                $efectivo->monto=$request->monto;
-                $efectivo->fecha= new \DateTime();
-                $efectivo->save();
+                $personapa = new Persona();
+                $personapa->id= $idp4;
+                $personapa->nombre_persona= $request->nombre_pd4;
+                $personapa->apellido_persona=$request->apellido_pd4;
+                $personapa->dui_pasaporte=$request->dui_pd4;
+                $personapa->sexo=$request->sexo_pd4;
+                $personapa->fecha_nacimiento=$request->nacimientopad4;
+                $personapa->idzonaa=$request->idzonap4;//zona padrino 4
+                $personapa->idiglesia=$request->idiglesiap4;//iglesia padrino 4
+                $personapa->estado=1; //estado 
+                $personapa->save();
 
-                $personam=new Persona();
-                $personam->id=$idma;
-                $personam->nombre_persona=$request->nombre_m;
-                $personam->apellido_persona=$request->apellido_m;
-                $personam->dui_pasaporte=$request->dui_m;
-                $personam->save();
-
-                $personapd2=new Persona();
-                $personapd2->id=$idpa2;
-                $personapd2->nombre_persona=$request->nombre_pd2;
-                $personapd2->apellido_persona=$request->apellido_pd2;
-                $personapd2->dui_pasaporte=$request->dui_pd2;
-                $personapd2->sexo=$request->sexo_pd2;
-                $personapd2->save();
-
-                $personapd3=new Persona();
-                $personapd3->id=$idpa3;
-                $personapd3->nombre_persona=$request->nombre_pd3;
-                $personapd3->apellido_persona=$request->apellido_pd3;
-                $personapd3->dui_pasaporte=$request->dui_pd3;
-                $personapd3->sexo=$request->sexo_pd3;
-                $personapd3->save();
-
-                $personapd4=new Persona();
-                $personapd4->id=$idpa4;
-                $personapd4->nombre_persona=$request->nombre_pd4;
-                $personapd4->apellido_persona=$request->apellido_pd4;
-                $personapd4->dui_pasaporte=$request->dui_pd4;
-                $personapd4->sexo=$request->sexo_pd4;
-                $personapd4->save();
-
-                $persona_reali = new Persona();
-                $persona_reali->id = $idreali;
-                $persona_reali->nombre_persona = $request->nombre_reali;
-                $persona_reali->apellido_persona = $request->apellido_reali;
-                $persona_reali->fecha_nacimiento = $request->nacimiento;
-                $persona_reali->dui_pasaporte = $request->dui_reali;
-                $persona_reali->sexo = $request->sexo;
-                $persona_reali->id_madre = $idma;
-                $persona_reali->id_padre = $request->id_p;
-                $persona_reali->save();
-
-                $partida = new PartidaNacimiento();
-                $partida->id = $idp;
-                $partida->alcaldia = $request->alcaldia;
-                $partida->libro = $request->libro;
-                $partida->partida = $request->partida;
-                $partida->folio = $request->folio;
-                $partida->ano = $request->ano;
-                $partida->idpersona = $idreali;
-                $partida->save();
-
-                $bautizo = new Sacramentos3();
-                $bautizo->id = $idsacramento;
-                $bautizo->tipo_sacramento=$tiposacra;
-                $bautizo->libro = $request->librob;
-                $bautizo->folio = $request->foliob;
-                $bautizo->asiento = $request->asiento;
-                $bautizo->fecha_realizacion = $request->fecha;
-                $bautizo->id_realizante1 = $idreali;
-                $bautizo->id_sacerdote = $request->sacerdote;
+                $bautizo = Sacramentos3::findOrFail($idsacramento);
                 $bautizo->id_padrino = $request->id_pd1;
-                $bautizo->id_padrino2 = $idpa2;
-                $bautizo->id_padrino3 = $idpa3;
-                $bautizo->id_padrino4 = $idpa4;
-                $bautizo->titulo = $request->titulo;
+                $bautizo->id_padrino2 = $request->id_pd2;
+                $bautizo->id_padrino3 = $request->id_pd3;
+                $bautizo->id_padrino4 = $idp4;
                 $bautizo->save();
-                break;
+            break;
             }
             case '13':{
-                $id_persona=Persona::max('id');
-                $idma=$id_persona+1;
-                $idpa=$idma+1;
-                $idpa1=$idpa+1;
-                $idpa2=$idpa1+1;
-                $idpa3=$idpa2+1;
-                $idpa4=$idpa3+1;
-                $idreali = $idpa4+1;
-                $idsacra = Sacramentos3::max('id');
-                $idsacramento = $idsacra+1;
-                $idpartida = PartidaNacimiento::max('id');
-                $idp = $idpartida+1;
-                $monto_p= Efectivo::max('id');
-                $montos=$monto_p+1;
+                $id_persona= Persona::max('id');
+                $idp1=$id_persona+1;
+                $idp3=$idp1+1;
+                $idp4=$idp3+1;
 
-                $efectivo = new Efectivo();
-                $efectivo->id=$montos;
-                $efectivo->descripcion_efectivo='BAUTISMO';
-                $efectivo->idcare=$request->idcate;
-                $efectivo->tipo= 1;
-                $efectivo->monto=$request->monto;
-                $efectivo->fecha= new \DateTime();
-                $efectivo->save();
+                $personapa = new Persona();
+                $personapa->id= $idp1;
+                $personapa->nombre_persona= $request->nombre_pd1;
+                $personapa->apellido_persona=$request->apellido_pd1;
+                $personapa->dui_pasaporte=$request->dui_pd1;
+                $personapa->sexo=$request->sexo_pd1;
+                $personapa->fecha_nacimiento=$request->nacimientopad1;
+                $personapa->idzonaa=$request->idzonap1;//zona padrino 1
+                $personapa->idiglesia=$request->idiglesiap1;//iglesia padrino 1
+                $personapa->estado=1; //estado 
+                $personapa->save();
 
-                $personam=new Persona();
-                $personam->id=$idma;
-                $personam->nombre_persona=$request->nombre_m;
-                $personam->apellido_persona=$request->apellido_m;
-                $personam->dui_pasaporte=$request->dui_m;
-                $personam->save();
+                $personapa = new Persona();
+                $personapa->id= $idp3;
+                $personapa->nombre_persona= $request->nombre_pd3;
+                $personapa->apellido_persona=$request->apellido_pd3;
+                $personapa->dui_pasaporte=$request->dui_pd3;
+                $personapa->sexo=$request->sexo_pd3;
+                $personapa->fecha_nacimiento=$request->nacimientopad3;
+                $personapa->idzonaa=$request->idzonap3;//zona padrino 3
+                $personapa->idiglesia=$request->idiglesiap3;//iglesia padrino 3
+                $personapa->estado=1; //estado 
+                $personapa->save();
 
-                $personap=new Persona();
-                $personap->id=$idpa;
-                $personap->nombre_persona=$request->nombre_p;
-                $personap->apellido_persona=$request->apellido_p;
-                $personap->dui_pasaporte=$request->dui_p;
-                $personap->save();
+                $personapa = new Persona();
+                $personapa->id= $idp4;
+                $personapa->nombre_persona= $request->nombre_pd4;
+                $personapa->apellido_persona=$request->apellido_pd4;
+                $personapa->dui_pasaporte=$request->dui_pd4;
+                $personapa->sexo=$request->sexo_pd4;
+                $personapa->fecha_nacimiento=$request->nacimientopad4;
+                $personapa->idzonaa=$request->idzonap4;//zona padrino 4
+                $personapa->idiglesia=$request->idiglesiap4;//iglesia padrino 4
+                $personapa->estado=1; //estado 
+                $personapa->save();
 
-                $personapd1=new Persona();
-                $personapd1->id=$idpa1;
-                $personapd1->nombre_persona=$request->nombre_pd1;
-                $personapd1->apellido_persona=$request->apellido_pd1;
-                $personapd1->dui_pasaporte=$request->dui_pd1;
-                $personapd1->sexo=$request->sexo_pd1;
-                $personapd1->save();
-
-                $personapd2=new Persona();
-                $personapd2->id=$idpa2;
-                $personapd2->nombre_persona=$request->nombre_pd2;
-                $personapd2->apellido_persona=$request->apellido_pd2;
-                $personapd2->dui_pasaporte=$request->dui_pd2;
-                $personapd2->sexo=$request->sexo_pd2;
-                $personapd2->save();
-
-                $personapd3=new Persona();
-                $personapd3->id=$idpa3;
-                $personapd3->nombre_persona=$request->nombre_pd3;
-                $personapd3->apellido_persona=$request->apellido_pd3;
-                $personapd3->dui_pasaporte=$request->dui_pd3;
-                $personapd3->sexo=$request->sexo_pd3;
-                $personapd3->save();
-
-                $personapd4=new Persona();
-                $personapd4->id=$idpa4;
-                $personapd4->nombre_persona=$request->nombre_pd4;
-                $personapd4->apellido_persona=$request->apellido_pd4;
-                $personapd4->dui_pasaporte=$request->dui_pd4;
-                $personapd4->sexo=$request->sexo_pd4;
-                $personapd4->save();
-
-                $persona_reali = new Persona();
-                $persona_reali->id = $idreali;
-                $persona_reali->nombre_persona = $request->nombre_reali;
-                $persona_reali->apellido_persona = $request->apellido_reali;
-                $persona_reali->fecha_nacimiento = $request->nacimiento;
-                $persona_reali->dui_pasaporte = $request->dui_reali;
-                $persona_reali->sexo = $request->sexo;
-                $persona_reali->id_madre = $idma;
-                $persona_reali->id_padre = $idpa;
-                $persona_reali->save();
-
-                $partida = new PartidaNacimiento();
-                $partida->id = $idp;
-                $partida->alcaldia = $request->alcaldia;
-                $partida->libro = $request->libro;
-                $partida->partida = $request->partida;
-                $partida->folio = $request->folio;
-                $partida->ano = $request->ano;
-                $partida->idpersona = $idreali;
-                $partida->save();
-
-                $bautizo = new Sacramentos3();
-                $bautizo->id = $idsacramento;
-                $bautizo->tipo_sacramento=$tiposacra;
-                $bautizo->libro = $request->librob;
-                $bautizo->folio = $request->foliob;
-                $bautizo->asiento = $request->asiento;
-                $bautizo->fecha_realizacion = $request->fecha;
-                $bautizo->id_realizante1 = $idreali;
-                $bautizo->id_sacerdote = $request->sacerdote;
-                $bautizo->id_padrino = $idpa1;
-                $bautizo->id_padrino2 = $idpa2;
-                $bautizo->id_padrino3 = $idpa3;
-                $bautizo->id_padrino4 = $idpa4;
-                $bautizo->titulo = $request->titulo;
+                $bautizo = Sacramentos3::findOrFail($idsacramento);
+                $bautizo->id_padrino = $idp1;
+                $bautizo->id_padrino2 = $request->id_pd2;
+                $bautizo->id_padrino3 = $idp3;
+                $bautizo->id_padrino4 = $idp4;
                 $bautizo->save();
-                break;
+            break;
             }
             case '14':{
-                $id_persona=Persona::max('id');
-                $idma=$id_persona+1;
-                $idpa=$idma+1;
-                $idreali = $idpa+1;
-                $idsacra = Sacramentos3::max('id');
-                $idsacramento = $idsacra+1;
-                $idpartida = PartidaNacimiento::max('id');
-                $idp = $idpartida+1;
-                $monto_p= Efectivo::max('id');
-                $montos=$monto_p+1;
+                $id_persona= Persona::max('id');
+                $idp1=$id_persona+1;
+                $idp2=$idp1+1;
+                $idp4=$idp2+1;
 
-                $efectivo = new Efectivo();
-                $efectivo->id=$montos;
-                $efectivo->descripcion_efectivo='BAUTISMO';
-                $efectivo->idcare=$request->idcate;
-                $efectivo->tipo= 1;
-                $efectivo->monto=$request->monto;
-                $efectivo->fecha= new \DateTime();
-                $efectivo->save();
+                $personapa = new Persona();
+                $personapa->id= $idp1;
+                $personapa->nombre_persona= $request->nombre_pd1;
+                $personapa->apellido_persona=$request->apellido_pd1;
+                $personapa->dui_pasaporte=$request->dui_pd1;
+                $personapa->sexo=$request->sexo_pd1;
+                $personapa->fecha_nacimiento=$request->nacimientopad1;
+                $personapa->idzonaa=$request->idzonap1;//zona padrino 1
+                $personapa->idiglesia=$request->idiglesiap1;//iglesia padrino 1
+                $personapa->estado=1; //estado 
+                $personapa->save();
 
-                $personam=new Persona();
-                $personam->id=$idma;
-                $personam->nombre_persona=$request->nombre_m;
-                $personam->apellido_persona=$request->apellido_m;
-                $personam->dui_pasaporte=$request->dui_m;
-                $personam->save();
+                $personapa = new Persona();
+                $personapa->id= $idp2;
+                $personapa->nombre_persona= $request->nombre_pd2;
+                $personapa->apellido_persona=$request->apellido_pd2;
+                $personapa->dui_pasaporte=$request->dui_pd2;
+                $personapa->sexo=$request->sexo_pd2;
+                $personapa->fecha_nacimiento=$request->nacimientopad2;
+                $personapa->idzonaa=$request->idzonap2;//zona padrino 2
+                $personapa->idiglesia=$request->idiglesiap2;//iglesia padrino 2
+                $personapa->estado=1; //estado 
+                $personapa->save();
 
-                $personap=new Persona();
-                $personap->id=$idpa;
-                $personap->nombre_persona=$request->nombre_p;
-                $personap->apellido_persona=$request->apellido_p;
-                $personap->dui_pasaporte=$request->dui_p;
-                $personap->save();
+                $personapa = new Persona();
+                $personapa->id= $idp4;
+                $personapa->nombre_persona= $request->nombre_pd4;
+                $personapa->apellido_persona=$request->apellido_pd4;
+                $personapa->dui_pasaporte=$request->dui_pd4;
+                $personapa->sexo=$request->sexo_pd4;
+                $personapa->fecha_nacimiento=$request->nacimientopad4;
+                $personapa->idzonaa=$request->idzonap4;//zona padrino 4
+                $personapa->idiglesia=$request->idiglesiap4;//iglesia padrino 4
+                $personapa->estado=1; //estado 
+                $personapa->save();
 
-                $persona_reali = new Persona();
-                $persona_reali->id = $idreali;
-                $persona_reali->nombre_persona = $request->nombre_reali;
-                $persona_reali->apellido_persona = $request->apellido_reali;
-                $persona_reali->fecha_nacimiento = $request->nacimiento;
-                $persona_reali->dui_pasaporte = $request->dui_reali;
-                $persona_reali->sexo = $request->sexo;
-                $persona_reali->id_madre = $idma;
-                $persona_reali->id_padre = $idpa;
-                $persona_reali->save();
-
-                $partida = new PartidaNacimiento();
-                $partida->id = $idp;
-                $partida->alcaldia = $request->alcaldia;
-                $partida->libro = $request->libro;
-                $partida->partida = $request->partida;
-                $partida->folio = $request->folio;
-                $partida->ano = $request->ano;
-                $partida->idpersona = $idreali;
-                $partida->save();
-
-                $bautizo = new Sacramentos3();
-                $bautizo->id = $idsacramento;
-                $bautizo->tipo_sacramento=$tiposacra;
-                $bautizo->libro = $request->librob;
-                $bautizo->folio = $request->foliob;
-                $bautizo->asiento = $request->asiento;
-                $bautizo->fecha_realizacion = $request->fecha;
-                $bautizo->id_realizante1 = $idreali;
-                $bautizo->id_sacerdote = $request->sacerdote;
-                $bautizo->id_padrino = $request->id_pd1;
-                $bautizo->id_padrino2 = $request->id_pd2;
+                $bautizo = Sacramentos3::findOrFail($idsacramento);
+                $bautizo->id_padrino = $idp1;
+                $bautizo->id_padrino2 = $idp2;
                 $bautizo->id_padrino3 = $request->id_pd3;
-                $bautizo->id_padrino4 = $request->id_pd4;
-                $bautizo->titulo = $request->titulo;
+                $bautizo->id_padrino4 = $idp4;
                 $bautizo->save();
-                break;
+            break;
             }
             case '15':{
-                $id_persona=Persona::max('id');
-                $idma=$id_persona+1;
-                $idpa=$idma+1;
-                $idpa4=$idpa+1;
-                $idreali = $idpa4+1;
-                $idsacra = Sacramentos3::max('id');
-                $idsacramento = $idsacra+1;
-                $idpartida = PartidaNacimiento::max('id');
-                $idp = $idpartida+1;
-                $monto_p= Efectivo::max('id');
-                $montos=$monto_p+1;
+                $id_persona= Persona::max('id');
+                $idp2=$id_persona+1;
+                $idp4=$idp2+1;
 
-                $efectivo = new Efectivo();
-                $efectivo->id=$montos;
-                $efectivo->descripcion_efectivo='BAUTISMO';
-                $efectivo->idcare=$request->idcate;
-                $efectivo->tipo= 1;
-                $efectivo->monto=$request->monto;
-                $efectivo->fecha= new \DateTime();
-                $efectivo->save();
+                $personapa = new Persona();
+                $personapa->id= $idp2;
+                $personapa->nombre_persona= $request->nombre_pd2;
+                $personapa->apellido_persona=$request->apellido_pd2;
+                $personapa->dui_pasaporte=$request->dui_pd2;
+                $personapa->sexo=$request->sexo_pd2;
+                $personapa->fecha_nacimiento=$request->nacimientopad2;
+                $personapa->idzonaa=$request->idzonap2;//zona padrino 2
+                $personapa->idiglesia=$request->idiglesiap2;//iglesia padrino 2
+                $personapa->estado=1; //estado 
+                $personapa->save();
 
-                $personam=new Persona();
-                $personam->id=$idma;
-                $personam->nombre_persona=$request->nombre_m;
-                $personam->apellido_persona=$request->apellido_m;
-                $personam->dui_pasaporte=$request->dui_m;
-                $personam->save();
+                $personapa = new Persona();
+                $personapa->id= $idp4;
+                $personapa->nombre_persona= $request->nombre_pd4;
+                $personapa->apellido_persona=$request->apellido_pd4;
+                $personapa->dui_pasaporte=$request->dui_pd4;
+                $personapa->sexo=$request->sexo_pd4;
+                $personapa->fecha_nacimiento=$request->nacimientopad4;
+                $personapa->idzonaa=$request->idzonap4;//zona padrino 4
+                $personapa->idiglesia=$request->idiglesiap4;//iglesia padrino 4
+                $personapa->estado=1; //estado 
+                $personapa->save();
 
-                $personap=new Persona();
-                $personap->id=$idpa;
-                $personap->nombre_persona=$request->nombre_p;
-                $personap->apellido_persona=$request->apellido_p;
-                $personap->dui_pasaporte=$request->dui_p;
-                $personap->save();
-
-                $personapd4=new Persona();
-                $personapd4->id=$idpa4;
-                $personapd4->nombre_persona=$request->nombre_pd4;
-                $personapd4->apellido_persona=$request->apellido_pd4;
-                $personapd4->dui_pasaporte=$request->dui_pd4;
-                $personapd4->sexo=$request->sexo_pd4;
-                $personapd4->save();
-
-                $persona_reali = new Persona();
-                $persona_reali->id = $idreali;
-                $persona_reali->nombre_persona = $request->nombre_reali;
-                $persona_reali->apellido_persona = $request->apellido_reali;
-                $persona_reali->fecha_nacimiento = $request->nacimiento;
-                $persona_reali->dui_pasaporte = $request->dui_reali;
-                $persona_reali->sexo = $request->sexo;
-                $persona_reali->id_madre = $idma;
-                $persona_reali->id_padre = $idpa;
-                $persona_reali->save();
-
-                $partida = new PartidaNacimiento();
-                $partida->id = $idp;
-                $partida->alcaldia = $request->alcaldia;
-                $partida->libro = $request->libro;
-                $partida->partida = $request->partida;
-                $partida->folio = $request->folio;
-                $partida->ano = $request->ano;
-                $partida->idpersona = $idreali;
-                $partida->save();
-
-                $bautizo = new Sacramentos3();
-                $bautizo->id = $idsacramento;
-                $bautizo->tipo_sacramento=$tiposacra;
-                $bautizo->libro = $request->librob;
-                $bautizo->folio = $request->foliob;
-                $bautizo->asiento = $request->asiento;
-                $bautizo->fecha_realizacion = $request->fecha;
-                $bautizo->id_realizante1 = $idreali;
-                $bautizo->id_sacerdote = $request->sacerdote;
+                $bautizo = Sacramentos3::findOrFail($idsacramento);
                 $bautizo->id_padrino = $request->id_pd1;
-                $bautizo->id_padrino2 = $request->id_pd2;
+                $bautizo->id_padrino2 = $idp2;
                 $bautizo->id_padrino3 = $request->id_pd3;
-                $bautizo->id_padrino4 = $idpa4;
-                $bautizo->titulo = $request->titulo;
+                $bautizo->id_padrino4 = $idp4;
                 $bautizo->save();
-                break;
+            break;
             }
             case '16':{
-                $id_persona=Persona::max('id');
-                $idma=$id_persona+1;
-                $idpa=$idma+1;
-                $idpa3=$idpa+1;
-                $idpa4=$idpa3+1;
-                $idreali = $idpa4+1;
-                $idsacra = Sacramentos3::max('id');
-                $idsacramento = $idsacra+1;
-                $idpartida = PartidaNacimiento::max('id');
-                $idp = $idpartida+1;
-                $monto_p= Efectivo::max('id');
-                $montos=$monto_p+1;
+                $id_persona= Persona::max('id');
+                $idp1=$id_persona+1;
+                $idp4=$idp1+1;
 
-                $efectivo = new Efectivo();
-                $efectivo->id=$montos;
-                $efectivo->descripcion_efectivo='BAUTISMO';
-                $efectivo->idcare=$request->idcate;
-                $efectivo->tipo= 1;
-                $efectivo->monto=$request->monto;
-                $efectivo->fecha= new \DateTime();
-                $efectivo->save();
+                $personapa = new Persona();
+                $personapa->id= $idp1;
+                $personapa->nombre_persona= $request->nombre_pd1;
+                $personapa->apellido_persona=$request->apellido_pd1;
+                $personapa->dui_pasaporte=$request->dui_pd1;
+                $personapa->sexo=$request->sexo_pd1;
+                $personapa->fecha_nacimiento=$request->nacimientopad1;
+                $personapa->idzonaa=$request->idzonap1;//zona padrino 1
+                $personapa->idiglesia=$request->idiglesiap1;//iglesia padrino 1
+                $personapa->estado=1; //estado 
+                $personapa->save();
 
-                $personam=new Persona();
-                $personam->id=$idma;
-                $personam->nombre_persona=$request->nombre_m;
-                $personam->apellido_persona=$request->apellido_m;
-                $personam->dui_pasaporte=$request->dui_m;
-                $personam->save();
+                $personapa = new Persona();
+                $personapa->id= $idp4;
+                $personapa->nombre_persona= $request->nombre_pd4;
+                $personapa->apellido_persona=$request->apellido_pd4;
+                $personapa->dui_pasaporte=$request->dui_pd4;
+                $personapa->sexo=$request->sexo_pd4;
+                $personapa->fecha_nacimiento=$request->nacimientopad4;
+                $personapa->idzonaa=$request->idzonap4;//zona padrino 4
+                $personapa->idiglesia=$request->idiglesiap4;//iglesia padrino 4
+                $personapa->estado=1; //estado 
+                $personapa->save();
 
-                $personap=new Persona();
-                $personap->id=$idpa;
-                $personap->nombre_persona=$request->nombre_p;
-                $personap->apellido_persona=$request->apellido_p;
-                $personap->dui_pasaporte=$request->dui_p;
-                $personap->save();
-
-                $personapd3=new Persona();
-                $personapd3->id=$idpa3;
-                $personapd3->nombre_persona=$request->nombre_pd3;
-                $personapd3->apellido_persona=$request->apellido_pd3;
-                $personapd3->dui_pasaporte=$request->dui_pd3;
-                $personapd3->sexo=$request->sexo_pd3;
-                $personapd3->save();
-
-                $personapd4=new Persona();
-                $personapd4->id=$idpa4;
-                $personapd4->nombre_persona=$request->nombre_pd4;
-                $personapd4->apellido_persona=$request->apellido_pd4;
-                $personapd4->dui_pasaporte=$request->dui_pd4;
-                $personapd4->sexo=$request->sexo_pd4;
-                $personapd4->save();
-
-                $persona_reali = new Persona();
-                $persona_reali->id = $idreali;
-                $persona_reali->nombre_persona = $request->nombre_reali;
-                $persona_reali->apellido_persona = $request->apellido_reali;
-                $persona_reali->fecha_nacimiento = $request->nacimiento;
-                $persona_reali->dui_pasaporte = $request->dui_reali;
-                $persona_reali->sexo = $request->sexo;
-                $persona_reali->id_madre = $idma;
-                $persona_reali->id_padre = $idpa;
-                $persona_reali->save();
-
-                $partida = new PartidaNacimiento();
-                $partida->id = $idp;
-                $partida->alcaldia = $request->alcaldia;
-                $partida->libro = $request->libro;
-                $partida->partida = $request->partida;
-                $partida->folio = $request->folio;
-                $partida->ano = $request->ano;
-                $partida->idpersona = $idreali;
-                $partida->save();
-
-                $bautizo = new Sacramentos3();
-                $bautizo->id = $idsacramento;
-                $bautizo->tipo_sacramento=$tiposacra;
-                $bautizo->libro = $request->librob;
-                $bautizo->folio = $request->foliob;
-                $bautizo->asiento = $request->asiento;
-                $bautizo->fecha_realizacion = $request->fecha;
-                $bautizo->id_realizante1 = $idreali;
-                $bautizo->id_sacerdote = $request->sacerdote;
-                $bautizo->id_padrino = $request->id_pd1;
-                $bautizo->id_padrino2 = $request->id_pd2;
-                $bautizo->id_padrino3 = $idpa3;
-                $bautizo->id_padrino4 = $idpa4;
-                $bautizo->titulo = $request->titulo;
-                $bautizo->save();
-                break;
-            }
-            case '17':{
-                $id_persona=Persona::max('id');
-                $idma=$id_persona+1;
-                $idpa=$idma+1;
-                $idpa2=$idpa+1;
-                $idpa3=$idpa2+1;
-                $idpa4=$idpa3+1;
-                $idreali = $idpa4+1;
-                $idsacra = Sacramentos3::max('id');
-                $idsacramento = $idsacra+1;
-                $idpartida = PartidaNacimiento::max('id');
-                $idp = $idpartida+1;
-                $monto_p= Efectivo::max('id');
-                $montos=$monto_p+1;
-
-                $efectivo = new Efectivo();
-                $efectivo->id=$montos;
-                $efectivo->descripcion_efectivo='BAUTISMO';
-                $efectivo->idcare=$request->idcate;
-                $efectivo->tipo= 1;
-                $efectivo->monto=$request->monto;
-                $efectivo->fecha= new \DateTime();
-                $efectivo->save();
-
-                $personam=new Persona();
-                $personam->id=$idma;
-                $personam->nombre_persona=$request->nombre_m;
-                $personam->apellido_persona=$request->apellido_m;
-                $personam->dui_pasaporte=$request->dui_m;
-                $personam->save();
-
-                $personap=new Persona();
-                $personap->id=$idpa;
-                $personap->nombre_persona=$request->nombre_p;
-                $personap->apellido_persona=$request->apellido_p;
-                $personap->dui_pasaporte=$request->dui_p;
-                $personap->save();
-
-                $personapd2=new Persona();
-                $personapd2->id=$idpa2;
-                $personapd2->nombre_persona=$request->nombre_pd2;
-                $personapd2->apellido_persona=$request->apellido_pd2;
-                $personapd2->dui_pasaporte=$request->dui_pd2;
-                $personapd2->sexo=$request->sexo_pd2;
-                $personapd2->save();
-
-                $personapd3=new Persona();
-                $personapd3->id=$idpa3;
-                $personapd3->nombre_persona=$request->nombre_pd3;
-                $personapd3->apellido_persona=$request->apellido_pd3;
-                $personapd3->dui_pasaporte=$request->dui_pd3;
-                $personapd3->sexo=$request->sexo_pd3;
-                $personapd3->save();
-
-                $personapd4=new Persona();
-                $personapd4->id=$idpa4;
-                $personapd4->nombre_persona=$request->nombre_pd4;
-                $personapd4->apellido_persona=$request->apellido_pd4;
-                $personapd4->dui_pasaporte=$request->dui_pd4;
-                $personapd4->sexo=$request->sexo_pd4;
-                $personapd4->save();
-
-                $persona_reali = new Persona();
-                $persona_reali->id = $idreali;
-                $persona_reali->nombre_persona = $request->nombre_reali;
-                $persona_reali->apellido_persona = $request->apellido_reali;
-                $persona_reali->fecha_nacimiento = $request->nacimiento;
-                $persona_reali->dui_pasaporte = $request->dui_reali;
-                $persona_reali->sexo = $request->sexo;
-                $persona_reali->id_madre = $idma;
-                $persona_reali->id_padre = $idpa;
-                $persona_reali->save();
-
-                $partida = new PartidaNacimiento();
-                $partida->id = $idp;
-                $partida->alcaldia = $request->alcaldia;
-                $partida->libro = $request->libro;
-                $partida->partida = $request->partida;
-                $partida->folio = $request->folio;
-                $partida->ano = $request->ano;
-                $partida->idpersona = $idreali;
-                $partida->save();
-
-                $bautizo = new Sacramentos3();
-                $bautizo->id = $idsacramento;
-                $bautizo->tipo_sacramento=$tiposacra;
-                $bautizo->libro = $request->librob;
-                $bautizo->folio = $request->foliob;
-                $bautizo->asiento = $request->asiento;
-                $bautizo->fecha_realizacion = $request->fecha;
-                $bautizo->id_realizante1 = $idreali;
-                $bautizo->id_sacerdote = $request->sacerdote;
-                $bautizo->id_padrino = $request->id_pd1;
-                $bautizo->id_padrino2 = $idpa2;
-                $bautizo->id_padrino3 = $idpa3;
-                $bautizo->id_padrino4 = $idpa4;
-                $bautizo->titulo = $request->titulo;
-                $bautizo->save();
-                break;
-            }
-            case '18':{
-                $id_realizante=Persona::max('id');
-                $idreali = $id_realizante+1;
-                $idsacra = Sacramentos3::max('id');
-                $idsacramento = $idsacra+1;
-                $idpartida = PartidaNacimiento::max('id');
-                $idp = $idpartida+1;
-                $monto_p= Efectivo::max('id');
-                $montos=$monto_p+1;
-
-                $efectivo = new Efectivo();
-                $efectivo->id=$montos;
-                $efectivo->descripcion_efectivo='BAUTISMO';
-                $efectivo->idcare=$request->idcate;
-                $efectivo->tipo= 1;
-                $efectivo->monto=$request->monto;
-                $efectivo->fecha= new \DateTime();
-                $efectivo->save();
-
-                $persona_reali = new Persona();
-                $persona_reali->id = $idreali;
-                $persona_reali->nombre_persona = $request->nombre_reali;
-                $persona_reali->apellido_persona = $request->apellido_reali;
-                $persona_reali->fecha_nacimiento = $request->nacimiento;
-                $persona_reali->dui_pasaporte = $request->dui_reali;
-                $persona_reali->sexo = $request->sexo;
-                $persona_reali->id_madre = $request->id_m;
-                $persona_reali->id_padre = $request->id_p;
-                $persona_reali->save();
-
-                $partida = new PartidaNacimiento();
-                $partida->id = $idp;
-                $partida->alcaldia = $request->alcaldia;
-                $partida->libro = $request->libro;
-                $partida->partida = $request->partida;
-                $partida->folio = $request->folio;
-                $partida->ano = $request->ano;
-                $partida->idpersona = $idreali;
-                $partida->save();
-
-                $bautizo = new Sacramentos3();
-                $bautizo->id = $idsacramento;
-                $bautizo->tipo_sacramento=$tiposacra;
-                $bautizo->libro = $request->librob;
-                $bautizo->folio = $request->foliob;
-                $bautizo->asiento = $request->asiento;
-                $bautizo->fecha_realizacion = $request->fecha;
-                $bautizo->id_realizante1 = $idreali;
-                $bautizo->id_sacerdote = $request->sacerdote;
-                $bautizo->id_padrino = $request->id_pd1;
+                $bautizo = Sacramentos3::findOrFail($idsacramento);
+                $bautizo->id_padrino = $idp1;
                 $bautizo->id_padrino2 = $request->id_pd2;
                 $bautizo->id_padrino3 = $request->id_pd3;
-                $bautizo->titulo = $request->titulo;
+                $bautizo->id_padrino4 = $idp4;
                 $bautizo->save();
-                break;
-            }
-            case '19':{
-                $id_realizante=Persona::max('id');
-                $idreali = $id_realizante+1;
-                $idsacra = Sacramentos3::max('id');
-                $idsacramento = $idsacra+1;
-                $idpartida = PartidaNacimiento::max('id');
-                $idp = $idpartida+1;
-                $monto_p= Efectivo::max('id');
-                $montos=$monto_p+1;
-
-                $efectivo = new Efectivo();
-                $efectivo->id=$montos;
-                $efectivo->descripcion_efectivo='BAUTISMO';
-                $efectivo->idcare=$request->idcate;
-                $efectivo->tipo= 1;
-                $efectivo->monto=$request->monto;
-                $efectivo->fecha= new \DateTime();
-                $efectivo->save();
-
-                $persona_reali = new Persona();
-                $persona_reali->id = $idreali;
-                $persona_reali->nombre_persona = $request->nombre_reali;
-                $persona_reali->apellido_persona = $request->apellido_reali;
-                $persona_reali->fecha_nacimiento = $request->nacimiento;
-                $persona_reali->dui_pasaporte = $request->dui_reali;
-                $persona_reali->sexo = $request->sexo;
-                $persona_reali->id_madre = $request->id_m;
-                $persona_reali->id_padre = $request->id_p;
-                $persona_reali->save();
-
-                $partida = new PartidaNacimiento();
-                $partida->id = $idp;
-                $partida->alcaldia = $request->alcaldia;
-                $partida->libro = $request->libro;
-                $partida->partida = $request->partida;
-                $partida->folio = $request->folio;
-                $partida->ano = $request->ano;
-                $partida->idpersona = $idreali;
-                $partida->save();
-
-                $bautizo = new Sacramentos3();
-                $bautizo->id = $idsacramento;
-                $bautizo->tipo_sacramento=$tiposacra;
-                $bautizo->libro = $request->librob;
-                $bautizo->folio = $request->foliob;
-                $bautizo->asiento = $request->asiento;
-                $bautizo->fecha_realizacion = $request->fecha;
-                $bautizo->id_realizante1 = $idreali;
-                $bautizo->id_sacerdote = $request->sacerdote;
-                $bautizo->id_padrino = $request->id_pd1;
-                $bautizo->id_padrino2 = $request->id_pd2;
-                $bautizo->titulo = $request->titulo;
-                $bautizo->save();
-                break;
-            }
-            case '20':{
-                $id_realizante=Persona::max('id');
-                $idreali = $id_realizante+1;
-                $idsacra = Sacramentos3::max('id');
-                $idsacramento = $idsacra+1;
-                $idpartida = PartidaNacimiento::max('id');
-                $idp = $idpartida+1;
-                $monto_p= Efectivo::max('id');
-                $montos=$monto_p+1;
-
-                $efectivo = new Efectivo();
-                $efectivo->id=$montos;
-                $efectivo->descripcion_efectivo='BAUTISMO';
-                $efectivo->idcare=$request->idcate;
-                $efectivo->tipo= 1;
-                $efectivo->monto=$request->monto;
-                $efectivo->fecha= new \DateTime();
-                $efectivo->save();
-
-                $persona_reali = new Persona();
-                $persona_reali->id = $idreali;
-                $persona_reali->nombre_persona = $request->nombre_reali;
-                $persona_reali->apellido_persona = $request->apellido_reali;
-                $persona_reali->fecha_nacimiento = $request->nacimiento;
-                $persona_reali->dui_pasaporte = $request->dui_reali;
-                $persona_reali->sexo = $request->sexo;
-                $persona_reali->id_madre = $request->id_m;
-                $persona_reali->id_padre = $request->id_p;
-                $persona_reali->save();
-
-                $partida = new PartidaNacimiento();
-                $partida->id = $idp;
-                $partida->alcaldia = $request->alcaldia;
-                $partida->libro = $request->libro;
-                $partida->partida = $request->partida;
-                $partida->folio = $request->folio;
-                $partida->ano = $request->ano;
-                $partida->idpersona = $idreali;
-                $partida->save();
-
-                $bautizo = new Sacramentos3();
-                $bautizo->id = $idsacramento;
-                $bautizo->tipo_sacramento=$tiposacra;
-                $bautizo->libro = $request->librob;
-                $bautizo->folio = $request->foliob;
-                $bautizo->asiento = $request->asiento;
-                $bautizo->fecha_realizacion = $request->fecha;
-                $bautizo->id_realizante1 = $idreali;
-                $bautizo->id_sacerdote = $request->sacerdote;
-                $bautizo->id_padrino = $request->id_pd1;
-                $bautizo->titulo = $request->titulo;
-                $bautizo->save();
-                break;
-            }
-            case '21':{
-                $id_realizante=Persona::max('id');
-                $idreali = $id_realizante+1;
-                $idsacra = Sacramentos3::max('id');
-                $idsacramento = $idsacra+1;
-                $idpartida = PartidaNacimiento::max('id');
-                $idp = $idpartida+1;
-                $monto_p= Efectivo::max('id');
-                $montos=$monto_p+1;
-
-                $efectivo = new Efectivo();
-                $efectivo->id=$montos;
-                $efectivo->descripcion_efectivo='BAUTISMO';
-                $efectivo->idcare=$request->idcate;
-                $efectivo->tipo= 1;
-                $efectivo->monto=$request->monto;
-                $efectivo->fecha= new \DateTime();
-                $efectivo->save();
-
-                $persona_reali = new Persona();
-                $persona_reali->id = $idreali;
-                $persona_reali->nombre_persona = $request->nombre_reali;
-                $persona_reali->apellido_persona = $request->apellido_reali;
-                $persona_reali->fecha_nacimiento = $request->nacimiento;
-                $persona_reali->dui_pasaporte = $request->dui_reali;
-                $persona_reali->sexo = $request->sexo;
-                $persona_reali->id_madre = $request->id_m;
-                $persona_reali->id_padre = $request->id_p;
-                $persona_reali->save();
-
-                $partida = new PartidaNacimiento();
-                $partida->id = $idp;
-                $partida->alcaldia = $request->alcaldia;
-                $partida->libro = $request->libro;
-                $partida->partida = $request->partida;
-                $partida->folio = $request->folio;
-                $partida->ano = $request->ano;
-                $partida->idpersona = $idreali;
-                $partida->save();
-
-                $bautizo = new Sacramentos3();
-                $bautizo->id = $idsacramento;
-                $bautizo->tipo_sacramento=$tiposacra;
-                $bautizo->libro = $request->librob;
-                $bautizo->folio = $request->foliob;
-                $bautizo->asiento = $request->asiento;
-                $bautizo->fecha_realizacion = $request->fecha;
-                $bautizo->id_realizante1 = $idreali;
-                $bautizo->id_sacerdote = $request->sacerdote;
-                $bautizo->titulo = $request->titulo;
-                $bautizo->save();
-                break;
-            }
-            case '22':{
-                $id_realizante=Persona::max('id');
-                $idreali = $id_realizante+1;
-                $idsacra = Sacramentos3::max('id');
-                $idsacramento = $idsacra+1;
-                $idpartida = PartidaNacimiento::max('id');
-                $idp = $idpartida+1;
-                $monto_p= Efectivo::max('id');
-                $montos=$monto_p+1;
-
-                $efectivo = new Efectivo();
-                $efectivo->id=$montos;
-                $efectivo->descripcion_efectivo='BAUTISMO';
-                $efectivo->idcare=$request->idcate;
-                $efectivo->tipo= 1;
-                $efectivo->monto=$request->monto;
-                $efectivo->fecha= new \DateTime();
-                $efectivo->save();
-
-                $persona_reali = new Persona();
-                $persona_reali->id = $idreali;
-                $persona_reali->nombre_persona = $request->nombre_reali;
-                $persona_reali->apellido_persona = $request->apellido_reali;
-                $persona_reali->fecha_nacimiento = $request->nacimiento;
-                $persona_reali->dui_pasaporte = $request->dui_reali;
-                $persona_reali->sexo = $request->sexo;
-                $persona_reali->id_madre = $request->id_m;
-                $persona_reali->save();
-
-                $partida = new PartidaNacimiento();
-                $partida->id = $idp;
-                $partida->alcaldia = $request->alcaldia;
-                $partida->libro = $request->libro;
-                $partida->partida = $request->partida;
-                $partida->folio = $request->folio;
-                $partida->ano = $request->ano;
-                $partida->idpersona = $idreali;
-                $partida->save();
-
-                $bautizo = new Sacramentos3();
-                $bautizo->id = $idsacramento;
-                $bautizo->tipo_sacramento=$tiposacra;
-                $bautizo->libro = $request->librob;
-                $bautizo->folio = $request->foliob;
-                $bautizo->asiento = $request->asiento;
-                $bautizo->fecha_realizacion = $request->fecha;
-                $bautizo->id_realizante1 = $idreali;
-                $bautizo->id_sacerdote = $request->sacerdote;
-                $bautizo->id_padrino = $request->id_pd1;
-                $bautizo->id_padrino2 = $request->id_pd2;
-                $bautizo->id_padrino3 = $request->id_pd3;
-                $bautizo->id_padrino4 = $request->id_pd4;
-                $bautizo->titulo = $request->titulo;
-                $bautizo->save();
-                break;
-            }
-            case '23':{
-                $id_realizante=Persona::max('id');
-                $idreali = $id_realizante+1;
-                $idsacra = Sacramentos3::max('id');
-                $idsacramento = $idsacra+1;
-                $idpartida = PartidaNacimiento::max('id');
-                $idp = $idpartida+1;
-                $monto_p= Efectivo::max('id');
-                $montos=$monto_p+1;
-
-                $efectivo = new Efectivo();
-                $efectivo->id=$montos;
-                $efectivo->descripcion_efectivo='BAUTISMO';
-                $efectivo->idcare=$request->idcate;
-                $efectivo->tipo= 1;
-                $efectivo->monto=$request->monto;
-                $efectivo->fecha= new \DateTime();
-                $efectivo->save();
-
-                $persona_reali = new Persona();
-                $persona_reali->id = $idreali;
-                $persona_reali->nombre_persona = $request->nombre_reali;
-                $persona_reali->apellido_persona = $request->apellido_reali;
-                $persona_reali->fecha_nacimiento = $request->nacimiento;
-                $persona_reali->dui_pasaporte = $request->dui_reali;
-                $persona_reali->sexo = $request->sexo;
-                $persona_reali->id_madre = $request->id_m;
-                $persona_reali->save();
-
-                $partida = new PartidaNacimiento();
-                $partida->id = $idp;
-                $partida->alcaldia = $request->alcaldia;
-                $partida->libro = $request->libro;
-                $partida->partida = $request->partida;
-                $partida->folio = $request->folio;
-                $partida->ano = $request->ano;
-                $partida->idpersona = $idreali;
-                $partida->save();
-
-                $bautizo = new Sacramentos3();
-                $bautizo->id = $idsacramento;
-                $bautizo->tipo_sacramento=$tiposacra;
-                $bautizo->libro = $request->librob;
-                $bautizo->folio = $request->foliob;
-                $bautizo->asiento = $request->asiento;
-                $bautizo->fecha_realizacion = $request->fecha;
-                $bautizo->id_realizante1 = $idreali;
-                $bautizo->id_sacerdote = $request->sacerdote;
-                $bautizo->id_padrino = $request->id_pd1;
-                $bautizo->id_padrino2 = $request->id_pd2;
-                $bautizo->id_padrino3 = $request->id_pd3;
-                $bautizo->titulo = $request->titulo;
-                $bautizo->save();
-                break;
-            }
-            case '24':{
-                $id_realizante=Persona::max('id');
-                $idreali = $id_realizante+1;
-                $idsacra = Sacramentos3::max('id');
-                $idsacramento = $idsacra+1;
-                $idpartida = PartidaNacimiento::max('id');
-                $idp = $idpartida+1;
-                $monto_p= Efectivo::max('id');
-                $montos=$monto_p+1;
-
-                $efectivo = new Efectivo();
-                $efectivo->id=$montos;
-                $efectivo->descripcion_efectivo='BAUTISMO';
-                $efectivo->idcare=$request->idcate;
-                $efectivo->tipo= 1;
-                $efectivo->monto=$request->monto;
-                $efectivo->fecha= new \DateTime();
-                $efectivo->save();
-
-                $persona_reali = new Persona();
-                $persona_reali->id = $idreali;
-                $persona_reali->nombre_persona = $request->nombre_reali;
-                $persona_reali->apellido_persona = $request->apellido_reali;
-                $persona_reali->fecha_nacimiento = $request->nacimiento;
-                $persona_reali->dui_pasaporte = $request->dui_reali;
-                $persona_reali->sexo = $request->sexo;
-                $persona_reali->id_madre = $request->id_m;
-                $persona_reali->save();
-
-                $partida = new PartidaNacimiento();
-                $partida->id = $idp;
-                $partida->alcaldia = $request->alcaldia;
-                $partida->libro = $request->libro;
-                $partida->partida = $request->partida;
-                $partida->folio = $request->folio;
-                $partida->ano = $request->ano;
-                $partida->idpersona = $idreali;
-                $partida->save();
-
-                $bautizo = new Sacramentos3();
-                $bautizo->id = $idsacramento;
-                $bautizo->tipo_sacramento=$tiposacra;
-                $bautizo->libro = $request->librob;
-                $bautizo->folio = $request->foliob;
-                $bautizo->asiento = $request->asiento;
-                $bautizo->fecha_realizacion = $request->fecha;
-                $bautizo->id_realizante1 = $idreali;
-                $bautizo->id_sacerdote = $request->sacerdote;
-                $bautizo->id_padrino = $request->id_pd1;
-                $bautizo->id_padrino2 = $request->id_pd2;
-                $bautizo->titulo = $request->titulo;
-                $bautizo->save();
-                break;
-            }
-            case '25':{
-                $id_realizante=Persona::max('id');
-                $idreali = $id_realizante+1;
-                $idsacra = Sacramentos3::max('id');
-                $idsacramento = $idsacra+1;
-                $idpartida = PartidaNacimiento::max('id');
-                $idp = $idpartida+1;
-                $monto_p= Efectivo::max('id');
-                $montos=$monto_p+1;
-
-                $efectivo = new Efectivo();
-                $efectivo->id=$montos;
-                $efectivo->descripcion_efectivo='BAUTISMO';
-                $efectivo->idcare=$request->idcate;
-                $efectivo->tipo= 1;
-                $efectivo->monto=$request->monto;
-                $efectivo->fecha= new \DateTime();
-                $efectivo->save();
-
-                $persona_reali = new Persona();
-                $persona_reali->id = $idreali;
-                $persona_reali->nombre_persona = $request->nombre_reali;
-                $persona_reali->apellido_persona = $request->apellido_reali;
-                $persona_reali->fecha_nacimiento = $request->nacimiento;
-                $persona_reali->dui_pasaporte = $request->dui_reali;
-                $persona_reali->sexo = $request->sexo;
-                $persona_reali->id_madre = $request->id_m;
-                $persona_reali->save();
-
-                $partida = new PartidaNacimiento();
-                $partida->id = $idp;
-                $partida->alcaldia = $request->alcaldia;
-                $partida->libro = $request->libro;
-                $partida->partida = $request->partida;
-                $partida->folio = $request->folio;
-                $partida->ano = $request->ano;
-                $partida->idpersona = $idreali;
-                $partida->save();
-
-                $bautizo = new Sacramentos3();
-                $bautizo->id = $idsacramento;
-                $bautizo->tipo_sacramento=$tiposacra;
-                $bautizo->libro = $request->librob;
-                $bautizo->folio = $request->foliob;
-                $bautizo->asiento = $request->asiento;
-                $bautizo->fecha_realizacion = $request->fecha;
-                $bautizo->id_realizante1 = $idreali;
-                $bautizo->id_sacerdote = $request->sacerdote;
-                $bautizo->id_padrino = $request->id_pd1;
-                $bautizo->titulo = $request->titulo;
-                $bautizo->save();
-                break;
-            }
-            case '26':{
-                $id_realizante=Persona::max('id');
-                $idreali = $id_realizante+1;
-                $idsacra = Sacramentos3::max('id');
-                $idsacramento = $idsacra+1;
-                $idpartida = PartidaNacimiento::max('id');
-                $idp = $idpartida+1;
-                $monto_p= Efectivo::max('id');
-                $montos=$monto_p+1;
-
-                $efectivo = new Efectivo();
-                $efectivo->id=$montos;
-                $efectivo->descripcion_efectivo='BAUTISMO';
-                $efectivo->idcare=$request->idcate;
-                $efectivo->tipo= 1;
-                $efectivo->monto=$request->monto;
-                $efectivo->fecha= new \DateTime();
-                $efectivo->save();
-
-                $persona_reali = new Persona();
-                $persona_reali->id = $idreali;
-                $persona_reali->nombre_persona = $request->nombre_reali;
-                $persona_reali->apellido_persona = $request->apellido_reali;
-                $persona_reali->fecha_nacimiento = $request->nacimiento;
-                $persona_reali->dui_pasaporte = $request->dui_reali;
-                $persona_reali->sexo = $request->sexo;
-                $persona_reali->id_madre = $request->id_m;
-                $persona_reali->save();
-
-                $partida = new PartidaNacimiento();
-                $partida->id = $idp;
-                $partida->alcaldia = $request->alcaldia;
-                $partida->libro = $request->libro;
-                $partida->partida = $request->partida;
-                $partida->folio = $request->folio;
-                $partida->ano = $request->ano;
-                $partida->idpersona = $idreali;
-                $partida->save();
-
-                $bautizo = new Sacramentos3();
-                $bautizo->id = $idsacramento;
-                $bautizo->tipo_sacramento=$tiposacra;
-                $bautizo->libro = $request->librob;
-                $bautizo->folio = $request->foliob;
-                $bautizo->asiento = $request->asiento;
-                $bautizo->fecha_realizacion = $request->fecha;
-                $bautizo->id_realizante1 = $idreali;
-                $bautizo->id_sacerdote = $request->sacerdote;
-                $bautizo->titulo = $request->titulo;
-                $bautizo->save();
-                break;
-            }
-            case '27':{
-                $id_realizante=Persona::max('id');
-                $idreali = $id_realizante+1;
-                $idsacra = Sacramentos3::max('id');
-                $idsacramento = $idsacra+1;
-                $idpartida = PartidaNacimiento::max('id');
-                $idp = $idpartida+1;
-                $monto_p= Efectivo::max('id');
-                $montos=$monto_p+1;
-
-                $efectivo = new Efectivo();
-                $efectivo->id=$montos;
-                $efectivo->descripcion_efectivo='BAUTISMO';
-                $efectivo->idcare=$request->idcate;
-                $efectivo->tipo= 1;
-                $efectivo->monto=$request->monto;
-                $efectivo->fecha= new \DateTime();
-                $efectivo->save();
-
-                $persona_reali = new Persona();
-                $persona_reali->id = $idreali;
-                $persona_reali->nombre_persona = $request->nombre_reali;
-                $persona_reali->apellido_persona = $request->apellido_reali;
-                $persona_reali->fecha_nacimiento = $request->nacimiento;
-                $persona_reali->dui_pasaporte = $request->dui_reali;
-                $persona_reali->sexo = $request->sexo;
-                $persona_reali->id_padre = $request->id_p;
-                $persona_reali->save();
-
-                $partida = new PartidaNacimiento();
-                $partida->id = $idp;
-                $partida->alcaldia = $request->alcaldia;
-                $partida->libro = $request->libro;
-                $partida->partida = $request->partida;
-                $partida->folio = $request->folio;
-                $partida->ano = $request->ano;
-                $partida->idpersona = $idreali;
-                $partida->save();
-
-                $bautizo = new Sacramentos3();
-                $bautizo->id = $idsacramento;
-                $bautizo->tipo_sacramento=$tiposacra;
-                $bautizo->libro = $request->librob;
-                $bautizo->folio = $request->foliob;
-                $bautizo->asiento = $request->asiento;
-                $bautizo->fecha_realizacion = $request->fecha;
-                $bautizo->id_realizante1 = $idreali;
-                $bautizo->id_sacerdote = $request->sacerdote;
-                $bautizo->id_padrino = $request->id_pd1;
-                $bautizo->id_padrino2 = $request->id_pd2;
-                $bautizo->id_padrino3 = $request->id_pd3;
-                $bautizo->id_padrino4 = $request->id_pd4;
-                $bautizo->titulo = $request->titulo;
-                $bautizo->save();
-                break;
-            }
-            case '28':{
-                $id_realizante=Persona::max('id');
-                $idreali = $id_realizante+1;
-                $idsacra = Sacramentos3::max('id');
-                $idsacramento = $idsacra+1;
-                $idpartida = PartidaNacimiento::max('id');
-                $idp = $idpartida+1;
-                $monto_p= Efectivo::max('id');
-                $montos=$monto_p+1;
-
-                $efectivo = new Efectivo();
-                $efectivo->id=$montos;
-                $efectivo->descripcion_efectivo='BAUTISMO';
-                $efectivo->idcare=$request->idcate;
-                $efectivo->tipo= 1;
-                $efectivo->monto=$request->monto;
-                $efectivo->fecha= new \DateTime();
-                $efectivo->save();
-
-                $persona_reali = new Persona();
-                $persona_reali->id = $idreali;
-                $persona_reali->nombre_persona = $request->nombre_reali;
-                $persona_reali->apellido_persona = $request->apellido_reali;
-                $persona_reali->fecha_nacimiento = $request->nacimiento;
-                $persona_reali->dui_pasaporte = $request->dui_reali;
-                $persona_reali->sexo = $request->sexo;
-                $persona_reali->id_padre = $request->id_p;
-                $persona_reali->save();
-
-                $partida = new PartidaNacimiento();
-                $partida->id = $idp;
-                $partida->alcaldia = $request->alcaldia;
-                $partida->libro = $request->libro;
-                $partida->partida = $request->partida;
-                $partida->folio = $request->folio;
-                $partida->ano = $request->ano;
-                $partida->idpersona = $idreali;
-                $partida->save();
-
-                $bautizo = new Sacramentos3();
-                $bautizo->id = $idsacramento;
-                $bautizo->tipo_sacramento=$tiposacra;
-                $bautizo->libro = $request->librob;
-                $bautizo->folio = $request->foliob;
-                $bautizo->asiento = $request->asiento;
-                $bautizo->fecha_realizacion = $request->fecha;
-                $bautizo->id_realizante1 = $idreali;
-                $bautizo->id_sacerdote = $request->sacerdote;
-                $bautizo->id_padrino = $request->id_pd1;
-                $bautizo->id_padrino2 = $request->id_pd2;
-                $bautizo->id_padrino3 = $request->id_pd3;
-                $bautizo->titulo = $request->titulo;
-                $bautizo->save();
-                break;
-            }
-            case '29':{
-                $id_realizante=Persona::max('id');
-                $idreali = $id_realizante+1;
-                $idsacra = Sacramentos3::max('id');
-                $idsacramento = $idsacra+1;
-                $idpartida = PartidaNacimiento::max('id');
-                $idp = $idpartida+1;
-                $monto_p= Efectivo::max('id');
-                $montos=$monto_p+1;
-
-                $efectivo = new Efectivo();
-                $efectivo->id=$montos;
-                $efectivo->descripcion_efectivo='BAUTISMO';
-                $efectivo->idcare=$request->idcate;
-                $efectivo->tipo= 1;
-                $efectivo->monto=$request->monto;
-                $efectivo->fecha= new \DateTime();
-                $efectivo->save();
-
-                $persona_reali = new Persona();
-                $persona_reali->id = $idreali;
-                $persona_reali->nombre_persona = $request->nombre_reali;
-                $persona_reali->apellido_persona = $request->apellido_reali;
-                $persona_reali->fecha_nacimiento = $request->nacimiento;
-                $persona_reali->dui_pasaporte = $request->dui_reali;
-                $persona_reali->sexo = $request->sexo;
-                $persona_reali->id_padre = $request->id_p;
-                $persona_reali->save();
-
-                $partida = new PartidaNacimiento();
-                $partida->id = $idp;
-                $partida->alcaldia = $request->alcaldia;
-                $partida->libro = $request->libro;
-                $partida->partida = $request->partida;
-                $partida->folio = $request->folio;
-                $partida->ano = $request->ano;
-                $partida->idpersona = $idreali;
-                $partida->save();
-
-                $bautizo = new Sacramentos3();
-                $bautizo->id = $idsacramento;
-                $bautizo->tipo_sacramento=$tiposacra;
-                $bautizo->libro = $request->librob;
-                $bautizo->folio = $request->foliob;
-                $bautizo->asiento = $request->asiento;
-                $bautizo->fecha_realizacion = $request->fecha;
-                $bautizo->id_realizante1 = $idreali;
-                $bautizo->id_sacerdote = $request->sacerdote;
-                $bautizo->id_padrino = $request->id_pd1;
-                $bautizo->id_padrino2 = $request->id_pd2;
-                $bautizo->titulo = $request->titulo;
-                $bautizo->save();
-                break;
-            }
-            case '30':{
-                $id_realizante=Persona::max('id');
-                $idreali = $id_realizante+1;
-                $idsacra = Sacramentos3::max('id');
-                $idsacramento = $idsacra+1;
-                $idpartida = PartidaNacimiento::max('id');
-                $idp = $idpartida+1;
-                $monto_p= Efectivo::max('id');
-                $montos=$monto_p+1;
-
-                $efectivo = new Efectivo();
-                $efectivo->id=$montos;
-                $efectivo->descripcion_efectivo='BAUTISMO';
-                $efectivo->idcare=$request->idcate;
-                $efectivo->tipo= 1;
-                $efectivo->monto=$request->monto;
-                $efectivo->fecha= new \DateTime();
-                $efectivo->save();
-
-                $persona_reali = new Persona();
-                $persona_reali->id = $idreali;
-                $persona_reali->nombre_persona = $request->nombre_reali;
-                $persona_reali->apellido_persona = $request->apellido_reali;
-                $persona_reali->fecha_nacimiento = $request->nacimiento;
-                $persona_reali->dui_pasaporte = $request->dui_reali;
-                $persona_reali->sexo = $request->sexo;
-                $persona_reali->id_padre = $request->id_p;
-                $persona_reali->save();
-
-                $partida = new PartidaNacimiento();
-                $partida->id = $idp;
-                $partida->alcaldia = $request->alcaldia;
-                $partida->libro = $request->libro;
-                $partida->partida = $request->partida;
-                $partida->folio = $request->folio;
-                $partida->ano = $request->ano;
-                $partida->idpersona = $idreali;
-                $partida->save();
-
-                $bautizo = new Sacramentos3();
-                $bautizo->id = $idsacramento;
-                $bautizo->tipo_sacramento=$tiposacra;
-                $bautizo->libro = $request->librob;
-                $bautizo->folio = $request->foliob;
-                $bautizo->asiento = $request->asiento;
-                $bautizo->fecha_realizacion = $request->fecha;
-                $bautizo->id_realizante1 = $idreali;
-                $bautizo->id_sacerdote = $request->sacerdote;
-                $bautizo->id_padrino = $request->id_pd1;
-                $bautizo->titulo = $request->titulo;
-                $bautizo->save();
-                break;
-            }
-            case '31':{
-                $id_realizante=Persona::max('id');
-                $idreali = $id_realizante+1;
-                $idsacra = Sacramentos3::max('id');
-                $idsacramento = $idsacra+1;
-                $idpartida = PartidaNacimiento::max('id');
-                $idp = $idpartida+1;
-                $monto_p= Efectivo::max('id');
-                $montos=$monto_p+1;
-
-                $efectivo = new Efectivo();
-                $efectivo->id=$montos;
-                $efectivo->descripcion_efectivo='BAUTISMO';
-                $efectivo->idcare=$request->idcate;
-                $efectivo->tipo= 1;
-                $efectivo->monto=$request->monto;
-                $efectivo->fecha= new \DateTime();
-                $efectivo->save();
-
-                $persona_reali = new Persona();
-                $persona_reali->id = $idreali;
-                $persona_reali->nombre_persona = $request->nombre_reali;
-                $persona_reali->apellido_persona = $request->apellido_reali;
-                $persona_reali->fecha_nacimiento = $request->nacimiento;
-                $persona_reali->dui_pasaporte = $request->dui_reali;
-                $persona_reali->sexo = $request->sexo;
-                $persona_reali->save();
-
-                $partida = new PartidaNacimiento();
-                $partida->id = $idp;
-                $partida->alcaldia = $request->alcaldia;
-                $partida->libro = $request->libro;
-                $partida->partida = $request->partida;
-                $partida->folio = $request->folio;
-                $partida->ano = $request->ano;
-                $partida->idpersona = $idreali;
-                $partida->save();
-
-                $bautizo = new Sacramentos3();
-                $bautizo->id = $idsacramento;
-                $bautizo->tipo_sacramento=$tiposacra;
-                $bautizo->libro = $request->librob;
-                $bautizo->folio = $request->foliob;
-                $bautizo->asiento = $request->asiento;
-                $bautizo->fecha_realizacion = $request->fecha;
-                $bautizo->id_realizante1 = $idreali;
-                $bautizo->id_sacerdote = $request->sacerdote;
-                $bautizo->id_padrino = $request->id_pd1;
-                $bautizo->id_padrino2 = $request->id_pd2;
-                $bautizo->id_padrino3 = $request->id_pd3;
-                $bautizo->id_padrino4 = $request->id_pd4;
-                $bautizo->titulo = $request->titulo;
-                $bautizo->save();
-                break;
-            }
-            case '32':{
-                $id_realizante=Persona::max('id');
-                $idreali = $id_realizante+1;
-                $idsacra = Sacramentos3::max('id');
-                $idsacramento = $idsacra+1;
-                $idpartida = PartidaNacimiento::max('id');
-                $idp = $idpartida+1;
-                $monto_p= Efectivo::max('id');
-                $montos=$monto_p+1;
-
-                $efectivo = new Efectivo();
-                $efectivo->id=$montos;
-                $efectivo->descripcion_efectivo='BAUTISMO';
-                $efectivo->idcare=$request->idcate;
-                $efectivo->tipo= 1;
-                $efectivo->monto=$request->monto;
-                $efectivo->fecha= new \DateTime();
-                $efectivo->save();
-
-                $persona_reali = new Persona();
-                $persona_reali->id = $idreali;
-                $persona_reali->nombre_persona = $request->nombre_reali;
-                $persona_reali->apellido_persona = $request->apellido_reali;
-                $persona_reali->fecha_nacimiento = $request->nacimiento;
-                $persona_reali->dui_pasaporte = $request->dui_reali;
-                $persona_reali->sexo = $request->sexo;
-                $persona_reali->save();
-
-                $partida = new PartidaNacimiento();
-                $partida->id = $idp;
-                $partida->alcaldia = $request->alcaldia;
-                $partida->libro = $request->libro;
-                $partida->partida = $request->partida;
-                $partida->folio = $request->folio;
-                $partida->ano = $request->ano;
-                $partida->idpersona = $idreali;
-                $partida->save();
-
-                $bautizo = new Sacramentos3();
-                $bautizo->id = $idsacramento;
-                $bautizo->tipo_sacramento=$tiposacra;
-                $bautizo->libro = $request->librob;
-                $bautizo->folio = $request->foliob;
-                $bautizo->asiento = $request->asiento;
-                $bautizo->fecha_realizacion = $request->fecha;
-                $bautizo->id_realizante1 = $idreali;
-                $bautizo->id_sacerdote = $request->sacerdote;
-                $bautizo->id_padrino = $request->id_pd1;
-                $bautizo->id_padrino2 = $request->id_pd2;
-                $bautizo->id_padrino3 = $request->id_pd3;
-                $bautizo->titulo = $request->titulo;
-                $bautizo->save();
-                break;
-            }
-            case '33':{
-                $id_realizante=Persona::max('id');
-                $idreali = $id_realizante+1;
-                $idsacra = Sacramentos3::max('id');
-                $idsacramento = $idsacra+1;
-                $idpartida = PartidaNacimiento::max('id');
-                $idp = $idpartida+1;
-                $monto_p= Efectivo::max('id');
-                $montos=$monto_p+1;
-
-                $efectivo = new Efectivo();
-                $efectivo->id=$montos;
-                $efectivo->descripcion_efectivo='BAUTISMO';
-                $efectivo->idcare=$request->idcate;
-                $efectivo->tipo= 1;
-                $efectivo->monto=$request->monto;
-                $efectivo->fecha= new \DateTime();
-                $efectivo->save();
-
-                $persona_reali = new Persona();
-                $persona_reali->id = $idreali;
-                $persona_reali->nombre_persona = $request->nombre_reali;
-                $persona_reali->apellido_persona = $request->apellido_reali;
-                $persona_reali->fecha_nacimiento = $request->nacimiento;
-                $persona_reali->dui_pasaporte = $request->dui_reali;
-                $persona_reali->sexo = $request->sexo;
-                $persona_reali->save();
-
-                $partida = new PartidaNacimiento();
-                $partida->id = $idp;
-                $partida->alcaldia = $request->alcaldia;
-                $partida->libro = $request->libro;
-                $partida->partida = $request->partida;
-                $partida->folio = $request->folio;
-                $partida->ano = $request->ano;
-                $partida->idpersona = $idreali;
-                $partida->save();
-
-                $bautizo = new Sacramentos3();
-                $bautizo->id = $idsacramento;
-                $bautizo->tipo_sacramento=$tiposacra;
-                $bautizo->libro = $request->librob;
-                $bautizo->folio = $request->foliob;
-                $bautizo->asiento = $request->asiento;
-                $bautizo->fecha_realizacion = $request->fecha;
-                $bautizo->id_realizante1 = $idreali;
-                $bautizo->id_sacerdote = $request->sacerdote;
-                $bautizo->id_padrino = $request->id_pd1;
-                $bautizo->id_padrino2 = $request->id_pd2;
-                $bautizo->titulo = $request->titulo;
-                $bautizo->save();
-                break;
-            }
-            case '34':{
-                $id_realizante=Persona::max('id');
-                $idreali = $id_realizante+1;
-                $idsacra = Sacramentos3::max('id');
-                $idsacramento = $idsacra+1;
-                $idpartida = PartidaNacimiento::max('id');
-                $idp = $idpartida+1;
-                $monto_p= Efectivo::max('id');
-                $montos=$monto_p+1;
-
-                $efectivo = new Efectivo();
-                $efectivo->id=$montos;
-                $efectivo->descripcion_efectivo='BAUTISMO';
-                $efectivo->idcare=$request->idcate;
-                $efectivo->tipo= 1;
-                $efectivo->monto=$request->monto;
-                $efectivo->fecha= new \DateTime();
-                $efectivo->save();
-
-                $persona_reali = new Persona();
-                $persona_reali->id = $idreali;
-                $persona_reali->nombre_persona = $request->nombre_reali;
-                $persona_reali->apellido_persona = $request->apellido_reali;
-                $persona_reali->fecha_nacimiento = $request->nacimiento;
-                $persona_reali->dui_pasaporte = $request->dui_reali;
-                $persona_reali->sexo = $request->sexo;
-                $persona_reali->save();
-
-                $partida = new PartidaNacimiento();
-                $partida->id = $idp;
-                $partida->alcaldia = $request->alcaldia;
-                $partida->libro = $request->libro;
-                $partida->partida = $request->partida;
-                $partida->folio = $request->folio;
-                $partida->ano = $request->ano;
-                $partida->idpersona = $idreali;
-                $partida->save();
-
-                $bautizo = new Sacramentos3();
-                $bautizo->id = $idsacramento;
-                $bautizo->tipo_sacramento=$tiposacra;
-                $bautizo->libro = $request->librob;
-                $bautizo->folio = $request->foliob;
-                $bautizo->asiento = $request->asiento;
-                $bautizo->fecha_realizacion = $request->fecha;
-                $bautizo->id_realizante1 = $idreali;
-                $bautizo->id_sacerdote = $request->sacerdote;
-                $bautizo->id_padrino = $request->id_pd1;
-                $bautizo->titulo = $request->titulo;
-                $bautizo->save();
-                break;
-            }
-            case '35':{
-                $id_persona=Persona::max('id');
-                $idma=$id_persona+1;
-                $idpa=$idma+1;
-                $idpa1=$idpa+1;
-                $idreali = $idpa1+1;
-                $idsacra = Sacramentos3::max('id');
-                $idsacramento = $idsacra+1;
-                $idpartida = PartidaNacimiento::max('id');
-                $idp = $idpartida+1;
-                $monto_p= Efectivo::max('id');
-                $montos=$monto_p+1;
-
-                $efectivo = new Efectivo();
-                $efectivo->id=$montos;
-                $efectivo->descripcion_efectivo='BAUTISMO';
-                $efectivo->idcare=$request->idcate;
-                $efectivo->tipo= 1;
-                $efectivo->monto=$request->monto;
-                $efectivo->fecha= new \DateTime();
-                $efectivo->save();
-
-                $personam=new Persona();
-                $personam->id=$idma;
-                $personam->nombre_persona=$request->nombre_m;
-                $personam->apellido_persona=$request->apellido_m;
-                $personam->dui_pasaporte=$request->dui_m;
-                $personam->save();
-
-                $personap=new Persona();
-                $personap->id=$idpa;
-                $personap->nombre_persona=$request->nombre_p;
-                $personap->apellido_persona=$request->apellido_p;
-                $personap->dui_pasaporte=$request->dui_p;
-                $personap->save();
-
-                $personapd1=new Persona();
-                $personapd1->id=$idpa1;
-                $personapd1->nombre_persona=$request->nombre_pd1;
-                $personapd1->apellido_persona=$request->apellido_pd1;
-                $personapd1->dui_pasaporte=$request->dui_pd1;
-                $personapd1->sexo=$request->sexo_pd1;
-                $personapd1->save();
-
-                $persona_reali = new Persona();
-                $persona_reali->id = $idreali;
-                $persona_reali->nombre_persona = $request->nombre_reali;
-                $persona_reali->apellido_persona = $request->apellido_reali;
-                $persona_reali->fecha_nacimiento = $request->nacimiento;
-                $persona_reali->dui_pasaporte = $request->dui_reali;
-                $persona_reali->sexo = $request->sexo;
-                $persona_reali->id_madre = $idma;
-                $persona_reali->id_padre = $idpa;
-                $persona_reali->save();
-
-                $partida = new PartidaNacimiento();
-                $partida->id = $idp;
-                $partida->alcaldia = $request->alcaldia;
-                $partida->libro = $request->libro;
-                $partida->partida = $request->partida;
-                $partida->folio = $request->folio;
-                $partida->ano = $request->ano;
-                $partida->idpersona = $idreali;
-                $partida->save();
-
-                $bautizo = new Sacramentos3();
-                $bautizo->id = $idsacramento;
-                $bautizo->tipo_sacramento=$tiposacra;
-                $bautizo->libro = $request->librob;
-                $bautizo->folio = $request->foliob;
-                $bautizo->asiento = $request->asiento;
-                $bautizo->fecha_realizacion = $request->fecha;
-                $bautizo->id_realizante1 = $idreali;
-                $bautizo->id_sacerdote = $request->sacerdote;
-                $bautizo->id_padrino = $idpa1;
-                $bautizo->titulo = $request->titulo;
-                $bautizo->save();
-                break;
-            }
-            case '36':{
-                $id_persona=Persona::max('id');
-                $idma=$id_persona+1;
-                $idpa=$idma+1;
-                $idpa1=$idpa+1;
-                $idpa2=$idpa1+1;
-                $idreali = $idpa2+1;
-                $idsacra = Sacramentos3::max('id');
-                $idsacramento = $idsacra+1;
-                $idpartida = PartidaNacimiento::max('id');
-                $idp = $idpartida+1;
-                $monto_p= Efectivo::max('id');
-                $montos=$monto_p+1;
-
-                $efectivo = new Efectivo();
-                $efectivo->id=$montos;
-                $efectivo->descripcion_efectivo='BAUTISMO';
-                $efectivo->idcare=$request->idcate;
-                $efectivo->tipo= 1;
-                $efectivo->monto=$request->monto;
-                $efectivo->fecha= new \DateTime();
-                $efectivo->save();
-
-                $personam=new Persona();
-                $personam->id=$idma;
-                $personam->nombre_persona=$request->nombre_m;
-                $personam->apellido_persona=$request->apellido_m;
-                $personam->dui_pasaporte=$request->dui_m;
-                $personam->save();
-
-                $personap=new Persona();
-                $personap->id=$idpa;
-                $personap->nombre_persona=$request->nombre_p;
-                $personap->apellido_persona=$request->apellido_p;
-                $personap->dui_pasaporte=$request->dui_p;
-                $personap->save();
-
-                $personapd1=new Persona();
-                $personapd1->id=$idpa1;
-                $personapd1->nombre_persona=$request->nombre_pd1;
-                $personapd1->apellido_persona=$request->apellido_pd1;
-                $personapd1->dui_pasaporte=$request->dui_pd1;
-                $personapd1->sexo=$request->sexo_pd1;
-                $personapd1->save();
-
-                $personapd2=new Persona();
-                $personapd2->id=$idpa2;
-                $personapd2->nombre_persona=$request->nombre_pd2;
-                $personapd2->apellido_persona=$request->apellido_pd2;
-                $personapd2->dui_pasaporte=$request->dui_pd2;
-                $personapd2->sexo=$request->sexo_pd2;
-                $personapd2->save();
-
-                $persona_reali = new Persona();
-                $persona_reali->id = $idreali;
-                $persona_reali->nombre_persona = $request->nombre_reali;
-                $persona_reali->apellido_persona = $request->apellido_reali;
-                $persona_reali->fecha_nacimiento = $request->nacimiento;
-                $persona_reali->dui_pasaporte = $request->dui_reali;
-                $persona_reali->sexo = $request->sexo;
-                $persona_reali->id_madre = $idma;
-                $persona_reali->id_padre = $idpa;
-                $persona_reali->save();
-
-                $partida = new PartidaNacimiento();
-                $partida->id = $idp;
-                $partida->alcaldia = $request->alcaldia;
-                $partida->libro = $request->libro;
-                $partida->partida = $request->partida;
-                $partida->folio = $request->folio;
-                $partida->ano = $request->ano;
-                $partida->idpersona = $idreali;
-                $partida->save();
-
-                $bautizo = new Sacramentos3();
-                $bautizo->id = $idsacramento;
-                $bautizo->tipo_sacramento=$tiposacra;
-                $bautizo->libro = $request->librob;
-                $bautizo->folio = $request->foliob;
-                $bautizo->asiento = $request->asiento;
-                $bautizo->fecha_realizacion = $request->fecha;
-                $bautizo->id_realizante1 = $idreali;
-                $bautizo->id_sacerdote = $request->sacerdote;
-                $bautizo->id_padrino = $idpa1;
-                $bautizo->id_padrino2 = $idpa2;
-                $bautizo->titulo = $request->titulo;
-                $bautizo->save();
-                break;
-            }
-            case '37':{
-                $id_persona=Persona::max('id');
-                $idma=$id_persona+1;
-                $idpa1=$idma+1;
-                $idreali = $idpa1+1;
-                $idsacra = Sacramentos3::max('id');
-                $idsacramento = $idsacra+1;
-                $idpartida = PartidaNacimiento::max('id');
-                $idp = $idpartida+1;
-                $monto_p= Efectivo::max('id');
-                $montos=$monto_p+1;
-
-                $efectivo = new Efectivo();
-                $efectivo->id=$montos;
-                $efectivo->descripcion_efectivo='BAUTISMO';
-                $efectivo->idcare=$request->idcate;
-                $efectivo->tipo= 1;
-                $efectivo->monto=$request->monto;
-                $efectivo->fecha= new \DateTime();
-                $efectivo->save();
-
-                $personam=new Persona();
-                $personam->id=$idma;
-                $personam->nombre_persona=$request->nombre_m;
-                $personam->apellido_persona=$request->apellido_m;
-                $personam->dui_pasaporte=$request->dui_m;
-                $personam->save();
-
-                $personapd1=new Persona();
-                $personapd1->id=$idpa1;
-                $personapd1->nombre_persona=$request->nombre_pd1;
-                $personapd1->apellido_persona=$request->apellido_pd1;
-                $personapd1->dui_pasaporte=$request->dui_pd1;
-                $personapd1->sexo=$request->sexo_pd1;
-                $personapd1->save();
-
-                $persona_reali = new Persona();
-                $persona_reali->id = $idreali;
-                $persona_reali->nombre_persona = $request->nombre_reali;
-                $persona_reali->apellido_persona = $request->apellido_reali;
-                $persona_reali->fecha_nacimiento = $request->nacimiento;
-                $persona_reali->dui_pasaporte = $request->dui_reali;
-                $persona_reali->sexo = $request->sexo;
-                $persona_reali->id_madre = $idma;
-                $persona_reali->save();
-
-                $partida = new PartidaNacimiento();
-                $partida->id = $idp;
-                $partida->alcaldia = $request->alcaldia;
-                $partida->libro = $request->libro;
-                $partida->partida = $request->partida;
-                $partida->folio = $request->folio;
-                $partida->ano = $request->ano;
-                $partida->idpersona = $idreali;
-                $partida->save();
-
-                $bautizo = new Sacramentos3();
-                $bautizo->id = $idsacramento;
-                $bautizo->tipo_sacramento=$tiposacra;
-                $bautizo->libro = $request->librob;
-                $bautizo->folio = $request->foliob;
-                $bautizo->asiento = $request->asiento;
-                $bautizo->fecha_realizacion = $request->fecha;
-                $bautizo->id_realizante1 = $idreali;
-                $bautizo->id_sacerdote = $request->sacerdote;
-                $bautizo->id_padrino = $idpa1;
-                $bautizo->titulo = $request->titulo;
-                $bautizo->save();
-                break;
-            }
-            case '38':{
-                $id_persona=Persona::max('id');
-                $idpa=$id_persona+1;
-                $idpa1=$idpa+1;
-                $idreali = $idpa1+1;
-                $idsacra = Sacramentos3::max('id');
-                $idsacramento = $idsacra+1;
-                $idpartida = PartidaNacimiento::max('id');
-                $idp = $idpartida+1;
-                $monto_p= Efectivo::max('id');
-                $montos=$monto_p+1;
-
-                $efectivo = new Efectivo();
-                $efectivo->id=$montos;
-                $efectivo->descripcion_efectivo='BAUTISMO';
-                $efectivo->idcare=$request->idcate;
-                $efectivo->tipo= 1;
-                $efectivo->monto=$request->monto;
-                $efectivo->fecha= new \DateTime();
-                $efectivo->save();
-
-                $personap=new Persona();
-                $personap->id=$idpa;
-                $personap->nombre_persona=$request->nombre_p;
-                $personap->apellido_persona=$request->apellido_p;
-                $personap->dui_pasaporte=$request->dui_p;
-                $personap->save();
-
-                $personapd1=new Persona();
-                $personapd1->id=$idpa1;
-                $personapd1->nombre_persona=$request->nombre_pd1;
-                $personapd1->apellido_persona=$request->apellido_pd1;
-                $personapd1->dui_pasaporte=$request->dui_pd1;
-                $personapd1->sexo=$request->sexo_pd1;
-                $personapd1->save();
-
-                $persona_reali = new Persona();
-                $persona_reali->id = $idreali;
-                $persona_reali->nombre_persona = $request->nombre_reali;
-                $persona_reali->apellido_persona = $request->apellido_reali;
-                $persona_reali->fecha_nacimiento = $request->nacimiento;
-                $persona_reali->dui_pasaporte = $request->dui_reali;
-                $persona_reali->sexo = $request->sexo;
-                $persona_reali->id_padre = $idpa;
-                $persona_reali->save();
-
-                $partida = new PartidaNacimiento();
-                $partida->id = $idp;
-                $partida->alcaldia = $request->alcaldia;
-                $partida->libro = $request->libro;
-                $partida->partida = $request->partida;
-                $partida->folio = $request->folio;
-                $partida->ano = $request->ano;
-                $partida->idpersona = $idreali;
-                $partida->save();
-
-                $bautizo = new Sacramentos3();
-                $bautizo->id = $idsacramento;
-                $bautizo->tipo_sacramento=$tiposacra;
-                $bautizo->libro = $request->librob;
-                $bautizo->folio = $request->foliob;
-                $bautizo->asiento = $request->asiento;
-                $bautizo->fecha_realizacion = $request->fecha;
-                $bautizo->id_realizante1 = $idreali;
-                $bautizo->id_sacerdote = $request->sacerdote;
-                $bautizo->id_padrino = $idpa1;
-                $bautizo->titulo = $request->titulo;
-                $bautizo->save();
-                break;
-            }
-            case '39':{
-                $id_persona=Persona::max('id');
-                $idpa1=$id_persona+1;
-                $idreali = $idpa1+1;
-                $idsacra = Sacramentos3::max('id');
-                $idsacramento = $idsacra+1;
-                $idpartida = PartidaNacimiento::max('id');
-                $idp = $idpartida+1;
-                $monto_p= Efectivo::max('id');
-                $montos=$monto_p+1;
-
-                $efectivo = new Efectivo();
-                $efectivo->id=$montos;
-                $efectivo->descripcion_efectivo='BAUTISMO';
-                $efectivo->idcare=$request->idcate;
-                $efectivo->tipo= 1;
-                $efectivo->monto=$request->monto;
-                $efectivo->fecha= new \DateTime();
-                $efectivo->save();
-
-                $personapd1=new Persona();
-                $personapd1->id=$idpa1;
-                $personapd1->nombre_persona=$request->nombre_pd1;
-                $personapd1->apellido_persona=$request->apellido_pd1;
-                $personapd1->dui_pasaporte=$request->dui_pd1;
-                $personapd1->sexo=$request->sexo_pd1;
-                $personapd1->save();
-
-                $persona_reali = new Persona();
-                $persona_reali->id = $idreali;
-                $persona_reali->nombre_persona = $request->nombre_reali;
-                $persona_reali->apellido_persona = $request->apellido_reali;
-                $persona_reali->fecha_nacimiento = $request->nacimiento;
-                $persona_reali->dui_pasaporte = $request->dui_reali;
-                $persona_reali->sexo = $request->sexo;
-                $persona_reali->save();
-
-                $partida = new PartidaNacimiento();
-                $partida->id = $idp;
-                $partida->alcaldia = $request->alcaldia;
-                $partida->libro = $request->libro;
-                $partida->partida = $request->partida;
-                $partida->folio = $request->folio;
-                $partida->ano = $request->ano;
-                $partida->idpersona = $idreali;
-                $partida->save();
-
-                $bautizo = new Sacramentos3();
-                $bautizo->id = $idsacramento;
-                $bautizo->tipo_sacramento=$tiposacra;
-                $bautizo->libro = $request->librob;
-                $bautizo->folio = $request->foliob;
-                $bautizo->asiento = $request->asiento;
-                $bautizo->fecha_realizacion = $request->fecha;
-                $bautizo->id_realizante1 = $idreali;
-                $bautizo->id_sacerdote = $request->sacerdote;
-                $bautizo->id_padrino = $idpa1;
-                $bautizo->titulo = $request->titulo;
-                $bautizo->save();
-                break;
+            break;
             }
         }
+        
+       
     }
 
     public function show($id)

@@ -25,13 +25,13 @@ class CanastasController extends Controller
             ->select('canasta.id','canasta.nombre_canasta','canasta.precio_venta','canasta.costo_canasta','existencia_canasta.cantidad')
             ->where('existencia_canasta.cantidad','>','0')
             ->orderBy('canasta.id')
-            ->paginate(3);
+            ->paginate(15);
         } else {
             $canastas = Canasta::join('existencia_canasta','canasta.id','=','existencia_canasta.id_canasta')
             ->select('canasta.id','canasta.nombre_canasta','canasta.precio_venta','canasta.costo_canasta','existencia_canasta.cantidad')
             ->where('existencia_canasta.cantidad','>','0')
             ->where($criterio, 'like','%' . $buscar .'%')
-            ->orderBy('canasta.id')->paginate(3);
+            ->orderBy('canasta.id')->paginate(15);
         }         
          
         return [
@@ -49,17 +49,29 @@ class CanastasController extends Controller
 
     public function Buscar(Request $request)
     {
-        //if(!$request->ajax()) return redirect('/');
+        if(!$request->ajax()) return redirect('/');
         $filtro=$request->buscar;
   
         $productos = Producto::join('detalle_entrada','producto.id','=','detalle_entrada.id_producto')
         ->join('existencias','detalle_entrada.id','=','existencias.id_entrada')
         ->join('descripcion_canasta','existencias.id','=','descripcion_canasta.id_existencia')
+        ->join('canasta','descripcion_canasta.id_canasta','=','canasta.id')
         ->select('producto.nombre_producto', DB::raw('sum(descripcion_canasta.cantidad) as cantidad'))
         ->where('descripcion_canasta.id_canasta',  $filtro )
         ->groupBy('producto.id')
         ->get();
         return  ['producto'=> $productos];
+    }
+
+    public function Buscar2(Request $request)
+    {
+        if(!$request->ajax()) return redirect('/');
+        $filtro=$request->buscar;
+  
+        $productos = Canasta::select('cantidad')
+        ->where('id',  $filtro )
+        ->get();
+        return  ['canasta'=> $productos];
     }
 
 

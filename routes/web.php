@@ -60,6 +60,13 @@ Route::group(['middleware'=>['auth']],function(){
                             Route::put('/montofijo/actualizar','MontoFijoController@update');
                             Route::put('/montofijo/eliminar','MontoFijoController@eliminar');
 
+                             //TABLA Unidad medida
+                             Route::get('/unidad','UnidadMedidaController@index');
+                             Route::put('/unidad/registrar','UnidadMedidaController@store');
+                             Route::post('/unidad/buscarmf','UnidadMedidaController@buscar');
+                             Route::put('/unidad/actualizar','UnidadMedidaController@update');
+                             Route::put('/unidad/eliminar','UnidadMedidaController@eliminar');
+
                             //TABLA BAUTIZO
                             Route::get('/bautizo','BautizoController@index');
                             Route::put('/bautizo/registrar','BautizoController@store');
@@ -71,13 +78,14 @@ Route::group(['middleware'=>['auth']],function(){
 
                             //TABLA PARTIDA NACIMIENTO
                             Route::get('/partida/busqueda','PartidaNacimientoController@realizante');//Buscar partida nacimiento- PRIMERA COMUNIÓN
+                            Route::get('/partida/busquedaBautizo','PartidaNacimientoController@realizanteBautizo');//Buscar partida nacimiento-BAUTIZO
                             Route::get('/partida/busquedaConfirma','PartidaNacimientoController2@realizante'); //Buscar partida nacimiento-CONFIRMA
 
                             //TABLA PERSONA
                             Route::get('/persona/obtener','PersonaController@realizante'); //PRIMERA COMUNIÓN 
                             Route::get('/persona/buscarsacerdote3','PersonaController@buscarsacerdote'); //primera comunión-confirma - y quizas bautizo y matrimonio
                             Route::get('/persona/buscarsacerdote','PersonaController@buscarsacerdoteG'); //MATRIMONIO
-                            Route::get('/persona/duis','PersonaController@buscarduis');//primera comunión - confirma
+                            Route::get('/persona/duis','PersonaController@buscarduis');//bautizo - primera comunión - confirma
                             Route::get('/persona/pan','PersonaController@show'); // ????
                             Route::put('/persona/registrar','PersonaController@store'); //PRIMERA COMUNIÓN
                            
@@ -94,6 +102,7 @@ Route::group(['middleware'=>['auth']],function(){
                             Route::put('/confirma/registrar','ConfirmaController@store');//CONFIRMA
                             //Route::put('/confirma/marginaracta','BautizoController@marginacionacta'); //aun no se para que es
 
+                            Route::get('/persona/listarbautizos','PersonaController@listaB');//para el realizante BAUTIZO
                             Route::get('/persona/listarcomuniones','PersonaController@listaPC');//para el realizante PRIMERA COMUNIÓN
                             Route::get('/persona/listarconfirmaciones','PersonaController@listaC');//para el realizante CONFIRMA
                             Route::get('/persona/listarsupletorias','PersonaController@listaS');//para el realizante SUPLETORIA
@@ -156,7 +165,7 @@ Route::group(['middleware'=>['auth']],function(){
                             Route::get('/producto','ProductoController@index');
                             Route::get('/productos/v','ProductoController@indexv');
                             Route::get('/productos/venta','ProductoController@venta');
-                            Route::get('/producto/seleccionar','ProductoController@seleccionarProducto');
+                            Route::get('/producto/seleccionar','ProductoController@seleccionarProducto'); //Para compras
                             Route::get('/producto/canasta','ProductoController@seleccionarProductoCanasta');
                             Route::put('/producto/registrar','ProductoController@store');
                             Route::put('/venta/registrar','ProductoController@guardarventa');
@@ -174,6 +183,7 @@ Route::group(['middleware'=>['auth']],function(){
                              Route::get('/canastas','CanastasController@index');
                              Route::put('/canastas/registrar','CanastasController@store');
                              Route::get('/canastas/detalle','CanastasController@Buscar');
+                             Route::get('/canastas/canasta','CanastasController@Buscar2');
                              Route::put('/canastas/vender','CanastasController@vender');
                              
                             

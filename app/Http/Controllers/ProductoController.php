@@ -25,13 +25,24 @@ class ProductoController extends Controller
         
         
         if ($buscar == ''){
-            $productos = Producto::where('estado','1')->orderBy('id')->get();
+            $productos = Producto::where('estado','1')->orderBy('id')->paginate(15);
         } else {
             $productos = Producto::where($criterio, 'like','%' . $buscar .'%')
             ->where('estado','1')
-            ->orderBy('id')->get();
+            ->orderBy('id')->paginate(15);
         }
-        return $productos;
+        return[
+            'pagination' =>[
+                 'total' =>  $productos->total(),
+                 'current_page' => $productos->currentPage(),
+                 'per_page' =>$productos->perPage(),
+                 'last_page' => $productos->lastPage(),
+                 'from' => $productos->firstItem(),
+                 'to' => $productos->lastItem(),
+                 ],
+                 'productos' => $productos
+             ];
+        
     }
     public function indexv(Request $request)
     {
@@ -47,7 +58,7 @@ class ProductoController extends Controller
             ->select('detalle_entrada.fecha','producto.nombre_producto','producto.unidad_medida','producto.id','existencias.precio_venta','existencias.cantidad','existencias.id as exi')
             ->where('existencias.cantidad','>','0')
             ->where('detalle_entrada.tipo','2')
-            ->orderby('producto.id', 'asc')->paginate(3);
+            ->orderby('producto.id', 'asc')->paginate(15);
         } else {
             $productos = Producto::join('detalle_entrada','producto.id','=','detalle_entrada.id_producto')
             ->join('existencias','detalle_entrada.id','=','existencias.id_entrada')
@@ -55,8 +66,12 @@ class ProductoController extends Controller
             ->where('existencias.cantidad','>','0')
             ->where('detalle_entrada.tipo','2')
             ->where('producto.nombre_producto', 'like','%' . $buscar .'%')
-            ->orderby('producto.id', 'asc')->paginate(3);
+            ->orderby('producto.id', 'asc')->paginate(15);
         }
+        $numero = count($productos); 
+    for ($i = 0; $i < $numero; $i++) {
+        $productos[$i]['idc']=$i;
+    }
         return [
             'pagination' => [
                 'total'        => $productos->total(),
@@ -72,11 +87,17 @@ class ProductoController extends Controller
     public function seleccionarProducto(Request $request)
     {
         if(!$request->ajax()) return redirect('/');
-        $filtro=$request->filtro;
-  
-        $productos = Producto::where('estado','1')->where('nombre_producto', 'like','%' . $filtro .'%')
+        $filtro1=$request->filtro;
+        $filtro2=strtoupper($filtro1);
+        $filtro = trim($filtro2);
+        $i=strlen ($filtro);
+        if($i>0){
+        $productos = Producto::select(DB::raw("CONCAT(nombre_producto, '-', unidad_medida) AS nombre_producto"),'id')->where('estado','1')->where('nombre_producto', 'like', $filtro .'%')
         ->get();
         return ['producto'=> $productos];
+        }else{
+            return;
+        }
     }
     public function venta(Request $request)
     {
@@ -93,16 +114,23 @@ class ProductoController extends Controller
     }
     public function seleccionarProductoCanasta(Request $request)
     {
-        //if(!$request->ajax()) return redirect('/');
-        $filtro=$request->filtro;
+        if(!$request->ajax()) return redirect('/');
+        $filtro1=$request->filtro;
+        $filtro2=strtoupper($filtro1);
+        $filtro = trim($filtro2);
+        $i=strlen ($filtro);
+        if($i>0){
   
         $productos = Producto::join('detalle_entrada','producto.id','=','detalle_entrada.id_producto')
         ->join('existencias','detalle_entrada.id','=','existencias.id_entrada')
-        ->select('producto.nombre_producto','producto.id')
-        ->where('detalle_entrada.tipo','1')->where('existencias.cantidad','>','0')->where('producto.nombre_producto', 'like','%' . $filtro .'%')
+        ->select(DB::raw("CONCAT(producto.nombre_producto, '-', producto.unidad_medida) AS nombre_producto"),'producto.id')
+        ->where('detalle_entrada.tipo','1')->where('existencias.cantidad','>','0')->where('producto.nombre_producto', 'like', $filtro .'%')
         ->groupBy('producto.id')
         ->get();
         return  ['producto'=> $productos];
+    }else{
+        return;
+    }
     }
     public function guardarventa(Request $request)
     {
@@ -129,24 +157,23 @@ class ProductoController extends Controller
     }
     public function seleccionarProductoExistencia(Request $request)
     {
-        //if(!$request->ajax()) return redirect('/');
+        if(!$request->ajax()) return redirect('/');
         $filtro=$request->filtro;
   
 
-        $productos2 = DetalleEntrada::join('existencias','detalle_entrada.id','=','existencias.id_entrada')
+        /*$productos2 = DetalleEntrada::join('existencias','detalle_entrada.id','=','existencias.id_entrada')
         ->select('detalle_entrada.unitario')
         ->where('existencias.cantidad','>','0')->where('detalle_entrada.id_producto','=', $filtro)
         ->orderby('existencias.id', 'asc')
         ->get();
-        $envio['compra']=  $productos2;
+        $envio['compra']=  $productos2;*/
 
         $productos3 = DetalleEntrada::join('existencias','detalle_entrada.id','=','existencias.id_entrada')
-        ->select('existencias.cantidad','existencias.id')
+        ->select('existencias.cantidad','existencias.id','detalle_entrada.unitario')
         ->where('existencias.cantidad','>','0')->where('detalle_entrada.id_producto','=', $filtro)
-        ->orderby('existencias.id', 'asc')
-        ->get();
-        $envio['cantidad']=  $productos3;
-        return  $envio;
+        ->orderby('existencias.id', 'asc')->get();
+        
+        return [ 'lista'=>$productos3];
     }
  
 

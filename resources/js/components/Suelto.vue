@@ -37,7 +37,7 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr v-for="producto in arraysProducto" :key="producto.id">
+                                    <tr v-for="producto in arraysProducto" :key="producto.idc">
                                         <td v-text="producto.fecha"></td>
                                         <td v-text="producto.nombre_producto"></td>
                                         <td v-text="producto.cantidad"></td>

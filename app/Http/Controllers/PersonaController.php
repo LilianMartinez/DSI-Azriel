@@ -135,7 +135,78 @@ class PersonaController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function listaPC(Request $request)
+    public function listaB(Request $request)
+    {
+        $nombre = $request->nombre;
+        $apellido = $request->apellido;  
+        
+        if(!$request->ajax()) return redirect('/');
+        if ($nombre == ''){
+            if($apellido==''){
+                $realizante = DB::table('personas as h')->join('sacramentos as s','s.id_realizante1','=','h.id')
+                ->where('s.tipo_sacramento',1)
+                ->leftjoin('personas as p','h.id_padre','=','p.id')
+                ->leftjoin('personas as m','h.id_madre','=','m.id')
+                ->select('s.id','h.id_padre','h.id_madre','s.id_realizante1',
+                'h.nombre_persona as hnom','h.apellido_persona as hapellido',
+                'p.nombre_persona as pnom','p.apellido_persona as papellido',
+                'm.nombre_persona as mnom','m.apellido_persona as mapellido')
+                ->paginate(6);
+            }else{
+                $realizante = DB::table('personas as h')->join('sacramentos as s','s.id_realizante1','=','h.id')
+                ->where('s.tipo_sacramento',1)
+                ->where('h.apellido_persona', 'like','%' . $apellido .'%')
+                ->leftjoin('personas as p','h.id_padre','=','p.id')
+                ->leftjoin('personas as m','h.id_madre','=','m.id')
+                ->select('s.id','h.id_padre','h.id_madre','s.id_realizante1',
+                'h.nombre_persona as hnom','h.apellido_persona as hapellido',
+                'p.nombre_persona as pnom','p.apellido_persona as papellido',
+                'm.nombre_persona as mnom','m.apellido_persona as mapellido')
+                ->paginate(6);
+            }
+            
+        }else{
+            if($apellido==''){
+                $realizante = DB::table('personas as h')->join('sacramentos as s','s.id_realizante1','=','h.id')
+                ->where('s.tipo_sacramento',1)
+                ->where('h.nombre_persona','like','%' . $nombre. '%')
+                ->leftjoin('personas as p','h.id_padre','=','p.id')
+                ->leftjoin('personas as m','h.id_madre','=','m.id')
+                ->select('s.id','h.id_padre','h.id_madre','s.id_realizante1',
+                'h.nombre_persona as hnom','h.apellido_persona as hapellido',
+                'p.nombre_persona as pnom','p.apellido_persona as papellido',
+                'm.nombre_persona as mnom','m.apellido_persona as mapellido')
+                ->paginate(6);
+            }else{
+                $realizante = DB::table('personas as h')->join('sacramentos as s','s.id_realizante1','=','h.id')
+                ->where('s.tipo_sacramento',1)
+                ->where('h.nombre_persona', $nombre)
+                ->where('h.apellido_persona', $apellido)
+                ->leftjoin('personas as p','h.id_padre','=','p.id')
+                ->leftjoin('personas as m','h.id_madre','=','m.id')
+                ->select('s.id','h.id_padre','h.id_madre','s.id_realizante1',
+                'h.nombre_persona as hnom','h.apellido_persona as hapellido',
+                'p.nombre_persona as pnom','p.apellido_persona as papellido',
+                'm.nombre_persona as mnom','m.apellido_persona as mapellido')
+                ->paginate(6);
+            }
+        }
+
+            return[
+                'pagination' =>[
+                     'total' =>  $realizante->total(),
+                     'current_page' => $realizante->currentPage(),
+                     'per_page' =>$realizante->perPage(),
+                     'last_page' => $realizante->lastPage(),
+                     'from' => $realizante->firstItem(),
+                     'to' => $realizante->lastItem(),
+                     ],
+                     'realizante' => $realizante
+                 ];
+            
+    }
+
+     public function listaPC(Request $request)
     {
         $nombre = $request->nombre;
         $apellido = $request->apellido;  
