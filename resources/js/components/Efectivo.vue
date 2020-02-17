@@ -27,7 +27,7 @@
                             </div>
                         </div>
                         <div class="totales">
-                            <label>Total acumulado: $</label>                              
+                            <label>Total acumulado en el mes: $</label>                              
                             <label v-text="totalAcum" ></label> 
                         </div>
                         <div class="totales2">

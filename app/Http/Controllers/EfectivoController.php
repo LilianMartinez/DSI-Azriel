@@ -148,11 +148,11 @@ class EfectivoController extends Controller
         $mes=$fechaActual->format('m');
         /*--------------------------------------------- */
 
-       /* $efectivo = DB::table('efectivos')->whereYear('fecha', $anio)->whereMonth('fecha', $mes)->where("tipo",1)->sum("monto");
-        $efectivo2=  DB::table('efectivos')->whereYear('fecha', $anio)->whereMonth('fecha', $mes)->where("tipo",2)->sum("monto");*/
+        $efectivo = DB::table('efectivos')->whereYear('fecha', $anio)->whereMonth('fecha', $mes)->where("tipo",1)->sum("monto");
+        $efectivo2=  DB::table('efectivos')->whereYear('fecha', $anio)->whereMonth('fecha', $mes)->where("tipo",2)->sum("monto");
 
-       $efectivo = DB::table('efectivos')->where("tipo",$h)->sum("monto");
-       $efectivo2=  DB::table('efectivos')->where("tipo",$h2)->sum("monto");
+       /*$efectivo = DB::table('efectivos')->where("tipo",$h)->sum("monto");
+       $efectivo2=  DB::table('efectivos')->where("tipo",$h2)->sum("monto");*/
        $total= $efectivo-$efectivo2;
        $envio['total']= number_format($total, 2);
 
