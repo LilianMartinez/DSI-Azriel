@@ -64,10 +64,6 @@ class BautizoController extends Controller
         $idsacra = Sacramentos3::max('id');
         $idsacramento = $idsacra+1;
         if(!$request->ajax()) return redirect('/');
-<<<<<<< HEAD
-        
-=======
->>>>>>> master
         switch($tipo){
             case '1':{
                 $id_persona = Persona::max('id');
