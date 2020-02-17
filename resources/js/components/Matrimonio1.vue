@@ -60,9 +60,9 @@
                                     </td>
                                     <td> <!-- Aquí relizamos el if para saber que botones mostrar u ocultar -->
                                         <template v-if="sacramento.estado==1">
-                                            <button type="button" @click="abrirModal('sacramento','actualizar',sacramento)">
+                                            <!-- <button type="button" @click="abrirModal('sacramento','actualizar',sacramento)">
                                               <i class="icon-pencil  enter"></i>
-                                            </button> &nbsp;
+                                            </button> &nbsp; -->
                                             <button type="button" @click="abrirModal2('sacramento','paso2',sacramento)">
                                               <i class="icon-folder  enter"></i>
                                             </button> &nbsp;

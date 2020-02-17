@@ -78,13 +78,14 @@ Route::group(['middleware'=>['auth']],function(){
 
                             //TABLA PARTIDA NACIMIENTO
                             Route::get('/partida/busqueda','PartidaNacimientoController@realizante');//Buscar partida nacimiento- PRIMERA COMUNIÓN
+                            Route::get('/partida/busquedaBautizo','PartidaNacimientoController@realizanteBautizo');//Buscar partida nacimiento-BAUTIZO
                             Route::get('/partida/busquedaConfirma','PartidaNacimientoController2@realizante'); //Buscar partida nacimiento-CONFIRMA
 
                             //TABLA PERSONA
                             Route::get('/persona/obtener','PersonaController@realizante'); //PRIMERA COMUNIÓN 
                             Route::get('/persona/buscarsacerdote3','PersonaController@buscarsacerdote'); //primera comunión-confirma - y quizas bautizo y matrimonio
                             Route::get('/persona/buscarsacerdote','PersonaController@buscarsacerdoteG'); //MATRIMONIO
-                            Route::get('/persona/duis','PersonaController@buscarduis');//primera comunión - confirma
+                            Route::get('/persona/duis','PersonaController@buscarduis');//bautizo - primera comunión - confirma
                             Route::get('/persona/pan','PersonaController@show'); // ????
                             Route::put('/persona/registrar','PersonaController@store'); //PRIMERA COMUNIÓN
                             
@@ -98,6 +99,7 @@ Route::group(['middleware'=>['auth']],function(){
                             Route::put('/confirma/registrar','ConfirmaController@store');//CONFIRMA
                             //Route::put('/confirma/marginaracta','BautizoController@marginacionacta'); //aun no se para que es
 
+                            Route::get('/persona/listarbautizos','PersonaController@listaB');//para el realizante BAUTIZO
                             Route::get('/persona/listarcomuniones','PersonaController@listaPC');//para el realizante PRIMERA COMUNIÓN
                             Route::get('/persona/listarconfirmaciones','PersonaController@listaC');//para el realizante CONFIRMA
                             Route::get('/persona/listarsupletorias','PersonaController@listaS');//para el realizante SUPLETORIA
