@@ -60,6 +60,13 @@ Route::group(['middleware'=>['auth']],function(){
                             Route::put('/montofijo/actualizar','MontoFijoController@update');
                             Route::put('/montofijo/eliminar','MontoFijoController@eliminar');
 
+                             //TABLA Unidad medida
+                             Route::get('/unidad','UnidadMedidaController@index');
+                             Route::put('/unidad/registrar','UnidadMedidaController@store');
+                             Route::post('/unidad/buscarmf','UnidadMedidaController@buscar');
+                             Route::put('/unidad/actualizar','UnidadMedidaController@update');
+                             Route::put('/unidad/eliminar','UnidadMedidaController@eliminar');
+
                             //TABLA BAUTIZO
                             Route::get('/bautizo','BautizoController@index');
                             Route::put('/bautizo/registrar','BautizoController@store');
@@ -81,6 +88,9 @@ Route::group(['middleware'=>['auth']],function(){
                             Route::get('/persona/duis','PersonaController@buscarduis');//bautizo - primera comunión - confirma
                             Route::get('/persona/pan','PersonaController@show'); // ????
                             Route::put('/persona/registrar','PersonaController@store'); //PRIMERA COMUNIÓN
+                           
+                            Route::get('/persona/existenciamadre','PersonaController@existenciamadre');//buscar a la madre sin dui solo con el nombre,apellido y fecha nacimiento-PRIMERA COMUNIÓN
+                            //Route::get('/persona/obtenerDatosMadre','PersonaController@obtenerDatosMadre');
                             
                             Route::get('/persona/obtenerConfirma','PersonaController3@realizante'); //CONFIRMA 
                             //Route::get('/persona/duis','PersonaController3@buscarduis'); //Es el mismo que el de primera comunión
@@ -154,8 +164,9 @@ Route::group(['middleware'=>['auth']],function(){
                             //TABLA Producto
                             Route::get('/producto','ProductoController@index');
                             Route::get('/productos/v','ProductoController@indexv');
+                            Route::get('/productos/buscarventa','ProductoController@buscarventa');
                             Route::get('/productos/venta','ProductoController@venta');
-                            Route::get('/producto/seleccionar','ProductoController@seleccionarProducto');
+                            Route::get('/producto/seleccionar','ProductoController@seleccionarProducto'); //Para compras
                             Route::get('/producto/canasta','ProductoController@seleccionarProductoCanasta');
                             Route::put('/producto/registrar','ProductoController@store');
                             Route::put('/venta/registrar','ProductoController@guardarventa');
@@ -173,6 +184,7 @@ Route::group(['middleware'=>['auth']],function(){
                              Route::get('/canastas','CanastasController@index');
                              Route::put('/canastas/registrar','CanastasController@store');
                              Route::get('/canastas/detalle','CanastasController@Buscar');
+                             Route::get('/canastas/canasta','CanastasController@Buscar2');
                              Route::put('/canastas/vender','CanastasController@vender');
                              
                             

@@ -103,6 +103,7 @@ class ConfirmaController extends Controller
                 $personap->sexo='F';
                 $personap->idzonaa=$request->idzonam;  //zona madre
                 $personap->idiglesia=$request->idiglesiam; //iglesia madre
+                $personap->fecha_nacimiento=$request->fechanam; //fecha nacimiento madre
                 $personap->estado=1; //estado
                 $personap->save();
 
@@ -170,6 +171,7 @@ class ConfirmaController extends Controller
                 $personap->sexo='M';
                 $personap->idzonaa=$request->idzonap;  //zona padre
                 $personap->idiglesia=$request->idiglesiap; //iglesia padre
+                $personap->fecha_nacimiento=$request->fechanap; //fecha nacimiento padre
                 $personap->estado=1; //estado
                 $personap->save();
 
@@ -238,6 +240,7 @@ class ConfirmaController extends Controller
                 $personap->sexo='M';
                 $personap->idzonaa=$request->idzonap;  //zona padre
                 $personap->idiglesia=$request->idiglesiap; //iglesia padre
+                $personap->fecha_nacimiento=$request->fechanap; //fecha nacimiento padre
                 $personap->estado=1; //estado
                 $personap->save();
 
@@ -249,6 +252,7 @@ class ConfirmaController extends Controller
                 $personap->sexo='F';
                 $personap->idzonaa=$request->idzonam;  //zona madre
                 $personap->idiglesia=$request->idiglesiam; //iglesia madre
+                $personap->fecha_nacimiento=$request->fechanam; //fecha nacimiento madre
                 $personap->estado=1; //estado
                 $personap->save();
 
@@ -452,7 +456,7 @@ class ConfirmaController extends Controller
                 $confirma->save();
                 break;
             }
-            case '8':{ //               REVISAR ESTE CASO PORQUE SE DEBEN INGRESAR DATOS SOLO DE MAMÁ (NO DE PAPÁ)
+            case '8':{ 
                 $id_persona = Persona::max('id');
                 $idm=$id_persona+1;
                 $idreali=$idm+1;
@@ -478,6 +482,7 @@ class ConfirmaController extends Controller
                 $personap->sexo='F';
                 $personap->idzonaa=$request->idzonam;  //zona madre
                 $personap->idiglesia=$request->idiglesiam; //iglesia madre
+                $personap->fecha_nacimiento=$request->fechanam; //fecha nacimiento madre
                 $personap->estado=1; //estado
                 $personap->save();
 
@@ -546,6 +551,7 @@ class ConfirmaController extends Controller
                 $personap->sexo='M';
                 $personap->idzonaa=$request->idzonap;  //zona padre
                 $personap->idiglesia=$request->idiglesiap; //iglesia padre
+                $personap->fecha_nacimiento=$request->fechanap; //fecha nacimiento padre
                 $personap->estado=1; //estado
                 $personap->save();
 
@@ -610,6 +616,7 @@ class ConfirmaController extends Controller
                 $personapa->sexo=$request->sexo_pd1;
                 $personapa->idzonaa=$request->idzonap1;//zona padrino 1
                 $personapa->idiglesia=$request->idiglesiap1;//iglesia padrino 1
+                $personapa->fecha_nacimiento=$request->fechanap1; //fecha nacimiento p1
                 $personapa->estado=1; //estado 
                 $personapa->save();
 
@@ -634,6 +641,7 @@ class ConfirmaController extends Controller
                 $personapa->sexo=$request->sexo_pd1;
                 $personapa->idzonaa=$request->idzonap1;//zona padrino 1
                 $personapa->idiglesia=$request->idiglesiap1;//iglesia padrino 1
+                $personapa->fecha_nacimiento=$request->fechanap1; //fecha nacimiento p1
                 $personapa->estado=1; //estado 
                 $personapa->save();
 
@@ -645,6 +653,7 @@ class ConfirmaController extends Controller
                 $personapa->sexo=$request->sexo_pd2;
                 $personapa->idzonaa=$request->idzonap2;//zona padrino 2
                 $personapa->idiglesia=$request->idiglesiap2;//iglesia padrino 2
+                $personapa->fecha_nacimiento=$request->fechanap2; //fecha nacimiento p2
                 $personapa->estado=1; //estado 
                 $personapa->save();
 
@@ -668,6 +677,7 @@ class ConfirmaController extends Controller
                 $personapa->sexo=$request->sexo_pd2;
                 $personapa->idzonaa=$request->idzonap2;//zona padrino 2
                 $personapa->idiglesia=$request->idiglesiap2;//iglesia padrino 2
+                $personapa->fecha_nacimiento=$request->fechanap2; //fecha nacimiento p2
                 $personapa->estado=1; //estado 
                 $personapa->save();
 
@@ -691,6 +701,7 @@ class ConfirmaController extends Controller
                 $personapa->sexo=$request->sexo_pd3;
                 $personapa->idzonaa=$request->idzonap3;//zona padrino 3
                 $personapa->idiglesia=$request->idiglesiap3;//iglesia padrino 3
+                $personapa->fecha_nacimiento=$request->fechanap3; //fecha nacimiento p3
                 $personapa->estado=1; //estado 
                 $personapa->save();
 
@@ -715,6 +726,7 @@ class ConfirmaController extends Controller
                 $personapa->sexo=$request->sexo_pd1;
                 $personapa->idzonaa=$request->idzonap1;//zona padrino 1
                 $personapa->idiglesia=$request->idiglesiap1;//iglesia padrino 1
+                $personapa->fecha_nacimiento=$request->fechanap1; //fecha nacimiento p1
                 $personapa->estado=1; //estado 
                 $personapa->save();
 
@@ -726,6 +738,7 @@ class ConfirmaController extends Controller
                 $personapa->sexo=$request->sexo_pd3;
                 $personapa->idzonaa=$request->idzonap3;//zona padrino 3
                 $personapa->idiglesia=$request->idiglesiap3;//iglesia padrino 3
+                $personapa->fecha_nacimiento=$request->fechanap3; //fecha nacimiento p3
                 $personapa->estado=1; //estado 
                 $personapa->save();
 
@@ -750,6 +763,7 @@ class ConfirmaController extends Controller
                 $personapa->sexo=$request->sexo_pd2;
                 $personapa->idzonaa=$request->idzonap2;//zona padrino 2
                 $personapa->idiglesia=$request->idiglesiap2;//iglesia padrino 2
+                $personapa->fecha_nacimiento=$request->fechanap2; //fecha nacimiento p2
                 $personapa->estado=1; //estado 
                 $personapa->save();
 
@@ -761,6 +775,7 @@ class ConfirmaController extends Controller
                 $personapa->sexo=$request->sexo_pd3;
                 $personapa->idzonaa=$request->idzonap3;//zona padrino 3
                 $personapa->idiglesia=$request->idiglesiap3;//iglesia padrino 3
+                $personapa->fecha_nacimiento=$request->fechanap3; //fecha nacimiento p3
                 $personapa->estado=1; //estado 
                 $personapa->save();
 
@@ -786,6 +801,7 @@ class ConfirmaController extends Controller
                 $personapa->sexo=$request->sexo_pd1;
                 $personapa->idzonaa=$request->idzonap1;//zona padrino 1
                 $personapa->idiglesia=$request->idiglesiap1;//iglesia padrino 1
+                $personapa->fecha_nacimiento=$request->fechanap1; //fecha nacimiento p1
                 $personapa->estado=1; //estado 
                 $personapa->save();
 
@@ -797,6 +813,7 @@ class ConfirmaController extends Controller
                 $personapa->sexo=$request->sexo_pd2;
                 $personapa->idzonaa=$request->idzonap2;//zona padrino 2
                 $personapa->idiglesia=$request->idiglesiap2;//iglesia padrino 2
+                $personapa->fecha_nacimiento=$request->fechanap2; //fecha nacimiento p2
                 $personapa->estado=1; //estado 
                 $personapa->save();
 
@@ -808,6 +825,7 @@ class ConfirmaController extends Controller
                 $personapa->sexo=$request->sexo_pd3;
                 $personapa->idzonaa=$request->idzonap3;//zona padrino 3
                 $personapa->idiglesia=$request->idiglesiap3;//iglesia padrino 3
+                $personapa->fecha_nacimiento=$request->fechanap3; //fecha nacimiento p3
                 $personapa->estado=1; //estado 
                 $personapa->save();
 
@@ -834,6 +852,7 @@ class ConfirmaController extends Controller
                 $personapa->sexo=$request->sexo_pd1;
                 $personapa->idzonaa=$request->idzonap1;//zona padrino 1
                 $personapa->idiglesia=$request->idiglesiap1;//iglesia padrino 1
+                $personapa->fecha_nacimiento=$request->fechanap1; //fecha nacimiento p1
                 $personapa->estado=1; //estado 
                 $personapa->save();
 
@@ -845,6 +864,7 @@ class ConfirmaController extends Controller
                 $personapa->sexo=$request->sexo_pd2;
                 $personapa->idzonaa=$request->idzonap2;//zona padrino 2
                 $personapa->idiglesia=$request->idiglesiap2;//iglesia padrino 2
+                $personapa->fecha_nacimiento=$request->fechanap2; //fecha nacimiento p2
                 $personapa->estado=1; //estado 
                 $personapa->save();
 
@@ -856,6 +876,7 @@ class ConfirmaController extends Controller
                 $personapa->sexo=$request->sexo_pd3;
                 $personapa->idzonaa=$request->idzonap3;//zona padrino 3
                 $personapa->idiglesia=$request->idiglesiap3;//iglesia padrino 3
+                $personapa->fecha_nacimiento=$request->fechanap3; //fecha nacimiento p3
                 $personapa->estado=1; //estado 
                 $personapa->save();
 
@@ -867,6 +888,7 @@ class ConfirmaController extends Controller
                 $personapa->sexo=$request->sexo_pd4;
                 $personapa->idzonaa=$request->idzonap4;//zona padrino 4
                 $personapa->idiglesia=$request->idiglesiap4;//iglesia padrino 4
+                $personapa->fecha_nacimiento=$request->fechanap4; //fecha nacimiento p4
                 $personapa->estado=1; //estado 
                 $personapa->save();
 
@@ -892,6 +914,7 @@ class ConfirmaController extends Controller
                 $personapa->sexo=$request->sexo_pd2;
                 $personapa->idzonaa=$request->idzonap2;//zona padrino 2
                 $personapa->idiglesia=$request->idiglesiap2;//iglesia padrino 2
+                $personapa->fecha_nacimiento=$request->fechanap2; //fecha nacimiento p2
                 $personapa->estado=1; //estado 
                 $personapa->save();
 
@@ -903,6 +926,7 @@ class ConfirmaController extends Controller
                 $personapa->sexo=$request->sexo_pd3;
                 $personapa->idzonaa=$request->idzonap3;//zona padrino 3
                 $personapa->idiglesia=$request->idiglesiap3;//iglesia padrino 3
+                $personapa->fecha_nacimiento=$request->fechanap3; //fecha nacimiento p3
                 $personapa->estado=1; //estado 
                 $personapa->save();
 
@@ -914,6 +938,7 @@ class ConfirmaController extends Controller
                 $personapa->sexo=$request->sexo_pd4;
                 $personapa->idzonaa=$request->idzonap4;//zona padrino 4
                 $personapa->idiglesia=$request->idiglesiap4;//iglesia padrino 4
+                $personapa->fecha_nacimiento=$request->fechanap4; //fecha nacimiento p4
                 $personapa->estado=1; //estado 
                 $personapa->save();
 
@@ -938,6 +963,7 @@ class ConfirmaController extends Controller
                 $personapa->sexo=$request->sexo_pd3;
                 $personapa->idzonaa=$request->idzonap3;//zona padrino 3
                 $personapa->idiglesia=$request->idiglesiap3;//iglesia padrino 3
+                $personapa->fecha_nacimiento=$request->fechanap3; //fecha nacimiento p3
                 $personapa->estado=1; //estado 
                 $personapa->save();
 
@@ -949,6 +975,7 @@ class ConfirmaController extends Controller
                 $personapa->sexo=$request->sexo_pd4;
                 $personapa->idzonaa=$request->idzonap4;//zona padrino 4
                 $personapa->idiglesia=$request->idiglesiap4;//iglesia padrino 4
+                $personapa->fecha_nacimiento=$request->fechanap4; //fecha nacimiento p4
                 $personapa->estado=1; //estado 
                 $personapa->save();
 
@@ -972,6 +999,7 @@ class ConfirmaController extends Controller
                 $personapa->sexo=$request->sexo_pd4;
                 $personapa->idzonaa=$request->idzonap4;//zona padrino 4
                 $personapa->idiglesia=$request->idiglesiap4;//iglesia padrino 4
+                $personapa->fecha_nacimiento=$request->fechanap4; //fecha nacimiento p4
                 $personapa->estado=1; //estado 
                 $personapa->save();
 
@@ -997,6 +1025,7 @@ class ConfirmaController extends Controller
                 $personapa->sexo=$request->sexo_pd1;
                 $personapa->idzonaa=$request->idzonap1;//zona padrino 1
                 $personapa->idiglesia=$request->idiglesiap1;//iglesia padrino 1
+                $personapa->fecha_nacimiento=$request->fechanap1; //fecha nacimiento p1
                 $personapa->estado=1; //estado 
                 $personapa->save();
 
@@ -1008,6 +1037,7 @@ class ConfirmaController extends Controller
                 $personapa->sexo=$request->sexo_pd3;
                 $personapa->idzonaa=$request->idzonap3;//zona padrino 3
                 $personapa->idiglesia=$request->idiglesiap3;//iglesia padrino 3
+                $personapa->fecha_nacimiento=$request->fechanap3; //fecha nacimiento p3
                 $personapa->estado=1; //estado 
                 $personapa->save();
 
@@ -1019,6 +1049,7 @@ class ConfirmaController extends Controller
                 $personapa->sexo=$request->sexo_pd4;
                 $personapa->idzonaa=$request->idzonap4;//zona padrino 4
                 $personapa->idiglesia=$request->idiglesiap4;//iglesia padrino 4
+                $personapa->fecha_nacimiento=$request->fechanap4; //fecha nacimiento p4
                 $personapa->estado=1; //estado 
                 $personapa->save();
 
@@ -1044,6 +1075,7 @@ class ConfirmaController extends Controller
                 $personapa->sexo=$request->sexo_pd1;
                 $personapa->idzonaa=$request->idzonap1;//zona padrino 1
                 $personapa->idiglesia=$request->idiglesiap1;//iglesia padrino 1
+                $personapa->fecha_nacimiento=$request->fechanap1; //fecha nacimiento p1
                 $personapa->estado=1; //estado 
                 $personapa->save();
 
@@ -1055,6 +1087,7 @@ class ConfirmaController extends Controller
                 $personapa->sexo=$request->sexo_pd2;
                 $personapa->idzonaa=$request->idzonap2;//zona padrino 2
                 $personapa->idiglesia=$request->idiglesiap2;//iglesia padrino 2
+                $personapa->fecha_nacimiento=$request->fechanap2; //fecha nacimiento p2
                 $personapa->estado=1; //estado 
                 $personapa->save();
 
@@ -1066,6 +1099,7 @@ class ConfirmaController extends Controller
                 $personapa->sexo=$request->sexo_pd4;
                 $personapa->idzonaa=$request->idzonap4;//zona padrino 4
                 $personapa->idiglesia=$request->idiglesiap4;//iglesia padrino 4
+                $personapa->fecha_nacimiento=$request->fechanap4; //fecha nacimiento p4
                 $personapa->estado=1; //estado 
                 $personapa->save();
 
@@ -1090,6 +1124,7 @@ class ConfirmaController extends Controller
                 $personapa->sexo=$request->sexo_pd2;
                 $personapa->idzonaa=$request->idzonap2;//zona padrino 2
                 $personapa->idiglesia=$request->idiglesiap2;//iglesia padrino 2
+                $personapa->fecha_nacimiento=$request->fechanap2; //fecha nacimiento p2
                 $personapa->estado=1; //estado 
                 $personapa->save();
 
@@ -1101,6 +1136,7 @@ class ConfirmaController extends Controller
                 $personapa->sexo=$request->sexo_pd4;
                 $personapa->idzonaa=$request->idzonap4;//zona padrino 4
                 $personapa->idiglesia=$request->idiglesiap4;//iglesia padrino 4
+                $personapa->fecha_nacimiento=$request->fechanap4; //fecha nacimiento p4
                 $personapa->estado=1; //estado 
                 $personapa->save();
 
@@ -1125,6 +1161,7 @@ class ConfirmaController extends Controller
                 $personapa->sexo=$request->sexo_pd1;
                 $personapa->idzonaa=$request->idzonap1;//zona padrino 1
                 $personapa->idiglesia=$request->idiglesiap1;//iglesia padrino 1
+                $personapa->fecha_nacimiento=$request->fechanap1; //fecha nacimiento p1
                 $personapa->estado=1; //estado 
                 $personapa->save();
 
@@ -1136,6 +1173,7 @@ class ConfirmaController extends Controller
                 $personapa->sexo=$request->sexo_pd4;
                 $personapa->idzonaa=$request->idzonap4;//zona padrino 4
                 $personapa->idiglesia=$request->idiglesiap4;//iglesia padrino 4
+                $personapa->fecha_nacimiento=$request->fechanap4; //fecha nacimiento p4
                 $personapa->estado=1; //estado 
                 $personapa->save();
 

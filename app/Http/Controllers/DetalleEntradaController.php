@@ -18,27 +18,36 @@ class DetalleEntradaController extends Controller
         $criterio = $request->criterio;
          
         if ($buscar==''){
+            $fechaActual=new \DateTime();//FECHA ACTUAL 
+            $anio=$fechaActual->format('Y');
+            $mes=$fechaActual->format('m');
             $ingresos = Producto::join('detalle_entrada','producto.id','=','detalle_entrada.id_producto')
-            ->select('producto.id','producto.nombre_producto',
-            'detalle_entrada.cantidad','detalle_entrada.fecha','detalle_entrada.precio_compra')
-            ->orderBy('detalle_entrada.fecha', 'desc')->paginate(3);
+            ->whereYear('detalle_entrada.fecha', $anio)
+            ->whereMonth('detalle_entrada.fecha', $mes)
+            ->select('producto.id','producto.nombre_producto', 'producto.unidad_medida',
+            'detalle_entrada.cantidad','detalle_entrada.fecha','detalle_entrada.precio_compra','detalle_entrada.tipo')
+            ->orderBy('detalle_entrada.fecha', 'desc')->paginate(15);
         }
         else{
             if ($criterio=='producto'){
                 $ingresos = Producto::join('detalle_entrada','producto.id','=','detalle_entrada.id_producto')
                 ->where('producto.nombre_producto','like','%' . $buscar .'%')
-                ->select('producto.id','producto.nombre_producto',
-                'detalle_entrada.cantidad','detalle_entrada.fecha','detalle_entrada.precio_compra')
-                ->orderBy('detalle_entrada.fecha', 'desc')->paginate(3);
+                ->select('producto.id','producto.nombre_producto','producto.unidad_medida',
+                'detalle_entrada.cantidad','detalle_entrada.fecha','detalle_entrada.precio_compra','detalle_entrada.tipo')
+                ->orderBy('detalle_entrada.fecha', 'desc')->paginate(15);
             }
             else{
                 $ingresos = Producto::join('detalle_entrada','producto.id','=','detalle_entrada.id_producto')
                 ->where('detalle_entrada.fecha','like','%' . $buscar .'%')
-                ->select('producto.id','producto.nombre_producto',
-                'detalle_entrada.cantidad','detalle_entrada.fecha','detalle_entrada.precio_compra')
-                ->orderBy('detalle_entrada.fecha', 'desc')->paginate(3);
+                ->select('producto.id','producto.nombre_producto','producto.unidad_medida',
+                'detalle_entrada.cantidad','detalle_entrada.fecha','detalle_entrada.precio_compra','detalle_entrada.tipo')
+                ->orderBy('detalle_entrada.fecha', 'desc')->paginate(15);
            
         }
+    }
+    $numero = count($ingresos); 
+    for ($i = 0; $i < $numero; $i++) {
+        $ingresos[$i]['idc']=$i;
     }
          
         return [
@@ -60,7 +69,7 @@ class DetalleEntradaController extends Controller
 
         $mytime= new \DateTime();
             
-            $detalles = $request->data;/
+            $detalles = $request->data;
             foreach($detalles as $ep=>$det)
             {
                 $id_entrada = DetalleEntrada::max('id');

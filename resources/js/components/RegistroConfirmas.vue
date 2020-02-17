@@ -143,6 +143,12 @@
                                 </div>
                             </div>
                             <div class="form-group row">
+                                <label class="col-md-3 form-control-label" for="text-input">Fecha de Nacimiento<b class="alerta">*</b></label>
+                                <div class="col-md-5">
+                                    <input type="date" class="form-control datepicker" name="date" v-model="fechanam" >
+                                </div>
+                            </div>
+                            <div class="form-group row">
                                     <label class="col-md-3 form-control-label" for="text-input">Zona:</label> 
                                     <div class="col-md-5">
                                         <select class="form-control" v-model="idzonam" @click="iglesiasm(idzona)"> 
@@ -179,6 +185,12 @@
                                 <label class="col-md-3 form-control-label" for="text-input">Apellidos</label>
                                 <div class="col-md-5">
                                     <input type="text" tabindexgt="0" v-model="apellidopadre" class="form-control" placeholder="Apellidos del padre">
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-md-3 form-control-label" for="text-input">Fecha de Nacimiento<b class="alerta">*</b></label>
+                                <div class="col-md-5">
+                                    <input type="date" class="form-control datepicker" name="date" v-model="fechanap"  >
                                 </div>
                             </div>
                             <div class="form-group row">
@@ -230,6 +242,12 @@
                                 <div class="col-md-5">
                                     <input type="text" tabindexgt="0" v-model="apellidopd1" class="form-control" placeholder="Apellidos del padrino 1">
                                 </div>
+                            </div>
+                            <div class="form-group row">
+                                    <label class="col-md-3 form-control-label" for="text-input">Fecha de Nacimiento<b class="alerta">*</b></label>
+                                    <div class="col-md-5">
+                                        <input type="date" class="form-control datepicker" name="date" v-model="fechanap1" >
+                                    </div>
                             </div>
                             <div class="form-group row">
                                 <label class="col-md-3 form-control-label" for="text-input">Sexo<b class="alerta">*</b></label>
@@ -300,6 +318,12 @@
                                 </div>
                             </div>
                             <div class="form-group row">
+                                    <label class="col-md-3 form-control-label" for="text-input">Fecha de Nacimiento<b class="alerta">*</b></label>
+                                    <div class="col-md-5">
+                                        <input type="date" class="form-control datepicker" name="date" v-model="fechanap2" >
+                                    </div>
+                            </div>
+                            <div class="form-group row">
                                 <label class="col-md-3 form-control-label" for="text-input">Sexo<b class="alerta">*</b></label>
                                 <div class="col-md-5">
                                     <table>
@@ -360,6 +384,12 @@
                                 </div>
                             </div>
                             <div class="form-group row">
+                                    <label class="col-md-3 form-control-label" for="text-input">Fecha de Nacimiento<b class="alerta">*</b></label>
+                                    <div class="col-md-5">
+                                        <input type="date" class="form-control datepicker" name="date" v-model="fechanap3" >
+                                    </div>
+                            </div>
+                            <div class="form-group row">
                                 <label class="col-md-3 form-control-label" for="text-input">Sexo<b class="alerta">*</b></label>
                                 <div class="col-md-5">
                                     <table>
@@ -418,6 +448,12 @@
                                 <div class="col-md-5">
                                     <input type="text" tabindexgt="0" v-model="apellidopd4" class="form-control" placeholder="Apellidos del padrino 4">
                                 </div>
+                            </div>
+                            <div class="form-group row">
+                                    <label class="col-md-3 form-control-label" for="text-input">Fecha de Nacimiento<b class="alerta">*</b></label>
+                                    <div class="col-md-5">
+                                        <input type="date" class="form-control datepicker" name="date" v-model="fechanap4" >
+                                    </div>
                             </div>
                             <div class="form-group row">
                                 <label class="col-md-3 form-control-label" for="text-input">Sexo<b class="alerta">*</b></label>
@@ -591,9 +627,11 @@
                                             <label class="col-md-4 form-control-label" for="text-input">Nacida el:</label>
                                             <label class="col-md-6 form-control-label" >{{fechanaes}}</label>
                                         </div>
-                                        <div class="form-group row">
+                                        <div v-show="accionbotones==2">
+                                            <div class="form-group row">
                                             <label class="col-md-4 form-control-label" for="text-input">Fue confirmada:</label>
                                             <label class="col-md-6 form-control-label" >{{fecharealizaciones}}</label>
+                                            </div>
                                         </div>
                                     </div>  
                                     <div v-show="accionsexo==1">
@@ -706,6 +744,13 @@
 export default {
     data (){
         return{
+            fechanam:'', //fecha nacimiento madre
+            fechanap:'', //fecha nacimiento padre
+            fechanap1:'', //fecha nacimiento padrino 1
+            fechanap2:'', //fecha nacimiento padrino 2
+            fechanap3:'', //fecha nacimiento padrino 3
+            fechanap4:'', //fecha nacimiento padrino 4
+
             idzona:'',
             idiglesia:'',
             zona:'', //
@@ -1218,6 +1263,12 @@ export default {
             this.idiglesiap3=0;
             this.idzonap4=0;   //zona padrino4
             this.idiglesiap4=0;     
+            this.fechanam=''; //fecha nacimiento madre
+            this.fechanap=''; //fecha nacimiento padre
+            this.fechanap1=''; //fecha nacimiento padrino 1
+            this.fechanap2=''; //fecha nacimiento padrino 2
+            this.fechanap3=''; //fecha nacimiento padrino 3
+            this.fechanap4=''; //fecha nacimiento padrino 4
 
         },
         cerrarm(){ //botones cancelat
@@ -1283,7 +1334,13 @@ export default {
             this.idzonap3=0;   //zona padrino3
             this.idiglesiap3=0;
             this.idzonap4=0;   //zona padrino4
-            this.idiglesiap4=0;       
+            this.idiglesiap4=0;
+            this.fechanam=''; //fecha nacimiento madre
+            this.fechanap=''; //fecha nacimiento padre
+            this.fechanap1=''; //fecha nacimiento padrino 1
+            this.fechanap2=''; //fecha nacimiento padrino 2
+            this.fechanap3=''; //fecha nacimiento padrino 3
+            this.fechanap4=''; //fecha nacimiento padrino 4       
         },
             //Mt. cuando le da modificar en el modal
         cerrarmodal(){
@@ -1644,6 +1701,12 @@ export default {
                         'idiglesiap3':this.idiglesiap3, //iglesia padrino3
                         'idzonap4':this.idzonap4,  //zona padrino4
                         'idiglesiap4':this.idiglesiap4, //iglesia padrino4
+                        'fechanam':this.fechanam, //fecha nacimiento madre
+                        'fechanap':this.fechanap, //fecha nacimiento padre
+                        'fechanap1':this.fechanap1, //fecha nacimiento padrino 1
+                        'fechanap2':this.fechanap2, //fecha nacimiento padrino 2
+                        'fechanap3':this.fechanap3, //fecha nacimiento padrino 3
+                        'fechanap4':this.fechanap4, //fecha nacimiento padrino 4
                 }) .then(function (response) {
                     me.modal=0;
                     me.cambiarm=0;
@@ -1712,11 +1775,12 @@ export default {
             },
    
 
-        llenarcamposm(data=[]){
+        llenarcamposm(data=[]){ //aqui
             this.nombremadre= data['nombre_persona'];
             this.apellidomadre= data['apellido_persona'];
             this.idmadre=data['id'];
             this.idzonam=data['idzonaa'];
+            this.fechanam=data['fecha_nacimiento'];
             this.llenadolistazona();
             if(this.idzonam)
                 {
@@ -1729,6 +1793,7 @@ export default {
             this.apellidopadre= data['apellido_persona'];
             this.idpadre=data['id'];
             this.idzonap=data['idzonaa'];
+            this.fechanap=data['fecha_nacimiento'];
             this.llenadolistazona();
             if(this.idzonap)
                 {
@@ -1741,6 +1806,7 @@ export default {
             this.apellidopd1= data['apellido_persona'];
             this.idpd1=data['id'];
             this.sexopd1=data['sexo'];
+            this.fechanap1=data['fecha_nacimiento'];
             this.idzonap1=data['idzonaa'];
             this.llenadolistazona();
             if(this.idzonap1)
@@ -1754,6 +1820,7 @@ export default {
             this.apellidopd2= data['apellido_persona'];
             this.idpd2=data['id'];
             this.sexopd2=data['sexo'];
+            this.fechanap2=data['fecha_nacimiento'];
             this.idzonap2=data['idzonaa'];
             this.llenadolistazona();
             if(this.idzonap2)
@@ -1768,6 +1835,7 @@ export default {
             this.apellidopd3= data['apellido_persona'];
             this.idpd3=data['id'];
             this.sexopd3=data['sexo'];
+            this.fechanap3=data['fecha_nacimiento'];
             this.idzonap3=data['idzonaa'];
             this.llenadolistazona();
             if(this.idzonap3)
@@ -1782,6 +1850,7 @@ export default {
             this.apellidopd4= data['apellido_persona'];
             this.idpd4=data['id'];
             this.sexopd4=data['sexo'];
+            this.fechanap4=data['fecha_nacimiento'];
             this.idzonap4=data['idzonaa'];
             this.llenadolistazona();
             if(this.idzonap4)
@@ -1817,6 +1886,7 @@ export default {
             this.idmadre='';
             this.idzonam=0;   //zona madre
             this.idiglesiam=0; 
+            this.fechanam='';
         },
         duip(){
             let me=this;
@@ -1844,6 +1914,7 @@ export default {
             this.idpadre='';
             this.idzonap=0;   //zona padre
             this.idiglesiap=0; 
+            this.fechanap='';
         },
         duip1(){
             let me=this;
@@ -1871,6 +1942,7 @@ export default {
             this.idpd1='';
             this.idzonap1=0;   //zona padrino1
             this.idiglesiap1=0; 
+            this.fechanap1='';
         },
         duip2(){
             let me=this;
@@ -1898,6 +1970,7 @@ export default {
             this.idpd2='';
             this.idzonap2=0;   //zona padrino2
             this.idiglesiap2=0;
+            this.fechanap2='';
         },
         duip3(){
             let me=this;
@@ -1925,6 +1998,7 @@ export default {
             this.idpd3='';
             this.idzonap3=0;   //zona padrino3
             this.idiglesiap3=0;
+            this.fechanap3='';
         },
         duip4(){
             let me=this;
@@ -1952,6 +2026,7 @@ export default {
             this.idpd4='';
             this.idzonap4=0;   //zona padrino4
             this.idiglesiap4=0;
+            this.fechanap4='';
         },
 
          //Validar datos
@@ -2144,6 +2219,40 @@ export default {
                             if (this.apellidopadre!='' && !patron.test(this.apellidopadre))this.errorMostrarMsj.push("El apellido del padre solo debe tener letras");
                             if (this.duimadre!='' && !patrondui.test(this.duimadre))this.errorMostrarMsj.push("El DUI de la madre debe ser de nueve digitos");                     
                             if (this.duipadre!='' && !patrondui.test(this.duipadre))this.errorMostrarMsj.push("El DUI del padre debe ser de nueve digitos");
+                            if(this.nombremadre!='' && this.apellidomadre!=''){
+                                if(!this.fechanam){
+                                this.errorMostrarMsj.push("La fecha de nacimiento no puede estar vacia");
+                                    }else{
+
+                                var fecha = new Date();
+                                var actualYear = fecha.getFullYear();
+                                var actualMes = fecha.getMonth();
+                                var values = this.fechanam.split("-");
+                                var anio = values[0];
+
+                                if(anio < 1900)this.errorMostrarMsj.push("El año debe de ser mayor a 1900");
+                                if((actualYear)<anio)this.errorMostrarMsj.push("El año debe ser menor a" + (actualYear));
+                                        }
+                            }
+
+                            if(this.nombrepadre!='' && this.apellidopadre!=''){
+                                if(!this.fechanap){
+                                this.errorMostrarMsj.push("La fecha de nacimiento no puede estar vacia");
+                                    }else{
+
+                                var fecha = new Date();
+                                var actualYear = fecha.getFullYear();
+                                var actualMes = fecha.getMonth();
+                                var values = this.fechanap.split("-");
+                                var anio = values[0];
+
+                                if(anio < 1900)this.errorMostrarMsj.push("El año debe de ser mayor a 1900");
+                                if((actualYear)<anio)this.errorMostrarMsj.push("El año debe ser menor a " + (actualYear));
+                                        }
+                            }
+                            
+
+
                             if(this.errorMostrarMsj.length) this.errorDatos=1;
                             return this.errorDatos;
                             break;
@@ -2210,6 +2319,21 @@ export default {
                                 if (!patron.test(this.apellidopd1))this.errorMostrarMsj.push("El apellido del padrino solo debe tener letras");                     
                                 if (this.duipd1!='' && !patrondui.test(this.duipd1))this.errorMostrarMsj.push("El DUI del padrino debe ser de nueve digitos");
                                 if(!this.sexopd1)this.errorMostrarMsj.push("El sexo no puede estar vacio");
+                                if(!this.fechanap1){
+                                    this.errorMostrarMsj.push("La fecha de nacimiento no puede estar vacia");
+                                        }else{
+
+                                    var fecha = new Date();
+                                    var actualYear = fecha.getFullYear();
+                                    var actualMes = fecha.getMonth();
+
+                                    var valuesp1 = this.fechanap1.split("-");
+                                    var aniop1 = valuesp1[0];
+
+                                    if(aniop1 < 1900)this.errorMostrarMsj.push("El año debe de ser mayor a 1900");
+                                    if((actualYear)<aniop1)this.errorMostrarMsj.push("El año debe ser menor a " + (actualYear));
+                                            }
+                            
                                 if(this.errorMostrarMsj.length) this.errorDatos=1;
                                 return this.errorDatos;
                                 break;   
@@ -2220,6 +2344,20 @@ export default {
                                 if (!patron.test(this.apellidopd2))this.errorMostrarMsj.push("El apellido del segundo padrino solo debe tener letras");                     
                                 if (this.duipd2!='' && !patrondui.test(this.duipd2))this.errorMostrarMsj.push("El DUI del segundo padrino debe ser de nueve digitos");
                                 if(!this.sexopd2)this.errorMostrarMsj.push("El sexo no puede estar vacio");
+                                if(!this.fechanap2){
+                                    this.errorMostrarMsj.push("La fecha de nacimiento no puede estar vacia");
+                                        }else{
+
+                                    var fecha = new Date();
+                                    var actualYear = fecha.getFullYear();
+                                    var actualMes = fecha.getMonth();
+
+                                    var valuesp2 = this.fechanap2.split("-");
+                                    var aniop2 = valuesp2[0];
+
+                                    if(aniop2 < 1900)this.errorMostrarMsj.push("El año debe de ser mayor a 1900");
+                                    if((actualYear)<aniop2)this.errorMostrarMsj.push("El año debe ser menor a " + (actualYear));
+                                            }
                                 if(this.errorMostrarMsj.length) this.errorDatos=1;
                                 return this.errorDatos;
                                 break;   
@@ -2230,6 +2368,20 @@ export default {
                                 if (!patron.test(this.apellidopd3))this.errorMostrarMsj.push("El apellido del tercer padrino solo debe tener letras");                     
                                 if (this.duipd3!='' && !patrondui.test(this.duipd3))this.errorMostrarMsj.push("El DUI del tercer padrino debe ser de nueve digitos");
                                 if(!this.sexopd3)this.errorMostrarMsj.push("El sexo no puede estar vacio");
+                                if(!this.fechanap3){
+                                    this.errorMostrarMsj.push("La fecha de nacimiento no puede estar vacia");
+                                        }else{
+
+                                    var fecha = new Date();
+                                    var actualYear = fecha.getFullYear();
+                                    var actualMes = fecha.getMonth();
+
+                                    var valuesp3 = this.fechanap3.split("-");
+                                    var aniop3 = valuesp3[0];
+
+                                    if(aniop3 < 1900)this.errorMostrarMsj.push("El año debe de ser mayor a 1900");
+                                    if((actualYear)<aniop3)this.errorMostrarMsj.push("El año debe ser menor a " + (actualYear));
+                                            }
                                 if(this.errorMostrarMsj.length) this.errorDatos=1;
                                 return this.errorDatos;
                                 break;   
@@ -2240,6 +2392,20 @@ export default {
                                 if (!patron.test(this.apellidopd4))this.errorMostrarMsj.push("El apellido del cuarto padrino solo debe tener letras");                     
                                 if (this.duipd4!='' && !patrondui.test(this.duipd4))this.errorMostrarMsj.push("El DUI del cuarto padrino debe ser de nueve digitos");
                                 if(!this.sexopd4)this.errorMostrarMsj.push("El sexo no puede estar vacio");
+                                if(!this.fechanap4){
+                                    this.errorMostrarMsj.push("La fecha de nacimiento no puede estar vacia");
+                                        }else{
+
+                                    var fecha = new Date();
+                                    var actualYear = fecha.getFullYear();
+                                    var actualMes = fecha.getMonth();
+
+                                    var valuesp4 = this.fechanap4.split("-");
+                                    var aniop4 = valuesp4[0];
+
+                                    if(aniop4 < 1900)this.errorMostrarMsj.push("El año debe de ser mayor a 1900");
+                                    if((actualYear)<aniop4)this.errorMostrarMsj.push("El año debe ser menor a " + (actualYear));
+                                            }
                                 if(this.errorMostrarMsj.length) this.errorDatos=1;
                                 return this.errorDatos;
                                 break;   

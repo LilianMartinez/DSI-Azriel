@@ -46,6 +46,7 @@ Vue.component('compras', require('./components/Compras.vue').default);
 Vue.component('ventas', require('./components/Ventas.vue').default);
 Vue.component('canasta', require('./components/Canasta.vue').default);
 Vue.component('suelto', require('./components/Suelto.vue').default);
+Vue.component('unidadmedida', require('./components/MantenimientoUnidadMedidas.vue').default);
 Vue.component('zonas', require('./components/MantenimientoZona.vue').default);
 Vue.component('feligreses', require('./components/RegistrarFeligres.vue').default);
 Vue.component('inventarioiglesia', require('./components/RegistrarInventarioIglesia.vue').default);

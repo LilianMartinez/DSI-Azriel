@@ -158,6 +158,9 @@
                         <template v-if="menu==34">
                         <ventas></ventas>
                         </template>
+                        <template v-if="menu==35">
+                        <unidadmedida></unidadmedida>
+                        </template>
                         
             @else
             @endif

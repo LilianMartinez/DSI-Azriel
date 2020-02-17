@@ -143,6 +143,12 @@
                                     <input type="text" tabindexgt="0" v-model="apellidomadre" class="form-control" placeholder="Apellidos de la madre">
                                 </div>
                             </div>
+                             <div class="form-group row">
+                                <label class="col-md-3 form-control-label" for="text-input">Fecha de Nacimiento<b class="alerta">*</b></label>
+                                <div class="col-md-4">
+                                    <input type="date" class="form-control datepicker" name="date" v-model="fechanam">
+                                </div>
+                            </div>
                             <div class="form-group row">
                                     <label class="col-md-3 form-control-label" for="text-input">Zona:</label> 
                                     <div class="col-md-5">
@@ -180,6 +186,12 @@
                                 <label class="col-md-3 form-control-label" for="text-input">Apellidos</label>
                                 <div class="col-md-5">
                                     <input type="text" tabindexgt="0" v-model="apellidopadre" class="form-control" placeholder="Apellidos del padre">
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-md-3 form-control-label" for="text-input">Fecha de Nacimiento<b class="alerta">*</b></label>
+                                <div class="col-md-4">
+                                    <input type="date" class="form-control datepicker" name="date" v-model="fechanap" >
                                 </div>
                             </div>
                             <div class="form-group row">
@@ -366,6 +378,46 @@
                 </div>
             </div>
             <!-- fin del modal -->
+
+            <!--Inicio del modal verificar madre-->
+          <!--  <div class="modal fade"  tabindex="-1" :class="{'mostrar': modal3}" role="dialog" aria-labelledby="myModalLabel" style="display: none;" aria-hidden="true">
+                <div class="modal-dialog modal-primary modal-lg" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h4 class="modal-title" v-text="tituloModal"></h4>
+                            <button type="button"  class="close" @click="cerrarmodal()" aria-label="Close">
+                              <span aria-hidden="true">×</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                                <div class="card-body">
+                                    <div class="form-group row">
+                                        <label class="col-md-4 form-control-label" for="text-input">Nombre madre:</label>
+                                                <label class="col-md-6 form-control-label" >{{nombremadre}}, {{apellidomadre}}</label>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label class="col-md-4 form-control-label" for="text-input">Fecha de nacimiento:</label>
+                                        <label class="col-md-6 form-control-label" >{{fechanam}}</label>
+                                    </div>
+                                    <div class="form-group row">
+                                            <label class="col-md-4 form-control-label" for="text-input">Hijos:</label>
+                                        <table>
+                                                <tr v-for="hijos in arrayhijos" :key="hijos.id">
+                                                    <td v-text="hijos.nombre_persona"></td>
+                                                    <td v-text="hijos.apellido_persona"></td>    
+                                                </tr>                         
+                                        </table>
+                                    </div>
+                                            <div class="col-md-4 modal-fo">
+                                                <button type="button" class="btn btn-secondary" @click="datosIncorrectosm()">Cancelar</button>
+                                                <button type="submit"  class="btn btn-primary" @click="datosCorrectosm()">Aceptar</button>
+                                            </div>                       
+                                </div>
+                        </div>
+                    </div> 
+                </div>
+            </div>-->
+            <!-- fin del modal -->
    
            
            
@@ -377,6 +429,9 @@
     export default {
       data(){
             return{
+               /* arrayhijos:[], //array para llenar los nombres de los hijos
+                cambiarmodalpadre:0,*/
+
                 idzona:'',
                 idiglesia:'',
                 zona:'',
@@ -413,7 +468,9 @@
                 apellidopadre:'',
                 duipadre:'',
                 idmadre:'',
+                //idmadretemp:'', //id temporal de madre
                 idpadre:'',
+               // idpadretemp:'', //id temporal de padre
                 idsacerdote:'',
                 id:'',
                 nombresacerdote:'',
@@ -421,12 +478,15 @@
                 fecharealizacion:'',
                 fecharealizaciones:'',
                 fechana:'',
+                fechanam:'', //fecha nacimiento madre
+                fechanap:'', //fecha nacimiento padre
                 fechanaes:'',
                 fechana2:'',
                 dui:'',
                 sexo:'',
                 Acciondui:0,
                 modal : 0,
+               // modal3:0, //modal para verificar madre
                 idcare:'',
                 arraysacerdote:[],
                 arraycategorias:[],
@@ -442,6 +502,7 @@
                 folio:'',
                 ano:'',
                 verificacion:0,
+                //verificacion2:0, //no se para que sirve exactamente
                 accionbotones:0,
 
                 errorDatos:0,
@@ -630,6 +691,11 @@
            
             //Mt. cuando da eliminar en el formulario
             cerrar(){
+                this.alcaldia='';
+                this.libro='';
+                this.partida='';
+                this.folio='';
+                this.ano='';
                 this.monto=0;
                 this.nombrerealizante='';
                 this.apellidorealizante='';
@@ -644,15 +710,19 @@
                 this.fecharealizacion='';
                 this.fecharealizaciones='';
                 this.fechana='';
+                this.fechanam=''; //fecha nacimiento madre
+                this.fechanap=''; //fecha nacimiento padre
                 this.fechanaes='';
                 this.dui='';
                 this.Acciondui=0;
                 this.accion=0;
                 this.accionbotones=0;
                 this.modal=0;
+                this.modal3=0;
                 this.sexo='';
                 this.id='';
                 this.verificacion=0;
+                //this.verificacion2=0; //no se para que sirve exactamente
                 this.cambiarm=0;
                 this.cambiarmb=0;
                 this.idzona=0;    //zona realizante
@@ -680,11 +750,14 @@
                 this.fecharealizacion='';
                 this.fecharealizaciones='';
                 this.fechana='';
+                this.fechanam=''; //fecha nacimiento madre
+                this.fechanap=''; //fecha nacimiento padre
                 this.fechanaes='';
                 this.dui='';
                 this.accion=0;
                 this.accionbotones=0;
                 this.modal=0;
+                this.modal3=0;
                 this.sexo='';
                 this.id='';
                 this.alcaldia='';
@@ -695,6 +768,7 @@
                 this.idpadre='';
                 this.idmadre='';
                 this.verificacion=0;
+                //this.verificacion2=0; //no se para que sirve exactamente
                 this.cambiarm=0;
                 this.cambiarmb=0;
                 this.idzona=0;    //zona realizante
@@ -708,6 +782,13 @@
             //Mt. cuando le da modificar en el modal
             cerrarmodal(){
                     this.modal=0;
+                   /* if(this.cambiarmodalpadre==1){
+                       this.modal3=0;
+                    }else{
+                        this.modal3=0;
+                    }*/
+                    this.modal3=0;
+                    
                    
             },
             llenadolistas(){
@@ -815,6 +896,7 @@
                 this.nombremadre= data['nombre_persona'];
                 this.apellidomadre= data['apellido_persona'];
                 this.idmadre=data['id']; 
+                this.fechanam=data['fecha_nacimiento']; //fecha nacimiento de la madre
                 this.idzonam=data['idzonaa'];
                 this.llenadolistazona();
                 if(this.idzonam)
@@ -827,6 +909,7 @@
                 this.nombrepadre= data['nombre_persona'];
                 this.apellidopadre= data['apellido_persona'];
                 this.idpadre=data['id'];
+                this.fechanap=data['fecha_nacimiento']; //fecha nacimiento del padre
                 this.idzonap=data['idzonaa'];
                 this.llenadolistazona();
                 if(this.idzonap)
@@ -899,9 +982,153 @@
                     });
 
             },
+
+            // ---SIN DUI 
+            //**********************************************************************************************************************************
+           /* verificarpersonam(){ //solo cuando hay datos de mamá
+                let me=this;
+                var nombremadre=this.nombremadre.toUpperCase();
+                var apellidomadre=this.apellidomadre.toUpperCase();
+                var fechanam=this.fechanam;
+
+               var url='/persona/existenciamadre?nombre_persona=' + nombremadre + '&apellido_persona=' + apellidomadre + '&fecha_nacimiento=' + fechanam;
+                    axios.get(url) .then(function (response) {
+                   var existencia=response.data.existenciamadre; //si encontro el id
+                   var hijos=response.data.hijos; //si encontro datos de hijos
+                   if(existencia==1){ //esos datos no se han ingresado antes, es decir no existe 
+                        me.cambiarm=3; //cambiar a datos de celebración 
+                        me.cambiarmb=1;
+                   }
+
+                   if(existencia==2 && hijos==1){ //la persona existe pero no tiene hijos
+                       me.idmadre=response.data.idmm.id; //no estoy segura 
+                       me.cambiarm=3;
+                       me.cambiarmb=1;
+                   }
+
+                   if(existencia==2 && hijos==2){ //la persona existe y tiene hijos
+                        me.idmadretemp=response.data.idmm.id; //no estoy segura de esto 
+                        me.llenarmodalmadre(me.idmadretemp);
+                   }
+
+                    }).catch(function (error) {
+                    console.log(error);
+                    });
+
+            },*/
+
+            /*verificarpersonap(){ //solo cuando hay datos de papa
+                
+                me.llenarmodalpadre(idpadretemp);
+            },*/
+
+          /*  verificarpersonamp(){ //cuando hay datos de ambos
+                let me=this;
+                var nombremadre=this.nombremadre.toUpperCase();
+                var apellidomadre=this.apellidomadre.toUpperCase();
+                var fechanam=this.fechanam;
+
+               var url='/persona/existenciamadre?nombre_persona=' + nombremadre + '&apellido_persona=' + apellidomadre + '&fecha_nacimiento=' + fechanam;
+                    axios.get(url) .then(function (response) {
+                   var existenciam=response.data.existenciamadre; //si encontro el id de madre
+                   var existenciap=response.data.existenciapadre; //si encontro el id de padre
+                   var hijosm=response.data.hijosm; //si encontro datos de hijos **madre
+                   var hijosp=response.data.hijosp; //si encontro satos de hijos **padre
+                   
+                   if(existenciam==1&&existencip==2){ //madre no existe pero padre existe
+                       me.verificarpersonam();
+                   }
+                   if(existenciam==2&&existenciap=1){
+                       me.verificarpersonap();
+                   }                   
+                   if(existenciam==1&&existenciap==1){ //esos datos no se han ingresado antes, es decir no existe 
+                        me.cambiarm=3; //cambiar a datos de celebración 
+                        me.cambiarmb=1;
+                   }
+
+                   if(existenciam==2 && hijosm==1 && existenciap==2 && hijosp==1){ //la madre y el padre existen pero no tiene hijos
+                            me.idmadre=response.data.idmm.id; //no estoy segura 
+                            me.idpadre=response.data.idpp.id;
+                            me.cambiarm=3;
+                            me.cambiarmb=1;
+                        else{
+                            if(existenciam==2 && hijosm==1){
+                                if(existencip==2 && hijosp==2){
+                                    me.idpadretemp=response.data.idmm.id
+                                    me.llenarmodalpadre(me.idpadretemp);
+                                }
+                            }
+
+                            if(existenciap==2 && hijosp==1){
+                                if(existenciam==2 && hijosm==2){
+                                    me.idmadretemp=response.data.idmm.id
+                                    me.llenarmodalpmadre(me.idmadretemp);
+                                }
+                            }
+                        }
+                       
+                   }
+                    me.idmadre=response.data.idmm.id; //no estoy segura 
+                       me.cambiarm=3;
+                       me.cambiarmb=1;
+
+
+                   if(existencia==2 && hijos==2){ //la persona existe y tiene hijos
+                        me.idmadretemp=response.data.idmm.id; //no estoy segura de esto 
+                        me.llenarmodalmadre(me.idmadretemp);
+                   }
+
+            },*/
+
+            /* llenarmodalmadre(idmadretemp){
+                let me=this;
+                var url='/persona/obtenerDatosMadre?idmadre=' + idmadretemp;
+                    axios.get(url) .then(function (response) {
+                    
+                        me.idmadretemp=response.data.datosmadre.id;
+                        me.nombremadre= response.data.datosmadre.nombre_persona;
+                        me.apellidomadre=response.data.datosmadre.apellido_persona;
+                        me.fechanam=response.data.datosmadre.fecha_nacimiento;
+                        me.arrayhijos=response.data.datoshijos;
+
+                        me.abrirmodalm();
+                    }).catch(function (error) {
+                    console.log(error);
+                    });
+
+            },*/
+
+            /*abrirmodalm(){
+                this.modal3=1;
+                this.tituloModal='Confirmar datos de la madre';
+            },*/
+            /*llenarmodalpadre(idpadretemp){
+
+            }*/
+
+            /*datosCorrectosm(){ //botón aceptar
+                let me=this;
+                me.idmadre=me.idmadretemp;
+                me.cambiarm=3; //esto quizas no iria aqui, sino que se llamaria a otra función la cual se verificaria si el 
+                                //nombre padre, apellido padre y fecha nacimiento padre existe o algo asi aunque quizas no
+
+                /*if(me.nombrepadre==''&& me.apellidopadre==''&& me.fechanap==''){
+                    me.cambiarm=3;
+                }else{
+                    me.cambiarmodalpadre=1;
+                    me.cerrarmodal();
+                }
+            },*/
+
+           /* datosIncorrectosm(){ //botón cancelar
+            
+            },*/
+
+            //**********************************************************************************************************************************
+
             //Validar datos
             validarvalores(d){
-                /*this.errorDatos=0;
+                this.errorDatos=0;
                 this.errorMostrarMsj=[];
                 var RE = /^([0-9])*$/;
                 var patron =/^[a-zA-ZÑñÁáÉéÍíÓóÚúÜü\s]+$/; /////ESTOOOOOOOO
@@ -1085,8 +1312,38 @@
                         {
                             if (this.nombremadre!='' && !patron.test(this.nombremadre))this.errorMostrarMsj.push("El nombre de la madre solo debe tener letras");
                             if (this.apellidomadre!='' && !patron.test(this.apellidomadre))this.errorMostrarMsj.push("El apellido de la madre solo debe tener letras");
+                            if(this.nombremadre!='' && this.apellidomadre!=''){
+                                if(!this.fechanam){
+                                this.errorMostrarMsj.push("La fecha de nacimiento no puede estar vacia");
+                                    }else{
+
+                                var fecha = new Date();
+                                var actualYear = fecha.getFullYear();
+                                var actualMes = fecha.getMonth();
+                                var values = this.fechanam.split("-");
+                                var anio = values[0];
+
+                                if(anio < 1900)this.errorMostrarMsj.push("El año debe de ser mayor a 1900");
+                                if((actualYear)<anio)this.errorMostrarMsj.push("El año debe ser menor a" + (actualYear));
+                                        }
+                            }
                             if (this.nombrepadre!='' && !patron.test(this.nombrepadre))this.errorMostrarMsj.push("El nombre del padre solo debe tener letras");
                             if (this.apellidopadre!='' && !patron.test(this.apellidopadre))this.errorMostrarMsj.push("El apellido del padre solo debe tener letras");
+                            if(this.nombrepadre!='' && this.apellidopadre!=''){
+                                if(!this.fechanap){
+                                this.errorMostrarMsj.push("La fecha de nacimiento no puede estar vacia");
+                                    }else{
+
+                                var fecha = new Date();
+                                var actualYear = fecha.getFullYear();
+                                var actualMes = fecha.getMonth();
+                                var values = this.fechanap.split("-");
+                                var anio = values[0];
+
+                                if(anio < 1900)this.errorMostrarMsj.push("El año debe de ser mayor a 1900");
+                                if((actualYear)<anio)this.errorMostrarMsj.push("El año debe ser menor a " + (actualYear));
+                                        }
+                            }
                             if (this.duimadre!='' && !patrondui.test(this.duimadre))this.errorMostrarMsj.push("El DUI de la madre debe ser de nueve digitos");                     
                             if (this.duipadre!='' && !patrondui.test(this.duipadre))this.errorMostrarMsj.push("El DUI del padre debe ser de nueve digitos");
                             if(this.errorMostrarMsj.length) this.errorDatos=1;
@@ -1131,7 +1388,7 @@
 
                             }
 
-                } */
+                } 
                 
             },
             //Buscar si ya hay datos del realizante
@@ -1273,6 +1530,8 @@
                         'dui_reali':this.dui,
                         'sexo':this.sexo,
                         'nacimiento':this.fechana,
+                        'nacimientom':this.fechanam, //fecha nacimiento madre
+                        'nacimientop':this.fechanap, //fecha nacimiento padre
                         'alcaldia': this.alcaldia.toUpperCase(),
                         'libro':this.libro,
                         'partida':this.partida,
