@@ -31,7 +31,7 @@
         "@fullcalendar/interaction": "^4.3.0",
         "@fullcalendar/vue": "^4.3.1",
         "fecha": "^3.0.3",
-        "moment": "^2.24.0",
+        "moment": "^2.29.4",
         "sweetalert2": "^8.13.0",
         "v-calendar": "^1.0.0-beta.16",
         "vue-moment": "^4.1.0",
